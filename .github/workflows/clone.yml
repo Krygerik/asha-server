@@ -1,0 +1,21 @@
+name: Clone
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone hrta server
+      uses: appleboy/ssh-action@0.1.2
+      with:
+        host: ${{secrets.SSH_USERNAME}}
+        username: ${{secret.SSH_PASSWORD}}
+        script: |
+          mkdir -p ~/projects/
+          cd ~/projects/
+          git clone https://github.com/Krygerik/hrta-server.git
+          cd hrta-server
+          npm install
