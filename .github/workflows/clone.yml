@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Clone hrta server
-      uses: appleboy/ssh-action@0.1.2
+      uses: P3TERX/ssh2actions@v1.0.0
       with:
         host: ${{secrets.SSH_HOST}}
         username: ${{secrets.SSH_USERNAME}}
