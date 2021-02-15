@@ -1,4 +1,4 @@
-name: Node CI
+name: Clone
 
 on:
   push:
@@ -19,3 +19,5 @@ jobs:
             mkdir -p ~/projects/
             cd ~/projects/
             git clone https://github.com/Krygerik/hrta-server.git
+            cd hrta-server/
+            npm install --production
