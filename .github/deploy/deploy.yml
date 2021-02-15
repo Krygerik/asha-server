@@ -1,0 +1,12 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  echo:
+    runs-on: centos-latest
+    steps:
+      - name: Echo Hello World
+        run: echo "Hello World"
