@@ -15,7 +15,6 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           key: ${{secrets.SERVER_SSH_KEY}}
           passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
-          password: ${{secrets.SSH_PASSWORD}}
           script: |
             mkdir -p ~/projects/
             cd ~/projects/
