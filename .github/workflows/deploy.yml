@@ -17,7 +17,7 @@ jobs:
           passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
           script: |
             cd ~/projects/hrta-server/
-            git pull
+            git pull --ff-only
             npm install --production
             npm run build
             pm2 restart dist/index.js
