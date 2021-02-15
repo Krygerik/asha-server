@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy hrta server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.SSH_HOST}}
+          username: ${{secrets.SSH_USERNAME}}
+          key: ${{secrets.SERVER_SSH_KEY}}
+          passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
+          script: |
+            cd ~/projects/hrta-server/
+            git pull
+            npm install --production
+            npm run build
+            pm2 restart dist/index.js
