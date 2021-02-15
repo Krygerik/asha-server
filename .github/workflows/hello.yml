@@ -22,7 +22,7 @@ on:
 jobs:
   hello:
     name: Hello
-    runs-on: centos-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Echo Hello!
       run: echo "Hello!"
