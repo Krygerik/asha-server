@@ -92,10 +92,10 @@ export class GameController {
             }
 
             if (deleteDetails.deletedCount == 0) {
-                return failureResponse('invalid user', null, res);
+                return failureResponse('invalid game', null, res);
             }
 
-            successResponse('delete user successfull', null, res);
+            successResponse('delete game successfull', null, res);
         })
     }
 }
