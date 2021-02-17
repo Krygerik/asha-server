@@ -1,18 +1,26 @@
 import {Request, Response} from "express";
 import {GameService} from "../modules/game/service";
 import {IGame} from "../modules/game/model";
+import {hasMissingField} from "../modules/game/utils";
 import {failureResponse, insufficientParameters, mongoError, successResponse} from "../modules/common/services";
 
 export class GameController {
     private gameService: GameService = new GameService();
 
     public createGame(req: Request, res: Response) {
-        if (!req.body.combat_id) {
+        if (hasMissingField(req.body)) {
             return insufficientParameters(res);
         }
 
         const gameParams: IGame = {
             combat_id: req.body.combat_id,
+            date: req.body.date,
+            loosing_player: {
+                ...req.body.loosing_player
+            },
+            winning_player: {
+                ...req.body.winning_player
+            },
         };
 
         this.gameService.createGame(gameParams, (err: any, gameData: IGame) => {
@@ -56,7 +64,14 @@ export class GameController {
 
             const gameParams: IGame = {
                 _id: req.params.id,
-                combat_id: gameData.combat_id,
+                combat_id: req.body.combat_id,
+                date: req.body.date,
+                loosing_player: {
+                    ...req.body.loosing_player
+                },
+                winning_player: {
+                    ...req.body.winning_player
+                },
             };
 
             this.gameService.updateGame(gameParams, (updateError: any) => {
