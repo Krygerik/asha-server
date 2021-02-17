@@ -1,7 +1,4 @@
-import {ModificationNote} from "../common/model";
-
 export interface IGame {
-    _id?: String;
-    combat_id: String;
-    modification_notes: ModificationNote[];
+    _id?: string;
+    combat_id: string;
 }

@@ -13,11 +13,6 @@ export class GameController {
 
         const gameParams: IGame = {
             combat_id: req.body.combat_id,
-            modification_notes: [{
-                modified_on: new Date(),
-                modified_by: null,
-                modification_note: 'Game data created'
-            }]
         };
 
         this.gameService.createGame(gameParams, (err: any, gameData: IGame) => {
@@ -59,16 +54,9 @@ export class GameController {
                 return failureResponse('invalid game', null, res);
             }
 
-            gameData.modification_notes.push({
-                modified_on: new Date(),
-                modified_by: null,
-                modification_note: 'Game data updated'
-            })
-
             const gameParams: IGame = {
                 _id: req.params.id,
                 combat_id: gameData.combat_id,
-                modification_notes: gameData.modification_notes
             };
 
             this.gameService.updateGame(gameParams, (updateError: any) => {
