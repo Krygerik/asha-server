@@ -6,7 +6,7 @@ export class MappingNicknameToGameRoutes {
     private mappingNicknameToGameController: MappingNicknameToGameController = new MappingNicknameToGameController();
 
     public route(app: Application) {
-        app.get('/api/map-nick-to-game', (req: Request, res: Response) => {
+        app.post('/api/map-nick-to-game', (req: Request, res: Response) => {
             this.mappingNicknameToGameController.createRecord(req, res);
         });
     }
