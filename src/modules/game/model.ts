@@ -64,7 +64,7 @@ export interface IGame {
     // id сражения
     combat_id: string;
     // Дата окончания игры
-    date: Date;
+    date: string;
     // Данные проигравшего игрока
     loosing_player: IPlayer;
     // Данные победившего игрока

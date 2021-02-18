@@ -98,7 +98,7 @@ const GameSchema = new mongoose.Schema({
         required: true
     },
     date: {
-        type: Date,
+        type: String,
         required: true
     },
     winning_player: {
