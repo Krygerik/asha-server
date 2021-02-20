@@ -3,33 +3,50 @@ import {GameService} from "../modules/game/service";
 import {IGame} from "../modules/game/model";
 import {hasMissingField} from "../modules/game/utils";
 import {failureResponse, insufficientParameters, mongoError, successResponse} from "../modules/common/services";
+import {MappingNicknameToGameService} from "../modules/mapping-nickname-to-game/service";
+import {IMappingNicknameToGame} from "../modules/mapping-nickname-to-game/model";
 
 export class GameController {
     private gameService: GameService = new GameService();
+    private mappingNicknameToGameService: MappingNicknameToGameService = new MappingNicknameToGameService();
 
     public createGame(req: Request, res: Response) {
         if (hasMissingField(req.body)) {
             return insufficientParameters(res);
         }
 
-        const gameParams: IGame = {
-            combat_id: req.body.combat_id,
-            date: req.body.date,
-            loosing_player: {
-                ...req.body.loosing_player
-            },
-            winning_player: {
-                ...req.body.winning_player
-            },
-        };
+        this.mappingNicknameToGameService.findNicknameListByCombatId(
+            req.body.combat_id,
+            (err: any, docList: IMappingNicknameToGame[]) => {
+                if (err) {
+                    return mongoError(err, res);
+                }
 
-        this.gameService.createGame(gameParams, (err: any, gameData: IGame) => {
-            if (err) {
-                return mongoError(err, res);
+                const loosingNickname = docList
+                    .map((doc: IMappingNicknameToGame) => doc.nickname)
+                    .find((nickname: string) => nickname !== req.body.winning_player.nickname);
+
+                const gameParams: IGame = {
+                    combat_id: req.body.combat_id,
+                    date: req.body.date,
+                    loosing_player: {
+                        ...req.body.loosing_player,
+                        nickname: loosingNickname,
+                    },
+                    winning_player: {
+                        ...req.body.winning_player,
+                    },
+                };
+
+                this.gameService.createGame(gameParams, (err: any, gameData: IGame) => {
+                    if (err) {
+                        return mongoError(err, res);
+                    }
+
+                    successResponse('create game successfull', gameData, res);
+                })
             }
-
-            successResponse('create game successfull', gameData, res);
-        })
+        );
     }
 
     public getGame(req: Request, res: Response) {

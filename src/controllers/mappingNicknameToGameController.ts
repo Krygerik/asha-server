@@ -1,10 +1,10 @@
 import {Request, Response} from "express";
 import {insufficientParameters, mongoError, successResponse} from "../modules/common/services";
-import {MappingNicknameToGame} from "../modules/mapping-nickname-to-game/service";
+import {MappingNicknameToGameService} from "../modules/mapping-nickname-to-game/service";
 import {IMappingNicknameToGame} from "../modules/mapping-nickname-to-game/model";
 
 export class MappingNicknameToGameController {
-    private mappingNicknameToGameService: MappingNicknameToGame = new MappingNicknameToGame();
+    private mappingNicknameToGameService: MappingNicknameToGameService = new MappingNicknameToGameService();
 
     public createRecord(req: Request, res: Response) {
         if (!req.body.combat_id || !req.body.nickname) {
