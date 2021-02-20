@@ -1,8 +1,8 @@
-import {IGame} from "./model";
+import {IInputGameData, ISavedGame, IShortGame} from "./model";
 import {GameModel} from "./schema";
 
 export class GameService {
-    public createGame(gameParams: IGame, callback: any) {
+    public createGame(gameParams: IInputGameData, callback: any) {
         const session = new GameModel(gameParams);
 
         session.save(callback);
@@ -12,7 +12,33 @@ export class GameService {
         GameModel.findOne(query, callback);
     }
 
-    public updateGame(gameParams: IGame, callback: any) {
+    /**
+     * Получение игр с краткой информацией по combatId
+     */
+    public async findGames(combatIdList: number[]): Promise<IShortGame[]> {
+        // @ts-ignore
+        const gameInfoList: ISavedGame[] = await Promise.all(combatIdList.map(
+            async (combatId: number) => await GameModel.findOne({ combat_id: combatId })
+        ));
+
+        return gameInfoList.filter(Boolean).map((gameInfo: ISavedGame) => ({
+            _id: gameInfo._id,
+                combat_id: gameInfo.combat_id,
+                date: gameInfo.date,
+                loosing_player: {
+                nickname: gameInfo.loosing_player.nickname,
+                    race: gameInfo.loosing_player.race,
+                    hero: gameInfo.loosing_player.hero,
+            },
+            winning_player: {
+                nickname: gameInfo.winning_player.nickname,
+                    race: gameInfo.winning_player.race,
+                    hero: gameInfo.winning_player.hero,
+            },
+        }));
+    }
+
+    public updateGame(gameParams: ISavedGame, callback: any) {
         const query = { _id: gameParams._id };
 
         GameModel.findByIdAndUpdate(query, gameParams, callback);

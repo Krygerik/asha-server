@@ -1,5 +1,10 @@
 import {Request, Response} from "express";
-import {GameService, IGame, hasMissingField} from "../modules/game";
+import {
+    GameService,
+    IInputGameData,
+    ISavedGame,
+    hasMissingField,
+} from "../modules/game";
 import {
     failureResponse,
     insufficientParameters,
@@ -28,7 +33,7 @@ export class GameController {
                     .map((doc: IMappingNicknameToGame) => doc.nickname)
                     .find((nickname: string) => nickname !== req.body.winning_player.nickname);
 
-                const gameParams: IGame = {
+                const gameParams: IInputGameData = {
                     combat_id: req.body.combat_id,
                     date: req.body.date,
                     loosing_player: {
@@ -40,7 +45,7 @@ export class GameController {
                     },
                 };
 
-                this.gameService.createGame(gameParams, (err: any, gameData: IGame) => {
+                this.gameService.createGame(gameParams, (err: any, gameData: IInputGameData) => {
                     if (err) {
                         return mongoError(err, res);
                     }
@@ -57,7 +62,7 @@ export class GameController {
         }
 
         const gameFilter = { _id: req.params.id };
-        this.gameService.findGame(gameFilter, (err: any, gameData: IGame) => {
+        this.gameService.findGame(gameFilter, (err: any, gameData: ISavedGame) => {
             if (err) {
                 return mongoError(err, res);
             }
@@ -66,13 +71,30 @@ export class GameController {
         })
     }
 
+    /**
+     * Получение списка игр с краткой информацией по нику игрока
+     */
+    public async getGamesByNickname(req: Request, res: Response) {
+        const nickname = req.query.nickname;
+
+        if (typeof nickname !== 'string') {
+            return insufficientParameters(res);
+        }
+
+        const combatIdList = await this.mappingNicknameToGameService.getGamesByNickname(nickname);
+
+        const shortGameInfoList = await this.gameService.findGames(combatIdList);
+
+        return successResponse('Список игр c краткой информацией получен успешно', shortGameInfoList, res);
+    }
+
     public updateGame(req: Request, res: Response) {
         if (!req.params.id) {
             return insufficientParameters(res);
         }
 
         const gameFilter = { _id: req.params.id };
-        this.gameService.findGame(gameFilter, (err: any, gameData: IGame) => {
+        this.gameService.findGame(gameFilter, (err: any, gameData: ISavedGame) => {
             if (err) {
                 return mongoError(err, res);
             }
@@ -81,7 +103,7 @@ export class GameController {
                 return failureResponse('invalid game', null, res);
             }
 
-            const gameParams: IGame = {
+            const gameParams: ISavedGame = {
                 _id: req.params.id,
                 combat_id: req.body.combat_id,
                 date: req.body.date,

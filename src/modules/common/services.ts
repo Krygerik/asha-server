@@ -20,7 +20,7 @@ export function failureResponse(message: string, DATA: any, res: Response) {
 export function insufficientParameters(res: Response) {
     res.status(responseStatusCodes.bad_request).json({
         STATUS: 'FAILURE',
-        MESSAGE: 'Insufficient parameters',
+        MESSAGE: 'Недостаточно данных в запросе',
     });
 }
 

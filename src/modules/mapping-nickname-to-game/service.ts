@@ -1,6 +1,6 @@
 import {MappingNicknameToGameModel} from "./schema";
 import {IMappingNicknameToGame} from "./model";
-import {MAXIMUM_GAME_PLAYERS_COUNT} from "./constants";
+import {DEFAULT_COUNT_FIND_GAMES_BY_NICKNAME, MAXIMUM_GAME_PLAYERS_COUNT} from "./constants";
 
 export class MappingNicknameToGameService {
     public createEntity(entityParams: IMappingNicknameToGame, callback: any) {
@@ -30,5 +30,21 @@ export class MappingNicknameToGameService {
         const docList = await MappingNicknameToGameModel.find({ combat_id: combatId });
 
         return docList.length >= MAXIMUM_GAME_PLAYERS_COUNT;
+    }
+
+    /**
+     * Получение всех игр, связанных с передаваемым игроком
+     */
+    public async getGamesByNickname(nickname: string): Promise<number[]> {
+        // @ts-ignore
+        const docList: IMappingNicknameToGame[] = await MappingNicknameToGameModel.find({ nickname });
+
+        return docList
+            .map((entry) => entry.combat_id)
+            .reverse()
+            .slice(
+                0,
+                DEFAULT_COUNT_FIND_GAMES_BY_NICKNAME
+            );
     }
 }

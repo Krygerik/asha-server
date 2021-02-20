@@ -11,9 +11,7 @@ interface ICreatures {
 /**
  * Интерфейс игрока в записи боя
  */
-export interface IPlayer {
-    // id в mongodb
-    _id?: string;
+export interface IInputPlayer {
     // Список войск героя
     army: ICreatures[];
     // Список оставшихся войск героя
@@ -58,15 +56,51 @@ export interface IPlayer {
     turns_left: number;
 }
 
-export interface IGame {
+export interface ISavedPlayer extends IInputPlayer {
     // id в mongodb
-    _id?: string;
+    _id: string;
+    // Никнейм игрока
+    nickname: string;
+}
+
+export interface IInputGameData {
     // id сражения
-    combat_id: string;
+    combat_id: number;
     // Дата окончания игры
     date: string;
     // Данные проигравшего игрока
-    loosing_player: IPlayer;
+    loosing_player: IInputPlayer;
     // Данные победившего игрока
-    winning_player: IPlayer;
+    winning_player: IInputPlayer;
+}
+
+export interface ISavedGame extends IInputGameData{
+    // id в mongodb
+    _id: string;
+    // Данные проигравшего игрока
+    loosing_player: ISavedPlayer;
+    // Данные победившего игрока
+    winning_player: ISavedPlayer;
+}
+
+interface IShortPlayer {
+    // Никнейм игрока
+    nickname: string;
+    // Раса
+    race: string;
+    // Название героя
+    hero: string;
+}
+
+export interface IShortGame {
+    // id в mongodb
+    _id: string;
+    // id сражения
+    combat_id: number;
+    // Дата окончания игры
+    date: string;
+    // Данные проигравшего игрока
+    loosing_player: IShortPlayer;
+    // Данные победившего игрока
+    winning_player: IShortPlayer;
 }
