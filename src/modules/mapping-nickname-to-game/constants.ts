@@ -1,0 +1,1 @@
+export const MAXIMUM_GAME_PLAYERS_COUNT = 2;

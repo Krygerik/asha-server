@@ -21,8 +21,21 @@ export function insufficientParameters(res: Response) {
     res.status(responseStatusCodes.bad_request).json({
         STATUS: 'FAILURE',
         MESSAGE: 'Insufficient parameters',
-        DATA: {}
     });
+}
+
+export function entryAlreadyExists(res: Response) {
+    res.status(responseStatusCodes.bad_request).json({
+        STATUS: 'FAILURE',
+        MESSAGE: 'Запись уже существует в базе данных',
+    })
+}
+
+export function hasMaximumEntries(res: Response) {
+    res.status(responseStatusCodes.bad_request).json({
+        STATUS: 'FAILURE',
+        MESSAGE: 'Достигнут максимум записей с такими условиями',
+    })
 }
 
 export function mongoError(err: any, res: Response) {
