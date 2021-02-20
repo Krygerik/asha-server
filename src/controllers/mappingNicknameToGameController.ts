@@ -1,7 +1,6 @@
 import {Request, Response} from "express";
 import {insufficientParameters, mongoError, successResponse} from "../modules/common/services";
-import {MappingNicknameToGameService} from "../modules/mapping-nickname-to-game/service";
-import {IMappingNicknameToGame} from "../modules/mapping-nickname-to-game/model";
+import {IMappingNicknameToGame, MappingNicknameToGameService} from "../modules/mapping-nickname-to-game";
 
 export class MappingNicknameToGameController {
     private mappingNicknameToGameService: MappingNicknameToGameService = new MappingNicknameToGameService();

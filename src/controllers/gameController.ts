@@ -1,10 +1,12 @@
 import {Request, Response} from "express";
-import {GameService} from "../modules/game/service";
-import {IGame} from "../modules/game/model";
-import {hasMissingField} from "../modules/game/utils";
-import {failureResponse, insufficientParameters, mongoError, successResponse} from "../modules/common/services";
-import {MappingNicknameToGameService} from "../modules/mapping-nickname-to-game/service";
-import {IMappingNicknameToGame} from "../modules/mapping-nickname-to-game/model";
+import {GameService, IGame, hasMissingField} from "../modules/game";
+import {
+    failureResponse,
+    insufficientParameters,
+    mongoError,
+    successResponse,
+} from "../modules/common/services";
+import {IMappingNicknameToGame, MappingNicknameToGameService} from "../modules/mapping-nickname-to-game";
 
 export class GameController {
     private gameService: GameService = new GameService();
