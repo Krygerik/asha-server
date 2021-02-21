@@ -1,4 +1,12 @@
 /**
+ * Цвет игрока
+ */
+export enum EPlayerColor {
+    RED = 1,
+    BLUE = 2,
+}
+
+/**
  * Интерфейс однотипных войск
  */
 interface ICreatures {
@@ -20,6 +28,8 @@ export interface IInputPlayer {
     arts: string[];
     // Нападение героя
     attack: number;
+    // цвет игрока
+    color: EPlayerColor[];
     // Защита героя
     defence: number;
     // Название героя
@@ -84,12 +94,14 @@ export interface ISavedGame extends IInputGameData{
 }
 
 interface IShortPlayer {
+    // Цвет игрока
+    color: EPlayerColor[];
+    // Название героя
+    hero: string;
     // Никнейм игрока
     nickname: string;
     // Раса
     race: string;
-    // Название героя
-    hero: string;
 }
 
 export interface IShortGame {

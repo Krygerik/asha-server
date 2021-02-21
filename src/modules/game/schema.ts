@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+import {EPlayerColor} from "./model";
 
 const CreatureSchema = new mongoose.Schema({
     name: {
@@ -23,6 +24,11 @@ const PlayerSchema = new mongoose.Schema({
     },
     attack: {
         type: Number,
+        required: true
+    },
+    color: {
+        type: Number,
+        enum: Object.values(EPlayerColor),
         required: true
     },
     defence: {

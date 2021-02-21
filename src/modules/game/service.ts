@@ -23,18 +23,20 @@ export class GameService {
 
         return gameInfoList.filter(Boolean).map((gameInfo: ISavedGame) => ({
             _id: gameInfo._id,
-                combat_id: gameInfo.combat_id,
-                date: gameInfo.date,
-                loosing_player: {
+            combat_id: gameInfo.combat_id,
+            date: gameInfo.date,
+            loosing_player: {
+                color: gameInfo.loosing_player.color,
+                hero: gameInfo.loosing_player.hero,
                 nickname: gameInfo.loosing_player.nickname,
-                    race: gameInfo.loosing_player.race,
-                    hero: gameInfo.loosing_player.hero,
+                race: gameInfo.loosing_player.race,
             },
             winning_player: {
+                color: gameInfo.winning_player.color,
+                hero: gameInfo.winning_player.hero,
                 nickname: gameInfo.winning_player.nickname,
-                    race: gameInfo.winning_player.race,
-                    hero: gameInfo.winning_player.hero,
-            },
+                race: gameInfo.winning_player.race,
+        },
         }));
     }
 
