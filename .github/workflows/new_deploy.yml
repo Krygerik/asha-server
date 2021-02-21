@@ -27,3 +27,13 @@ jobs:
         # that temp kostil :D
         source: dist,node_modules
         target: projects/server
+    - name: Restart server process
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{secrets.SSH_HOST}}
+        username: ${{secrets.SSH_USERNAME}}
+        key: ${{secrets.SERVER_SSH_KEY}}
+        passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
+        script: |
+          cd ~/projects/server/
+          pm2 restart dist/index.js
