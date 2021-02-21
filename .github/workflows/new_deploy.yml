@@ -24,5 +24,6 @@ jobs:
         username: ${{secrets.SSH_USERNAME}}
         passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
         key: ${{secrets.SERVER_SSH_KEY}}
-        source: dist
+        # that temp kostil :D
+        source: dist,node_modules
         target: projects/server
