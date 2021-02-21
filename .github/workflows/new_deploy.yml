@@ -1,0 +1,28 @@
+name: Compile and deploy to server
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  compile_with_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout to code
+      uses: actions/checkout@v2
+    - name: Compile project
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: npm install --production
+    - run: npm run build
+    - name: Deploy to server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{secrets.SSH_HOST}}
+        username: ${{secrets.SSH_USERNAME}}
+        passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
+        key: ${{secrets.SERVER_SSH_KEY}}
+        source: dist
+        target: projects/server
