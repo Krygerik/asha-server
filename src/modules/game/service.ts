@@ -2,26 +2,11 @@ import {IInputGameData, ISavedGame, IShortGame} from "./model";
 import {GameModel} from "./schema";
 
 export class GameService {
-    public createGame(gameParams: IInputGameData, callback: any) {
-        const session = new GameModel(gameParams);
-
-        session.save(callback);
-    }
-
-    public findGame(query: any, callback: any) {
-        GameModel.findOne(query, callback);
-    }
-
     /**
-     * Получение игр с краткой информацией по combatId
+     * Прообразование полного вида данных по игре в короткий
      */
-    public async findGames(combatIdList: number[]): Promise<IShortGame[]> {
-        // @ts-ignore
-        const gameInfoList: ISavedGame[] = await Promise.all(combatIdList.map(
-            async (combatId: number) => await GameModel.findOne({ combat_id: combatId })
-        ));
-
-        return gameInfoList.filter(Boolean).map((gameInfo: ISavedGame) => ({
+    private static formatFullGameInfoToShort(gameInfo: ISavedGame): IShortGame {
+        return {
             _id: gameInfo._id,
             combat_id: gameInfo.combat_id,
             date: gameInfo.date,
@@ -36,8 +21,40 @@ export class GameService {
                 hero: gameInfo.winning_player.hero,
                 nickname: gameInfo.winning_player.nickname,
                 race: gameInfo.winning_player.race,
-        },
-        }));
+            },
+        };
+    }
+
+    public createGame(gameParams: IInputGameData, callback: any) {
+        const session = new GameModel(gameParams);
+
+        session.save(callback);
+    }
+
+    public findGame(query: any, callback: any) {
+        GameModel.findOne(query, callback);
+    }
+
+    /**
+     * Получение списка краткой информации по всем играм
+     */
+    public async getAllShortGameInfoList(): Promise<IShortGame[]> {
+        // @ts-ignore
+        const allGameInfoList: ISavedGame[] = await GameModel.find();
+
+        return allGameInfoList.map(GameService.formatFullGameInfoToShort);
+    }
+
+    /**
+     * Получение игр с краткой информацией по combatId
+     */
+    public async getShortGamesInfoListByCombatId(combatIdList: number[]): Promise<IShortGame[]> {
+        // @ts-ignore
+        const gameInfoList: ISavedGame[] = await Promise.all(combatIdList.map(
+            async (combatId: number) => await GameModel.findOne({ combat_id: combatId })
+        ));
+
+        return gameInfoList.filter(Boolean).map(GameService.formatFullGameInfoToShort);
     }
 
     public updateGame(gameParams: ISavedGame, callback: any) {

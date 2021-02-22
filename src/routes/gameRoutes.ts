@@ -13,8 +13,12 @@ export class GameRoutes {
             this.gameController.getGame(req, res);
         });
 
+        app.get('/api/get-all-short-game-info', (req: Request, res: Response) => {
+            this.gameController.getAllShortGameInfoList(req, res);
+        });
+
         app.get('/api/get-games-by-nickname', (req: Request, res: Response) => {
-            this.gameController.getGamesByNickname(req, res);
+            this.gameController.getShortGameInfoListByNickname(req, res);
         });
 
         app.put('/api/game/:id', (req: Request, res: Response) => {

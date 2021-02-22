@@ -72,9 +72,22 @@ export class GameController {
     }
 
     /**
+     * Получение краткого списка всех игр
+     */
+    public async getAllShortGameInfoList(req: Request, res: Response) {
+        const allShortGameInfoList = await this.gameService.getAllShortGameInfoList();
+
+        return successResponse(
+            'Список краткой информации по всем играм получен успешно',
+            allShortGameInfoList,
+            res,
+        )
+    }
+
+    /**
      * Получение списка игр с краткой информацией по нику игрока
      */
-    public async getGamesByNickname(req: Request, res: Response) {
+    public async getShortGameInfoListByNickname(req: Request, res: Response) {
         const nickname = req.query.nickname;
 
         if (typeof nickname !== 'string') {
@@ -83,7 +96,7 @@ export class GameController {
 
         const combatIdList = await this.mappingNicknameToGameService.getGamesByNickname(nickname);
 
-        const shortGameInfoList = await this.gameService.findGames(combatIdList);
+        const shortGameInfoList = await this.gameService.getShortGamesInfoListByCombatId(combatIdList);
 
         return successResponse('Список игр c краткой информацией получен успешно', shortGameInfoList, res);
     }
