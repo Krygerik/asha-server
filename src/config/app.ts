@@ -1,4 +1,5 @@
 import * as bodyParser from "body-parser";
+import * as cors from 'cors';
 import * as express from "express";
 import * as mongoose from "mongoose";
 import {TestRoutes} from '../routes/testRoutes';
@@ -26,6 +27,7 @@ class App {
     }
 
     private config(): void {
+        this.app.use(cors());
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
     }
