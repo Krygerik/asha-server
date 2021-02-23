@@ -27,7 +27,19 @@ class App {
     }
 
     private config(): void {
-        this.app.use(cors({ origin: false }));
+        const options: cors.CorsOptions = {
+            allowedHeaders: [
+                'Origin',
+                'X-Requested-With',
+                'Content-Type',
+                'Accept',
+                'X-Access-Token',
+            ],
+            credentials: true,
+            methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+            preflightContinue: false,
+        };
+        this.app.use(cors(options));
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
     }
