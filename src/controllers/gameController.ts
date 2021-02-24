@@ -1,12 +1,14 @@
 import {Request, Response} from "express";
+import {isUndefined} from "lodash";
 import {
-    GameService,
     IInputGameData,
-    ISavedGame,
+    GameService,
     hasMissingField,
+    ISavedGame,
 } from "../modules/game";
 import {
     failureResponse,
+    incorrectParameters,
     insufficientParameters,
     mongoError,
     successResponse,
@@ -74,8 +76,12 @@ export class GameController {
     /**
      * Получение краткого списка всех игр
      */
-    public async getAllShortGameInfoList(req: Request, res: Response) {
-        const allShortGameInfoList = await this.gameService.getAllShortGameInfoList();
+    public async getShortGameInfoList(req: Request, res: Response) {
+        if (!isUndefined(req.query.items) && typeof req.query.items !== "string") {
+            return incorrectParameters(res);
+        }
+
+        const allShortGameInfoList = await this.gameService.getShortGameInfoList(req.query.items);
 
         return successResponse(
             'Список краткой информации по всем играм получен успешно',

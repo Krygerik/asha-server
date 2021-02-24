@@ -24,6 +24,13 @@ export function insufficientParameters(res: Response) {
     });
 }
 
+export function incorrectParameters(res: Response) {
+    res.status(responseStatusCodes.bad_request).json({
+        STATUS: 'FAILURE',
+        MESSAGE: 'Некорректные параметры запроса',
+    });
+}
+
 export function entryAlreadyExists(res: Response) {
     res.status(responseStatusCodes.bad_request).json({
         STATUS: 'FAILURE',

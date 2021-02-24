@@ -38,10 +38,18 @@ export class GameService {
     /**
      * Получение списка краткой информации по всем играм
      */
-    public async getAllShortGameInfoList(): Promise<IShortGame[]> {
+    public async getShortGameInfoList(items?: string): Promise<IShortGame[]> {
         // @ts-ignore
-        const allGameInfoList: ISavedGame[] = await GameModel.find();
+        let allGameInfoList: ISavedGame[] = await GameModel.find().sort({ date: 'desc' });
 
+        /**
+         * Количество требуемых элементов
+         */
+        if (items) {
+            allGameInfoList = [
+                ...allGameInfoList.slice(0, Number(items)),
+            ]
+        }
         return allGameInfoList.map(GameService.formatFullGameInfoToShort);
     }
 
