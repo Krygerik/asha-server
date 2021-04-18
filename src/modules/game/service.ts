@@ -15,6 +15,7 @@ export class GameService {
      */
     private static formatFullGameInfoToShort(gameInfo: ISavedGame): IShortGame {
         return {
+            _id: gameInfo._id,
             combat_id: gameInfo.combat_id,
             date: gameInfo.date,
             players: gameInfo.players.map(
@@ -106,7 +107,7 @@ export class GameService {
      */
     public async getShortGameInfoList(items?: string): Promise<IShortGame[]> {
         // @ts-ignore
-        let allGameInfoList: ISavedGame[] = await GameModel.find().sort({ date: 'desc' });
+        let allGameInfoList: ISavedGame[] = await GameModel.find({ winner: { $ne: null } }).sort({ date: 'desc' });
 
         /**
          * Количество требуемых элементов

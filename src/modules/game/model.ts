@@ -137,6 +137,8 @@ export interface IShortPlayer {
  * Тип краткой информации по игре
  */
 export interface IShortGame {
+    // id в mongodb
+    _id: string;
     // id сражения
     combat_id: number;
     // Дата окончания игры

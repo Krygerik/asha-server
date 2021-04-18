@@ -19,10 +19,16 @@ export class GameRoutes {
             this.gameController.saveGameWinner(req,res);
         });
 
+        /**
+         * Получение полной информации по конкретной игре
+         */
         app.get('/api/game/:id', (req: Request, res: Response) => {
             this.gameController.getGame(req, res);
         });
 
+        /**
+         * Получение краткой информации по всем играм
+         */
         app.get('/api/get-short-game-info-list', (req: Request, res: Response) => {
             this.gameController.getShortGameInfoList(req, res);
         });
