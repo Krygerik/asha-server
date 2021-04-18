@@ -27,6 +27,9 @@ export class GameRoutes {
             this.gameController.getShortGameInfoList(req, res);
         });
 
+        /**
+         * Получение краткой информации по всем играм по нику
+         */
         app.get('/api/get-games-by-nickname', (req: Request, res: Response) => {
             this.gameController.getShortGameInfoListByNickname(req, res);
         });

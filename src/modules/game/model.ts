@@ -62,9 +62,7 @@ export interface ISavedPlayer extends IInputPlayer {
     // id в mongodb
     _id: string;
     // Никнейм игрока
-    nickname: string;
-    // Признак, является ли игрок победителем
-    winner: boolean | undefined;
+    nickname?: string;
 }
 
 /**
@@ -105,18 +103,26 @@ export interface IInputGameData {
     players: IInputPlayer[];
 }
 
-export interface ISavedGame extends IInputGameData{
+/**
+ * Тип информации об игре из бд
+ */
+export interface ISavedGame extends IInputGameData {
     // id в mongodb
     _id: string;
     // Дата окончания игры
     date?: string;
     // Список данных обоих игроков
     players: ISavedPlayer[];
+    // Список ников игроков, участвующих в игре
+    players_nicknames: string[];
     // Цвет победителя
-    winner: EPlayerColor;
+    winner?: EPlayerColor;
 }
 
-interface IShortPlayer {
+/**
+ * Тип краткой информации по игроку
+ */
+export interface IShortPlayer {
     // Цвет игрока
     color: EPlayerColor;
     // Название героя
@@ -125,17 +131,18 @@ interface IShortPlayer {
     nickname: string;
     // Раса
     race: string;
-    // Признак, является ли игрок победителем
-    winner: boolean | undefined;
 }
 
+/**
+ * Тип краткой информации по игре
+ */
 export interface IShortGame {
-    // id в mongodb
-    _id: string;
     // id сражения
     combat_id: number;
     // Дата окончания игры
     date?: string;
     // Список данных обоих игроков
     players: IShortPlayer[];
+    // Цвет победителя
+    winner: EPlayerColor;
 }

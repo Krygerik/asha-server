@@ -1,11 +1,10 @@
-import {find, isNil, map, omit} from "lodash";
+import {find, isNil, omit} from "lodash";
 import {
     EPlayerColor,
     IInputGameData,
-    IInputPlayer,
     IInputPlayersData,
-    ISavedGame,
-    IShortGame,
+    ISavedGame, ISavedPlayer,
+    IShortGame, IShortPlayer,
     IWinnerRequestDto
 } from "./model";
 import {GameModel} from "./schema";
@@ -16,10 +15,17 @@ export class GameService {
      */
     private static formatFullGameInfoToShort(gameInfo: ISavedGame): IShortGame {
         return {
-            _id: gameInfo._id,
             combat_id: gameInfo.combat_id,
             date: gameInfo.date,
-            players: gameInfo.players,
+            players: gameInfo.players.map(
+                (player: ISavedPlayer): IShortPlayer => ({
+                    color: player.color,
+                    hero: player.hero,
+                    nickname: player.nickname,
+                    race: player.race,
+                }),
+            ),
+            winner: gameInfo.winner,
         };
     }
 
@@ -114,20 +120,12 @@ export class GameService {
     }
 
     /**
-     * Получение игр с краткой информацией по combatId
+     * Получение игр с краткой информацией по нику игрока
      */
-    public async getShortGamesInfoListByCombatId(combatIdList: number[]): Promise<IShortGame[]> {
+    public async getShortGamesInfoListByCombatId(nickname: string): Promise<IShortGame[]> {
         // @ts-ignore
-        const gameInfoList: ISavedGame[] = await Promise.all(combatIdList.map(
-            async (combatId: number) => await GameModel.findOne({ combat_id: combatId })
-        ));
+        const gameInfoList: ISavedGame[] = await GameModel.find({ "players.nickname": nickname })
 
-        return gameInfoList.filter(Boolean).map(GameService.formatFullGameInfoToShort);
-    }
-
-    public deleteGame(_id: string, callback: any) {
-        const query = { _id };
-
-        GameModel.deleteOne(query, callback);
+        return gameInfoList.map(GameService.formatFullGameInfoToShort);
     }
 }

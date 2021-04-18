@@ -6,17 +6,14 @@ import {
     ISavedGame,
 } from "../modules/game";
 import {
-    failureResponse,
     incorrectParameters,
     insufficientParameters,
     mongoError,
     successResponse,
 } from "../modules/common/services";
-import {MappingNicknameToGameService} from "../modules/mapping-nickname-to-game";
 
 export class GameController {
     private gameService: GameService = new GameService();
-    private mappingNicknameToGameService: MappingNicknameToGameService = new MappingNicknameToGameService();
 
     /**
      * Сохранение основных характеристик игрока с его никнеймом
@@ -97,9 +94,7 @@ export class GameController {
             return insufficientParameters(res);
         }
 
-        const combatIdList = await this.mappingNicknameToGameService.getGamesByNickname(nickname);
-
-        const shortGameInfoList = await this.gameService.getShortGamesInfoListByCombatId(combatIdList);
+        const shortGameInfoList = await this.gameService.getShortGamesInfoListByCombatId(nickname);
 
         return successResponse('Список игр c краткой информацией получен успешно', shortGameInfoList, res);
     }
