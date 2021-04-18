@@ -1,4 +1,5 @@
-import {IInputGameData, ISavedGame, IShortGame} from "./model";
+import { isNil, omit } from "lodash";
+import {IInputGameData, IInputPlayersData, ISavedGame, IShortGame} from "./model";
 import {GameModel} from "./schema";
 
 export class GameService {
@@ -10,25 +11,41 @@ export class GameService {
             _id: gameInfo._id,
             combat_id: gameInfo.combat_id,
             date: gameInfo.date,
-            loosing_player: {
-                color: gameInfo.loosing_player.color,
-                hero: gameInfo.loosing_player.hero,
-                nickname: gameInfo.loosing_player.nickname,
-                race: gameInfo.loosing_player.race,
-            },
-            winning_player: {
-                color: gameInfo.winning_player.color,
-                hero: gameInfo.winning_player.hero,
-                nickname: gameInfo.winning_player.nickname,
-                race: gameInfo.winning_player.race,
-            },
+            players: gameInfo.players,
         };
     }
 
+    /**
+     * Создание записи игры на основе данных, поступивших от любого игрока
+     */
     public createGame(gameParams: IInputGameData, callback: any) {
         const session = new GameModel(gameParams);
 
         session.save(callback);
+    }
+
+    /**
+     * Создание игры с главными параметрами игрока или добавление их в уже созданную
+     */
+    public async createOrUpdateGame(playerData: IInputPlayersData, callback: any) {
+        const savedGame = await GameModel.findOne({ combat_id: playerData.combat_id });
+
+        if (!isNil(savedGame)) {
+            const updatedValue = {
+                $push: {
+                    players_nicknames: playerData.nickname,
+                }
+            };
+
+            GameModel.updateOne({ _id: savedGame._id }, updatedValue, callback);
+        } else {
+            const gameData = {
+                ...omit(playerData, 'nickname'),
+                players_nicknames: [playerData.nickname],
+            }
+
+            this.createGame(gameData, callback);
+        }
     }
 
     public findGame(query: any, callback: any) {
@@ -63,12 +80,6 @@ export class GameService {
         ));
 
         return gameInfoList.filter(Boolean).map(GameService.formatFullGameInfoToShort);
-    }
-
-    public updateGame(gameParams: ISavedGame, callback: any) {
-        const query = { _id: gameParams._id };
-
-        GameModel.findByIdAndUpdate(query, gameParams, callback);
     }
 
     public deleteGame(_id: string, callback: any) {

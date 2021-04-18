@@ -17,7 +17,6 @@ const PlayerSchema = new mongoose.Schema({
         type: [CreatureSchema],
         required: true
     },
-    army_remainder: [CreatureSchema],
     arts: {
         type: [String],
         required: true
@@ -48,10 +47,6 @@ const PlayerSchema = new mongoose.Schema({
         required: true
     },
     luck: {
-        type: Number,
-        required: true
-    },
-    mana_end: {
         type: Number,
         required: true
     },
@@ -92,10 +87,6 @@ const PlayerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    turns_left: {
-        type: Number,
-        required: true
-    },
 });
 
 const GameSchema = new mongoose.Schema({
@@ -105,14 +96,13 @@ const GameSchema = new mongoose.Schema({
     },
     date: {
         type: String,
+    },
+    players_nicknames: {
+        type: [String],
         required: true
     },
-    winning_player: {
-        type: PlayerSchema,
-        required: true
-    },
-    loosing_player: {
-        type: PlayerSchema,
+    players: {
+        type: [PlayerSchema],
         required: true
     },
 });

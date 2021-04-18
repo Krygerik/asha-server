@@ -22,14 +22,12 @@ interface ICreatures {
 export interface IInputPlayer {
     // Список войск героя
     army: ICreatures[];
-    // Список оставшихся войск героя
-    army_remainder?: ICreatures[];
     // Артефакты героя
     arts: string[];
     // Нападение героя
     attack: number;
     // цвет игрока
-    color: EPlayerColor[];
+    color: EPlayerColor;
     // Защита героя
     defence: number;
     // Название героя
@@ -40,16 +38,12 @@ export interface IInputPlayer {
     level: number;
     // Удача героя
     luck: number;
-    // Конечная мана героя
-    mana_end: number;
     // Стартовая мана героя
     mana_start: number;
     // Количество использования ментора
     mentoring: number;
     // Мораль героя
     morale: number;
-    // Никнейм игрока
-    nickname?: string;
     // Умения, способности
     perks: string[];
     // Раса
@@ -62,8 +56,6 @@ export interface IInputPlayer {
     spells: string[];
     // Выбранный стартовый бонус
     start_bonus: string;
-    // Ходов осталось
-    turns_left: number;
 }
 
 export interface ISavedPlayer extends IInputPlayer {
@@ -71,37 +63,56 @@ export interface ISavedPlayer extends IInputPlayer {
     _id: string;
     // Никнейм игрока
     nickname: string;
+    // Признак, является ли игрок победителем
+    winner: boolean | undefined;
 }
 
+/**
+ * Тип входящих данных по основным характеристикам игроков с ником отправителя
+ */
+export interface IInputPlayersData {
+    // id сражения
+    combat_id: number;
+    // Никнейм игрока
+    nickname: string;
+    // Список данных о прокачках обоих игроков
+    players: IInputPlayer[];
+}
+
+/**
+ * Тип данных для сохранения данных об игре
+ */
 export interface IInputGameData {
     // id сражения
     combat_id: number;
-    // Дата окончания игры
-    date: string;
-    // Данные проигравшего игрока
-    loosing_player: IInputPlayer;
-    // Данные победившего игрока
-    winning_player: IInputPlayer;
+    // Список ников игроков, участвующих в игре
+    players_nicknames: string[];
+    // Список данных о прокачках обоих игроков
+    players: IInputPlayer[];
 }
 
 export interface ISavedGame extends IInputGameData{
     // id в mongodb
     _id: string;
-    // Данные проигравшего игрока
-    loosing_player: ISavedPlayer;
-    // Данные победившего игрока
-    winning_player: ISavedPlayer;
+    // Дата окончания игры
+    date?: string;
+    // Список данных обоих игроков
+    players: ISavedPlayer[];
+    // Цвет победителя
+    winner: EPlayerColor;
 }
 
 interface IShortPlayer {
     // Цвет игрока
-    color: EPlayerColor[];
+    color: EPlayerColor;
     // Название героя
     hero: string;
     // Никнейм игрока
     nickname: string;
     // Раса
     race: string;
+    // Признак, является ли игрок победителем
+    winner: boolean | undefined;
 }
 
 export interface IShortGame {
@@ -110,9 +121,7 @@ export interface IShortGame {
     // id сражения
     combat_id: number;
     // Дата окончания игры
-    date: string;
-    // Данные проигравшего игрока
-    loosing_player: IShortPlayer;
-    // Данные победившего игрока
-    winning_player: IShortPlayer;
+    date?: string;
+    // Список данных обоих игроков
+    players: IShortPlayer[];
 }

@@ -5,8 +5,11 @@ export class GameRoutes {
     private gameController: GameController = new GameController();
 
     public route(app: Application) {
-        app.post('/api/game', (req: Request, res: Response) => {
-            this.gameController.createGame(req,res);
+        /**
+         * Сохранение основных характеристик игрока с его никнеймом
+         */
+        app.post('/api/save-game-params', (req: Request, res: Response) => {
+            this.gameController.saveGameParams(req,res);
         });
 
         app.get('/api/game/:id', (req: Request, res: Response) => {
@@ -19,10 +22,6 @@ export class GameRoutes {
 
         app.get('/api/get-games-by-nickname', (req: Request, res: Response) => {
             this.gameController.getShortGameInfoListByNickname(req, res);
-        });
-
-        app.put('/api/game/:id', (req: Request, res: Response) => {
-            this.gameController.updateGame(req, res);
         });
 
         app.delete('/api/game/:id', (req: Request, res: Response) => {
