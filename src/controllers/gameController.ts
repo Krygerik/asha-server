@@ -37,6 +37,24 @@ export class GameController {
         });
     }
 
+    /**
+     * Сохранение победителя и определение красного игрока
+     */
+    public saveGameWinner(req: Request, res: Response) {
+        // Проверяем, что есть хотя бы одно поле. Валидацию по полям сделает mongodb
+        if (isEmpty(req.body)) {
+            return insufficientParameters(res);
+        }
+
+        this.gameService.saveGameWinner(req.body, (err: any, gameData: IInputGameData) => {
+            if (err) {
+                return mongoError(err, res);
+            }
+
+            successResponse('create game successfull', gameData, res);
+        });
+    }
+
     public getGame(req: Request, res: Response) {
         if (!req.params.id) {
             return insufficientParameters(res);
@@ -84,23 +102,5 @@ export class GameController {
         const shortGameInfoList = await this.gameService.getShortGamesInfoListByCombatId(combatIdList);
 
         return successResponse('Список игр c краткой информацией получен успешно', shortGameInfoList, res);
-    }
-
-    public deleteGame(req: Request, res: Response) {
-        if (!req.params.id) {
-            return insufficientParameters(res);
-        }
-
-        this.gameService.deleteGame(req.params.id, (err: any, deleteDetails: any) => {
-            if (err) {
-                return mongoError(err, res);
-            }
-
-            if (deleteDetails.deletedCount == 0) {
-                return failureResponse('invalid game', null, res);
-            }
-
-            successResponse('delete game successfull', null, res);
-        })
     }
 }

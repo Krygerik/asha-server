@@ -97,6 +97,10 @@ const GameSchema = new mongoose.Schema({
     date: {
         type: String,
     },
+    winner: {
+        enum: Object.values(EPlayerColor),
+        type: Number,
+    },
     players_nicknames: {
         type: [String],
         required: true

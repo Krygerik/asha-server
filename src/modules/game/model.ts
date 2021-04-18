@@ -80,6 +80,20 @@ export interface IInputPlayersData {
 }
 
 /**
+ * Тип входящих данных с данными о победителе
+ */
+export interface IWinnerRequestDto {
+    // id сражения
+    combat_id: number;
+    // Дата окончания игры
+    date: string;
+    // Является ли игрок красным
+    isRedPlayer: boolean;
+    // Никнейм игрока
+    nickname: string;
+}
+
+/**
  * Тип данных для сохранения данных об игре
  */
 export interface IInputGameData {

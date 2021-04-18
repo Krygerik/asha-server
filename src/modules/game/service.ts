@@ -1,5 +1,13 @@
-import { isNil, omit } from "lodash";
-import {IInputGameData, IInputPlayersData, ISavedGame, IShortGame} from "./model";
+import {find, isNil, map, omit} from "lodash";
+import {
+    EPlayerColor,
+    IInputGameData,
+    IInputPlayer,
+    IInputPlayersData,
+    ISavedGame,
+    IShortGame,
+    IWinnerRequestDto
+} from "./model";
 import {GameModel} from "./schema";
 
 export class GameService {
@@ -46,6 +54,41 @@ export class GameService {
 
             this.createGame(gameData, callback);
         }
+    }
+
+    /**
+     * Сохранение победителя и определение красного игрока
+     */
+    public async saveGameWinner(winnerData: IWinnerRequestDto, callback: any) {
+        const savedGame = await GameModel.findOne({ combat_id: winnerData.combat_id });
+
+        const looserNickname = find(
+            // @ts-ignore
+            savedGame.players_nicknames,
+            (playerNickname: string) => playerNickname !== winnerData.nickname
+        );
+
+        const redPlayerNickname = winnerData.isRedPlayer ? winnerData.nickname : looserNickname;
+        const bluePlayerNickname = winnerData.isRedPlayer ? looserNickname : winnerData.nickname;
+
+        const updatedValue = {
+            $set: {
+                "players.$[redPlayer].nickname": redPlayerNickname,
+                "players.$[bluePlayer].nickname": bluePlayerNickname,
+                winner: winnerData.isRedPlayer ? EPlayerColor.RED : EPlayerColor.BLUE,
+                date: winnerData.date,
+            }
+        };
+
+        const option = {
+            multi: true,
+            arrayFilters: [
+                { "redPlayer.color": EPlayerColor.RED },
+                { "bluePlayer.color": EPlayerColor.BLUE },
+            ]
+        };
+
+        GameModel.updateOne({ _id: savedGame._id }, updatedValue, option, callback);
     }
 
     public findGame(query: any, callback: any) {

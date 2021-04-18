@@ -12,6 +12,13 @@ export class GameRoutes {
             this.gameController.saveGameParams(req,res);
         });
 
+        /**
+         * Сохранение победителя и определение красного игрока
+         */
+        app.post('/api/save-game-winner', (req: Request, res: Response) => {
+            this.gameController.saveGameWinner(req,res);
+        });
+
         app.get('/api/game/:id', (req: Request, res: Response) => {
             this.gameController.getGame(req, res);
         });
@@ -22,10 +29,6 @@ export class GameRoutes {
 
         app.get('/api/get-games-by-nickname', (req: Request, res: Response) => {
             this.gameController.getShortGameInfoListByNickname(req, res);
-        });
-
-        app.delete('/api/game/:id', (req: Request, res: Response) => {
-            this.gameController.deleteGame(req, res);
         });
     };
 }
