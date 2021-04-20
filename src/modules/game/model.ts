@@ -89,6 +89,8 @@ export interface IWinnerRequestDto {
     isRedPlayer: boolean;
     // Никнейм игрока
     nickname: string;
+    // Цвет игрока победителя
+    winner: EPlayerColor;
 }
 
 /**

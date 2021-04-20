@@ -66,24 +66,37 @@ export class GameService {
     /**
      * Сохранение победителя и определение красного игрока
      */
-    public async saveGameWinner(winnerData: IWinnerRequestDto, callback: any) {
-        const savedGame = await GameModel.findOne({ combat_id: winnerData.combat_id });
+    public async saveGameWinner(requestData: IWinnerRequestDto, callback: any) {
+        // @ts-ignore
+        const savedGame: ISavedGame = await GameModel.findOne({ combat_id: requestData.combat_id });
+
+        if (!isNil(savedGame.winner)) {
+            return callback();
+        }
+
+        const senderIsWinner = (
+            requestData.isRedPlayer && requestData.winner === EPlayerColor.RED
+            || !requestData.isRedPlayer && requestData.winner === EPlayerColor.BLUE
+        )
+
+        const winnerNickname = senderIsWinner
+            ? requestData.nickname
+            : find(
+                savedGame.players_nicknames,
+                (playerNickname: string) => playerNickname !== requestData.nickname
+            );
 
         const looserNickname = find(
-            // @ts-ignore
             savedGame.players_nicknames,
-            (playerNickname: string) => playerNickname !== winnerData.nickname
+            (playerNickname: string) => playerNickname !== winnerNickname
         );
-
-        const redPlayerNickname = winnerData.isRedPlayer ? winnerData.nickname : looserNickname;
-        const bluePlayerNickname = winnerData.isRedPlayer ? looserNickname : winnerData.nickname;
 
         const updatedValue = {
             $set: {
-                "players.$[redPlayer].nickname": redPlayerNickname,
-                "players.$[bluePlayer].nickname": bluePlayerNickname,
-                winner: winnerData.isRedPlayer ? EPlayerColor.RED : EPlayerColor.BLUE,
-                date: winnerData.date,
+                "players.$[redPlayer].nickname": requestData.winner === EPlayerColor.RED ? winnerNickname : looserNickname,
+                "players.$[bluePlayer].nickname": requestData.winner === EPlayerColor.BLUE ? winnerNickname : looserNickname,
+                winner: requestData.winner,
+                date: requestData.date,
             }
         };
 

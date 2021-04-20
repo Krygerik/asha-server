@@ -48,7 +48,7 @@ export class GameController {
                 return mongoError(err, res);
             }
 
-            successResponse('create game successfull', gameData, res);
+            successResponse('Победитель игры обозначен!', gameData, res);
         });
     }
 
