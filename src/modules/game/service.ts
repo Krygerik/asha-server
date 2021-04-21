@@ -43,16 +43,37 @@ export class GameService {
      * Создание игры с главными параметрами игрока или добавление их в уже созданную
      */
     public async createOrUpdateGame(playerData: IInputPlayersData, callback: any) {
-        const savedGame = await GameModel.findOne({ combat_id: playerData.combat_id });
+        // @ts-ignore
+        const savedGame: ISavedGame = await GameModel.findOne({ combat_id: playerData.combat_id });
 
         if (!isNil(savedGame)) {
-            const updatedValue = {
-                $push: {
-                    players_nicknames: playerData.nickname,
-                }
-            };
+            let updatedValue;
+            let option = {};
 
-            GameModel.updateOne({ _id: savedGame._id }, updatedValue, callback);
+            if (!isNil(savedGame.winner)) {
+                updatedValue = {
+                    $push: {
+                        players_nicknames: playerData.nickname,
+                    },
+                    $set: {
+                        "players.$[player].nickname": playerData.nickname,
+                    }
+                };
+
+                option = {
+                    arrayFilters: [
+                        { "player.nickname": null },
+                    ]
+                };
+            } else {
+                updatedValue = {
+                    $push: {
+                        players_nicknames: playerData.nickname,
+                    }
+                };
+            }
+
+            GameModel.updateOne({ _id: savedGame._id }, updatedValue, option, callback);
         } else {
             const gameData = {
                 ...omit(playerData, 'nickname'),
