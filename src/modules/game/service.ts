@@ -3,8 +3,10 @@ import {
     EPlayerColor,
     IInputGameData,
     IInputPlayersData,
-    ISavedGame, ISavedPlayer,
-    IShortGame, IShortPlayer,
+    ISavedGame,
+    ISavedPlayer,
+    IShortGame,
+    IShortPlayer,
     IWinnerRequestDto
 } from "./model";
 import {GameModel} from "./schema";
@@ -22,6 +24,7 @@ export class GameService {
                 (player: ISavedPlayer): IShortPlayer => ({
                     color: player.color,
                     hero: player.hero,
+                    army_remainder: player.army_remainder,
                     nickname: player.nickname,
                     race: player.race,
                 }),
@@ -91,7 +94,10 @@ export class GameService {
         // @ts-ignore
         const savedGame: ISavedGame = await GameModel.findOne({ combat_id: requestData.combat_id });
 
-        if (!isNil(savedGame.winner)) {
+        /**
+         * Если игра с данным id отсутствует или победитель уже определен - выкидываем
+         */
+        if (isNil(savedGame) || !isNil(savedGame.winner)) {
             return callback();
         }
 
@@ -116,6 +122,7 @@ export class GameService {
             $set: {
                 "players.$[redPlayer].nickname": requestData.winner === EPlayerColor.RED ? winnerNickname : looserNickname,
                 "players.$[bluePlayer].nickname": requestData.winner === EPlayerColor.BLUE ? winnerNickname : looserNickname,
+                "players.$[winner].army_remainder": requestData.army_remainder,
                 winner: requestData.winner,
                 date: requestData.date,
             }
@@ -126,6 +133,7 @@ export class GameService {
             arrayFilters: [
                 { "redPlayer.color": EPlayerColor.RED },
                 { "bluePlayer.color": EPlayerColor.BLUE },
+                { "winner.color": requestData.winner },
             ]
         };
 
@@ -158,8 +166,13 @@ export class GameService {
      * Получение игр с краткой информацией по нику игрока
      */
     public async getShortGamesInfoListByCombatId(nickname: string): Promise<IShortGame[]> {
+        const option = {
+            winner: { $ne: null },
+            "players.nickname": nickname,
+        };
+
         // @ts-ignore
-        const gameInfoList: ISavedGame[] = await GameModel.find({ "players.nickname": nickname })
+        const gameInfoList: ISavedGame[] = await GameModel.find(option)
 
         return gameInfoList.map(GameService.formatFullGameInfoToShort);
     }

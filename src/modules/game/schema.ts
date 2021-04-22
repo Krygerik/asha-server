@@ -17,6 +17,7 @@ const PlayerSchema = new mongoose.Schema({
         type: [CreatureSchema],
         required: true
     },
+    army_remainder: [CreatureSchema],
     arts: {
         type: [String],
         required: true

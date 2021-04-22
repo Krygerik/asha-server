@@ -61,6 +61,8 @@ export interface IInputPlayer {
 export interface ISavedPlayer extends IInputPlayer {
     // id в mongodb
     _id: string;
+    // Конечный состав армии
+    army_remainder?: ICreatures[];
     // Никнейм игрока
     nickname?: string;
 }
@@ -81,6 +83,8 @@ export interface IInputPlayersData {
  * Тип входящих данных с данными о победителе
  */
 export interface IWinnerRequestDto {
+    // Конечный состав армии
+    army_remainder: ICreatures[];
     // id сражения
     combat_id: number;
     // Дата окончания игры
@@ -125,6 +129,8 @@ export interface ISavedGame extends IInputGameData {
  * Тип краткой информации по игроку
  */
 export interface IShortPlayer {
+    // Конечный состав армии
+    army_remainder?: ICreatures[];
     // Цвет игрока
     color: EPlayerColor;
     // Название героя
