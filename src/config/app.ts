@@ -5,6 +5,7 @@ import * as mongoose from "mongoose";
 import {TestRoutes} from '../routes/testRoutes';
 import {GameRoutes} from '../routes/gameRoutes';
 import {CommonRoutes} from '../routes/commonRoutes';
+import {DictionaryRoutes} from "../routes/dictionaryRoutes";
 
 class App {
     public app: express.Application;
@@ -12,6 +13,7 @@ class App {
 
     private testRoutes: TestRoutes = new TestRoutes();
     private gameRoutes: GameRoutes = new GameRoutes();
+    private dictionaryRoutes: DictionaryRoutes = new DictionaryRoutes();
     private commonRoutes: CommonRoutes = new CommonRoutes();
 
     constructor() {
@@ -20,6 +22,7 @@ class App {
         this.mongoSetup();
         this.testRoutes.route(this.app);
         this.gameRoutes.route(this.app);
+        this.dictionaryRoutes.route(this.app);
         this.commonRoutes.route(this.app);
     }
 
