@@ -26,7 +26,7 @@ jobs:
         key: ${{secrets.SERVER_SSH_KEY}}
         # that temp kostil :D
         source: dist,node_modules
-        target: projects/server
+        target: projects/servers/production
     - name: Restart server process
       uses: appleboy/ssh-action@master
       with:
