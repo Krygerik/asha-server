@@ -6,9 +6,11 @@ import {TestRoutes} from '../routes/testRoutes';
 import {GameRoutes} from '../routes/gameRoutes';
 import {CommonRoutes} from '../routes/commonRoutes';
 
+const database = process.env.NODE_ENV == 'production' ? 'production' : 'test';
+
 class App {
     public app: express.Application;
-    public mongoUrl: string = 'mongodb://AdminSokratik:Her0EsF!ve@localhost:27017/admin';
+    public mongoUrl: string = 'mongodb://AdminSokratik:Her0EsF!ve@localhost:27017/' + database;
 
     private testRoutes: TestRoutes = new TestRoutes();
     private gameRoutes: GameRoutes = new GameRoutes();
