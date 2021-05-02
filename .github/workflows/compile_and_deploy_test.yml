@@ -2,7 +2,7 @@ name: Compile and deploy to server
 
 on:
   push:
-    branches: [master]
+    branches: [develop]
 
 jobs:
   compile_with_deploy:
@@ -35,5 +35,5 @@ jobs:
         key: ${{secrets.SERVER_SSH_KEY}}
         passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
         script: |
-          cd ~/projects/servers/production/
-          pm2 set PORT=3000 && pm2 restart dist/index.js
+          cd ~/projects/servers/test/
+          set PORT=3001 && pm2 restart dist/index.js
