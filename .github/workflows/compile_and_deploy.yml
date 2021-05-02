@@ -16,7 +16,7 @@ jobs:
       with:
         node-version: '12.x'
     - run: npm install --production
-    - run: set PORT=3000 && npm run build
+    - run: PORT=3000 npm run build
     - name: Deploy to server
       uses: appleboy/scp-action@master
       with:
