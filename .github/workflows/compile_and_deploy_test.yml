@@ -36,4 +36,4 @@ jobs:
         passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
         script: |
           cd ~/projects/servers/test/
-          set PORT=3001 && pm2 restart dist/index.js
+          pm2 restart dist/index.js
