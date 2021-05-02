@@ -16,7 +16,7 @@ jobs:
       with:
         node-version: '12.x'
     - run: npm install --production
-    - run: npm run build
+    - run: set PORT=3000 && npm run build
     - name: Deploy to server
       uses: appleboy/scp-action@master
       with:
@@ -36,4 +36,4 @@ jobs:
         passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
         script: |
           cd ~/projects/servers/production/
-          pm2 set PORT=3000 && pm2 restart dist/index.js
+          pm2 restart dist/index.js
