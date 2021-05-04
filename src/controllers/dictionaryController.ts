@@ -14,7 +14,16 @@ export class DictionaryController {
                 return mongoError(err, res);
             }
 
-            successResponse('Список всех словарей успешно получен', dictionaries, res);
+            const associativeArray = {};
+
+            dictionaries.forEach((item: IDictionary) => {
+                associativeArray[item.name] = {
+                    name: item.name,
+                    records: item.records,
+                };
+            });
+
+            successResponse('Список всех словарей успешно получен', associativeArray, res);
         })
     }
 }
