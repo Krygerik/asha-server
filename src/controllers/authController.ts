@@ -39,7 +39,7 @@ export class AuthController {
                 return failureResponse('Пользователь не авторизован', null, res);
             }
 
-            jwt.verify(token, String(process.env.SECRET), (tokenError) => {
+            jwt.verify(token, String(process.env.SECRET), (tokenError: any, decodedData: { userId: string }) => {
                 if (tokenError) {
                     const message = tokenError.name === 'TokenExpiredError'
                         ? 'Действите токена истекло'
@@ -47,6 +47,8 @@ export class AuthController {
 
                     return failureResponse(message, null, res);
                 }
+
+                req.body.userId = decodedData;
 
                 next();
             });
