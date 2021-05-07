@@ -1,2 +1,2 @@
 export { AuthService } from './service';
-export { IUser } from './model';
+export { IUser, ISavedUser } from './model';
