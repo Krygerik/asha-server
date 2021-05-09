@@ -1,5 +1,6 @@
-import {GameController} from "../controllers/gameController";
 import {Application, Request, Response} from "express";
+import {AuthController} from "../controllers/authController";
+import {GameController} from "../controllers/gameController";
 
 export class GameRoutes {
     private gameController: GameController = new GameController();
@@ -39,5 +40,12 @@ export class GameRoutes {
         app.get('/api/get-games-by-nickname', (req: Request, res: Response) => {
             this.gameController.getShortGameInfoListByNickname(req, res);
         });
+
+        /**
+         * Получение краткой информации по последним играм пользователя
+         */
+        app.get('/api/get-games-by-user', AuthController.authMiddleware, (req: Request, res: Response) => {
+            this.gameController.getShortGameInfoByUserId(req, res);
+        })
     };
 }

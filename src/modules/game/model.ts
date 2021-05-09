@@ -65,6 +65,8 @@ export interface ISavedPlayer extends IInputPlayer {
     army_remainder?: ICreatures[];
     // Никнейм игрока
     nickname?: string;
+    // Ид пользователя в бд
+    user_id: string;
 }
 
 /**
@@ -139,6 +141,8 @@ export interface IShortPlayer {
     nickname: string;
     // Раса
     race: string;
+    // Ид пользователя в бд
+    user_id: string;
 }
 
 /**

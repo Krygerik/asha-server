@@ -2,6 +2,7 @@ import * as bodyParser from "body-parser";
 import * as cors from 'cors';
 import * as express from "express";
 import * as mongoose from "mongoose";
+import {AuthRoutes} from "../routes/authRoutes";
 import {TestRoutes} from '../routes/testRoutes';
 import {GameRoutes} from '../routes/gameRoutes';
 import {CommonRoutes} from '../routes/commonRoutes';
@@ -13,6 +14,7 @@ class App {
     public app: express.Application;
     public mongoUrl: string = 'mongodb://AdminSokratik:Her0EsF!ve@localhost:27017/' + database;
 
+    private authRoutes: AuthRoutes = new AuthRoutes();
     private testRoutes: TestRoutes = new TestRoutes();
     private gameRoutes: GameRoutes = new GameRoutes();
     private dictionaryRoutes: DictionaryRoutes = new DictionaryRoutes();
@@ -24,6 +26,7 @@ class App {
         this.mongoSetup();
         this.testRoutes.route(this.app);
         this.gameRoutes.route(this.app);
+        this.authRoutes.route(this.app);
         this.dictionaryRoutes.route(this.app);
         this.commonRoutes.route(this.app);
     }

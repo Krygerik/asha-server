@@ -10,7 +10,7 @@ export function successResponse(message: string, DATA: any, res: Response) {
 }
 
 export function failureResponse(message: string, DATA: any, res: Response) {
-    res.status(responseStatusCodes.success).json({
+    res.status(responseStatusCodes.bad_request).json({
         STATUS: 'FAILURE',
         MESSAGE: message,
         DATA

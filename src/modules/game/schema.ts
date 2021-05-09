@@ -88,6 +88,7 @@ const PlayerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    user_id: String,
 });
 
 const GameSchema = new mongoose.Schema({

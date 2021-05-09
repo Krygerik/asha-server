@@ -22,11 +22,12 @@ export class GameService {
             date: gameInfo.date,
             players: gameInfo.players.map(
                 (player: ISavedPlayer): IShortPlayer => ({
+                    army_remainder: player.army_remainder,
                     color: player.color,
                     hero: player.hero,
-                    army_remainder: player.army_remainder,
                     nickname: player.nickname,
                     race: player.race,
+                    user_id: player.user_id,
                 }),
             ),
             winner: gameInfo.winner,
@@ -173,6 +174,26 @@ export class GameService {
 
         // @ts-ignore
         const gameInfoList: ISavedGame[] = await GameModel.find(option)
+
+        return gameInfoList.map(GameService.formatFullGameInfoToShort);
+    }
+
+    /**
+     * Получение игр с краткой информацией по пользователю
+     */
+    public async getShortGamesInfoByUser(userId, inputOptions: Record<string, any>): Promise<IShortGame[]> {
+        const filterOptions = {
+            winner: { $ne: null },
+            "players.user_id": userId,
+        };
+
+        let additionalOptions = {
+            sort: { date: 'desc' },
+            ...inputOptions,
+        }
+
+        // @ts-ignore
+        const gameInfoList: ISavedGame[] = await GameModel.find(filterOptions, null, additionalOptions);
 
         return gameInfoList.map(GameService.formatFullGameInfoToShort);
     }
