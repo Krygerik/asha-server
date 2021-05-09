@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {isEmpty} from "lodash";
+import {isEmpty, omit} from "lodash";
 import * as jwt from "jsonwebtoken";
 import {
     entryAlreadyExists,
@@ -48,7 +48,7 @@ export class AuthController {
                     return failureResponse(message, null, res);
                 }
 
-                req.body.userId = decodedData;
+                req.body.userId = decodedData.userId;
 
                 next();
             });
@@ -100,5 +100,21 @@ export class AuthController {
         const token = AuthController.generateAccessToken(user._id);
 
         successResponse('Пользователь успешно авторизирован', { token }, res);
+    }
+
+    /**
+     * Получение профиля текущего пользователя
+     */
+    public async getProfile(req: Request, res: Response) {
+        const { userId }: { userId: string } = req.body;
+
+        // @ts-ignore
+        const user: ISavedUser | null = await this.authService.findUserById(userId);
+
+        if (!user) {
+            return failureResponse(`Пользователь не найден`, null, res);
+        }
+
+        successResponse('Данные пользователя получены успешно', omit(user, 'hash_password'), res);
     }
 }

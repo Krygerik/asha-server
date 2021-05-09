@@ -1,6 +1,5 @@
 import {Application, Request, Response} from "express";
 import {AuthController} from "../controllers/authController";
-import {successResponse} from "../modules/common/services";
 
 export class AuthRoutes {
     private authController: AuthController = new AuthController();
@@ -18,6 +17,13 @@ export class AuthRoutes {
          */
         app.post('/api/auth/login', (req: Request, res: Response) => {
             this.authController.login(req, res);
+        });
+
+        /**
+         * Получение данных пользователя
+         */
+        app.get('/api/auth/get-profile', AuthController.authMiddleware, (req: Request, res: Response) => {
+            this.authController.getProfile(req, res);
         });
     };
 }

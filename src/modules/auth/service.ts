@@ -11,4 +11,11 @@ export class AuthService {
     public findUser(email: string) {
         return UserModel.findOne({email});
     }
+
+    /**
+     * Нахождение пользователя по id в бд
+     */
+    public findUserById(id: string) {
+        return UserModel.findById(id);
+    }
 }
