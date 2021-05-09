@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {isEmpty} from "lodash";
+import {isEmpty, pick} from "lodash";
 import * as jwt from "jsonwebtoken";
 import {
     entryAlreadyExists,
@@ -115,9 +115,7 @@ export class AuthController {
             return failureResponse(`Пользователь не найден`, null, res);
         }
 
-        const responseData = {
-            email: user.email,
-        }
+        const responseData = pick(user, ['discord', 'email', 'nickname']);
 
         successResponse('Данные пользователя получены успешно', responseData, res);
     }

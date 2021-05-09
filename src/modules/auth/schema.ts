@@ -1,14 +1,22 @@
 import * as mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-    email: {
-        type: String,
+    discord: {
         required: true,
+        type: String,
+    },
+    email: {
+        required: true,
+        type: String,
     },
     hash_password: {
-        type: String,
         required: true,
-    }
+        type: String,
+    },
+    nickname: {
+        required: true,
+        type: String,
+    },
 });
 
 export const UserModel = mongoose.model('users', UserSchema);
