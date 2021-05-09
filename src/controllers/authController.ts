@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {isEmpty, omit} from "lodash";
+import {isEmpty} from "lodash";
 import * as jwt from "jsonwebtoken";
 import {
     entryAlreadyExists,
@@ -115,6 +115,10 @@ export class AuthController {
             return failureResponse(`Пользователь не найден`, null, res);
         }
 
-        successResponse('Данные пользователя получены успешно', omit(user, 'hash_password'), res);
+        const responseData = {
+            email: user.email,
+        }
+
+        successResponse('Данные пользователя получены успешно', responseData, res);
     }
 }
