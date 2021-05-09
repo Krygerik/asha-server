@@ -56,6 +56,8 @@ export interface IInputPlayer {
     spells: string[];
     // Выбранный стартовый бонус
     start_bonus: string;
+    // Боевые машины игрока
+    war_machines: string[];
 }
 
 export interface ISavedPlayer extends IInputPlayer {

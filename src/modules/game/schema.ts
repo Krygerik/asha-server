@@ -89,6 +89,10 @@ const PlayerSchema = new mongoose.Schema({
         required: true
     },
     user_id: String,
+    war_machines: {
+        type: [String],
+        required: true
+    },
 });
 
 const GameSchema = new mongoose.Schema({
