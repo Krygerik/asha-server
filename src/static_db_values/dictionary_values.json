@@ -534,15 +534,7 @@
         "localize_name": "Рыцари смерти"
       },
       {
-        "game_id": "ID115",
-        "localize_name": "Мантикоры"
-      },
-      {
-        "game_id": "ID91",
-        "localize_name": "Фениксы"
-      },
-      {
-        "game_id": "ID57",
+        "game_id": "ID58",
         "localize_name": "Старшие гремлины"
       },
       {
@@ -638,10 +630,6 @@
         "localize_name": "Темные гидры"
       },
       {
-        "game_id": "ID81",
-        "localize_name": "Владычицы тени"
-      },
-      {
         "game_id": "ID143",
         "localize_name": "Владычицы тени"
       },
@@ -678,10 +666,6 @@
         "localize_name": "Ревнитель веры"
       },
       {
-        "game_id": "ID7",
-        "localize_name": "Королевские грифоны"
-      },
-      {
         "game_id": "ID109",
         "localize_name": "Боевые грифоны"
       },
@@ -700,10 +684,6 @@
       {
         "game_id": "ID111",
         "localize_name": "Рыцари Изабель"
-      },
-      {
-        "game_id": "ID13",
-        "localize_name": "Архангелы"
       },
       {
         "game_id": "ID112",
@@ -811,7 +791,7 @@
       },
       {
         "game_id": "ID157",
-        "localize_name": "Баньши"
+        "localize_name": "Банши"
       },
       {
         "game_id": "ID41",
@@ -822,32 +802,16 @@
         "localize_name": "Астральные драконы"
       },
       {
-        "game_id": "ID43",
-        "localize_name": "Дриады"
-      },
-      {
         "game_id": "ID145",
         "localize_name": "Нимфы"
-      },
-      {
-        "game_id": "ID45",
-        "localize_name": "Танцующие со смертью"
       },
       {
         "game_id": "ID146",
         "localize_name": "Танцующие с ветром"
       },
       {
-        "game_id": "ID47",
-        "localize_name": "Мастера лука"
-      },
-      {
         "game_id": "ID147",
-        "localize_name": "Лесные стрелки"
-      },
-      {
-        "game_id": "ID49",
-        "localize_name": "Верховные друиды"
+        "localize_name": "Мастера лука"
       },
       {
         "game_id": "ID148",
@@ -862,16 +826,8 @@
         "localize_name": "Светлые единороги"
       },
       {
-        "game_id": "ID53",
-        "localize_name": "Древние энты"
-      },
-      {
         "game_id": "ID150",
         "localize_name": "Дикие энты"
-      },
-      {
-        "game_id": "ID55",
-        "localize_name": "Изумрудные драконы"
       },
       {
         "game_id": "ID151",
@@ -902,10 +858,6 @@
         "localize_name": "Северные наездники"
       },
       {
-        "game_id": "ID98",
-        "localize_name": "Берсерки"
-      },
-      {
         "game_id": "ID169",
         "localize_name": "Воины Арката"
       },
@@ -916,10 +868,6 @@
       {
         "game_id": "ID170",
         "localize_name": "Жрецы Пламени"
-      },
-      {
-        "game_id": "ID102",
-        "localize_name": "Ярлы"
       },
       {
         "game_id": "ID171",
@@ -1006,180 +954,32 @@
         "localize_name": "Архангелы"
       },
       {
-        "game_id": "ID16",
-        "localize_name": "Искусительницы"
-      },
-      {
-        "game_id": "ID24",
-        "localize_name": "Архидьяволы"
-      },
-      {
-        "game_id": "ID30",
-        "localize_name": "Духи"
-      },
-      {
         "game_id": "ID44",
         "localize_name": "Нимфы"
-      },
-      {
-        "game_id": "ID93",
-        "localize_name": "Ловчие"
-      },
-      {
-        "game_id": "ID84",
-        "localize_name": "Владычицы тени"
       },
       {
         "game_id": "ID103",
         "localize_name": "Ярлы"
       },
       {
-        "game_id": "ID95",
-        "localize_name": "Эрлы"
-      },
-      {
-        "game_id": "ID118",
-        "localize_name": "Архангелы"
-      },
-      {
-        "game_id": "ID52",
-        "localize_name": "Падшие ангелы"
-      },
-      {
-        "game_id": "ID66",
-        "localize_name": "Архангелы"
-      },
-      {
         "game_id": "ID46",
         "localize_name": "Танцующие со смертью"
-      },
-      {
-        "game_id": "ID18",
-        "localize_name": "Танцующие с ветром"
       },
       {
         "game_id": "ID48",
         "localize_name": "Мастера лука"
       },
       {
-        "game_id": "ID20",
-        "localize_name": "Лесные стрелки"
-      },
-      {
         "game_id": "ID50",
         "localize_name": "Верховные друиды"
-      },
-      {
-        "game_id": "ID22",
-        "localize_name": "Старшие друиды"
-      },
-      {
-        "game_id": "ID62",
-        "localize_name": "Мастера лука"
-      },
-      {
-        "game_id": "ID76",
-        "localize_name": "Лесные стрелки"
-      },
-      {
-        "game_id": "ID72",
-        "localize_name": "Верховные друиды"
-      },
-      {
-        "game_id": "ID74",
-        "localize_name": "Старшие друиды"
       },
       {
         "game_id": "ID82",
         "localize_name": "Владычицы тени"
       },
       {
-        "game_id": "ID200",
-        "localize_name": "Темные всадники"
-      },
-      {
-        "game_id": "ID201",
-        "localize_name": "Темные всадники"
-      },
-      {
-        "game_id": "ID202",
-        "localize_name": "Темные всадники"
-      },
-      {
-        "game_id": "ID203",
-        "localize_name": "Темные всадники"
-      },
-      {
-        "game_id": "ID204",
-        "localize_name": "Темные всадники"
-      },
-      {
-        "game_id": "ID205",
-        "localize_name": "Темные всадники"
-      },
-      {
-        "game_id": "ID206",
-        "localize_name": "Темные всадники"
-      },
-      {
-        "game_id": "ID207",
-        "localize_name": "Темные всадники"
-      },
-      {
-        "game_id": "ID208",
-        "localize_name": "Темные всадники"
-      },
-      {
-        "game_id": "ID209",
-        "localize_name": "Темные всадники"
-      },
-      {
-        "game_id": "ID210",
-        "localize_name": "Проворные наездники"
-      },
-      {
-        "game_id": "ID211",
-        "localize_name": "Проворные наездники"
-      },
-      {
-        "game_id": "ID212",
-        "localize_name": "Проворные наездники"
-      },
-      {
-        "game_id": "ID213",
-        "localize_name": "Проворные наездники"
-      },
-      {
-        "game_id": "ID214",
-        "localize_name": "Проворные наездники"
-      },
-      {
-        "game_id": "ID215",
-        "localize_name": "Проворные наездники"
-      },
-      {
-        "game_id": "ID216",
-        "localize_name": "Проворные наездники"
-      },
-      {
-        "game_id": "ID217",
-        "localize_name": "Проворные наездники"
-      },
-      {
-        "game_id": "ID218",
-        "localize_name": "Проворные наездники"
-      },
-      {
-        "game_id": "ID219",
-        "localize_name": "Проворные наездники"
-      },
-      {
         "game_id": "ID99",
         "localize_name": "Берсерки"
-      },
-      {
-        "game_id": "ID80",
-        "localize_name": "Воины Арката"
       }
     ]
   },
