@@ -97,6 +97,8 @@ export interface IWinnerRequestDto {
     isRedPlayer: boolean;
     // Никнейм игрока
     nickname: string;
+    // Процент оставшейся силы армии
+    percentage_of_army_left: number;
     // Цвет игрока победителя
     winner: EPlayerColor;
 }

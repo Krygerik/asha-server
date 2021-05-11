@@ -107,6 +107,7 @@ const GameSchema = new mongoose.Schema({
         enum: Object.values(EPlayerColor),
         type: Number,
     },
+    percentage_of_army_left: Number,
     players_nicknames: {
         type: [String],
         required: true
