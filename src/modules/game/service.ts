@@ -141,8 +141,8 @@ export class GameService {
         GameModel.updateOne({ _id: savedGame._id }, updatedValue, option, callback);
     }
 
-    public findGame(query: any, callback: any) {
-        GameModel.findOne(query, callback);
+    public findGame(query: any) {
+        return GameModel.findOne(query);
     }
 
     /**

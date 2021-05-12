@@ -1,9 +1,14 @@
 import {Request, Response} from "express";
-import {filter, isUndefined, omit, uniq} from "lodash";
+import {filter, isUndefined, map, omit, uniq} from "lodash";
 import {
-    IInputGameData,
     GameService,
-    ISavedGame, IInputPlayersData, IWinnerRequestDto, IShortGame,
+    IInputGameData,
+    IInputPlayersData,
+    ISavedGame,
+    ISavedPlayer,
+    IShortGame,
+    IShortPlayer,
+    IWinnerRequestDto,
 } from "../modules/game";
 import {
     incorrectParameters,
@@ -16,6 +21,51 @@ import {AuthService} from "../modules/auth";
 export class GameController {
     private gameService: GameService = new GameService();
     private authService: AuthService = new AuthService();
+
+    /**
+     * Получение таблицы соотношений ид игроков к никам
+     */
+    private getMappingIdToNicknames(idList: string[]) {
+        const filteredEmptyIdList = filter<string>(idList, Boolean);
+
+        return this.authService.getRelatedMappingUserIdToUserNickname(filteredEmptyIdList);
+    }
+
+    /**
+     * Обогащение информации об играх никнеймами игроков
+     */
+    private async addNicknamesToGameInfoList(gameList: IShortGame[]): Promise<any[]> {
+        const relatedUserIdList = [];
+
+        gameList.forEach(item => item.players.forEach(player => {
+            relatedUserIdList.push(player.user_id);
+        }));
+
+        const mappingIdToNicknames = await this.getMappingIdToNicknames(uniq(relatedUserIdList));
+
+        return map(gameList, (item: ISavedGame | IShortGame) => ({
+            ...item,
+            players: map(item.players, ((player: ISavedPlayer | IShortPlayer) => ({
+                ...player,
+                nickname: mappingIdToNicknames[player.user_id]
+            })))
+        }));
+    }
+
+    /**
+     * Обогащение одной записи игры никами участников
+     */
+    private async addNicknameToSingleGame(gameInfo: ISavedGame) {
+        const mappingIdToNicknames = await this.getMappingIdToNicknames(gameInfo.players_ids);
+
+        return {
+            ...gameInfo,
+            players: map(gameInfo.players, ((player: ISavedPlayer) => ({
+                ...player,
+                nickname: mappingIdToNicknames[player.user_id]
+            })))
+        }
+    }
 
     /**
      * Сохранение основных характеристик игрока с его никнеймом
@@ -56,19 +106,20 @@ export class GameController {
         });
     }
 
-    public getGame(req: Request, res: Response) {
+    public async getGame(req: Request, res: Response) {
         if (!req.params.id) {
             return insufficientParameters(res);
         }
 
         const gameFilter = { _id: req.params.id };
-        this.gameService.findGame(gameFilter, (err: any, gameData: ISavedGame) => {
-            if (err) {
-                return mongoError(err, res);
-            }
+        const docGameData = await this.gameService.findGame(gameFilter);
 
-            successResponse('get game successfull', gameData, res);
-        })
+        // @ts-ignore
+        const gameData: ISavedGame = docGameData.toObject();
+
+        const gameDataWithNicknameList = await this.addNicknameToSingleGame(gameData);
+
+        successResponse('get game successfull', gameDataWithNicknameList, res);
     }
 
     /**
@@ -79,11 +130,13 @@ export class GameController {
             return incorrectParameters(res);
         }
 
-        const allShortGameInfoList = await this.gameService.getShortGameInfoList(req.query.items);
+        const allShortGameInfoList: IShortGame[] = await this.gameService.getShortGameInfoList(req.query.items);
+
+        const gameDataWithNicknameList = await this.addNicknamesToGameInfoList(allShortGameInfoList);
 
         return successResponse(
             'Список краткой информации по всем играм получен успешно',
-            allShortGameInfoList,
+            gameDataWithNicknameList,
             res,
         )
     }
@@ -100,27 +153,11 @@ export class GameController {
 
         let shortGameInfoList: IShortGame[] = await this.gameService.getShortGamesInfoListByUserId(userId);
 
-        const relatedUserIdList = [];
-
-        shortGameInfoList.forEach(item => item.players.forEach(player => {
-            relatedUserIdList.push(player.user_id);
-        }));
-
-        const filteredRelatedUserIdList = filter<string>(uniq(relatedUserIdList), Boolean);
-
-        const mappingIdToNicknames = await this.authService.getRelatedMappingUserIdToUserNickname(filteredRelatedUserIdList);
-
-        const shortGameInfoWithNicknamesList = shortGameInfoList.map(item => ({
-            ...item,
-            players: item.players.map(player => ({
-                ...player,
-                nickname: mappingIdToNicknames[player.user_id]
-            }))
-        }));
+        const gameDataWithNicknameList = await this.addNicknamesToGameInfoList(shortGameInfoList);
 
         return successResponse(
             'Список игр c краткой информацией получен успешно',
-            shortGameInfoWithNicknamesList,
+            gameDataWithNicknameList,
             res,
         );
     }
