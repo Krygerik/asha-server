@@ -65,10 +65,8 @@ export interface ISavedPlayer extends IInputPlayer {
     _id: string;
     // Конечный состав армии
     army_remainder?: ICreatures[];
-    // Никнейм игрока
-    nickname?: string;
     // Ид пользователя в бд
-    user_id: string;
+    user_id?: string;
 }
 
 /**
@@ -141,8 +139,6 @@ export interface IShortPlayer {
     color: EPlayerColor;
     // Название героя
     hero: string;
-    // Никнейм игрока
-    nickname: string;
     // Раса
     race: string;
     // Ид пользователя в бд

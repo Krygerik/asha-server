@@ -25,7 +25,6 @@ export class GameService {
                     army_remainder: player.army_remainder,
                     color: player.color,
                     hero: player.hero,
-                    nickname: player.nickname,
                     race: player.race,
                     user_id: player.user_id,
                 }),
@@ -167,10 +166,10 @@ export class GameService {
     /**
      * Получение игр с краткой информацией по нику игрока
      */
-    public async getShortGamesInfoListByCombatId(nickname: string): Promise<IShortGame[]> {
+    public async getShortGamesInfoListByUserId(user_id: string): Promise<IShortGame[]> {
         const option = {
             winner: { $ne: null },
-            "players.nickname": nickname,
+            "players.user_id": user_id,
         };
 
         // @ts-ignore

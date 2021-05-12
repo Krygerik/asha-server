@@ -1,9 +1,9 @@
 import {Request, Response} from "express";
-import {isUndefined, omit} from "lodash";
+import {filter, isUndefined, omit, uniq} from "lodash";
 import {
     IInputGameData,
     GameService,
-    ISavedGame, IInputPlayersData, IWinnerRequestDto,
+    ISavedGame, IInputPlayersData, IWinnerRequestDto, IShortGame,
 } from "../modules/game";
 import {
     incorrectParameters,
@@ -11,9 +11,11 @@ import {
     mongoError,
     successResponse,
 } from "../modules/common/services";
+import {AuthService} from "../modules/auth";
 
 export class GameController {
     private gameService: GameService = new GameService();
+    private authService: AuthService = new AuthService();
 
     /**
      * Сохранение основных характеристик игрока с его никнеймом
@@ -89,16 +91,38 @@ export class GameController {
     /**
      * Получение списка игр с краткой информацией по нику игрока
      */
-    public async getShortGameInfoListByNickname(req: Request, res: Response) {
-        const nickname = req.query.nickname;
+    public async getShortGameInfoListByUserId(req: Request, res: Response) {
+        const userId = req.query.userId;
 
-        if (typeof nickname !== 'string') {
+        if (typeof userId !== 'string') {
             return insufficientParameters(res);
         }
 
-        const shortGameInfoList = await this.gameService.getShortGamesInfoListByCombatId(nickname);
+        let shortGameInfoList: IShortGame[] = await this.gameService.getShortGamesInfoListByUserId(userId);
 
-        return successResponse('Список игр c краткой информацией получен успешно', shortGameInfoList, res);
+        const relatedUserIdList = [];
+
+        shortGameInfoList.forEach(item => item.players.forEach(player => {
+            relatedUserIdList.push(player.user_id);
+        }));
+
+        const filteredRelatedUserIdList = filter<string>(uniq(relatedUserIdList), Boolean);
+
+        const mappingIdToNicknames = await this.authService.getRelatedMappingUserIdToUserNickname(filteredRelatedUserIdList);
+
+        const shortGameInfoWithNicknamesList = shortGameInfoList.map(item => ({
+            ...item,
+            players: item.players.map(player => ({
+                ...player,
+                nickname: mappingIdToNicknames[player.user_id]
+            }))
+        }));
+
+        return successResponse(
+            'Список игр c краткой информацией получен успешно',
+            shortGameInfoWithNicknamesList,
+            res,
+        );
     }
 
     /**

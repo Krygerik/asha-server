@@ -35,11 +35,11 @@ export class GameRoutes {
         });
 
         /**
-         * Получение краткой информации по всем играм по нику
+         * Получение краткой информации по всем играм по user_id
          */
-        app.get('/api/get-games-by-nickname', (req: Request, res: Response) => {
-            this.gameController.getShortGameInfoListByNickname(req, res);
-        });
+        app.get('/api/get-games-by-user-id', (req: Request, res: Response) => {
+            this.gameController.getShortGameInfoListByUserId(req, res);
+        })
 
         /**
          * Получение краткой информации по последним играм пользователя

@@ -1,4 +1,4 @@
-import { IUser } from "./model";
+import {ISavedUser, IUser} from "./model";
 import {UserModel} from "./schema";
 
 export class AuthService {
@@ -17,5 +17,18 @@ export class AuthService {
      */
     public findUserById(id: string) {
         return UserModel.findById(id);
+    }
+
+    /**
+     * Маппинг Id игроков к никам
+     */
+    public async getRelatedMappingUserIdToUserNickname(idList: string[]) {
+        // @ts-ignore
+        const users: ISavedUser[] = await UserModel.find({ _id: { $in: idList } });
+
+        return users.reduce((acc, user) => ({
+            ...acc,
+            [user._id]: user.nickname
+        }), {})
     }
 }
