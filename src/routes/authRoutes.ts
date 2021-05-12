@@ -20,9 +20,16 @@ export class AuthRoutes {
         });
 
         /**
-         * Получение данных пользователя
+         * Получение данных текущего пользователя
          */
         app.get('/api/auth/get-profile', AuthController.authMiddleware, (req: Request, res: Response) => {
+            this.authController.getProfile(req, res);
+        });
+
+        /**
+         * Получение данных переданного пользователя
+         */
+        app.get('/api/auth/get-profile/:id', AuthController.authMiddleware, (req: Request, res: Response) => {
             this.authController.getProfile(req, res);
         });
     };

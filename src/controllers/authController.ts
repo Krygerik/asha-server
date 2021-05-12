@@ -103,19 +103,22 @@ export class AuthController {
     }
 
     /**
-     * Получение профиля текущего пользователя
+     * Получение профиля текущего пользователя или того, чей id передан
+     * (Только для авторизованных)
      */
     public async getProfile(req: Request, res: Response) {
         const { userId }: { userId: string } = req.body;
+        // @ts-ignore
+        const { id }: { id: string } = req.params;
 
         // @ts-ignore
-        const user: ISavedUser | null = await this.authService.findUserById(userId);
+        const user: ISavedUser | null = await this.authService.findUserById(id || userId);
 
         if (!user) {
             return failureResponse(`Пользователь не найден`, null, res);
         }
 
-        const responseData = pick(user, ['discord', 'email', 'nickname']);
+        const responseData = pick(user, ['_id', 'discord', 'email', 'nickname']);
 
         successResponse('Данные пользователя получены успешно', responseData, res);
     }
