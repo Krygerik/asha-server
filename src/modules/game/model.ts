@@ -77,8 +77,8 @@ export interface ISavedPlayer extends IInputPlayer {
 export interface IInputPlayersData {
     // id сражения
     combat_id: number;
-    // Никнейм игрока
-    nickname: string;
+    // id игрока
+    user_id: string;
     // Список данных о прокачках обоих игроков
     players: IInputPlayer[];
 }
@@ -95,8 +95,8 @@ export interface IWinnerRequestDto {
     date: string;
     // Является ли игрок красным
     isRedPlayer: boolean;
-    // Никнейм игрока
-    nickname: string;
+    // id игрока
+    user_id: string;
     // Процент оставшейся силы армии
     percentage_of_army_left: number;
     // Цвет игрока победителя
@@ -110,7 +110,7 @@ export interface IInputGameData {
     // id сражения
     combat_id: number;
     // Список ников игроков, участвующих в игре
-    players_nicknames: string[];
+    players_ids: string[];
     // Список данных о прокачках обоих игроков
     players: IInputPlayer[];
 }
@@ -126,7 +126,7 @@ export interface ISavedGame extends IInputGameData {
     // Список данных обоих игроков
     players: ISavedPlayer[];
     // Список ников игроков, участвующих в игре
-    players_nicknames: string[];
+    players_ids: string[];
     // Цвет победителя
     winner?: EPlayerColor;
 }

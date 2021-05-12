@@ -63,7 +63,6 @@ const PlayerSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    nickname: String,
     perks: {
         type: [String],
         required: true
@@ -108,7 +107,7 @@ const GameSchema = new mongoose.Schema({
         type: Number,
     },
     percentage_of_army_left: Number,
-    players_nicknames: {
+    players_ids: {
         type: [String],
         required: true
     },

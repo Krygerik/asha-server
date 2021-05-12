@@ -1,9 +1,9 @@
 import {Request, Response} from "express";
-import {isEmpty, isUndefined} from "lodash";
+import {isUndefined, omit} from "lodash";
 import {
     IInputGameData,
     GameService,
-    ISavedGame,
+    ISavedGame, IInputPlayersData, IWinnerRequestDto,
 } from "../modules/game";
 import {
     incorrectParameters,
@@ -20,12 +20,13 @@ export class GameController {
      * Ожидаем от обоих игроков по такому запросу для заполнения основных данных об игре
      */
     public saveGameParams(req: Request, res: Response) {
-        // Проверяем, что есть хотя бы одно поле. Валидацию по полям сделает mongodb
-        if (isEmpty(req.body)) {
-            return insufficientParameters(res);
+        // @ts-ignore
+        const gameData: IInputPlayersData = {
+            ...omit(req.body, ['userId']),
+            user_id: req.body.userId,
         }
 
-        this.gameService.createOrUpdateGame(req.body, (err: any, gameData: IInputGameData) => {
+        this.gameService.createOrUpdateGame(gameData, (err: any, gameData: IInputGameData) => {
             if (err) {
                 return mongoError(err, res);
             }
@@ -38,12 +39,13 @@ export class GameController {
      * Сохранение победителя и определение красного игрока
      */
     public saveGameWinner(req: Request, res: Response) {
-        // Проверяем, что есть хотя бы одно поле. Валидацию по полям сделает mongodb
-        if (isEmpty(req.body)) {
-            return insufficientParameters(res);
+        // @ts-ignore
+        const gameData: IWinnerRequestDto = {
+            ...omit(req.body, ['userId']),
+            user_id: req.body.userId,
         }
 
-        this.gameService.saveGameWinner(req.body, (err: any, gameData: IInputGameData) => {
+        this.gameService.saveGameWinner(gameData, (err: any, gameData: IInputGameData) => {
             if (err) {
                 return mongoError(err, res);
             }

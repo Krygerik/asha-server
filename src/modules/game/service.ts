@@ -57,22 +57,22 @@ export class GameService {
             if (!isNil(savedGame.winner)) {
                 updatedValue = {
                     $push: {
-                        players_nicknames: playerData.nickname,
+                        players_ids: playerData.user_id,
                     },
                     $set: {
-                        "players.$[player].nickname": playerData.nickname,
+                        "players.$[player].user_id": playerData.user_id,
                     }
                 };
 
                 option = {
                     arrayFilters: [
-                        { "player.nickname": null },
+                        { "player.user_id": null },
                     ]
                 };
             } else {
                 updatedValue = {
                     $push: {
-                        players_nicknames: playerData.nickname,
+                        players_ids: playerData.user_id,
                     }
                 };
             }
@@ -80,8 +80,8 @@ export class GameService {
             GameModel.updateOne({ _id: savedGame._id }, updatedValue, option, callback);
         } else {
             const gameData = {
-                ...omit(playerData, 'nickname'),
-                players_nicknames: [playerData.nickname],
+                ...omit(playerData, 'user_id'),
+                players_ids: [playerData.user_id],
             }
 
             this.createGame(gameData, callback);
@@ -107,22 +107,22 @@ export class GameService {
             || !requestData.isRedPlayer && requestData.winner === EPlayerColor.BLUE
         )
 
-        const winnerNickname = senderIsWinner
-            ? requestData.nickname
+        const winnerId = senderIsWinner
+            ? requestData.user_id
             : find(
-                savedGame.players_nicknames,
-                (playerNickname: string) => playerNickname !== requestData.nickname
+                savedGame.players_ids,
+                (playerId: string) => playerId !== requestData.user_id
             );
 
-        const looserNickname = find(
-            savedGame.players_nicknames,
-            (playerNickname: string) => playerNickname !== winnerNickname
+        const looserId = find(
+            savedGame.players_ids,
+            (playerId: string) => playerId !== winnerId
         );
 
         const updatedValue = {
             $set: {
-                "players.$[redPlayer].nickname": requestData.winner === EPlayerColor.RED ? winnerNickname : looserNickname,
-                "players.$[bluePlayer].nickname": requestData.winner === EPlayerColor.BLUE ? winnerNickname : looserNickname,
+                "players.$[redPlayer].user_id": requestData.winner === EPlayerColor.RED ? winnerId : looserId,
+                "players.$[bluePlayer].user_id": requestData.winner === EPlayerColor.BLUE ? winnerId : looserId,
                 "players.$[winner].army_remainder": requestData.army_remainder,
                 date: requestData.date,
                 percentage_of_army_left: requestData.percentage_of_army_left,

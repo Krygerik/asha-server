@@ -9,14 +9,14 @@ export class GameRoutes {
         /**
          * Сохранение основных характеристик игрока с его никнеймом
          */
-        app.post('/api/save-game-params', (req: Request, res: Response) => {
+        app.post('/api/save-game-params', AuthController.authMiddleware, (req: Request, res: Response) => {
             this.gameController.saveGameParams(req,res);
         });
 
         /**
          * Сохранение победителя и определение красного игрока
          */
-        app.post('/api/save-game-winner', (req: Request, res: Response) => {
+        app.post('/api/save-game-winner', AuthController.authMiddleware, (req: Request, res: Response) => {
             this.gameController.saveGameWinner(req,res);
         });
 
