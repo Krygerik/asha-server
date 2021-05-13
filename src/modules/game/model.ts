@@ -75,6 +75,8 @@ export interface ISavedPlayer extends IInputPlayer {
 export interface IInputPlayersData {
     // id сражения
     combat_id: number;
+    // Версия карты
+    map_version: string;
     // id игрока
     user_id: string;
     // Список данных о прокачках обоих игроков
@@ -107,6 +109,8 @@ export interface IWinnerRequestDto {
 export interface IInputGameData {
     // id сражения
     combat_id: number;
+    // Версия карты
+    map_version: string;
     // Список ников игроков, участвующих в игре
     players_ids: string[];
     // Список данных о прокачках обоих игроков
