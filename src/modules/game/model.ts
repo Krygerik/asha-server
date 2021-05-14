@@ -125,6 +125,8 @@ export interface ISavedGame extends IInputGameData {
     _id: string;
     // Дата окончания игры
     date?: string;
+    // Произошел ли разрыв соединения
+    disconnect: boolean;
     // Список данных обоих игроков
     players: ISavedPlayer[];
     // Список ников игроков, участвующих в игре

@@ -197,4 +197,11 @@ export class GameService {
 
         return gameInfoList.map(GameService.formatFullGameInfoToShort);
     }
+
+    /**
+     * Проставление игре статуса дисконнекта
+     */
+    public async setGameDisconnectStatus(combat_id: boolean) {
+        return GameModel.updateOne({ combat_id }, { disconnect: true });
+    }
 }

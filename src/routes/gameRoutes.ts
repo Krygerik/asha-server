@@ -47,5 +47,12 @@ export class GameRoutes {
         app.get('/api/get-games-by-user', AuthController.authMiddleware, (req: Request, res: Response) => {
             this.gameController.getShortGameInfoByUserId(req, res);
         })
+
+        /**
+         * Получение краткой информации по последним играм пользователя
+         */
+        app.post('/api/set-game-disconnect-status', AuthController.authMiddleware, (req: Request, res: Response) => {
+            this.gameController.setGameDisconnectStatusByCombatId(req, res);
+        })
     };
 }

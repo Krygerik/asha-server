@@ -185,4 +185,23 @@ export class GameController {
             res,
         );
     }
+
+    /**
+     * Проставление игре статуса разрыва соединения
+     */
+    public async setGameDisconnectStatusByCombatId(req: Request, res: Response) {
+        try {
+            const { combat_id } = req.body;
+
+            const updatedDocs = await this.gameService.setGameDisconnectStatus(combat_id);
+
+            return successResponse(
+                `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения`,
+                updatedDocs,
+                res,
+            );
+        } catch (error) {
+            return mongoError(error, res);
+        }
+    }
 }
