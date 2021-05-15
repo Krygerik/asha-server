@@ -17,7 +17,7 @@ export class AuthController {
      * Генерация временного токена для пользователя
      */
     private static generateAccessToken(userId: string) {
-        return jwt.sign({ userId }, String(process.env.SECRET), { expiresIn: "24h" });
+        return jwt.sign({ userId }, String(process.env.SECRET), { expiresIn: "7d" });
     }
 
     /**
