@@ -1,5 +1,6 @@
-import {GameController} from "../controllers/gameController";
 import {Application, Request, Response} from "express";
+import {AuthController} from "../controllers/authController";
+import {GameController} from "../controllers/gameController";
 
 export class GameRoutes {
     private gameController: GameController = new GameController();
@@ -8,14 +9,14 @@ export class GameRoutes {
         /**
          * Сохранение основных характеристик игрока с его никнеймом
          */
-        app.post('/api/save-game-params', (req: Request, res: Response) => {
+        app.post('/api/save-game-params', AuthController.authMiddleware, (req: Request, res: Response) => {
             this.gameController.saveGameParams(req,res);
         });
 
         /**
          * Сохранение победителя и определение красного игрока
          */
-        app.post('/api/save-game-winner', (req: Request, res: Response) => {
+        app.post('/api/save-game-winner', AuthController.authMiddleware, (req: Request, res: Response) => {
             this.gameController.saveGameWinner(req,res);
         });
 
@@ -34,10 +35,24 @@ export class GameRoutes {
         });
 
         /**
-         * Получение краткой информации по всем играм по нику
+         * Получение краткой информации по всем играм по user_id
          */
-        app.get('/api/get-games-by-nickname', (req: Request, res: Response) => {
-            this.gameController.getShortGameInfoListByNickname(req, res);
-        });
+        app.get('/api/get-games-by-user-id', (req: Request, res: Response) => {
+            this.gameController.getShortGameInfoListByUserId(req, res);
+        })
+
+        /**
+         * Получение краткой информации по последним играм пользователя
+         */
+        app.get('/api/get-games-by-user', AuthController.authMiddleware, (req: Request, res: Response) => {
+            this.gameController.getShortGameInfoByUserId(req, res);
+        })
+
+        /**
+         * Получение краткой информации по последним играм пользователя
+         */
+        app.post('/api/set-game-disconnect-status', AuthController.authMiddleware, (req: Request, res: Response) => {
+            this.gameController.setGameDisconnectStatusByCombatId(req, res);
+        })
     };
 }
