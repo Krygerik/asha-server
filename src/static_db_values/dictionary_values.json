@@ -738,10 +738,6 @@
         "localize_name": "Пещерные отродья"
       },
       {
-        "game_id": "ID27",
-        "localize_name": "Архидьяволы"
-      },
-      {
         "game_id": "ID137",
         "localize_name": "Архидемоны"
       },
@@ -950,10 +946,6 @@
         "localize_name": "Изумрудные драконы"
       },
       {
-        "game_id": "ID14",
-        "localize_name": "Архангелы"
-      },
-      {
         "game_id": "ID44",
         "localize_name": "Нимфы"
       },
@@ -980,6 +972,14 @@
       {
         "game_id": "ID99",
         "localize_name": "Берсерки"
+      },
+      {
+        "game_id": "ID24",
+        "localize_name": "Архидьяволы"
+      },
+      {
+        "game_id": "ID13",
+        "localize_name": "Архангелы"
       }
     ]
   },
