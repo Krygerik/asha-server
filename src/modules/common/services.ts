@@ -52,3 +52,12 @@ export function mongoError(err: any, res: Response) {
         DATA: err
     });
 }
+
+export function internalError(err: any, res: Response) {
+    console.log('err:', err);
+    res.status(responseStatusCodes.internal_server_error).json({
+        STATUS: 'FAILURE',
+        MESSAGE: 'internal error',
+        DATA: err
+    });
+}

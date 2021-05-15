@@ -5,6 +5,7 @@ import {
     entryAlreadyExists,
     failureResponse,
     insufficientParameters,
+    internalError,
     mongoError,
     successResponse,
 } from "../modules/common/services";
@@ -58,48 +59,57 @@ export class AuthController {
     }
 
     public async registration(req: Request, res: Response) {
-        const userData: IUser = req.body;
+        try {
+            const userData: IUser = req.body;
 
-        if (isEmpty(userData)) {
-            return insufficientParameters(res);
-        }
-
-        const user = await this.authService.findUser(userData.email);
-
-        if (user) {
-            return entryAlreadyExists(res);
-        }
-
-        this.authService.createUser(userData, (err: any) => {
-            if (err) {
-                return mongoError(err, res);
+            if (isEmpty(userData)) {
+                return insufficientParameters(res);
             }
 
-            successResponse('Пользователь успешно зарегистрирован', null, res);
-        });
+            const user = await this.authService.findUser(userData.email);
+
+            if (user) {
+                return entryAlreadyExists(res);
+            }
+
+            this.authService.createUser(userData, (err: any) => {
+                if (err) {
+                    return mongoError(err, res);
+                }
+
+                successResponse('Пользователь успешно зарегистрирован', null, res);
+            });
+        } catch (error) {
+            internalError(error, res);
+        }
     }
 
     public async login(req: Request, res: Response) {
-        const userData: IUser = req.body;
+        try {
+            const userData: IUser = req.body;
 
-        if (isEmpty(userData)) {
-            return insufficientParameters(res);
+            if (isEmpty(userData)) {
+                return insufficientParameters(res);
+            }
+
+            // @ts-ignore
+            const user: ISavedUser | null = await this.authService.findUser(userData.email);
+
+            if (!user) {
+                return failureResponse(`Пользователь ${userData.email} не найден`, null, res);
+            }
+
+            if (userData.hash_password !== user.hash_password) {
+                return failureResponse('Введен неверный пароль', null, res);
+            }
+
+            const token = AuthController.generateAccessToken(user._id);
+
+            successResponse('Пользователь успешно авторизирован', { token }, res);
+        } catch (error) {
+            internalError(error, res);
         }
 
-        // @ts-ignore
-        const user: ISavedUser | null = await this.authService.findUser(userData.email);
-
-        if (!user) {
-            return failureResponse(`Пользователь ${userData.email} не найден`, null, res);
-        }
-
-        if (userData.hash_password !== user.hash_password) {
-            return failureResponse('Введен неверный пароль', null, res);
-        }
-
-        const token = AuthController.generateAccessToken(user._id);
-
-        successResponse('Пользователь успешно авторизирован', { token }, res);
     }
 
     /**
@@ -107,19 +117,23 @@ export class AuthController {
      * (Только для авторизованных)
      */
     public async getProfile(req: Request, res: Response) {
-        const { userId }: { userId: string } = req.body;
-        // @ts-ignore
-        const { id }: { id: string } = req.params;
+        try {
+            const { userId }: { userId: string } = req.body;
+            // @ts-ignore
+            const { id }: { id: string } = req.params;
 
-        // @ts-ignore
-        const user: ISavedUser | null = await this.authService.findUserById(id || userId);
+            // @ts-ignore
+            const user: ISavedUser | null = await this.authService.findUserById(id || userId);
 
-        if (!user) {
-            return failureResponse(`Пользователь не найден`, null, res);
+            if (!user) {
+                return failureResponse(`Пользователь не найден`, null, res);
+            }
+
+            const responseData = pick(user, ['_id', 'discord', 'email', 'nickname']);
+
+            successResponse('Данные пользователя получены успешно', responseData, res);
+        } catch (error) {
+            internalError(error, res);
         }
-
-        const responseData = pick(user, ['_id', 'discord', 'email', 'nickname']);
-
-        successResponse('Данные пользователя получены успешно', responseData, res);
     }
 }
