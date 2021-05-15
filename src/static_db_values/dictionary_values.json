@@ -866,7 +866,7 @@
         "localize_name": "Жрецы Пламени"
       },
       {
-        "game_id": "ID171",
+        "game_id": "ID95",
         "localize_name": "Эрлы"
       },
       {
@@ -938,7 +938,7 @@
         "localize_name": "Королевские грифоны"
       },
       {
-        "game_id": "ID54",
+        "game_id": "ID53",
         "localize_name": "Древние энты"
       },
       {
@@ -954,7 +954,7 @@
         "localize_name": "Ярлы"
       },
       {
-        "game_id": "ID46",
+        "game_id": "ID45",
         "localize_name": "Танцующие со смертью"
       },
       {
@@ -962,7 +962,7 @@
         "localize_name": "Мастера лука"
       },
       {
-        "game_id": "ID50",
+        "game_id": "ID49",
         "localize_name": "Верховные друиды"
       },
       {
@@ -970,7 +970,7 @@
         "localize_name": "Владычицы тени"
       },
       {
-        "game_id": "ID99",
+        "game_id": "ID98",
         "localize_name": "Берсерки"
       },
       {
@@ -980,6 +980,10 @@
       {
         "game_id": "ID13",
         "localize_name": "Архангелы"
+      },
+      {
+        "game_id": "ID43",
+        "localize_name": "Дриады"
       }
     ]
   },
