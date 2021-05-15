@@ -10,8 +10,6 @@ import {DictionaryRoutes} from "../routes/dictionaryRoutes";
 
 const database = process.env.NODE_ENV == 'production' ? 'production' : 'test';
 
-const database = process.env.NODE_ENV == 'production' ? 'production' : 'test';
-
 class App {
     public app: express.Application;
     public mongoUrl: string = 'mongodb://AdminSokratik:Her0EsF!ve@localhost:27017/' + database;
