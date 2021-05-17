@@ -1,7 +1,8 @@
 import {Request, Response} from "express";
-import {filter, isUndefined, map, omit, uniq} from "lodash";
+import {filter, map, omit, uniq} from "lodash";
 import {
     GameService,
+    IFindGameOptions,
     IInputGameData,
     IInputPlayersData,
     ISavedGame,
@@ -12,7 +13,8 @@ import {
 } from "../modules/game";
 import {
     incorrectParameters,
-    insufficientParameters, internalError,
+    insufficientParameters,
+    internalError,
     mongoError,
     successResponse,
 } from "../modules/common/services";
@@ -137,19 +139,40 @@ export class GameController {
     /**
      * Получение краткого списка всех игр
      */
-    public async getShortGameInfoList(req: Request, res: Response) {
+    public async getShortGameInfoList(req: Request<unknown, unknown, unknown, Partial<IFindGameOptions>>, res: Response) {
         try {
-            if (!isUndefined(req.query.items) && typeof req.query.items !== "string") {
+            const { query } = req;
+
+            if (!query.items || !query.requestPage) {
                 return incorrectParameters(res);
             }
 
-            const allShortGameInfoList: IShortGame[] = await this.gameService.getShortGameInfoList(req.query.items);
+            const options = {
+                items: Number(query.items),
+                requestPage: Number(query.requestPage),
+            }
+
+            /**
+             * Количество страниц пагинации
+             */
+            const totalPages = await this.gameService.getCountPagesByPageSize(options.items);
+
+            /**
+             * Список игр без никнеймов игроков
+             */
+            const allShortGameInfoList: IShortGame[] = await this.gameService.getShortGameInfoList(options);
 
             const gameDataWithNicknameList = await this.addNicknamesToGameInfoList(allShortGameInfoList);
 
             return successResponse(
                 'Список краткой информации по всем играм получен успешно',
-                gameDataWithNicknameList,
+                {
+                    pagination: {
+                        activePage: options.requestPage,
+                        totalPages,
+                    },
+                    shortGameInfoList: gameDataWithNicknameList,
+                },
                 res,
             )
         } catch (error) {
