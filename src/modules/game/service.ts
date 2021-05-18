@@ -1,6 +1,7 @@
 import {find, isNil, omit} from "lodash";
 import {
     EPlayerColor,
+    IFindGameOptions,
     IInputGameData,
     IInputPlayersData,
     ISavedGame,
@@ -146,21 +147,26 @@ export class GameService {
     }
 
     /**
-     * Получение списка краткой информации по всем играм
+     * Получение списка краткой информации по всем играм с пагинацией
      */
-    public async getShortGameInfoList(items?: string): Promise<IShortGame[]> {
+    public async getShortGameInfoList(options: IFindGameOptions): Promise<IShortGame[]> {
         // @ts-ignore
-        let allGameInfoList: ISavedGame[] = await GameModel.find({ winner: { $ne: null } }).sort({ date: 'desc' });
+        const allGameInfoList: ISavedGame[] = await GameModel
+            .find({ winner: { $ne: null } })
+            .sort({ date: 'desc' })
+            .limit(options.items)
+            .skip(options.items * (options.requestPage - 1))
 
-        /**
-         * Количество требуемых элементов
-         */
-        if (items) {
-            allGameInfoList = [
-                ...allGameInfoList.slice(0, Number(items)),
-            ]
-        }
         return allGameInfoList.map(GameService.formatFullGameInfoToShort);
+    }
+
+    /**
+     * Получение количества страниц пагинации для переданных опций
+     */
+    public async getCountPagesByPageSize(size: number) {
+        const count = await GameModel.countDocuments({ winner: { $ne: null } });
+
+        return Math.ceil(count/size);
     }
 
     /**

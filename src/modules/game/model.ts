@@ -166,3 +166,13 @@ export interface IShortGame {
     // Цвет победителя
     winner: EPlayerColor;
 }
+
+/**
+ * Опции для поиска игр с пагинацией
+ */
+export interface IFindGameOptions {
+    // Количество запрашиваемых элементов
+    items: number;
+    // Страница запрашиваемых элементов
+    requestPage: number;
+}
