@@ -161,6 +161,8 @@ export interface IShortGame {
     combat_id: number;
     // Дата окончания игры
     date?: string;
+    // Произошел ли разрыв соединения
+    disconnect: boolean;
     // Список данных обоих игроков
     players: IShortPlayer[];
     // Цвет победителя

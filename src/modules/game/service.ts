@@ -21,6 +21,7 @@ export class GameService {
             _id: gameInfo._id,
             combat_id: gameInfo.combat_id,
             date: gameInfo.date,
+            disconnect: gameInfo.disconnect,
             players: gameInfo.players.map(
                 (player: ISavedPlayer): IShortPlayer => ({
                     army_remainder: player.army_remainder,
