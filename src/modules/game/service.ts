@@ -1,6 +1,7 @@
-import {find, isNil, omit} from "lodash";
+import {find, forEach, isNil, omit} from "lodash";
 import {
     EPlayerColor,
+    IFilterGamesOption,
     IFindGameOptions,
     IInputGameData,
     IInputPlayersData,
@@ -150,10 +151,18 @@ export class GameService {
     /**
      * Получение списка краткой информации по всем играм с пагинацией
      */
-    public async getShortGameInfoList(options: IFindGameOptions): Promise<IShortGame[]> {
+    public async getShortGameInfoList(options: IFindGameOptions, filter: IFilterGamesOption): Promise<IShortGame[]> {
+        let query = {
+            winner: { $ne: null },
+        };
+
+        forEach(filter, (value: string, key: string) => {
+            query[`players.${key}`] = value;
+        });
+
         // @ts-ignore
         const allGameInfoList: ISavedGame[] = await GameModel
-            .find({ winner: { $ne: null } })
+            .find(query)
             .sort({ date: 'desc' })
             .limit(options.items)
             .skip(options.items * (options.requestPage - 1))
@@ -164,8 +173,16 @@ export class GameService {
     /**
      * Получение количества страниц пагинации для переданных опций
      */
-    public async getCountPagesByPageSize(size: number) {
-        const count = await GameModel.countDocuments({ winner: { $ne: null } });
+    public async getCountPagesByPageSize(size: number, filter: IFilterGamesOption) {
+        let query = {
+            winner: { $ne: null },
+        };
+
+        forEach(filter, (value: string, key: string) => {
+            query[`players.${key}`] = value;
+        });
+
+        const count = await GameModel.countDocuments(query);
 
         return Math.ceil(count/size);
     }

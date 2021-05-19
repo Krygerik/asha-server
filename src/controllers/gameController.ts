@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import {filter, map, omit, uniq} from "lodash";
 import {
     GameService,
+    IFilterGamesOption,
     IFindGameOptions,
     IInputGameData,
     IInputPlayersData,
@@ -139,9 +140,10 @@ export class GameController {
     /**
      * Получение краткого списка всех игр
      */
-    public async getShortGameInfoList(req: Request<unknown, unknown, unknown, Partial<IFindGameOptions>>, res: Response) {
+    public async getShortGameInfoList(req: Request<unknown, unknown, { filter: IFilterGamesOption }, Partial<IFindGameOptions>>, res: Response) {
         try {
             const { query } = req;
+            const { filter } = req.body;
 
             if (!query.items || !query.requestPage) {
                 return incorrectParameters(res);
@@ -155,12 +157,12 @@ export class GameController {
             /**
              * Количество страниц пагинации
              */
-            const totalPages = await this.gameService.getCountPagesByPageSize(options.items);
+            const totalPages = await this.gameService.getCountPagesByPageSize(options.items, filter);
 
             /**
              * Список игр без никнеймов игроков
              */
-            const allShortGameInfoList: IShortGame[] = await this.gameService.getShortGameInfoList(options);
+            const allShortGameInfoList: IShortGame[] = await this.gameService.getShortGameInfoList(options, filter);
 
             const gameDataWithNicknameList = await this.addNicknamesToGameInfoList(allShortGameInfoList);
 
