@@ -178,3 +178,15 @@ export interface IFindGameOptions {
     // Страница запрашиваемых элементов
     requestPage: number;
 }
+
+/**
+ * Опции фильтрации игр при поиске
+ */
+export interface IFilterGamesOption {
+    // ID героя
+    hero?: string;
+    // ID фракции
+    race?: string;
+    // ID игрока
+    user_id?: string;
+}

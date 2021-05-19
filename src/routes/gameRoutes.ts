@@ -30,7 +30,7 @@ export class GameRoutes {
         /**
          * Получение краткой информации по всем играм
          */
-        app.get('/api/get-short-game-info-list', (req: Request, res: Response) => {
+        app.post('/api/get-short-game-info-list', (req: Request, res: Response) => {
             this.gameController.getShortGameInfoList(req, res);
         });
 
