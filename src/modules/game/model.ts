@@ -187,4 +187,6 @@ export interface IFilterGamesOption {
     hero?: string;
     // ID фракции
     race?: string;
+    // ID игрока
+    user_id?: string;
 }
