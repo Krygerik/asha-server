@@ -136,4 +136,17 @@ export class AuthController {
             internalError(error, res);
         }
     }
+
+    /**
+     * Получение списка Id с ником всех пользователей
+     */
+    public async getAllUsersList(req: Request, res: Response) {
+        try {
+            const allUserList = await this.authService.findAllUsers();
+
+            successResponse('Список пользователей успешно получен', allUserList, res);
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
 }

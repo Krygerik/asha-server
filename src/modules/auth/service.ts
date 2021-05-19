@@ -31,4 +31,11 @@ export class AuthService {
             [user._id]: user.nickname
         }), {})
     }
+
+    /**
+     * Получение списка id и ников всех пользователей
+     */
+    public findAllUsers() {
+        return UserModel.find(null, { nickname: 1, _id: 1 });
+    }
 }
