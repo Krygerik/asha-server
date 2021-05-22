@@ -1,7 +1,7 @@
 /**
  * Тип одиночной записи в справочнике
  */
-interface IRecords {
+export interface IRecords {
     // id записи в БД
     _id: string;
     // id записи в игре
@@ -11,13 +11,27 @@ interface IRecords {
 }
 
 /**
+ * Список всех словарей
+ */
+export enum EDictionaryName {
+    Artifacts = 'artifacts',
+    Creatures = 'creatures',
+    Heroes = 'heroes',
+    Perks = 'perks',
+    Races = 'races',
+    Skills = 'skills',
+    Spells = 'spells',
+    WarMachines = 'warMachines',
+}
+
+/**
  * Тип справочника
  */
 export interface IDictionary {
     // id записи в БД
     _id: string;
     // Название справочника
-    name: string;
+    name: EDictionaryName;
     // Список записей справочника
     records: IRecords[];
 }

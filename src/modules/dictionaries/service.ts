@@ -1,4 +1,5 @@
 import {DictionariesModel} from "./schema";
+import {EDictionaryName} from "./model";
 
 export class DictionariesService {
     /**
@@ -6,5 +7,12 @@ export class DictionariesService {
      */
     public async getDictionaries(callback: any) {
         DictionariesModel.find(callback);
+    }
+
+    /**
+     * Получение конкретного справочника
+     */
+    public async getDictionary(name: EDictionaryName) {
+        return DictionariesModel.findOne({ name });
     }
 }
