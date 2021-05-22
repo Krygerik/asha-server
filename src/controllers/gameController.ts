@@ -20,10 +20,13 @@ import {
     successResponse,
 } from "../modules/common/services";
 import {AuthService} from "../modules/auth";
+import {DictionariesService, IDictionary} from "../modules/dictionaries";
+import {EDictionaryName, IRecords} from "../modules/dictionaries/model";
 
 export class GameController {
     private gameService: GameService = new GameService();
     private authService: AuthService = new AuthService();
+    private dictionaryService: DictionariesService = new DictionariesService();
 
     /**
      * Получение таблицы соотношений ид игроков к никам
@@ -247,6 +250,60 @@ export class GameController {
             return successResponse(
                 `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения`,
                 updatedDocs,
+                res,
+            );
+        } catch (error) {
+            return mongoError(error, res);
+        }
+    }
+
+    /**
+     * Получение винрейта по расам
+     */
+    public async getRacesWinRate(req: Request, res: Response) {
+        try {
+            const allApprovedGamesDoc = await this.gameService.getAllApprovedGames();
+
+            // @ts-ignore
+            const allApprovedGames = allApprovedGamesDoc.map(item => item.toObject());
+
+            const racesDictionaryDoc = await this.dictionaryService.getDictionary(EDictionaryName.Races)
+
+            // @ts-ignore
+            const racesDictionary: IDictionary = racesDictionaryDoc.toObject();
+
+            const racesWinRate = racesDictionary.records.reduce((acc, firstRace: IRecords) => {
+                const winRateWithAllRaces = racesDictionary.records.reduce((accValue, secondRace: IRecords) => {
+                    const filteredApprovedGames = allApprovedGames.filter(
+                        (game: ISavedGame) => game.players[0].race === firstRace.game_id && game.players[1].race === secondRace.game_id
+                        || game.players[0].race === secondRace.game_id && game.players[1].race === firstRace.game_id
+                    );
+
+                    const winningGames = filteredApprovedGames.filter((game: ISavedGame) => (
+                        game.players[0].race === firstRace.game_id && game.players[0].color === game.winner
+                        || game.players[1].race === firstRace.game_id && game.players[1].color === game.winner
+                    ));
+
+                    const loosingGames = filteredApprovedGames.filter((game: ISavedGame) => (
+                        game.players[0].race === firstRace.game_id && game.players[0].color !== game.winner
+                        || game.players[1].race === firstRace.game_id && game.players[1].color !== game.winner
+                    ));
+
+                    return {
+                        ...accValue,
+                        [secondRace.game_id]: { win: winningGames.length, lose: loosingGames.length }
+                    }
+                }, {});
+
+                return {
+                    ...acc,
+                    [firstRace.game_id]: winRateWithAllRaces,
+                }
+            }, {} as Record<string, any>);
+
+            return successResponse(
+                'Статистика по расам получена успешно',
+                racesWinRate,
                 res,
             );
         } catch (error) {

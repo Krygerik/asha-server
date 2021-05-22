@@ -228,4 +228,15 @@ export class GameService {
     public async setGameDisconnectStatus(combat_id: boolean) {
         return GameModel.updateOne({ combat_id }, { disconnect: true });
     }
+
+    /**
+     * Получение всех разрешенных для высчитывания баланса игр
+     */
+    public getAllApprovedGames() {
+        return GameModel.find({
+            "players.user_id": { $ne: null },
+            disconnect: false,
+            winner: { $ne: null },
+        })
+    }
 }

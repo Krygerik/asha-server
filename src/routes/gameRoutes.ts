@@ -54,5 +54,12 @@ export class GameRoutes {
         app.post('/api/set-game-disconnect-status', AuthController.authMiddleware, (req: Request, res: Response) => {
             this.gameController.setGameDisconnectStatusByCombatId(req, res);
         })
+
+        /**
+         * Получение статистики побед по расам
+         */
+        app.get('/api/get-races-win-rate', (req: Request, res: Response) => {
+            this.gameController.getRacesWinRate(req, res);
+        });
     };
 }
