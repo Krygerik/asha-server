@@ -7,6 +7,15 @@ export enum EPlayerColor {
 }
 
 /**
+ * Стартовый бонус игрока
+ */
+export enum EPlayerStartedBonus {
+    Artifact = 'art',
+    Gold = 'gold',
+    Spell = 'spell',
+}
+
+/**
  * Интерфейс однотипных войск
  */
 interface ICreatures {
@@ -55,7 +64,7 @@ export interface IInputPlayer {
     // Заклинания героя
     spells: string[];
     // Выбранный стартовый бонус
-    start_bonus: string;
+    start_bonus: EPlayerStartedBonus;
     // Боевые машины игрока
     war_machines: string[];
 }
@@ -183,10 +192,14 @@ export interface IFindGameOptions {
  * Опции фильтрации игр при поиске
  */
 export interface IFilterGamesOption {
+    // Цвет игрока
+    color?: EPlayerColor;
     // ID героя
     hero?: string;
     // ID фракции
     race?: string;
     // ID игрока
     user_id?: string;
+    // Стартовый бонус игрока
+    start_bonus?: EPlayerStartedBonus;
 }

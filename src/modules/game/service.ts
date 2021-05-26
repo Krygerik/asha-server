@@ -232,11 +232,17 @@ export class GameService {
     /**
      * Получение всех разрешенных для высчитывания баланса игр
      */
-    public getAllApprovedGames() {
-        return GameModel.find({
-            "players.user_id": { $ne: null },
+    public getAllApprovedGames(filter: IFilterGamesOption) {
+        let query: Record<any, any> = {
+            $and: [{ "players.user_id": { $ne: null } }],
             disconnect: false,
             winner: { $ne: null },
-        })
+        };
+
+        forEach(filter, (value: string, key: string) => {
+            query["$and"].push({ [`players.${key}`]: value });
+        });
+
+        return GameModel.find(query);
     }
 }

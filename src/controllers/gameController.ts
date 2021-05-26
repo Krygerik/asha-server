@@ -260,9 +260,11 @@ export class GameController {
     /**
      * Получение винрейта по расам
      */
-    public async getRacesWinRate(req: Request, res: Response) {
+    public async getRacesWinRate(req: Request<unknown, unknown, { filter: IFilterGamesOption }, unknown>, res: Response) {
         try {
-            const allApprovedGamesDoc = await this.gameService.getAllApprovedGames();
+            const { filter } = req.body;
+
+            const allApprovedGamesDoc = await this.gameService.getAllApprovedGames(filter);
 
             // @ts-ignore
             const allApprovedGames = allApprovedGamesDoc.map(item => item.toObject());
@@ -273,6 +275,10 @@ export class GameController {
             const racesDictionary: IDictionary = racesDictionaryDoc.toObject();
 
             const racesWinRate = racesDictionary.records.reduce((acc, firstRace: IRecords) => {
+                if (filter.race && filter.race !== firstRace.game_id) {
+                    return acc;
+                }
+
                 const winRateWithAllRaces = racesDictionary.records.reduce((accValue, secondRace: IRecords) => {
                     const filteredApprovedGames = allApprovedGames.filter(
                         (game: ISavedGame) => game.players[0].race === firstRace.game_id && game.players[1].race === secondRace.game_id
@@ -280,13 +286,28 @@ export class GameController {
                     );
 
                     const winningGames = filteredApprovedGames.filter((game: ISavedGame) => (
-                        game.players[0].race === firstRace.game_id && game.players[0].color === game.winner
-                        || game.players[1].race === firstRace.game_id && game.players[1].color === game.winner
+                        filter.color === game.winner
+                            ? (
+                                game.players[0].race === firstRace.game_id && game.players[0].color === game.winner
+                                || game.players[1].race === firstRace.game_id && game.players[1].color === game.winner
+                            )
+                            : (
+                                game.players[0].race === firstRace.game_id && game.players[0].color !== game.winner
+                                || game.players[1].race === firstRace.game_id && game.players[1].color !== game.winner
+                            )
+
                     ));
 
                     const loosingGames = filteredApprovedGames.filter((game: ISavedGame) => (
-                        game.players[0].race === firstRace.game_id && game.players[0].color !== game.winner
-                        || game.players[1].race === firstRace.game_id && game.players[1].color !== game.winner
+                        filter.color === game.winner
+                            ? (
+                                game.players[0].race === firstRace.game_id && game.players[0].color !== game.winner
+                                || game.players[1].race === firstRace.game_id && game.players[1].color !== game.winner
+                            )
+                            : (
+                                game.players[0].race === firstRace.game_id && game.players[0].color === game.winner
+                                || game.players[1].race === firstRace.game_id && game.players[1].color === game.winner
+                            )
                     ));
 
                     return {
