@@ -236,7 +236,7 @@ export class GameService {
         let query: Record<any, any> = {
             players: {
                 $elemMatch: {
-                    ...filter,
+                    ...omit(filter, ['percentage_of_army_left']),
                 }
             },
             disconnect: false,
@@ -244,6 +244,13 @@ export class GameService {
             players_ids: { $size: 2 },
             winner: { $ne: null },
         };
+
+        if (filter.percentage_of_army_left) {
+            query = {
+                ...query,
+                percentage_of_army_left: filter.percentage_of_army_left,
+            }
+        }
 
         return GameModel.find(query);
     }

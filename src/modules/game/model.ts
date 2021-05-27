@@ -197,6 +197,8 @@ export enum EComparisonNames {
     LessThen = '$lt',
 }
 
+export type TComparisonField = Record<EComparisonNames, number>;
+
 /**
  * Опции фильтрации игр при поиске
  */
@@ -212,5 +214,31 @@ export interface IFilterGamesOption {
     // Стартовый бонус игрока
     start_bonus?: EPlayerStartedBonus;
     // Количество ментора
-    mentoring?: Record<EComparisonNames, number>;
+    mentoring?: TComparisonField;
+    // Количество оставшейся армии
+    percentage_of_army_left?: TComparisonField;
+    // Нападение героя
+    attack?: TComparisonField;
+    // Защита героя
+    defence?: TComparisonField;
+    // Колдовство героя
+    spell_power?: TComparisonField;
+    // Знание героя
+    knowledge?: TComparisonField;
+    // Удача героя
+    luck?: TComparisonField;
+    // Мораль героя
+    morale?: TComparisonField;
+    // Уровень героя
+    level?: TComparisonField;
+    // Стартовая мана героя
+    mana_start?: TComparisonField;
+    // Один артефакт героя
+    arts?: string;
+    // Одно из заклинаний героя
+    spells?: string;
+    // Существо из армии героя
+    "army.name"?: string;
+    // Боевая машина игрока
+    war_machines?: string;
 }
