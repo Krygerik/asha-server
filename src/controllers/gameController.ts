@@ -286,28 +286,13 @@ export class GameController {
                     );
 
                     const winningGames = filteredApprovedGames.filter((game: ISavedGame) => (
-                        filter.color === game.winner
-                            ? (
-                                game.players[0].race === firstRace.game_id && game.players[0].color === game.winner
-                                || game.players[1].race === firstRace.game_id && game.players[1].color === game.winner
-                            )
-                            : (
-                                game.players[0].race === firstRace.game_id && game.players[0].color !== game.winner
-                                || game.players[1].race === firstRace.game_id && game.players[1].color !== game.winner
-                            )
-
+                        game.players[0].race === firstRace.game_id && game.players[0].color === game.winner
+                        || game.players[1].race === firstRace.game_id && game.players[1].color === game.winner
                     ));
 
                     const loosingGames = filteredApprovedGames.filter((game: ISavedGame) => (
-                        filter.color === game.winner
-                            ? (
-                                game.players[0].race === firstRace.game_id && game.players[0].color !== game.winner
-                                || game.players[1].race === firstRace.game_id && game.players[1].color !== game.winner
-                            )
-                            : (
-                                game.players[0].race === firstRace.game_id && game.players[0].color === game.winner
-                                || game.players[1].race === firstRace.game_id && game.players[1].color === game.winner
-                            )
+                        game.players[0].race === firstRace.game_id && game.players[0].color !== game.winner
+                        || game.players[1].race === firstRace.game_id && game.players[1].color !== game.winner
                     ));
 
                     return {

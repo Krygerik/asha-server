@@ -189,6 +189,15 @@ export interface IFindGameOptions {
 }
 
 /**
+ * Ключи сравнений для бд
+ */
+export enum EComparisonNames {
+    Equal = '$eq',
+    GreatThen = '$gt',
+    LessThen = '$lt',
+}
+
+/**
  * Опции фильтрации игр при поиске
  */
 export interface IFilterGamesOption {
@@ -202,4 +211,6 @@ export interface IFilterGamesOption {
     user_id?: string;
     // Стартовый бонус игрока
     start_bonus?: EPlayerStartedBonus;
+    // Количество ментора
+    mentoring?: Record<EComparisonNames, number>;
 }

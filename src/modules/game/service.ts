@@ -234,14 +234,16 @@ export class GameService {
      */
     public getAllApprovedGames(filter: IFilterGamesOption) {
         let query: Record<any, any> = {
-            $and: [{ "players.user_id": { $ne: null } }],
+            players: {
+                $elemMatch: {
+                    ...filter,
+                }
+            },
             disconnect: false,
+            // 2 - означает, что в игре участвовало 2 зарегистрированных участника проекта
+            players_ids: { $size: 2 },
             winner: { $ne: null },
         };
-
-        forEach(filter, (value: string, key: string) => {
-            query["$and"].push({ [`players.${key}`]: value });
-        });
 
         return GameModel.find(query);
     }
