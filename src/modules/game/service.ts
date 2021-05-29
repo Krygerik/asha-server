@@ -232,11 +232,26 @@ export class GameService {
     /**
      * Получение всех разрешенных для высчитывания баланса игр
      */
-    public getAllApprovedGames() {
-        return GameModel.find({
-            "players.user_id": { $ne: null },
+    public getAllApprovedGames(filter: IFilterGamesOption) {
+        let query: Record<any, any> = {
+            players: {
+                $elemMatch: {
+                    ...omit(filter, ['percentage_of_army_left']),
+                }
+            },
             disconnect: false,
+            // 2 - означает, что в игре участвовало 2 зарегистрированных участника проекта
+            players_ids: { $size: 2 },
             winner: { $ne: null },
-        })
+        };
+
+        if (filter.percentage_of_army_left) {
+            query = {
+                ...query,
+                percentage_of_army_left: filter.percentage_of_army_left,
+            }
+        }
+
+        return GameModel.find(query);
     }
 }

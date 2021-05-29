@@ -58,7 +58,7 @@ export class GameRoutes {
         /**
          * Получение статистики побед по расам
          */
-        app.get('/api/get-races-win-rate', (req: Request, res: Response) => {
+        app.post('/api/get-races-win-rate', (req: Request, res: Response) => {
             this.gameController.getRacesWinRate(req, res);
         });
     };

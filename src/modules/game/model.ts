@@ -7,6 +7,15 @@ export enum EPlayerColor {
 }
 
 /**
+ * Стартовый бонус игрока
+ */
+export enum EPlayerStartedBonus {
+    Artifact = 'art',
+    Gold = 'gold',
+    Spell = 'spell',
+}
+
+/**
  * Интерфейс однотипных войск
  */
 interface ICreatures {
@@ -55,7 +64,7 @@ export interface IInputPlayer {
     // Заклинания героя
     spells: string[];
     // Выбранный стартовый бонус
-    start_bonus: string;
+    start_bonus: EPlayerStartedBonus;
     // Боевые машины игрока
     war_machines: string[];
 }
@@ -180,13 +189,56 @@ export interface IFindGameOptions {
 }
 
 /**
+ * Ключи сравнений для бд
+ */
+export enum EComparisonNames {
+    Equal = '$eq',
+    GreatThen = '$gt',
+    LessThen = '$lt',
+}
+
+export type TComparisonField = Record<EComparisonNames, number>;
+
+/**
  * Опции фильтрации игр при поиске
  */
 export interface IFilterGamesOption {
+    // Цвет игрока
+    color?: EPlayerColor;
     // ID героя
     hero?: string;
     // ID фракции
     race?: string;
     // ID игрока
     user_id?: string;
+    // Стартовый бонус игрока
+    start_bonus?: EPlayerStartedBonus;
+    // Количество ментора
+    mentoring?: TComparisonField;
+    // Количество оставшейся армии
+    percentage_of_army_left?: TComparisonField;
+    // Нападение героя
+    attack?: TComparisonField;
+    // Защита героя
+    defence?: TComparisonField;
+    // Колдовство героя
+    spell_power?: TComparisonField;
+    // Знание героя
+    knowledge?: TComparisonField;
+    // Удача героя
+    luck?: TComparisonField;
+    // Мораль героя
+    morale?: TComparisonField;
+    // Уровень героя
+    level?: TComparisonField;
+    // Стартовая мана героя
+    mana_start?: TComparisonField;
+    // Один артефакт героя
+    arts?: string;
+    // Одно из заклинаний героя
+    spells?: string;
+    // Существо из армии героя
+    "army.name"?: string;
+    // Боевая машина игрока
+    war_machines?: string;
 }
