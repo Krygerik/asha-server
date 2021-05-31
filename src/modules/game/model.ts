@@ -200,9 +200,21 @@ export enum EComparisonNames {
 export type TComparisonField = Record<EComparisonNames, number>;
 
 /**
- * Опции фильтрации игр при поиске
+ * Краткий фильтр игр
  */
-export interface IFilterGamesOption {
+export interface IShortFilter {
+    // ID героя
+    hero?: string;
+    // ID фракции
+    race?: string;
+    // ID игрока
+    user_id?: string;
+}
+
+/**
+ * Поля фильтра для игроков
+ */
+interface IFilterPlayersField {
     // Цвет игрока
     color?: EPlayerColor;
     // ID героя
@@ -215,8 +227,6 @@ export interface IFilterGamesOption {
     start_bonus?: EPlayerStartedBonus;
     // Количество ментора
     mentoring?: TComparisonField;
-    // Количество оставшейся армии
-    percentage_of_army_left?: TComparisonField;
     // Нападение героя
     attack?: TComparisonField;
     // Защита героя
@@ -241,4 +251,13 @@ export interface IFilterGamesOption {
     "army.name"?: string;
     // Боевая машина игрока
     war_machines?: string;
+}
+
+/**
+ * Фильтр по статистике игр
+ */
+export interface IFilterGames {
+    players: IFilterPlayersField[];
+    // Количество оставшейся армии
+    percentage_of_army_left?: TComparisonField;
 }

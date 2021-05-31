@@ -1,12 +1,13 @@
-import {find, forEach, isNil, omit} from "lodash";
+import {find, forEach, isEmpty, isNil, omit} from "lodash";
 import {
     EPlayerColor,
-    IFilterGamesOption,
+    IFilterGames,
     IFindGameOptions,
     IInputGameData,
     IInputPlayersData,
     ISavedGame,
     ISavedPlayer,
+    IShortFilter,
     IShortGame,
     IShortPlayer,
     IWinnerRequestDto
@@ -151,7 +152,7 @@ export class GameService {
     /**
      * Получение списка краткой информации по всем играм с пагинацией
      */
-    public async getShortGameInfoList(options: IFindGameOptions, filter: IFilterGamesOption): Promise<IShortGame[]> {
+    public async getShortGameInfoList(options: IFindGameOptions, filter: IShortFilter): Promise<IShortGame[]> {
         let query = {
             winner: { $ne: null },
         };
@@ -173,7 +174,7 @@ export class GameService {
     /**
      * Получение количества страниц пагинации для переданных опций
      */
-    public async getCountPagesByPageSize(size: number, filter: IFilterGamesOption) {
+    public async getCountPagesByPageSize(size: number, filter: IShortFilter) {
         let query = {
             winner: { $ne: null },
         };
@@ -232,13 +233,57 @@ export class GameService {
     /**
      * Получение всех разрешенных для высчитывания баланса игр
      */
-    public getAllApprovedGames(filter: IFilterGamesOption) {
-        let query: Record<any, any> = {
-            players: {
-                $elemMatch: {
-                    ...omit(filter, ['percentage_of_army_left']),
+    public getAllApprovedGames(filter: IFilterGames) {
+        const playerWithColor = find(filter.players, player => player.color !== undefined);
+        const selectedColor = playerWithColor?.color;
+
+        /**
+         * Какие то сложные ребусы, сделал по-тупому
+         */
+        const queryWithSelectedColor = {
+            $and: filter.players.map((item) => ({
+                players: {
+                    $elemMatch: {
+                        ...item,
+                        color: item.color !== undefined
+                            ? item.color
+                            : selectedColor === EPlayerColor.RED
+                                ? EPlayerColor.RED
+                                : EPlayerColor.BLUE
+                    }
                 }
-            },
+            })),
+        };
+
+        const queryWOSelectedColor = {
+            $or: [
+                {
+                    $and: filter.players.map((item, index) => ({
+                        players: {
+                            $elemMatch: {
+                                ...item,
+                                color: index + 1,
+                            }
+                        }
+                    })),
+                },
+                {
+                    $and: filter.players.map((item, index) => ({
+                        players: {
+                            $elemMatch: {
+                                ...item,
+                                color: 2 - index
+                            }
+                        }
+                    })),
+                },
+            ]
+        }
+
+        let query: Record<any, any> = {
+            ...isEmpty(playerWithColor)
+                ? queryWOSelectedColor
+                : queryWithSelectedColor,
             disconnect: false,
             // 2 - означает, что в игре участвовало 2 зарегистрированных участника проекта
             players_ids: { $size: 2 },

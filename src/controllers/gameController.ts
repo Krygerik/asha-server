@@ -2,7 +2,8 @@ import {Request, Response} from "express";
 import {filter, map, omit, uniq} from "lodash";
 import {
     GameService,
-    IFilterGamesOption,
+    IFilterGames,
+    IShortFilter,
     IFindGameOptions,
     IInputGameData,
     IInputPlayersData,
@@ -143,7 +144,7 @@ export class GameController {
     /**
      * Получение краткого списка всех игр
      */
-    public async getShortGameInfoList(req: Request<unknown, unknown, { filter: IFilterGamesOption }, Partial<IFindGameOptions>>, res: Response) {
+    public async getShortGameInfoList(req: Request<unknown, unknown, { filter: IShortFilter }, Partial<IFindGameOptions>>, res: Response) {
         try {
             const { query } = req;
             const { filter } = req.body;
@@ -260,7 +261,7 @@ export class GameController {
     /**
      * Получение винрейта по расам
      */
-    public async getRacesWinRate(req: Request<unknown, unknown, { filter: IFilterGamesOption }, unknown>, res: Response) {
+    public async getRacesWinRate(req: Request<unknown, unknown, { filter: IFilterGames }, unknown>, res: Response) {
         try {
             const { filter } = req.body;
 
@@ -275,10 +276,6 @@ export class GameController {
             const racesDictionary: IDictionary = racesDictionaryDoc.toObject();
 
             const racesWinRate = racesDictionary.records.reduce((acc, firstRace: IRecords) => {
-                if (filter.race && filter.race !== firstRace.game_id) {
-                    return acc;
-                }
-
                 const winRateWithAllRaces = racesDictionary.records.reduce((accValue, secondRace: IRecords) => {
                     const filteredApprovedGames = allApprovedGames.filter(
                         (game: ISavedGame) => game.players[0].race === firstRace.game_id && game.players[1].race === secondRace.game_id
