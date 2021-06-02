@@ -93,6 +93,11 @@ const PlayerSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
+    winner: {
+        default: false,
+        required: true,
+        type: Boolean,
+    }
 });
 
 const GameSchema = new mongoose.Schema({

@@ -127,6 +127,7 @@ export class GameService {
                 "players.$[redPlayer].user_id": requestData.winner === EPlayerColor.RED ? winnerId : looserId,
                 "players.$[bluePlayer].user_id": requestData.winner === EPlayerColor.BLUE ? winnerId : looserId,
                 "players.$[winner].army_remainder": requestData.army_remainder,
+                "players.$[winner].winner": true,
                 date: requestData.date,
                 percentage_of_army_left: requestData.percentage_of_army_left,
                 winner: requestData.winner,
