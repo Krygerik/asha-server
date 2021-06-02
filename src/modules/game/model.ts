@@ -76,6 +76,8 @@ export interface ISavedPlayer extends IInputPlayer {
     army_remainder?: ICreatures[];
     // Ид пользователя в бд
     user_id?: string;
+    // Является ли игрок победителем
+    winner: boolean;
 }
 
 /**
@@ -251,6 +253,8 @@ interface IFilterPlayersField {
     "army.name"?: string;
     // Боевая машина игрока
     war_machines?: string;
+    // Является игрок победителем
+    winner: boolean;
 }
 
 /**
