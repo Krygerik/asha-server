@@ -1,4 +1,4 @@
-import {find, forEach, isEmpty, isNil, omit} from "lodash";
+import {find, forEach, isNil, omit} from "lodash";
 import {
     EPlayerColor,
     IFilterGames,
@@ -234,70 +234,73 @@ export class GameService {
     /**
      * Получение всех разрешенных для высчитывания баланса игр
      */
-    public getAllApprovedGames(filter: IFilterGames) {
-        const playerWithColor = find(filter.players, player => player.color !== undefined);
-        const selectedColor = playerWithColor?.color;
-
+    public async getSingleMatchUpWinRate(filter: IFilterGames, mainRaceId?: string, otherRaceId?: string) {
         /**
-         * Какие то сложные ребусы, сделал по-тупому
+         * НЕ СМОТРИТЕ НА ЭТО, Я БЫЛ В ПАНИКЕ
          */
-        const queryWithSelectedColor = {
+        const winRateWithRedMain = await this.getSingleMatchUpsWinRateByColors(
+            filter, mainRaceId, otherRaceId, EPlayerColor.RED, EPlayerColor.BLUE
+        );
+
+        const winRateWithBlueMain = await this.getSingleMatchUpsWinRateByColors(
+            filter, mainRaceId, otherRaceId, EPlayerColor.BLUE, EPlayerColor.RED
+        );
+
+        return {
+            loses: winRateWithRedMain.loses + winRateWithBlueMain.loses,
+            wins: winRateWithRedMain.wins + winRateWithBlueMain.wins,
+        }
+    }
+
+    // TODO: docs
+    public async getSingleMatchUpsWinRateByColors (
+        filter: IFilterGames, mainRaceId: string, otherRaceId: string, mainColor: number, otherColor: number
+    ) {
+        const query: Record<any, any> = {
             $and: filter.players.map((item) => ({
                 players: {
                     $elemMatch: {
-                        ...item,
-                        color: item.color !== undefined
-                            ? item.color
-                            : selectedColor === EPlayerColor.RED
-                                ? EPlayerColor.RED
-                                : EPlayerColor.BLUE
+                        ...omit(item, ['main']),
+                        ...item.main
+                            ? { race: mainRaceId, color: mainColor }
+                            : { race: otherRaceId, color: otherColor },
                     }
                 }
             })),
-        };
-
-        const queryWOSelectedColor = {
-            $or: [
-                {
-                    $and: filter.players.map((item, index) => ({
-                        players: {
-                            $elemMatch: {
-                                ...item,
-                                color: index + 1,
-                            }
-                        }
-                    })),
-                },
-                {
-                    $and: filter.players.map((item, index) => ({
-                        players: {
-                            $elemMatch: {
-                                ...item,
-                                color: 2 - index
-                            }
-                        }
-                    })),
-                },
-            ]
-        }
-
-        let query: Record<any, any> = {
-            ...isEmpty(playerWithColor)
-                ? queryWOSelectedColor
-                : queryWithSelectedColor,
             disconnect: false,
             // 2 - означает, что в игре участвовало 2 зарегистрированных участника проекта
             players_ids: { $size: 2 },
             winner: { $ne: null },
         };
 
-        if (filter.percentage_of_army_left) {
-            query = {
-                ...query,
-                percentage_of_army_left: filter.percentage_of_army_left,
-            }
-        }
+        const cutGamesDoc = await GameModel.find(
+            query,
+            { players: { winner: true, race: true, color: true } }
+        );
 
-        return GameModel.find(query);
+        type TCutGames = {
+            _id: string;
+            players: {
+                color: number;
+                race: string;
+                winner: boolean;
+            }[]
+        };
+
+        // @ts-ignore
+        const cutGames: TCutGames[] = cutGamesDoc.map(doc => doc.toObject());
+
+        const wins = cutGames.filter(
+            game => find(game.players, { winner: true, color: mainColor })
+        );
+
+        const loses = cutGames.filter(
+            game => find(game.players, { winner: true, color: otherColor })
+        );
+
+        return {
+            loses: loses.length,
+            wins: wins.length,
+        };
     }
 }

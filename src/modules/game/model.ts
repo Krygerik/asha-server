@@ -253,8 +253,8 @@ interface IFilterPlayersField {
     "army.name"?: string;
     // Боевая машина игрока
     war_machines?: string;
-    // Является игрок победителем
-    winner: boolean;
+    // Является ли текущий фильтр главным
+    main?: boolean;
 }
 
 /**

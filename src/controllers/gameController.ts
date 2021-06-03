@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {filter, map, omit, uniq} from "lodash";
+import {filter, flatten, map, omit, uniq} from "lodash";
 import {
     GameService,
     IFilterGames,
@@ -265,48 +265,41 @@ export class GameController {
         try {
             const { filter } = req.body;
 
-            const allApprovedGamesDoc = await this.gameService.getAllApprovedGames(filter);
-
-            // @ts-ignore
-            const allApprovedGames = allApprovedGamesDoc.map(item => item.toObject());
-
             const racesDictionaryDoc = await this.dictionaryService.getDictionary(EDictionaryName.Races)
 
             // @ts-ignore
             const racesDictionary: IDictionary = racesDictionaryDoc.toObject();
 
-            const racesWinRate = racesDictionary.records.reduce((acc, firstRace: IRecords) => {
-                const winRateWithAllRaces = racesDictionary.records.reduce((accValue, secondRace: IRecords) => {
-                    const filteredApprovedGames = allApprovedGames.filter(
-                        (game: ISavedGame) => game.players[0].race === firstRace.game_id && game.players[1].race === secondRace.game_id
-                        || game.players[0].race === secondRace.game_id && game.players[1].race === firstRace.game_id
-                    );
+            const allMatchUpsList = flatten(
+                racesDictionary.records.map((firstRecord: IRecords) => (
+                    racesDictionary.records.map((secondRecord: IRecords) => ({
+                        mainRaceId: firstRecord.game_id,
+                        otherRaceId: secondRecord.game_id,
+                    }))
+                ))
+            );
 
-                    const winningGames = filteredApprovedGames.filter((game: ISavedGame) => (
-                        game.players[0].race === firstRace.game_id && game.players[0].color === game.winner
-                        || game.players[1].race === firstRace.game_id && game.players[1].color === game.winner
-                    ));
+            const allMatchUpsWinRateList = await Promise.all(
+                allMatchUpsList.map(
+                    (matchUp) => this.gameService.getSingleMatchUpWinRate(filter, matchUp.mainRaceId, matchUp.otherRaceId)
+                )
+            );
 
-                    const loosingGames = filteredApprovedGames.filter((game: ISavedGame) => (
-                        game.players[0].race === firstRace.game_id && game.players[0].color !== game.winner
-                        || game.players[1].race === firstRace.game_id && game.players[1].color !== game.winner
-                    ));
-
-                    return {
-                        ...accValue,
-                        [secondRace.game_id]: { win: winningGames.length, lose: loosingGames.length }
+            const resultMapRaceIdsToWinRates = allMatchUpsList.reduce(
+                (accumulator, current, index) => ({
+                    ...accumulator,
+                    [current.mainRaceId]: {
+                        ...accumulator[current.mainRaceId],
+                        [current.otherRaceId]: allMatchUpsWinRateList[index],
                     }
-                }, {});
 
-                return {
-                    ...acc,
-                    [firstRace.game_id]: winRateWithAllRaces,
-                }
-            }, {} as Record<string, any>);
+                }),
+                {}
+            );
 
             return successResponse(
                 'Статистика по расам получена успешно',
-                racesWinRate,
+                resultMapRaceIdsToWinRates,
                 res,
             );
         } catch (error) {
