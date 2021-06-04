@@ -270,6 +270,9 @@ export class GameController {
             // @ts-ignore
             const racesDictionary: IDictionary = racesDictionaryDoc.toObject();
 
+            /**
+             * Одноуровневый список всех возможных матчапов
+             */
             const allMatchUpsList = flatten(
                 racesDictionary.records.map((firstRecord: IRecords) => (
                     racesDictionary.records.map((secondRecord: IRecords) => ({
@@ -279,12 +282,18 @@ export class GameController {
                 ))
             );
 
+            /**
+             * Одноуровневый список винрейтов всех возможных матчапов
+             */
             const allMatchUpsWinRateList = await Promise.all(
                 allMatchUpsList.map(
                     (matchUp) => this.gameService.getSingleMatchUpWinRate(filter, matchUp.mainRaceId, matchUp.otherRaceId)
                 )
             );
 
+            /**
+             * Итоговая мапа винрейтов всех МА
+             */
             const resultMapRaceIdsToWinRates = allMatchUpsList.reduce(
                 (accumulator, current, index) => ({
                     ...accumulator,

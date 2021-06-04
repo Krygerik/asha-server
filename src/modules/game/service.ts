@@ -10,7 +10,9 @@ import {
     IShortFilter,
     IShortGame,
     IShortPlayer,
-    IWinnerRequestDto
+    IWinnerRequestDto,
+    TCutGames,
+    TWinRate,
 } from "./model";
 import {GameModel} from "./schema";
 
@@ -232,11 +234,14 @@ export class GameService {
     }
 
     /**
-     * Получение всех разрешенных для высчитывания баланса игр
+     * Получение винрейта по определенному МА
      */
-    public async getSingleMatchUpWinRate(filter: IFilterGames, mainRaceId?: string, otherRaceId?: string) {
+    public async getSingleMatchUpWinRate(
+        filter: IFilterGames, mainRaceId?: string, otherRaceId?: string
+    ): Promise<TWinRate> {
         /**
-         * НЕ СМОТРИТЕ НА ЭТО, Я БЫЛ В ПАНИКЕ
+         * Фильтры игроков не должны пересекаться в 1 сущности, поэтому необходимо их разделить друг от друга
+         * В данном случае присваиваем фильтрам разные цвета
          */
         const winRateWithRedMain = await this.getSingleMatchUpsWinRateByColors(
             filter, mainRaceId, otherRaceId, EPlayerColor.RED, EPlayerColor.BLUE
@@ -252,10 +257,12 @@ export class GameService {
         }
     }
 
-    // TODO: docs
+    /**
+     * Получение винрейта по определенному МА с назначенными цветами для обоих игроков
+     */
     public async getSingleMatchUpsWinRateByColors (
         filter: IFilterGames, mainRaceId: string, otherRaceId: string, mainColor: number, otherColor: number
-    ) {
+    ): Promise<TWinRate> {
         const query: Record<any, any> = {
             $and: filter.players.map((item) => ({
                 players: {
@@ -277,15 +284,6 @@ export class GameService {
             query,
             { players: { winner: true, race: true, color: true } }
         );
-
-        type TCutGames = {
-            _id: string;
-            players: {
-                color: number;
-                race: string;
-                winner: boolean;
-            }[]
-        };
 
         // @ts-ignore
         const cutGames: TCutGames[] = cutGamesDoc.map(doc => doc.toObject());
