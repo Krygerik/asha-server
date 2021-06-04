@@ -253,8 +253,8 @@ interface IFilterPlayersField {
     "army.name"?: string;
     // Боевая машина игрока
     war_machines?: string;
-    // Является игрок победителем
-    winner: boolean;
+    // Является ли текущий фильтр главным
+    main?: boolean;
 }
 
 /**
@@ -265,3 +265,30 @@ export interface IFilterGames {
     // Количество оставшейся армии
     percentage_of_army_left?: TComparisonField;
 }
+
+/**
+ * Тип обрезанной игры для подсчетов винрейта
+ */
+export type TCutGames = {
+    // Ид игры в БД
+    _id: string;
+    // Краткие данные по игрокам
+    players: {
+        // Цвет игрока
+        color: number;
+        // Раса игрока
+        race: string;
+        // Является ли игрок победителем
+        winner: boolean;
+    }[]
+};
+
+/**
+ * Тип винрейта
+ */
+export type TWinRate = {
+    // Количество поражений
+    loses: number;
+    // Количество побед
+    wins: number;
+};

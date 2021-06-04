@@ -1,4 +1,4 @@
-import {find, forEach, isEmpty, isNil, omit} from "lodash";
+import {find, forEach, isNil, omit} from "lodash";
 import {
     EPlayerColor,
     IFilterGames,
@@ -10,7 +10,9 @@ import {
     IShortFilter,
     IShortGame,
     IShortPlayer,
-    IWinnerRequestDto
+    IWinnerRequestDto,
+    TCutGames,
+    TWinRate,
 } from "./model";
 import {GameModel} from "./schema";
 
@@ -232,72 +234,71 @@ export class GameService {
     }
 
     /**
-     * Получение всех разрешенных для высчитывания баланса игр
+     * Получение винрейта по определенному МА
      */
-    public getAllApprovedGames(filter: IFilterGames) {
-        const playerWithColor = find(filter.players, player => player.color !== undefined);
-        const selectedColor = playerWithColor?.color;
-
+    public async getSingleMatchUpWinRate(
+        filter: IFilterGames, mainRaceId?: string, otherRaceId?: string
+    ): Promise<TWinRate> {
         /**
-         * Какие то сложные ребусы, сделал по-тупому
+         * Фильтры игроков не должны пересекаться в 1 сущности, поэтому необходимо их разделить друг от друга
+         * В данном случае присваиваем фильтрам разные цвета
          */
-        const queryWithSelectedColor = {
+        const winRateWithRedMain = await this.getSingleMatchUpsWinRateByColors(
+            filter, mainRaceId, otherRaceId, EPlayerColor.RED, EPlayerColor.BLUE
+        );
+
+        const winRateWithBlueMain = await this.getSingleMatchUpsWinRateByColors(
+            filter, mainRaceId, otherRaceId, EPlayerColor.BLUE, EPlayerColor.RED
+        );
+
+        return {
+            loses: winRateWithRedMain.loses + winRateWithBlueMain.loses,
+            wins: winRateWithRedMain.wins + winRateWithBlueMain.wins,
+        }
+    }
+
+    /**
+     * Получение винрейта по определенному МА с назначенными цветами для обоих игроков
+     */
+    public async getSingleMatchUpsWinRateByColors (
+        filter: IFilterGames, mainRaceId: string, otherRaceId: string, mainColor: number, otherColor: number
+    ): Promise<TWinRate> {
+        const query: Record<any, any> = {
             $and: filter.players.map((item) => ({
                 players: {
                     $elemMatch: {
-                        ...item,
-                        color: item.color !== undefined
-                            ? item.color
-                            : selectedColor === EPlayerColor.RED
-                                ? EPlayerColor.RED
-                                : EPlayerColor.BLUE
+                        ...omit(item, ['main']),
+                        ...item.main
+                            ? { race: mainRaceId, color: mainColor }
+                            : { race: otherRaceId, color: otherColor },
                     }
                 }
             })),
-        };
-
-        const queryWOSelectedColor = {
-            $or: [
-                {
-                    $and: filter.players.map((item, index) => ({
-                        players: {
-                            $elemMatch: {
-                                ...item,
-                                color: index + 1,
-                            }
-                        }
-                    })),
-                },
-                {
-                    $and: filter.players.map((item, index) => ({
-                        players: {
-                            $elemMatch: {
-                                ...item,
-                                color: 2 - index
-                            }
-                        }
-                    })),
-                },
-            ]
-        }
-
-        let query: Record<any, any> = {
-            ...isEmpty(playerWithColor)
-                ? queryWOSelectedColor
-                : queryWithSelectedColor,
             disconnect: false,
             // 2 - означает, что в игре участвовало 2 зарегистрированных участника проекта
             players_ids: { $size: 2 },
             winner: { $ne: null },
         };
 
-        if (filter.percentage_of_army_left) {
-            query = {
-                ...query,
-                percentage_of_army_left: filter.percentage_of_army_left,
-            }
-        }
+        const cutGamesDoc = await GameModel.find(
+            query,
+            { players: { winner: true, race: true, color: true } }
+        );
 
-        return GameModel.find(query);
+        // @ts-ignore
+        const cutGames: TCutGames[] = cutGamesDoc.map(doc => doc.toObject());
+
+        const wins = cutGames.filter(
+            game => find(game.players, { winner: true, color: mainColor })
+        );
+
+        const loses = cutGames.filter(
+            game => find(game.players, { winner: true, color: otherColor })
+        );
+
+        return {
+            loses: loses.length,
+            wins: wins.length,
+        };
     }
 }
