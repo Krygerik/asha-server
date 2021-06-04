@@ -239,6 +239,42 @@ export class GameService {
     public async getSingleMatchUpWinRate(
         filter: IFilterGames, mainRaceId?: string, otherRaceId?: string
     ): Promise<TWinRate> {
+        const playerWithColor = filter.players.find(player => player.color);
+
+        /**
+         * Если у одного из игроков проставлен цвет - не перебираем все цветовые варианты игроков
+         */
+        if (playerWithColor) {
+            const isSelectedRedColor = playerWithColor.color === EPlayerColor.RED;
+
+            const mainPlayerColor = playerWithColor.main
+                ? isSelectedRedColor
+                    ? EPlayerColor.RED
+                    : EPlayerColor.BLUE
+                : isSelectedRedColor
+                    ? EPlayerColor.BLUE
+                    : EPlayerColor.RED;
+
+            const otherPlayerColor = playerWithColor.main
+                ? isSelectedRedColor
+                    ? EPlayerColor.BLUE
+                    : EPlayerColor.RED
+                : isSelectedRedColor
+                    ? EPlayerColor.RED
+                    : EPlayerColor.BLUE;
+
+            const winRates = await this.getSingleMatchUpsWinRateByColors(
+                filter, mainRaceId, otherRaceId, mainPlayerColor, otherPlayerColor
+            );
+
+            return {
+                loses: winRates.loses,
+                wins: winRates.wins,
+            };
+        }
+
+
+
         /**
          * Фильтры игроков не должны пересекаться в 1 сущности, поэтому необходимо их разделить друг от друга
          * В данном случае присваиваем фильтрам разные цвета
