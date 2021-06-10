@@ -39,5 +39,12 @@ export class AuthRoutes {
         app.get('/api/auth/get-users', (req: Request, res: Response) => {
             this.authController.getAllUsersList(req, res);
         });
+
+        /**
+         * Получение списка публичных данных игроков по их ид
+         */
+        app.post('/api/auth/get-users-by-ids', (req: Request, res: Response) => {
+            this.authController.getUserListByIds(req, res);
+        });
     };
 }

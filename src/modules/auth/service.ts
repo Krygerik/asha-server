@@ -38,4 +38,17 @@ export class AuthService {
     public findAllUsers() {
         return UserModel.find(null, { nickname: 1, _id: 1 });
     }
+
+    /**
+     * Получение списка id и ников всех пользователей
+     */
+    public async findUsersByIds(ids: string[]) {
+        const userListDocs = await UserModel.find({
+            _id: {
+                $in: ids
+            }
+        }).select('-__v -email');
+
+        return userListDocs.map(doc => doc.toObject());
+    }
 }
