@@ -3,12 +3,13 @@ import {filter, flatten, map, omit, uniq} from "lodash";
 import {
     GameService,
     IFilterGames,
-    IShortFilter,
     IFindGameOptions,
     IInputGameData,
     IInputPlayersData,
     ISavedGame,
     ISavedPlayer,
+    ISetDisconnectStatusDto,
+    IShortFilter,
     IShortGame,
     IShortPlayer,
     IWinnerRequestDto,
@@ -242,14 +243,20 @@ export class GameController {
     /**
      * Проставление игре статуса разрыва соединения
      */
-    public async setGameDisconnectStatusByCombatId(req: Request, res: Response) {
+    public async setGameDisconnectStatusByCombatId(
+        req: Request<unknown, unknown, ISetDisconnectStatusDto, unknown>, res: Response
+    ) {
         try {
-            const { combat_id } = req.body;
+            const { combat_id, disconnect } = req.body;
 
-            const updatedDocs = await this.gameService.setGameDisconnectStatus(combat_id);
+            if (combat_id === undefined || disconnect === undefined) {
+                return insufficientParameters(res);
+            }
+
+            const updatedDocs = await this.gameService.setGameDisconnectStatus(combat_id, disconnect);
 
             return successResponse(
-                `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения`,
+                `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения в ${disconnect}`,
                 updatedDocs,
                 res,
             );

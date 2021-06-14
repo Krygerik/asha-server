@@ -112,6 +112,18 @@ export interface IWinnerRequestDto {
     percentage_of_army_left: number;
     // Цвет игрока победителя
     winner: EPlayerColor;
+    // Произошел ли разрыв соединения во время игры
+    isDisconnect: boolean;
+}
+
+/**
+ * Тело запроса для установки статуса соединения для игры
+ */
+export interface ISetDisconnectStatusDto {
+    // ИД игры для которой проставляется статус
+    combat_id?: number;
+    // статус соединения
+    disconnect?: boolean;
 }
 
 /**
@@ -142,6 +154,8 @@ export interface ISavedGame extends IInputGameData {
     players: ISavedPlayer[];
     // Список ников игроков, участвующих в игре
     players_ids: string[];
+    // Ожидание статуса соединения
+    waiting_for_disconnect_status: boolean;
     // Цвет победителя
     winner?: EPlayerColor;
 }

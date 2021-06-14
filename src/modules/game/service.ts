@@ -132,6 +132,7 @@ export class GameService {
                 "players.$[winner].winner": true,
                 date: requestData.date,
                 percentage_of_army_left: requestData.percentage_of_army_left,
+                waiting_for_disconnect_status: requestData.isDisconnect,
                 winner: requestData.winner,
             }
         };
@@ -157,6 +158,7 @@ export class GameService {
      */
     public async getShortGameInfoList(options: IFindGameOptions, filter: IShortFilter): Promise<IShortGame[]> {
         let query = {
+            waiting_for_disconnect_status: false,
             winner: { $ne: null },
         };
 
@@ -213,6 +215,7 @@ export class GameService {
         const filterOptions = {
             winner: { $ne: null },
             "players.user_id": userId,
+            waiting_for_disconnect_status: false,
         };
 
         let additionalOptions = {
@@ -229,8 +232,13 @@ export class GameService {
     /**
      * Проставление игре статуса дисконнекта
      */
-    public async setGameDisconnectStatus(combat_id: boolean) {
-        return GameModel.updateOne({ combat_id }, { disconnect: true });
+    public async setGameDisconnectStatus(combat_id: number, disconnect: boolean) {
+        const updateFields = {
+            disconnect,
+            waiting_for_disconnect_status: false,
+        }
+
+        return GameModel.updateOne({ combat_id }, updateFields);
     }
 
     /**
@@ -314,6 +322,7 @@ export class GameService {
             // 2 - означает, что в игре участвовало 2 зарегистрированных участника проекта
             players_ids: { $size: 2 },
             winner: { $ne: null },
+            waiting_for_disconnect_status: false,
         };
 
         const cutGamesDoc = await GameModel.find(
