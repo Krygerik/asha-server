@@ -101,9 +101,9 @@ export class GameService {
         const savedGame: ISavedGame = await GameModel.findOne({ combat_id: requestData.combat_id });
 
         /**
-         * Если игра с данным id отсутствует или победитель уже определен - выкидываем
+         * Если игра с данным id отсутствует или игра завершилась корректно - не меняем ее исход
          */
-        if (isNil(savedGame) || !isNil(savedGame.winner)) {
+        if (isNil(savedGame) || !savedGame.disconnect) {
             return callback();
         }
 
@@ -129,8 +129,11 @@ export class GameService {
                 "players.$[redPlayer].user_id": requestData.winner === EPlayerColor.RED ? winnerId : looserId,
                 "players.$[bluePlayer].user_id": requestData.winner === EPlayerColor.BLUE ? winnerId : looserId,
                 "players.$[winner].army_remainder": requestData.army_remainder,
+                "players.$[looser].army_remainder": [],
                 "players.$[winner].winner": true,
+                "players.$[looser].winner": false,
                 date: requestData.date,
+                disconnect: false,
                 percentage_of_army_left: requestData.percentage_of_army_left,
                 waiting_for_disconnect_status: requestData.isDisconnect,
                 winner: requestData.winner,
@@ -143,6 +146,7 @@ export class GameService {
                 { "redPlayer.color": EPlayerColor.RED },
                 { "bluePlayer.color": EPlayerColor.BLUE },
                 { "winner.color": requestData.winner },
+                { "looser.color": { $ne: requestData.winner} },
             ]
         };
 
