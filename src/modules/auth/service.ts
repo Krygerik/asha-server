@@ -47,7 +47,7 @@ export class AuthService {
             _id: {
                 $in: ids
             }
-        }).select('-__v -email');
+        }).select('-__v -email -hash_password');
 
         return userListDocs.map(doc => doc.toObject());
     }
