@@ -10,3 +10,13 @@ export interface ITournament {
     // Название турнира
     name: string;
 }
+
+/**
+ * Тело запроса на регистрацию игрока в турнире
+ */
+export interface IRegisterParticipantBody {
+    // ИД турнира
+    tournament_id: string | undefined;
+    // ИД регистрирующегося игрока
+    userId: string;
+}

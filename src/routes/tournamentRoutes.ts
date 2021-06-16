@@ -1,4 +1,5 @@
 import {Application, Request, Response} from "express";
+import { AuthController } from "../controllers/authController";
 import {TournamentController} from "../controllers/tournamentController";
 
 export class TournamentRoutes {
@@ -24,6 +25,20 @@ export class TournamentRoutes {
          */
         app.get('/api/tournament/:id', (req: Request, res: Response) => {
             this.tournamentController.getTournament(req, res);
+        })
+
+        /**
+         * Регистрация игрока в турнире
+         */
+        app.post('/api/tournament/register', AuthController.authMiddleware, (req: Request, res: Response) => {
+            this.tournamentController.registerParticipant(req, res);
+        })
+
+        /**
+         * Снятие кандидатуры игрока на турнире
+         */
+        app.post('/api/tournament/leave', AuthController.authMiddleware, (req: Request, res: Response) => {
+            this.tournamentController.removeParticipantFromTournament(req, res);
         })
     }
 }
