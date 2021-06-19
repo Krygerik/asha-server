@@ -13,6 +13,15 @@ export class TournamentService {
     }
 
     /**
+     * Удаление турнира
+     */
+    public async deleteTournament(_id: string) {
+        const deletedTour = await TournamentModel.findOneAndDelete({ _id });
+
+        return deletedTour.toObject();
+    }
+
+    /**
      * Получение списка всех турниров
      */
     public async getAllTournaments() {

@@ -8,11 +8,18 @@ export class TournamentRoutes {
 
     public route(app: Application) {
         /**
-         * Регистрация нового турнира
+         * Создание нового турнира
          */
         app.post('/api/tournament/create', AuthController.authMiddleware(ERoles.ADMIN), (req: Request, res: Response) => {
             this.tournamentController.createTournament(req, res);
         });
+
+        /**
+         * Удаление существующего турнира
+         */
+        app.post('/api/tournament/delete', AuthController.authMiddleware(ERoles.ADMIN), (req: Request, res: Response) => {
+            this.tournamentController.deleteTournament(req, res);
+        })
 
         /**
          * Получение списка всех турниров

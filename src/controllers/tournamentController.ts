@@ -30,6 +30,30 @@ export class TournamentController {
     }
 
     /**
+     * Удаление турнира
+     */
+    public async deleteTournament(req: Request, res: Response) {
+        try {
+            const { tournament_id }: { tournament_id?: string } = req.body;
+
+            if (!tournament_id) {
+                return insufficientParameters(res);
+            }
+
+            // @ts-ignore
+            const deletedTournament: ITournament | null = await this.tournamentService.deleteTournament(tournament_id);
+
+            if (!deletedTournament) {
+                return failureResponse('Такого турнира не существует', null, res);
+            }
+
+            successResponse(`Турнир "${deletedTournament.name}" успешно удален`, null, res);
+        } catch (error) {
+            mongoError(error, res);
+        }
+    }
+
+    /**
      * Получение списка всех турниров
      */
     public async getAllTournaments(req: Request, res: Response) {
