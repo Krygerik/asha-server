@@ -17,44 +17,52 @@ export class AuthController {
     /**
      * Генерация временного токена для пользователя
      */
-    private static generateAccessToken(userId: string) {
-        return jwt.sign({ userId }, String(process.env.SECRET), { expiresIn: "7d" });
+    private static generateAccessToken(userId: string, roles: string[]) {
+        return jwt.sign({ userId, roles }, String(process.env.SECRET), { expiresIn: "7d" });
     }
 
     /**
      * Промежуточный обработчик, проверяющий пользователя на авторизацию
      */
-    public static authMiddleware(req: Request, res: Response, next: Function) {
-        if (req.method === 'OPTIONS') {
-            next();
-        }
-
-        try {
-            if (!req.headers.authorization) {
-                return failureResponse('Пользователь не авторизован', null, res);
+    public static authMiddleware(accessRole?: string) {
+        return async function(req: Request, res: Response, next: Function) {
+            if (req.method === 'OPTIONS') {
+                next();
             }
 
-            const token = req.headers.authorization.split(' ')[1];
+            try {
+                if (!req.headers.authorization) {
+                    return failureResponse('Пользователь не авторизован', null, res);
+                }
 
-            if (!token) {
-                return failureResponse('Пользователь не авторизован', null, res);
-            }
+                const token = req.headers.authorization.split(' ')[1];
 
-            jwt.verify(token, String(process.env.SECRET), (tokenError: any, decodedData: { userId: string }) => {
-                if (tokenError) {
-                    const message = tokenError.name === 'TokenExpiredError'
-                        ? 'Действите токена истекло'
-                        : 'Ошибка при работе с токеном';
+                if (!token) {
+                    return failureResponse('Пользователь не авторизован', null, res);
+                }
 
-                    return failureResponse(message, null, res);
+                // @ts-ignore
+                const decodedData: { userId: string, roles?: string[] } = jwt.verify(token, String(process.env.SECRET));
+
+                if (accessRole && !decodedData.roles?.includes(accessRole)) {
+                    return failureResponse('Пользователь не имеет привелегий для данной операции', null, res);
                 }
 
                 req.body.userId = decodedData.userId;
+                req.body.roles = decodedData.roles;
 
                 next();
-            });
-        } catch (error) {
-            return failureResponse('Ошибка при проверке пользователя на авторизацию', { error }, res);
+            } catch (error) {
+                let message = 'Ошибка при работе с токеном';
+
+                if (error.name === 'TokenExpiredError') {
+                    message = 'Действите токена истекло';
+                }
+                if (error.name === 'JsonWebTokenError') {
+                    message = 'Неправильный токен';
+                }
+                return failureResponse(message, { error }, res);
+            }
         }
     }
 
@@ -103,7 +111,7 @@ export class AuthController {
                 return failureResponse('Введен неверный пароль', null, res);
             }
 
-            const token = AuthController.generateAccessToken(user._id);
+            const token = AuthController.generateAccessToken(user._id, user.roles);
 
             successResponse('Пользователь успешно авторизирован', { token }, res);
         } catch (error) {

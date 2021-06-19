@@ -1,5 +1,12 @@
 
 /**
+ * Тип ролей пользователя
+ */
+export enum ERoles {
+    ADMIN = 'ADMIN',
+}
+
+/**
  * Тип данных пользователя, приходящий с ui
  */
 export interface IUser {
@@ -11,6 +18,8 @@ export interface IUser {
     hash_password: string;
     // ник игрока
     nickname: string;
+    // Роли игрока
+    roles: ERoles[];
 }
 
 /**

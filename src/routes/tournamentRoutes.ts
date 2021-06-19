@@ -1,6 +1,7 @@
 import {Application, Request, Response} from "express";
 import { AuthController } from "../controllers/authController";
 import {TournamentController} from "../controllers/tournamentController";
+import {ERoles} from "../modules/auth/model";
 
 export class TournamentRoutes {
     private tournamentController: TournamentController = new TournamentController();
@@ -9,7 +10,7 @@ export class TournamentRoutes {
         /**
          * Регистрация нового турнира
          */
-        app.post('/api/tournament/create', (req: Request, res: Response) => {
+        app.post('/api/tournament/create', AuthController.authMiddleware(ERoles.ADMIN), (req: Request, res: Response) => {
             this.tournamentController.createTournament(req, res);
         });
 
@@ -30,14 +31,14 @@ export class TournamentRoutes {
         /**
          * Регистрация игрока в турнире
          */
-        app.post('/api/tournament/register', AuthController.authMiddleware, (req: Request, res: Response) => {
+        app.post('/api/tournament/register', AuthController.authMiddleware(), (req: Request, res: Response) => {
             this.tournamentController.registerParticipant(req, res);
         })
 
         /**
          * Снятие кандидатуры игрока на турнире
          */
-        app.post('/api/tournament/leave', AuthController.authMiddleware, (req: Request, res: Response) => {
+        app.post('/api/tournament/leave', AuthController.authMiddleware(), (req: Request, res: Response) => {
             this.tournamentController.removeParticipantFromTournament(req, res);
         })
     }
