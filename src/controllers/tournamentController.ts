@@ -15,6 +15,12 @@ export class TournamentController {
         try {
             const tournamentData: ITournament = req.body;
 
+            const tournament = this.tournamentService.getTournament(tournamentData);
+
+            if (tournament) {
+                return failureResponse('Такой турнир уже зарегистрирован', null, res);
+            }
+
             await this.tournamentService.createTournament(tournamentData);
 
             successResponse('Турнир успешно создан', null, res);

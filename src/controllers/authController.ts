@@ -137,7 +137,7 @@ export class AuthController {
                 return failureResponse(`Пользователь не найден`, null, res);
             }
 
-            const responseData = pick(user, ['_id', 'discord', 'email', 'nickname']);
+            const responseData = pick(user, ['_id', 'discord', 'email', 'nickname', 'roles']);
 
             successResponse('Данные пользователя получены успешно', responseData, res);
         } catch (error) {
