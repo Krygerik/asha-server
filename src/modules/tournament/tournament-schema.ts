@@ -14,6 +14,11 @@ const TournamentSchema = new mongoose.Schema({
         required: true,
         type: String,
     },
+    started: {
+        default: false,
+        required: true,
+        type: Boolean,
+    }
 });
 
 export const TournamentModel = mongoose.model('tournament', TournamentSchema);

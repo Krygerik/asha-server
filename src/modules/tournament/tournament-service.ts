@@ -5,6 +5,27 @@ import {ITournament} from "./tournament-model";
  * Действия непосредственно с таблицей с турнирами
  */
 export class TournamentService {
+    constructor() {
+        this.checkTournamentByCron();
+    }
+
+    /**
+     * Закрытие регистраций на турниры по шедулеру каждые 10 минут
+     */
+    private checkTournamentByCron() {
+        const FIVE_MINUTE = 600000;
+
+        setInterval(() => {
+            TournamentModel.updateMany(
+                {
+                    start_date: { $lt: new Date().toISOString() },
+                    started: false,
+                },
+                { started: true }
+            )
+        }, FIVE_MINUTE);
+    }
+
     /**
      * Создание турнира
      */

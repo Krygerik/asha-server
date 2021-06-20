@@ -9,6 +9,8 @@ export interface ITournament {
     users: string[];
     // Название турнира
     name: string;
+    // Регистрация окончилась и турнир начался
+    started: boolean;
 }
 
 /**
