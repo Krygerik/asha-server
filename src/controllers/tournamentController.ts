@@ -105,7 +105,14 @@ export class TournamentController {
                 return failureResponse('Пользователь уже участвует в турнире', null, res);
             }
 
-            await this.tournamentService.addParticipantToTournament(tournament_id, userId);
+            const updatedTournament = await this.tournamentService.addParticipantToTournament(tournament_id, userId);
+
+            /**
+             * Если пользователь отправил запрос на регистрацию после ее закрытия
+             */
+            if (!updatedTournament) {
+                return failureResponse('Регистрация на турнир уже закрыта', null, res);
+            }
 
             successResponse('Игрок успешно зарегистрирован', null, res);
         } catch (error) {

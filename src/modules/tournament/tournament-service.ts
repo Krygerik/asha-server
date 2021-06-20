@@ -77,7 +77,10 @@ export class TournamentService {
         };
 
         return TournamentModel.findOneAndUpdate(
-            { _id: tournament_id },
+            {
+                _id: tournament_id,
+                started: false,
+            },
             updateOperator,
         );
     }
