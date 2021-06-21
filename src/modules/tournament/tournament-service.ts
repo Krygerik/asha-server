@@ -1,5 +1,6 @@
+import {EPlayerColor} from "../game";
 import {TournamentModel} from "./tournament-schema";
-import {ITournament, ITournamentRound} from "./tournament-model";
+import {ITournament, ITournamentPlayer, ITournamentRound} from "./tournament-model";
 
 /**
  * Действия непосредственно с таблицей с турнирами
@@ -16,40 +17,46 @@ export class TournamentService {
         const FIVE_MINUTE = 600000;
 
         setInterval(() => {
-            TournamentModel.updateMany(
-                {
-                    start_date: { $lt: new Date().toISOString() },
-                    started: false,
-                },
-                { started: true }
-            )
+            this.closeRegistrationInOpenTournaments();
         }, FIVE_MINUTE);
+
+    }
+
+    /**
+     * Закрытие регистраций на турниры, в которых время на регистрацию истекло
+     */
+    private async closeRegistrationInOpenTournaments() {
+        // @ts-ignore
+        const openToursDocs: { _id: string, users: string[] }[] = await TournamentModel.find(
+            {
+                start_date: { $lt: new Date().toISOString() },
+                started: false,
+            },
+            { _id: true, users: true }
+        );
+
+        openToursDocs.forEach(openTours => {
+            const grid = this.generateTournamentGrid(openTours.users);
+
+            TournamentModel.findOneAndUpdate(
+                { _id: openTours._id },
+                {
+                    $set: {
+                        started: true,
+                        grid,
+                    }
+                }
+            ).catch((e) => console.log(e));
+        })
+
     }
 
     /**
      * Создание турнирной сетки
      */
-    private generateTournamentGrid(): ITournamentRound[] {
-        /**
-         * Тестовое количество игроков, потом заменится на параметр
-         */
-        const users = [
-            'Маркар',
-            'Маркар Орижин',
-            'Маркар Не настоящий',
-            'Маркар Сталкер',
-            'Маркар в автобусе',
-            'Маркар Сержант',
-            'Маркар Держит глобус',
-            'Маркар вне себя',
-        ];
-
-        /**
-         * Общее количество матчей
-         */
-        const allRoundCount = users.length - 1;
-
+    private generateTournamentGrid(users: string[]): ITournamentRound[] {
         const mapCountUsersToCountStage = {
+            [2]: 1,
             [4]: 2,
             [8]: 3,
             [16]: 4,
@@ -75,7 +82,21 @@ export class TournamentService {
                         ? undefined
                         : currentRoundCount % 2 === 0
                             ? currentRoundCount / 2
-                            : (currentRoundCount - 1) / 2
+                            : (currentRoundCount - 1) / 2,
+                    players: indexStage !== countStage - 1
+                        ? []
+                        : [
+                            {
+                                user_id: users.pop(),
+                                color: EPlayerColor.BLUE,
+                                win_count: 0,
+                            },
+                            {
+                                user_id: users.shift(),
+                                color: EPlayerColor.RED,
+                                win_count: 0,
+                            },
+                        ] as ITournamentPlayer[]
                 };
 
                 grid.push(generatedRound);

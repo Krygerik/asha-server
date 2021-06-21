@@ -3,7 +3,7 @@ import {EPlayerColor} from "../game";
 /**
  * Данные по участнику раунда
  */
-interface ITournamentPlayer {
+export interface ITournamentPlayer {
     // ИД игрока
     user_id?: string;
     // Цвет игрока
@@ -22,7 +22,8 @@ export interface ITournamentRound {
     parent_round?: number;
     // Номер этого раунда
     number_of_round: number;
-    players?: ITournamentPlayer[];
+    // Данные игроков текущего раунда
+    players: ITournamentPlayer[];
     // Ид игрока победителя в текущем раунде
     winner_id?: string;
 }
