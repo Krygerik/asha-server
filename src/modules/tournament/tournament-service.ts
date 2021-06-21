@@ -1,5 +1,5 @@
 import {TournamentModel} from "./tournament-schema";
-import {ITournament} from "./tournament-model";
+import {ITournament, ITournamentRound} from "./tournament-model";
 
 /**
  * Действия непосредственно с таблицей с турнирами
@@ -24,6 +24,65 @@ export class TournamentService {
                 { started: true }
             )
         }, FIVE_MINUTE);
+    }
+
+    /**
+     * Создание турнирной сетки
+     */
+    private generateTournamentGrid(): ITournamentRound[] {
+        /**
+         * Тестовое количество игроков, потом заменится на параметр
+         */
+        const users = [
+            'Маркар',
+            'Маркар Орижин',
+            'Маркар Не настоящий',
+            'Маркар Сталкер',
+            'Маркар в автобусе',
+            'Маркар Сержант',
+            'Маркар Держит глобус',
+            'Маркар вне себя',
+        ];
+
+        /**
+         * Общее количество матчей
+         */
+        const allRoundCount = users.length - 1;
+
+        const mapCountUsersToCountStage = {
+            [4]: 2,
+            [8]: 3,
+            [16]: 4,
+            [32]: 5,
+            [64]: 6,
+        };
+        const countStage = mapCountUsersToCountStage[users.length];
+
+        const grid = [] as ITournamentRound[];
+
+        // Йуууухуууу, пирамидкаааа ^_^
+        for (let indexStage = 0; indexStage < countStage; indexStage++) {
+            for (let indexRoundInLine = 0; indexRoundInLine < 2**indexStage; indexRoundInLine++) {
+                // Число уже сгенерированных раундов
+                const currentRoundCount = grid.length + 1;
+
+                const generatedRound: ITournamentRound = {
+                    number_of_round: currentRoundCount,
+                    children_rounds: indexStage === countStage - 1
+                        ? []
+                        : [currentRoundCount * 2, currentRoundCount * 2 + 1],
+                    parent_round: indexStage === 0
+                        ? undefined
+                        : currentRoundCount % 2 === 0
+                            ? currentRoundCount / 2
+                            : (currentRoundCount - 1) / 2
+                };
+
+                grid.push(generatedRound);
+            }
+        }
+
+        return grid;
     }
 
     /**
