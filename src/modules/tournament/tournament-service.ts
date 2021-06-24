@@ -1,6 +1,7 @@
 import {EPlayerColor} from "../game";
 import {TournamentModel} from "./tournament-schema";
 import {ITournament, ITournamentPlayer, ITournamentRound} from "./tournament-model";
+import {AUTO_WIN, BOUNDARY_MEMBER_COUNT_LIST, mapCountMemberToCountStage} from "./tournament-constants";
 
 /**
  * Действия непосредственно с таблицей с турнирами
@@ -48,22 +49,86 @@ export class TournamentService {
                 }
             ).catch((e) => console.log(e));
         })
+    }
 
+    /**
+     * Получение конечного списка участников турнира
+     * Добавление авто-винов до пороговых значений для построения сетки
+     */
+    private static getTournamentMemberList(usersIdList: string[]): string[] {
+        for (let i = 0; i < BOUNDARY_MEMBER_COUNT_LIST.length; i++) {
+            if (usersIdList.length <= BOUNDARY_MEMBER_COUNT_LIST[i]) {
+                return [
+                    ...usersIdList,
+                    ...new Array(BOUNDARY_MEMBER_COUNT_LIST[i] - usersIdList.length).fill(AUTO_WIN)
+                ];
+            }
+        }
+    }
+
+    /**
+     * Корректировка начальных раундов для игроков, которым не выпали оппоненты
+     */
+    private static resolveInitialAutoWins(grid: ITournamentRound[]): ITournamentRound[] {
+        const roundWithAutoWins: ITournamentRound[] = grid.filter(
+            (round: ITournamentRound) => round.players.find(
+                (player: ITournamentPlayer) => player.user_id === AUTO_WIN
+            )
+        )
+
+        return grid.map((round: ITournamentRound) => {
+            /**
+             * дочерние игры с автопобедой
+             */
+            const childRoundsWithAutoWin = roundWithAutoWins.filter(
+                (roundWithAutoWin: ITournamentRound) => roundWithAutoWin.parent_round === round.number_of_round
+            );
+
+            /**
+             * Является ли эта игра - игрой с автопобедой
+             */
+            const isRoundWithAutoWin = Boolean(
+                roundWithAutoWins.find(
+                (roundWithAutoWin: ITournamentRound) => roundWithAutoWin.number_of_round === round.number_of_round
+            ));
+
+            if (isRoundWithAutoWin) {
+                const playerWOOpponent = round.players.find(
+                    (player: ITournamentPlayer) => player.user_id !== AUTO_WIN
+                )
+
+                return {
+                    ...round,
+                    winner_id: playerWOOpponent.user_id,
+                };
+            }
+
+            if (childRoundsWithAutoWin.length) {
+                const livePlayers = [];
+
+                childRoundsWithAutoWin.forEach((round: ITournamentRound) => {
+                    livePlayers.push(round.players.find(
+                        (player: ITournamentPlayer) => player.user_id !== AUTO_WIN
+                    ))
+                })
+
+                return {
+                    ...round,
+                    players: livePlayers
+                } as ITournamentRound;
+            }
+
+            return round;
+        })
     }
 
     /**
      * Создание турнирной сетки
      */
     private generateTournamentGrid(users: string[]): ITournamentRound[] {
-        const mapCountUsersToCountStage = {
-            [2]: 1,
-            [4]: 2,
-            [8]: 3,
-            [16]: 4,
-            [32]: 5,
-            [64]: 6,
-        };
-        const countStage = mapCountUsersToCountStage[users.length];
+        const memberList = TournamentService.getTournamentMemberList(users);
+
+        const countStage = mapCountMemberToCountStage[memberList.length];
 
         const grid = [] as ITournamentRound[];
 
@@ -87,12 +152,12 @@ export class TournamentService {
                         ? []
                         : [
                             {
-                                user_id: users.pop(),
+                                user_id: memberList.pop(),
                                 color: EPlayerColor.BLUE,
                                 win_count: 0,
                             },
                             {
-                                user_id: users.shift(),
+                                user_id: memberList.shift(),
                                 color: EPlayerColor.RED,
                                 win_count: 0,
                             },
@@ -103,7 +168,7 @@ export class TournamentService {
             }
         }
 
-        return grid;
+        return TournamentService.resolveInitialAutoWins(grid);
     }
 
     /**
