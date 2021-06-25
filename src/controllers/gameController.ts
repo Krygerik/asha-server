@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
-import {filter, flatten, map, omit, uniq} from "lodash";
+import {filter, find, flatten, isNil, map, omit, uniq} from "lodash";
 import {
+    EPlayerColor,
     GameService,
     IFilterGames,
     IFindGameOptions,
@@ -15,6 +16,7 @@ import {
     IWinnerRequestDto,
 } from "../modules/game";
 import {
+    failureResponse,
     incorrectParameters,
     insufficientParameters,
     internalError,
@@ -24,6 +26,7 @@ import {
 import {AuthService} from "../modules/auth";
 import {DictionariesService, IDictionary} from "../modules/dictionaries";
 import {EDictionaryName, IRecords} from "../modules/dictionaries/model";
+import {ERoles} from "../modules/auth/model";
 
 export class GameController {
     private gameService: GameService = new GameService();
@@ -102,21 +105,65 @@ export class GameController {
     /**
      * Сохранение победителя и определение красного игрока
      */
-    public saveGameWinner(req: Request, res: Response) {
+    public async saveGameWinner(req: Request<unknown, unknown, IWinnerRequestDto & { userId: string; roles: ERoles }>, res: Response) {
         try {
             // @ts-ignore
-            const gameData: IWinnerRequestDto = {
-                ...omit(req.body, ['userId']),
-                user_id: req.body.userId,
+            const savedGame: ISavedGame = await this.gameService.findGame({ combat_id: gameData.combat_id });
+
+            /**
+             * Если игра с данным id отсутствует или игра завершилась корректно - не меняем ее исход
+             */
+            if (isNil(savedGame)) {
+                return failureResponse('Игра с таким ID отсутствует', null, res);
             }
 
-            this.gameService.saveGameWinner(gameData, (err: any, gameData: IInputGameData) => {
-                if (err) {
-                    return mongoError(err, res);
-                }
+            const senderIsWinner = (
+                req.body.isRedPlayer && req.body.winner === EPlayerColor.RED
+                || !req.body.isRedPlayer && req.body.winner === EPlayerColor.BLUE
+            )
 
-                successResponse('Победитель игры обозначен!', gameData, res);
-            });
+            const winnerId = senderIsWinner
+                ? req.body.userId
+                : find(
+                    savedGame.players_ids,
+                    (playerId: string) => playerId !== req.body.userId
+                );
+
+            const looserId = find(
+                savedGame.players_ids,
+                (playerId: string) => playerId !== winnerId
+            );
+
+            const updatedValue = {
+                $set: {
+                    "players.$[redPlayer].user_id": req.body.winner === EPlayerColor.RED ? winnerId : looserId,
+                    "players.$[bluePlayer].user_id": req.body.winner === EPlayerColor.BLUE ? winnerId : looserId,
+                    "players.$[winner].army_remainder": req.body.army_remainder,
+                    "players.$[looser].army_remainder": [],
+                    "players.$[winner].winner": true,
+                    "players.$[looser].winner": false,
+                    date: req.body.date,
+                    disconnect: false,
+                    percentage_of_army_left: req.body.percentage_of_army_left,
+                    waiting_for_disconnect_status: req.body.isDisconnect,
+                    winner: req.body.winner,
+                }
+            };
+
+            const option = {
+                multi: true,
+                arrayFilters: [
+                    { "redPlayer.color": EPlayerColor.RED },
+                    { "bluePlayer.color": EPlayerColor.BLUE },
+                    { "winner.color": req.body.winner },
+                    { "looser.color": { $ne: req.body.winner} },
+                ]
+            };
+
+            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
+
+            successResponse('Победитель игры обозначен!', updatedGame, res);
+
         } catch (error) {
             internalError(error, res);
         }
