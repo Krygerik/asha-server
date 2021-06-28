@@ -51,4 +51,17 @@ export class AuthService {
 
         return userListDocs.map(doc => doc.toObject());
     }
+
+    /**
+     * Добавление пользователю данных о турнире, на который он зарегистрировался
+     */
+    public addTournamentIdToUser(userId: string, tournamentId: string) {
+        const updatedValue = {
+            $push: {
+                tournaments: tournamentId
+            }
+        };
+
+        return UserModel.findOneAndUpdate({ _id: userId }, updatedValue);
+    }
 }

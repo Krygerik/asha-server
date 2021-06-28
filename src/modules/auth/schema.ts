@@ -21,7 +21,11 @@ const UserSchema = new mongoose.Schema({
         default: [],
         required: true,
         type: [String],
-    }
+    },
+    tournaments: {
+        default: [],
+        type: [String],
+    },
 });
 
 export const UserModel = mongoose.model('users', UserSchema);

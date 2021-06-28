@@ -7,23 +7,30 @@ import {
     mongoError,
     successResponse,
 } from "../modules/common/services";
+import {AuthService} from "../modules/auth";
 
 export class TournamentController {
+    private authService: AuthService = new AuthService();
     private tournamentService: TournamentService = new TournamentService();
 
     public async createTournament(req: Request, res: Response) {
         try {
             const tournamentData: ITournament = req.body;
 
-            const tournament = this.tournamentService.getTournament(tournamentData);
+            const tournament = await this.tournamentService.getTournament(tournamentData);
 
             if (tournament) {
                 return failureResponse('Такой турнир уже зарегистрирован', null, res);
             }
 
-            await this.tournamentService.createTournament(tournamentData);
+            // @ts-ignore
+            const createdTournament: ITournament | null = await this.tournamentService.createTournament(tournamentData);
 
-            successResponse('Турнир успешно создан', null, res);
+            if (!createdTournament) {
+                return failureResponse('Не удалось создать турнир', null, res);
+            }
+
+            successResponse('Турнир успешно создан', createdTournament, res);
         } catch (error) {
             mongoError(error, res);
         }
@@ -112,6 +119,19 @@ export class TournamentController {
              */
             if (!updatedTournament) {
                 return failureResponse('Регистрация на турнир уже закрыта', null, res);
+            }
+
+            /**
+             * Добавляем турнир в список турниров, в которых участвует пользователь
+             */
+            const updatedUser = await this.authService.addTournamentIdToUser(userId, tournament_id);
+
+            if (!updatedUser) {
+                return failureResponse(
+                    'Не получилось добавить турнир в список турниров пользователя',
+                    null,
+                    res,
+                );
             }
 
             successResponse('Игрок успешно зарегистрирован', null, res);

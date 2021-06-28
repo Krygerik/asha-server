@@ -20,6 +20,8 @@ export interface IUser {
     nickname: string;
     // Роли игрока
     roles: ERoles[];
+    // ИД турниров, в которых юзверь участвовал или участвует
+    tournaments: string[];
 }
 
 /**
