@@ -23,10 +23,13 @@ import {
     mongoError,
     successResponse,
 } from "../modules/common/services";
-import {AuthService} from "../modules/auth";
-import {ERoles} from "../modules/auth/model";
-import {DictionariesService, IDictionary} from "../modules/dictionaries";
-import {EDictionaryName, IRecords} from "../modules/dictionaries/model";
+import {AuthService, ERoles} from "../modules/auth";
+import {
+    DictionariesService,
+    EDictionaryName,
+    IDictionary,
+    IRecords,
+} from "../modules/dictionaries";
 import {TournamentService} from "../modules/tournament";
 
 export class GameController {

@@ -1,2 +1,6 @@
-export {IDictionary} from './model';
+export {
+    EDictionaryName,
+    IDictionary,
+    IRecords,
+} from './model';
 export {DictionariesService} from './service';

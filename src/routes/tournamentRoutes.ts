@@ -1,7 +1,7 @@
 import {Application, Request, Response} from "express";
 import { AuthController } from "../controllers/authController";
 import {TournamentController} from "../controllers/tournamentController";
-import {ERoles} from "../modules/auth/model";
+import {ERoles} from "../modules/auth";
 
 export class TournamentRoutes {
     private tournamentController: TournamentController = new TournamentController();
