@@ -1,5 +1,6 @@
 import * as mongoose from "mongoose";
 import {EPlayerColor} from "../game";
+import { ERoundFormat } from "./tournament-model";
 
 const PlayerSchema = new mongoose.Schema({
     user_id: String,
@@ -25,12 +26,20 @@ const GridSchema = new mongoose.Schema({
         required: true,
         type: [String],
     },
-    parent_round: Number,
     number_of_round: {
         required: true,
         type: Number,
     },
-    players: [PlayerSchema],
+    parent_round: Number,
+    players: {
+        type: [PlayerSchema],
+        required: true,
+    },
+    round_format: {
+        enum: Object.values(ERoundFormat),
+        required: true,
+        type: String,
+    },
     winner_id: String,
 });
 
@@ -57,7 +66,19 @@ const TournamentSchema = new mongoose.Schema({
         default: [],
         required: true,
         type: [GridSchema],
-    }
+    },
+    rounds_format: {
+        default: ERoundFormat.Bo3,
+        enum: Object.values(ERoundFormat),
+        required: true,
+        type: String,
+    },
+    super_final_format: {
+        default: ERoundFormat.Bo5,
+        enum: Object.values(ERoundFormat),
+        required: true,
+        type: String,
+    },
 });
 
 export const TournamentModel = mongoose.model('tournament', TournamentSchema);

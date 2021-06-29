@@ -20,14 +20,26 @@ export interface ITournamentRound {
     children_rounds: number[];
     // ИД игр, сыгранных в этом раунде
     games: string[];
-    // Номер родительского раунда
-    parent_round?: number;
     // Номер этого раунда
     number_of_round: number;
+    // Номер родительского раунда
+    parent_round?: number;
     // Данные игроков текущего раунда
     players: ITournamentPlayer[];
+    // Формат этого раунда
+    round_format: ERoundFormat;
     // Ид игрока победителя в текущем раунде
     winner_id?: string;
+}
+
+/**
+ * Возможные форматы раундов
+ */
+export enum ERoundFormat {
+    // До 2 побед
+    Bo3 = 'BO3',
+    // До 3 побед
+    Bo5 = 'BO5',
 }
 
 /**
@@ -46,6 +58,10 @@ export interface ITournament {
     started: boolean;
     // Список всех раундов турнира (Сетка)
     grid: ITournamentRound[];
+    // Формат прочих раундов
+    rounds_format: ERoundFormat;
+    // Формат суперфинала
+    super_final_format: ERoundFormat;
 }
 
 /**

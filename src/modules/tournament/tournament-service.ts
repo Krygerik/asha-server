@@ -1,6 +1,6 @@
 import {EPlayerColor} from "../game";
 import {TournamentModel} from "./tournament-schema";
-import {ITournament, ITournamentPlayer, ITournamentRound} from "./tournament-model";
+import {ERoundFormat, ITournament, ITournamentPlayer, ITournamentRound} from "./tournament-model";
 import {AUTO_WIN, BOUNDARY_MEMBER_COUNT_LIST, mapCountMemberToCountStage} from "./tournament-constants";
 
 /**
@@ -15,7 +15,7 @@ export class TournamentService {
      * Закрытие регистраций на турниры по шедулеру каждые 10 минут
      */
     private checkTournamentByCron() {
-        const FIVE_MINUTE = 600000;
+        const FIVE_MINUTE = 6000;
 
         setInterval(() => {
             this.closeRegistrationInOpenTournaments();
@@ -28,19 +28,21 @@ export class TournamentService {
      */
     private async closeRegistrationInOpenTournaments() {
         // @ts-ignore
-        const openToursDocs: { _id: string, users: string[] }[] = await TournamentModel.find(
+        const openToursDocs = await TournamentModel.find(
             {
                 start_date: { $lt: new Date().toISOString() },
                 started: false,
-            },
-            { _id: true, users: true }
+            }
         );
 
-        openToursDocs.forEach(openTours => {
-            const grid = this.generateTournamentGrid(openTours.users);
+        openToursDocs.forEach(openTourDoc => {
+            // @ts-ignore
+            const openTour: ITournament = openTourDoc.toObject();
+
+            const grid = this.generateTournamentGrid(openTour);
 
             TournamentModel.findOneAndUpdate(
-                { _id: openTours._id },
+                { _id: openTour._id },
                 {
                     $set: {
                         started: true,
@@ -125,8 +127,8 @@ export class TournamentService {
     /**
      * Создание турнирной сетки
      */
-    private generateTournamentGrid(users: string[]): ITournamentRound[] {
-        const memberList = TournamentService.getTournamentMemberList(users);
+    private generateTournamentGrid(tournament: ITournament): ITournamentRound[] {
+        const memberList = TournamentService.getTournamentMemberList(tournament.users);
 
         const countStage = mapCountMemberToCountStage[memberList.length];
 
@@ -162,7 +164,10 @@ export class TournamentService {
                                 color: EPlayerColor.RED,
                                 win_count: 0,
                             },
-                        ] as ITournamentPlayer[]
+                        ] as ITournamentPlayer[],
+                    round_format: currentRoundCount === 1
+                        ? tournament.super_final_format
+                        : tournament.rounds_format
                 };
 
                 grid.push(generatedRound);
