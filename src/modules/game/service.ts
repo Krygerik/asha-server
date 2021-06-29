@@ -1,10 +1,9 @@
-import {find, forEach, isNil, omit} from "lodash";
+import {find, forEach, omit} from "lodash";
 import {
     EPlayerColor,
     IFilterGames,
     IFindGameOptions,
     IInputGameData,
-    IInputPlayersData,
     ISavedGame,
     ISavedPlayer,
     IShortFilter,
@@ -41,55 +40,10 @@ export class GameService {
     /**
      * Создание записи игры на основе данных, поступивших от любого игрока
      */
-    public createGame(gameParams: IInputGameData, callback: any) {
-        const session = new GameModel(gameParams);
+    public createGame(gameParams: IInputGameData) {
+        const game = new GameModel(gameParams);
 
-        session.save(callback);
-    }
-
-    /**
-     * Создание игры с главными параметрами игрока или добавление их в уже созданную
-     */
-    public async createOrUpdateGame(playerData: IInputPlayersData, callback: any) {
-        // @ts-ignore
-        const savedGame: ISavedGame = await GameModel.findOne({ combat_id: playerData.combat_id });
-
-        if (!isNil(savedGame)) {
-            let updatedValue;
-            let option = {};
-
-            if (!isNil(savedGame.winner)) {
-                updatedValue = {
-                    $push: {
-                        players_ids: playerData.user_id,
-                    },
-                    $set: {
-                        "players.$[player].user_id": playerData.user_id,
-                    }
-                };
-
-                option = {
-                    arrayFilters: [
-                        { "player.user_id": null },
-                    ]
-                };
-            } else {
-                updatedValue = {
-                    $push: {
-                        players_ids: playerData.user_id,
-                    }
-                };
-            }
-
-            GameModel.updateOne({ _id: savedGame._id }, updatedValue, option, callback);
-        } else {
-            const gameData = {
-                ...omit(playerData, 'user_id'),
-                players_ids: [playerData.user_id],
-            }
-
-            this.createGame(gameData, callback);
-        }
+        return GameModel.insertMany(game);
     }
 
     /**
@@ -102,7 +56,7 @@ export class GameService {
     /**
      * Обновление записи игры
      */
-    public updateGame(_id: string, updatedValue: Record<any, any>, option: Record<any, any>) {
+    public updateGame(_id: string, updatedValue: Record<any, any>, option?: Record<any, any>) {
         return GameModel.updateOne({ _id }, updatedValue, option);
     }
 

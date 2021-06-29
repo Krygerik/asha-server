@@ -18,6 +18,8 @@ export interface ITournamentPlayer {
 export interface ITournamentRound {
     // Номера дочерних раундов
     children_rounds: number[];
+    // ИД игр, сыгранных в этом раунде
+    games: string[];
     // Номер родительского раунда
     parent_round?: number;
     // Номер этого раунда
@@ -32,6 +34,8 @@ export interface ITournamentRound {
  * Тип данных о турнире
  */
 export interface ITournament {
+    // ИД записи в бд
+    _id: string;
     // Дата начала турнира
     start_date: string;
     // Список пользователей, зарегистрированных в турнире

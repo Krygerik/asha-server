@@ -83,13 +83,11 @@ export interface ISavedPlayer extends IInputPlayer {
 /**
  * Тип входящих данных по основным характеристикам игроков с ником отправителя
  */
-export interface IInputPlayersData {
+export interface ISaveGameParamsBody {
     // id сражения
     combat_id: number;
     // Версия карты
     map_version: string;
-    // id игрока
-    user_id: string;
     // Список данных о прокачках обоих игроков
     players: IInputPlayer[];
 }
@@ -150,10 +148,14 @@ export interface ISavedGame extends IInputGameData {
     date?: string;
     // Произошел ли разрыв соединения
     disconnect: boolean;
+    // Номер раунда в турнире
+    number_of_round?: number;
     // Список данных обоих игроков
     players: ISavedPlayer[];
     // Список ников игроков, участвующих в игре
     players_ids: string[];
+    // Турнир, в рамках которого была сыграна игра
+    tournament_id?: string;
     // Ожидание статуса соединения
     waiting_for_disconnect_status: boolean;
     // Цвет победителя

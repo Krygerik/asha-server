@@ -140,6 +140,7 @@ export class TournamentService {
 
                 const generatedRound: ITournamentRound = {
                     number_of_round: currentRoundCount,
+                    games: [],
                     children_rounds: indexStage === countStage - 1
                         ? []
                         : [currentRoundCount * 2, currentRoundCount * 2 + 1],
@@ -169,6 +170,112 @@ export class TournamentService {
         }
 
         return TournamentService.resolveInitialAutoWins(grid);
+    }
+
+    /**
+     * Получение ИД турнира и номера раунда по совпадению списка игроков
+     */
+    public async getTournamentIdWithNumberOfRound(gameUserIdList: string[]) {
+        /**
+         * Если игроков не 2, не обрабатываем
+         */
+        if (gameUserIdList.length !== 2) {
+            return null;
+        }
+
+        const tournamentDoc = await TournamentModel.findOne(
+            { users: { $all: gameUserIdList } },
+            { grid: true }
+        );
+
+        /**
+         * Если не найден турнир с такими участниками
+         */
+        if (!tournamentDoc) {
+            return null;
+        }
+
+        // @ts-ignore
+        const tournament: ITournament | null = tournamentDoc.toObject();
+
+        /**
+         * Получение раундав котором участвуют
+         */
+        const round: ITournamentRound | null = tournament.grid.find(
+            (_round: ITournamentRound) => (
+                _round.players.length == 2
+                && _round.players.every(
+                (player: ITournamentPlayer) => gameUserIdList.includes(player.user_id)
+                )
+            )
+        )
+
+        /**
+         * Если у переданных игроков нет активной встречи - тож бесцеремонно выкидываем
+         */
+        if (!round) {
+            return null;
+        }
+
+        return {
+            number_of_round: round.number_of_round,
+            tournament_id: tournament._id,
+        }
+    }
+
+    /**
+     * Добавление результата игры к раунду в турнире
+     */
+    public async addGameToTournament(
+        tournament_id: string, number_of_round: number, winner_id: string, game_id: string
+    ) {
+        // @ts-ignore
+        const tournament: ITournament | null = await TournamentModel.findOne({ _id: tournament_id });
+
+        if (!tournament) {
+            throw new Error('Не удалось найти турнир, для добавления результатов игры');
+        }
+
+        const currentRound: ITournamentRound | null = tournament.grid.find(
+            (round: ITournamentRound) => round.number_of_round === number_of_round
+        );
+
+        if (!currentRound) {
+            throw new Error('Не удалось найти активный раунд турнира');
+        }
+
+        /**
+         * Если игра игра уже добавлена в раунд - выкидываем
+         */
+        if (currentRound.games.includes(game_id)) {
+            return null;
+        }
+
+        const updatedValue = {
+            $inc: {
+                "grid.$[round].players.$[winner].win_count": 1
+            },
+            $push: {
+                "grid.$[round].games": game_id,
+            }
+        }
+
+        const option = {
+            arrayFilters: [
+                { "round.number_of_round": number_of_round },
+                { "winner.user_id": winner_id },
+            ]
+        }
+
+        const updatedTournament = await TournamentModel.updateOne(
+            { _id: tournament_id },
+            updatedValue,
+            option
+        );
+
+        if (!updatedTournament) {
+            throw new Error('Не удалось добавить результат игры в турнир');
+        }
     }
 
     /**

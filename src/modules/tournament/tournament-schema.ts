@@ -20,6 +20,11 @@ const GridSchema = new mongoose.Schema({
         required: true,
         default: [],
     },
+    games: {
+        default: [],
+        required: true,
+        type: [String],
+    },
     parent_round: Number,
     number_of_round: {
         required: true,

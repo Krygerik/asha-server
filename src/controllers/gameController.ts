@@ -6,9 +6,9 @@ import {
     IFilterGames,
     IFindGameOptions,
     IInputGameData,
-    IInputPlayersData,
     ISavedGame,
     ISavedPlayer,
+    ISaveGameParamsBody,
     ISetDisconnectStatusDto,
     IShortFilter,
     IShortGame,
@@ -24,14 +24,16 @@ import {
     successResponse,
 } from "../modules/common/services";
 import {AuthService} from "../modules/auth";
+import {ERoles} from "../modules/auth/model";
 import {DictionariesService, IDictionary} from "../modules/dictionaries";
 import {EDictionaryName, IRecords} from "../modules/dictionaries/model";
-import {ERoles} from "../modules/auth/model";
+import {TournamentService} from "../modules/tournament";
 
 export class GameController {
-    private gameService: GameService = new GameService();
     private authService: AuthService = new AuthService();
     private dictionaryService: DictionariesService = new DictionariesService();
+    private gameService: GameService = new GameService();
+    private tournamentService: TournamentService = new TournamentService();
 
     /**
      * Получение таблицы соотношений ид игроков к никам
@@ -82,24 +84,82 @@ export class GameController {
      * Сохранение основных характеристик игрока с его никнеймом
      * Ожидаем от обоих игроков по такому запросу для заполнения основных данных об игре
      */
-    public saveGameParams(req: Request, res: Response) {
+    public async saveGameParams(
+        req: Request<unknown, unknown, ISaveGameParamsBody & { userId: string; roles: ERoles }>, res: Response
+    ) {
         try {
             // @ts-ignore
-            const gameData: IInputPlayersData = {
-                ...omit(req.body, ['userId']),
-                user_id: req.body.userId,
+            const savedGame: ISavedGame | null = await this.gameService.findGame({
+                combat_id: req.body.combat_id
+            })
+
+            /**
+             * Если запись игры еще не создана - создаем
+             */
+            if (!savedGame) {
+                const gameData: IInputGameData = {
+                    ...omit(req.body, ['userId', 'roles']),
+                    players_ids: [req.body.userId],
+                };
+
+                const createdGame = await this.gameService.createGame(gameData);
+
+                return successResponse('Запись игры успешно создана', createdGame, res);
             }
 
-            this.gameService.createOrUpdateGame(gameData, (err: any, gameData: IInputGameData) => {
-                if (err) {
-                    return mongoError(err, res);
-                }
+            /**
+             * Если игрок уже записан в игре - выкидываем
+             */
+            if (savedGame.players_ids.includes(req.body.userId)) {
+                return successResponse('Игрок уже записан в запись игры', savedGame, res);
+            }
 
-                successResponse('create game successfull', gameData, res);
-            });
+            const updatedValue = {
+                $push: {
+                    players_ids: req.body.userId,
+                },
+                $set: {
+                    "players.$[player].user_id": req.body.userId,
+                }
+            };
+
+            const option = {
+                arrayFilters: [
+                    { "player.user_id": null },
+                ]
+            };
+
+            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
+
+            successResponse('Запись игры успешно обновлена', updatedGame, res);
         } catch (error) {
             internalError(error, res);
         }
+    }
+
+    /**
+     * Запись результатов игры в турнир
+     */
+    private async saveGameIntoTournament(gameId: string) {
+        // @ts-ignore
+        const savedGame: ISavedGame | null = await this.gameService.findGame({ _id: gameId });
+
+        if (!savedGame) {
+            return null;
+        }
+
+        if (savedGame.waiting_for_disconnect_status || savedGame.disconnect) {
+            return null;
+        }
+
+        const winnerPlayer = savedGame.players.find((player: ISavedPlayer) => player.winner);
+
+        await this.tournamentService.addGameToTournament(
+            savedGame.tournament_id,
+            savedGame.number_of_round,
+            winnerPlayer.user_id,
+            savedGame._id,
+        );
     }
 
     /**
@@ -108,7 +168,7 @@ export class GameController {
     public async saveGameWinner(req: Request<unknown, unknown, IWinnerRequestDto & { userId: string; roles: ERoles }>, res: Response) {
         try {
             // @ts-ignore
-            const savedGame: ISavedGame = await this.gameService.findGame({ combat_id: gameData.combat_id });
+            const savedGame: ISavedGame = await this.gameService.findGame({ combat_id: req.body.combat_id });
 
             /**
              * Если игра с данным id отсутствует или игра завершилась корректно - не меняем ее исход
@@ -162,7 +222,22 @@ export class GameController {
 
             const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
-            successResponse('Победитель игры обозначен!', updatedGame, res);
+            const tournamentData = await this.tournamentService.getTournamentIdWithNumberOfRound(savedGame.players_ids);
+
+            /**
+             * Если нашелся турнир с активным раундом - сохраняем это в запись игры
+             */
+            if (tournamentData) {
+                const updateQuery = {
+                    $set: tournamentData
+                }
+
+                await this.gameService.updateGame(savedGame._id, updateQuery);
+
+                await this.saveGameIntoTournament(savedGame._id);
+            }
+
+            successResponse('Финальные данные игры успешно записаны', updatedGame, res);
 
         } catch (error) {
             internalError(error, res);
@@ -291,7 +366,7 @@ export class GameController {
      * Проставление игре статуса разрыва соединения
      */
     public async setGameDisconnectStatusByCombatId(
-        req: Request<unknown, unknown, ISetDisconnectStatusDto, unknown>, res: Response
+        req: Request<unknown, unknown, ISetDisconnectStatusDto & { userId: string; roles: string[] }>, res: Response
     ) {
         try {
             const { combat_id, disconnect } = req.body;
@@ -300,11 +375,15 @@ export class GameController {
                 return insufficientParameters(res);
             }
 
-            const updatedDocs = await this.gameService.setGameDisconnectStatus(combat_id, disconnect);
+            await this.gameService.setGameDisconnectStatus(combat_id, disconnect);
+
+            const gameDoc = await this.gameService.findGame({ combat_id });
+
+            await this.saveGameIntoTournament(gameDoc._id);
 
             return successResponse(
                 `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения в ${disconnect}`,
-                updatedDocs,
+                null,
                 res,
             );
         } catch (error) {

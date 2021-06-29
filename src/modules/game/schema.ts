@@ -135,6 +135,8 @@ const GameSchema = new mongoose.Schema({
         type: [PlayerSchema],
         required: true
     },
+    tournament_id: String,
+    number_of_round: Number,
 });
 
 export const GameModel = mongoose.model('game', GameSchema);
