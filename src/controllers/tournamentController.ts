@@ -84,9 +84,9 @@ export class TournamentController {
                 return insufficientParameters(res);
             }
 
-            const tournamentDoc = await this.tournamentService.getTournament({ _id: id })
+            const tournament = await this.tournamentService.getTournament({ _id: id })
 
-            successResponse('Полная информация о турнире получена успешно', tournamentDoc.toObject(), res);
+            successResponse('Полная информация о турнире получена успешно', tournament, res);
         } catch (error) {
             internalError(error, res);
         }
@@ -103,23 +103,26 @@ export class TournamentController {
                 return insufficientParameters(res);
             }
 
-            const participantList: string[] = await this.tournamentService.getParticipantListByTournamentId(tournament_id);
+            const tournament: ITournament | null = await this.tournamentService.getTournament({ _id: tournament_id });
+
+            if (!tournament) {
+                return failureResponse('Не удалось найти турнир для регистрации', null, res);
+            }
+
+            if (tournament.started) {
+                return failureResponse('Регистрация на турнир уже закрыта', null, res);
+            }
 
             /**
              * Если он уже является участником турнира - выкидываем
              */
-            if (participantList.includes(userId)) {
+            if (tournament.users.includes(userId)) {
                 return failureResponse('Пользователь уже участвует в турнире', null, res);
             }
 
-            const updatedTournament = await this.tournamentService.addParticipantToTournament(tournament_id, userId);
+            await this.tournamentService.addParticipantToTournament(tournament_id, userId);
 
-            /**
-             * Если пользователь отправил запрос на регистрацию после ее закрытия
-             */
-            if (!updatedTournament) {
-                return failureResponse('Регистрация на турнир уже закрыта', null, res);
-            }
+            await this.tournamentService.checkTournamentOnMaximumPlayer(tournament_id);
 
             /**
              * Добавляем турнир в список турниров, в которых участвует пользователь

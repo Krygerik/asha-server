@@ -48,18 +48,20 @@ export enum ERoundFormat {
 export interface ITournament {
     // ИД записи в бд
     _id: string;
-    // Дата начала турнира
-    start_date: string;
-    // Список пользователей, зарегистрированных в турнире
-    users: string[];
-    // Название турнира
-    name: string;
-    // Регистрация окончилась и турнир начался
-    started: boolean;
     // Список всех раундов турнира (Сетка)
     grid: ITournamentRound[];
+    // Максимальное количество участников турнира
+    maximum_player_count: number;
+    // Название турнира
+    name: string;
     // Формат прочих раундов
     rounds_format: ERoundFormat;
+    // Список пользователей, зарегистрированных в турнире
+    users: string[];
+    // Регистрация окончилась и турнир начался
+    started: boolean;
+    // Дата начала турнира
+    start_date: string;
     // Формат суперфинала
     super_final_format: ERoundFormat;
     // ИД победителя турнира

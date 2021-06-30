@@ -20,7 +20,7 @@ export class TournamentService {
      * Закрытие регистраций на турниры по шедулеру каждые 10 минут
      */
     private checkTournamentByCron() {
-        const FIVE_MINUTE = 6000;
+        const FIVE_MINUTE = 600000;
 
         setInterval(() => {
             this.closeRegistrationInOpenTournaments()
@@ -45,18 +45,43 @@ export class TournamentService {
             // @ts-ignore
             const openTour: ITournament = openTourDoc.toObject();
 
-            const grid = TournamentService.generateTournamentGrid(openTour);
-
-            TournamentModel.findOneAndUpdate(
-                { _id: openTour._id },
-                {
-                    $set: {
-                        started: true,
-                        grid,
-                    }
-                }
-            ).catch((e) => console.log(e));
+            TournamentService.closeRegistrationInSingleTournament(openTour);
         })
+    }
+
+    /**
+     * Завершение регистрации на отдельный турнир
+     */
+    private static async closeRegistrationInSingleTournament(tournament: ITournament) {
+        const grid = TournamentService.generateTournamentGrid(tournament);
+
+        await TournamentModel.findOneAndUpdate(
+            { _id: tournament._id },
+            {
+                $set: {
+                    started: true,
+                    grid,
+                }
+            }
+        );
+    }
+
+    /**
+     * Проверка турнира на максимальное количество игроков для закрытия регистрации
+     */
+    public async checkTournamentOnMaximumPlayer(tournament_id: string) {
+        const tournamentDoc = await TournamentModel.findOne({ _id: tournament_id });
+
+        if (!tournamentDoc) {
+            return null;
+        }
+
+        // @ts-ignore
+        const tournament: ITournament = tournamentDoc.toObject();
+
+        if (tournament.users.length >= tournament.maximum_player_count) {
+            await TournamentService.closeRegistrationInSingleTournament(tournament);
+        }
     }
 
     /**
@@ -394,8 +419,15 @@ export class TournamentService {
     /**
      * Получение данных о турнире
      */
-    public getTournament(query: any) {
-        return TournamentModel.findOne(query).select('-__v');
+    public async getTournament(query: any): Promise<ITournament | null> {
+        const tourDoc = await TournamentModel.findOne(query).select('-__v');
+
+        if (!tourDoc) {
+            return null;
+        }
+
+        // @ts-ignore
+        return tourDoc.toObject();
     }
 
     /**
@@ -411,16 +443,13 @@ export class TournamentService {
     /**
      * Добавление игрока в переданный турнир
      */
-    public addParticipantToTournament(tournament_id: string, user_id: string) {
+    public async addParticipantToTournament(tournament_id: string, user_id: string) {
         const updateOperator = {
             $push: { users: user_id }
         };
 
-        return TournamentModel.findOneAndUpdate(
-            {
-                _id: tournament_id,
-                started: false,
-            },
+        await TournamentModel.findOneAndUpdate(
+            { _id: tournament_id },
             updateOperator,
         );
     }

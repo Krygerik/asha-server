@@ -67,6 +67,11 @@ const TournamentSchema = new mongoose.Schema({
         required: true,
         type: [GridSchema],
     },
+    maximum_player_count: {
+        default: 4,
+        required: true,
+        type: Number,
+    },
     rounds_format: {
         default: ERoundFormat.Bo3,
         enum: Object.values(ERoundFormat),
