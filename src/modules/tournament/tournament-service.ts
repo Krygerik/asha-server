@@ -23,7 +23,8 @@ export class TournamentService {
         const FIVE_MINUTE = 6000;
 
         setInterval(() => {
-            this.closeRegistrationInOpenTournaments();
+            this.closeRegistrationInOpenTournaments()
+                .catch((e) => console.log('Ошибка при закрытии регистрации турнира: ', e.toString()));
         }, FIVE_MINUTE);
 
     }
@@ -44,7 +45,7 @@ export class TournamentService {
             // @ts-ignore
             const openTour: ITournament = openTourDoc.toObject();
 
-            const grid = this.generateTournamentGrid(openTour);
+            const grid = TournamentService.generateTournamentGrid(openTour);
 
             TournamentModel.findOneAndUpdate(
                 { _id: openTour._id },
@@ -132,7 +133,7 @@ export class TournamentService {
     /**
      * Создание турнирной сетки
      */
-    private generateTournamentGrid(tournament: ITournament): ITournamentRound[] {
+    private static generateTournamentGrid(tournament: ITournament): ITournamentRound[] {
         const memberList = TournamentService.getTournamentMemberList(tournament.users);
 
         const countStage = mapCountMemberToCountStage[memberList.length];
@@ -303,6 +304,59 @@ export class TournamentService {
 
         if (!updatedTournament) {
             throw new Error('Не удалось добавить результат игры в турнир');
+        }
+
+        if (isFinishGame) {
+            await this.moveWinnerIntoNextRound(tournament_id, number_of_round);
+        }
+    }
+
+
+    /**
+     * Перемещаем победителя в следующий раунд
+     */
+    public async moveWinnerIntoNextRound(tournament_id: string, number_of_round: number) {
+        const tournamentDoc = await TournamentModel.findOne({ _id: tournament_id });
+
+        // @ts-ignore
+        const tournament: ITournament = tournamentDoc.toObject();
+
+        const targetRound: ITournamentRound = tournament.grid.find(
+            round => round.number_of_round === number_of_round
+        );
+
+        const nextRound: ITournamentRound = tournament.grid.find(
+            round => round.number_of_round === targetRound.parent_round
+        );
+
+        const playerDataInNextRound: ITournamentPlayer = {
+            color: nextRound.players.length === 0
+                ? EPlayerColor.RED
+                : EPlayerColor.BLUE,
+            user_id: targetRound.winner_id,
+            win_count: 0,
+        }
+
+        const updatedValue = {
+            $push: {
+                "grid.$[nextRound].players": playerDataInNextRound,
+            }
+        };
+
+        const option = {
+            arrayFilters: [
+                { "nextRound.number_of_round": targetRound.parent_round },
+            ]
+        }
+
+        const updatedTournament = await TournamentModel.updateOne(
+            { _id: tournament_id },
+            updatedValue,
+            option
+        );
+
+        if (!updatedTournament) {
+            throw new Error('Не удалось переместить победителя в следующий раунд турнира');
         }
     }
 

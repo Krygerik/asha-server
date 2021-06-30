@@ -4,10 +4,10 @@ import {EPlayerColor} from "../game";
  * Данные по участнику раунда
  */
 export interface ITournamentPlayer {
-    // ИД игрока
-    user_id?: string;
     // Цвет игрока
     color?: EPlayerColor;
+    // ИД игрока
+    user_id?: string;
     // Количество побед
     win_count: number;
 }
