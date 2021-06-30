@@ -79,6 +79,7 @@ const TournamentSchema = new mongoose.Schema({
         required: true,
         type: String,
     },
+    winner_id: String,
 });
 
 export const TournamentModel = mongoose.model('tournament', TournamentSchema);

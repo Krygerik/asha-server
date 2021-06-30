@@ -198,6 +198,7 @@ export class TournamentService {
             {
                 started: true,
                 users: { $all: gameUserIdList },
+                winner_id: null,
             },
             { grid: true }
         );
@@ -280,7 +281,10 @@ export class TournamentService {
                 "grid.$[round].players.$[winner].win_count": newWinCount,
                 ...isFinishGame
                     ? {
-                        "grid.$[round].winner_id": winner_id
+                        "grid.$[round].winner_id": winner_id,
+                        ...number_of_round === 1
+                            ? { winner_id }
+                            : {}
                     }
                     : {}
             },
@@ -306,11 +310,13 @@ export class TournamentService {
             throw new Error('Не удалось добавить результат игры в турнир');
         }
 
-        if (isFinishGame) {
+        /**
+         * Если это последняя игра раунда и не суперфинал - двигаем игрока дальше по сетке
+         */
+        if (isFinishGame && number_of_round !== 1) {
             await this.moveWinnerIntoNextRound(tournament_id, number_of_round);
         }
     }
-
 
     /**
      * Перемещаем победителя в следующий раунд

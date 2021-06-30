@@ -62,6 +62,8 @@ export interface ITournament {
     rounds_format: ERoundFormat;
     // Формат суперфинала
     super_final_format: ERoundFormat;
+    // ИД победителя турнира
+    winner_id?: string;
 }
 
 /**
