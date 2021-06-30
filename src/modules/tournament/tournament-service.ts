@@ -1,7 +1,12 @@
 import {EPlayerColor} from "../game";
 import {TournamentModel} from "./tournament-schema";
-import {ERoundFormat, ITournament, ITournamentPlayer, ITournamentRound} from "./tournament-model";
-import {AUTO_WIN, BOUNDARY_MEMBER_COUNT_LIST, mapCountMemberToCountStage} from "./tournament-constants";
+import {ITournament, ITournamentPlayer, ITournamentRound} from "./tournament-model";
+import {
+    AUTO_WIN,
+    BOUNDARY_MEMBER_COUNT_LIST,
+    mapCountMemberToCountStage,
+    mapRoundFormatToMaximumCountGame,
+} from "./tournament-constants";
 
 /**
  * Действия непосредственно с таблицей с турнирами
@@ -189,7 +194,10 @@ export class TournamentService {
         }
 
         const tournamentDoc = await TournamentModel.findOne(
-            { users: { $all: gameUserIdList } },
+            {
+                started: true,
+                users: { $all: gameUserIdList },
+            },
             { grid: true }
         );
 
@@ -256,9 +264,24 @@ export class TournamentService {
             return null;
         }
 
+        /**
+         * Текущие данные победившего игрока
+         */
+        const winnerGamePlayer = currentRound.players.find(
+            (player: ITournamentPlayer) => player.user_id === winner_id
+        );
+
+        const newWinCount = winnerGamePlayer.win_count + 1;
+        const isFinishGame = newWinCount >= mapRoundFormatToMaximumCountGame[currentRound.round_format];
+
         const updatedValue = {
-            $inc: {
-                "grid.$[round].players.$[winner].win_count": 1
+            $set: {
+                "grid.$[round].players.$[winner].win_count": newWinCount,
+                ...isFinishGame
+                    ? {
+                        "grid.$[round].winner_id": winner_id
+                    }
+                    : {}
             },
             $push: {
                 "grid.$[round].games": game_id,

@@ -1,3 +1,4 @@
+import { ERoundFormat } from "./tournament-model";
 
 export const AUTO_WIN = 'AUTO_WIN';
 
@@ -21,4 +22,12 @@ export const mapCountMemberToCountStage = {
     [16]: 4,
     [32]: 5,
     [64]: 6,
+}
+
+/**
+ * Отношение формата раунда к необходимому количеству игр для победы каждого игрока
+ */
+export const mapRoundFormatToMaximumCountGame = {
+    [ERoundFormat.Bo3]: 2,
+    [ERoundFormat.Bo5]: 3,
 }
