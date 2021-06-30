@@ -37,9 +37,9 @@ export interface ITournamentRound {
  */
 export enum ERoundFormat {
     // До 2 побед
-    Bo3 = 'BO3',
+    Bo3 = 'Bo3',
     // До 3 побед
-    Bo5 = 'BO5',
+    Bo5 = 'Bo5',
 }
 
 /**

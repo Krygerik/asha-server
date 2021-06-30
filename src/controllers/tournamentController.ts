@@ -17,10 +17,10 @@ export class TournamentController {
         try {
             const tournamentData: ITournament = req.body;
 
-            const tournament = await this.tournamentService.getTournament(tournamentData);
+            const tournament = await this.tournamentService.getTournament({ name: tournamentData.name });
 
             if (tournament) {
-                return failureResponse('Такой турнир уже зарегистрирован', null, res);
+                return failureResponse('Турнир с таким названием уже зарегистрирован', null, res);
             }
 
             // @ts-ignore
