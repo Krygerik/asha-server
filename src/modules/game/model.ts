@@ -261,6 +261,8 @@ interface IFilterPlayersField {
     level?: TComparisonField;
     // Стартовая мана героя
     mana_start?: TComparisonField;
+    // Один из навыков героя
+    perks?: string;
     // Один артефакт героя
     arts?: string;
     // Одно из заклинаний героя
