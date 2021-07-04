@@ -40,16 +40,23 @@ export class AuthService {
     }
 
     /**
-     * Получение списка id и ников всех пользователей
+     * Получение маппинга информации пользователей на их id
      */
-    public async findUsersByIds(ids: string[]) {
-        const userListDocs = await UserModel.find({
-            _id: {
-                $in: ids
+    public async getMappingUsersIdToUserShortInfo(ids: string[]) {
+        const userListDocs = await UserModel.find(
+            { _id: { $in: ids }, },
+            {
+                nickname: true,
+                discord: true,
             }
-        }).select('-__v -email -hash_password');
+        );
 
-        return userListDocs.map(doc => doc.toObject());
+        const userList = userListDocs.map(a => a.toObject());
+
+        return userList.reduce((acc, userInfo) => ({
+            ...acc,
+            [userInfo._id]: userInfo,
+        }), {})
     }
 
     /**

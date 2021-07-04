@@ -84,9 +84,18 @@ export class TournamentController {
                 return insufficientParameters(res);
             }
 
-            const tournament = await this.tournamentService.getTournament({ _id: id })
+            const tournament: ITournament = await this.tournamentService.getTournament({ _id: id });
 
-            successResponse('Полная информация о турнире получена успешно', tournament, res);
+            const mappingUserIdToShortUserInfo = await this.authService.getMappingUsersIdToUserShortInfo(tournament.users);
+
+            successResponse(
+                'Полная информация о турнире получена успешно',
+                {
+                    ...tournament,
+                    mapUsersIdToUserInfo: mappingUserIdToShortUserInfo
+                },
+                res
+            );
         } catch (error) {
             internalError(error, res);
         }

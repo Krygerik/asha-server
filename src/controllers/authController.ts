@@ -157,19 +157,4 @@ export class AuthController {
             internalError(error, res);
         }
     }
-
-    /**
-     * Получение списка пользователей с публичными данными по их ид
-     */
-    public async getUserListByIds(req: Request, res: Response) {
-        try {
-            const { userIds }: { userIds: string[] } = req.body;
-
-            const userList = await this.authService.findUsersByIds(userIds);
-
-            successResponse('Список пользователей успешно получен', userList, res);
-        } catch (error) {
-            internalError(error, res);
-        }
-    }
 }
