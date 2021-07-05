@@ -90,19 +90,19 @@ export class AuthService {
         // Смягчающий фактор
         const softFactor = 40;
 
-        const newWinnerRating = Number((winner.rating + softFactor * (1 - updatedRatingFactor)).toFixed(2));
-        const newLooserRating = Number((looser.rating + softFactor * (0 - updatedRatingFactor)).toFixed(2));
+        const newWinnerRating = Math.round(winner.rating + softFactor * (1 - updatedRatingFactor));
+        const newLooserRating = Math.round(looser.rating + softFactor * (0 - updatedRatingFactor));
 
         await UserModel.findOneAndUpdate({ _id: winnerId }, { rating: newWinnerRating });
         await UserModel.findOneAndUpdate({ _id: loserId }, { rating: newLooserRating });
 
         return {
             [loserId]: {
-                changedRating: Number((newLooserRating - looser.rating).toFixed(2)),
+                changedRating: Math.round(newLooserRating - looser.rating),
                 newRating: newLooserRating,
             },
             [winnerId]: {
-                changedRating: Number((newWinnerRating - winner.rating).toFixed(2)),
+                changedRating: Math.round(newWinnerRating - winner.rating),
                 newRating: newWinnerRating,
             },
         };

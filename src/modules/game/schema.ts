@@ -137,6 +137,7 @@ const GameSchema = new mongoose.Schema({
         required: true
     },
     tournament_id: String,
+    tournament_name: String,
     number_of_round: Number,
 });
 

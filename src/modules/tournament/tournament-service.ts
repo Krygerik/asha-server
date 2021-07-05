@@ -225,7 +225,7 @@ export class TournamentService {
                 users: { $all: gameUserIdList },
                 winner_id: null,
             },
-            { grid: true }
+            { grid: true, name: true }
         );
 
         /**
@@ -260,6 +260,7 @@ export class TournamentService {
         return {
             number_of_round: round.number_of_round,
             tournament_id: tournament._id,
+            tournament_name: tournament.name
         }
     }
 

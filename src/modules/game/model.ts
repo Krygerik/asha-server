@@ -158,8 +158,10 @@ export interface ISavedGame extends IInputGameData {
     players: ISavedPlayer[];
     // Список ников игроков, участвующих в игре
     players_ids: string[];
-    // Турнир, в рамках которого была сыграна игра
+    // ИД турнира, в рамках которого была сыграна игра
     tournament_id?: string;
+    // Название турнира, в рамках которого была сыграна игра
+    tournament_name?: string;
     // Ожидание статуса соединения
     waiting_for_disconnect_status: boolean;
     // Цвет победителя
