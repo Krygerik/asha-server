@@ -156,6 +156,7 @@ export class GameController {
         }
 
         const winnerPlayer = savedGame.players.find((player: ISavedPlayer) => player.winner);
+        const looserPlayer = savedGame.players.find((player: ISavedPlayer) => !player.winner);
 
         await this.tournamentService.addGameToTournament(
             savedGame.tournament_id,
@@ -163,6 +164,29 @@ export class GameController {
             winnerPlayer.user_id,
             savedGame._id,
         );
+
+        const changedRating: Record<string, { changedRating: number; newRating: number }> = await this.authService.changePlayerRating(
+            winnerPlayer.user_id,
+            looserPlayer.user_id,
+        );
+
+        const updatedValue = {
+            $set: {
+                "players.$[winner].changed_rating": changedRating[winnerPlayer.user_id].changedRating,
+                "players.$[winner].new_rating": changedRating[winnerPlayer.user_id].newRating,
+                "players.$[looser].changed_rating": changedRating[looserPlayer.user_id].changedRating,
+                "players.$[looser].new_rating": changedRating[looserPlayer.user_id].newRating,
+            }
+        };
+
+        const option = {
+            arrayFilters: [
+                { "winner.user_id": winnerPlayer.user_id },
+                { "looser.user_id": looserPlayer.user_id },
+            ]
+        };
+
+        await this.gameService.updateGame(savedGame._id, updatedValue, option);
     }
 
     /**

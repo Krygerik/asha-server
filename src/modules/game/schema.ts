@@ -1,6 +1,5 @@
 import * as mongoose from "mongoose";
 import {EPlayerColor} from "./model";
-import {isBoolean} from "util";
 
 const CreatureSchema = new mongoose.Schema({
     name: {
@@ -32,6 +31,7 @@ const PlayerSchema = new mongoose.Schema({
         enum: Object.values(EPlayerColor),
         required: true
     },
+    changed_rating: Number,
     defence: {
         type: Number,
         required: true
@@ -88,6 +88,7 @@ const PlayerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    new_rating: Number,
     user_id: String,
     war_machines: {
         type: [String],

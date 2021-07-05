@@ -71,4 +71,40 @@ export class AuthService {
 
         return UserModel.findOneAndUpdate({ _id: userId }, updatedValue);
     }
+
+    /**
+     * Добавление пользователю данных о турнире, на который он зарегистрировался
+     */
+    public async changePlayerRating(winnerId: string, loserId: string) {
+        // @ts-ignore
+        const winner: ISavedUser | null = await UserModel.findOne({ _id: winnerId });
+        // @ts-ignore
+        const looser: ISavedUser | null = await UserModel.findOne({ _id: loserId });
+
+        if (!winner || !looser) {
+            return null;
+        }
+
+        const updatedRatingFactor = 1 / (1 + 10 ** ((looser.rating - winner.rating) / 400));
+
+        // Смягчающий фактор
+        const softFactor = 40;
+
+        const newWinnerRating = Number((winner.rating + softFactor * (1 - updatedRatingFactor)).toFixed(2));
+        const newLooserRating = Number((looser.rating + softFactor * (0 - updatedRatingFactor)).toFixed(2));
+
+        await UserModel.findOneAndUpdate({ _id: winnerId }, { rating: newWinnerRating });
+        await UserModel.findOneAndUpdate({ _id: loserId }, { rating: newLooserRating });
+
+        return {
+            [loserId]: {
+                changedRating: Number((newLooserRating - looser.rating).toFixed(2)),
+                newRating: newLooserRating,
+            },
+            [winnerId]: {
+                changedRating: Number((newWinnerRating - winner.rating).toFixed(2)),
+                newRating: newWinnerRating,
+            },
+        };
+    }
 }

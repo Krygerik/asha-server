@@ -76,6 +76,10 @@ export interface ISavedPlayer extends IInputPlayer {
     army_remainder?: ICreatures[];
     // Ид пользователя в бд
     user_id?: string;
+    // На сколько изменился рейтинг игрока за эту партию
+    changed_rating?: number;
+    // Новый рейтинг игрока после игры
+    new_rating?: number;
     // Является ли игрок победителем
     winner: boolean;
 }
