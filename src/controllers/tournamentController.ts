@@ -8,9 +8,11 @@ import {
     successResponse,
 } from "../modules/common/services";
 import {AuthService} from "../modules/auth";
+import {GameService} from "../modules/game";
 
 export class TournamentController {
     private authService: AuthService = new AuthService();
+    private gameService: GameService = new GameService();
     private tournamentService: TournamentService = new TournamentService();
 
     public async createTournament(req: Request, res: Response) {
@@ -86,13 +88,21 @@ export class TournamentController {
 
             const tournament: ITournament = await this.tournamentService.getTournament({ _id: id });
 
-            const mappingUserIdToShortUserInfo = await this.authService.getMappingUsersIdToUserShortInfo(tournament.users);
+            const mapUsersIdToUserInfo = await this.authService.getMappingUsersIdToUserShortInfo(tournament.users);
+
+            const allGameInToTournament: string[] = tournament.grid.reduce((acc, round) => ([
+                ...acc,
+                ...round.games,
+            ]), [] as string[]);
+
+            const mapGameIdToShortGameInfo = await this.gameService.getMappingShortGamesInfoByGameIds(allGameInToTournament);
 
             successResponse(
                 'Полная информация о турнире получена успешно',
                 {
                     ...tournament,
-                    mapUsersIdToUserInfo: mappingUserIdToShortUserInfo
+                    mapUsersIdToUserInfo,
+                    mapGameIdToShortGameInfo
                 },
                 res
             );

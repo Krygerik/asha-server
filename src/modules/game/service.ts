@@ -21,12 +21,10 @@ export class GameService {
     private static formatFullGameInfoToShort(gameInfo: ISavedGame): IShortGame {
         return {
             _id: gameInfo._id,
-            combat_id: gameInfo.combat_id,
             date: gameInfo.date,
             disconnect: gameInfo.disconnect,
             players: gameInfo.players.map(
                 (player: ISavedPlayer): IShortPlayer => ({
-                    army_remainder: player.army_remainder,
                     color: player.color,
                     hero: player.hero,
                     race: player.race,
@@ -134,6 +132,29 @@ export class GameService {
         const gameInfoList: ISavedGame[] = await GameModel.find(filterOptions, null, additionalOptions);
 
         return gameInfoList.map(GameService.formatFullGameInfoToShort);
+    }
+
+    /**
+     * Получение маппинга краткой информации по переданным играм на их id
+     */
+    public async getMappingShortGamesInfoByGameIds(gameIdList: string[]) {
+        const filterOptions = {
+            _id: { $in: gameIdList },
+            winner: { $ne: null },
+            waiting_for_disconnect_status: false,
+        };
+
+        const gameInfoDocList = await GameModel.find(filterOptions);
+
+        // @ts-ignore
+        const gameInfoList: ISavedGame[] = gameInfoDocList.map(gameInfo => gameInfo.toObject());
+
+        const shortGameInfoList = gameInfoList.map(GameService.formatFullGameInfoToShort);
+
+        return shortGameInfoList.reduce((acc, shortGameInfo) => ({
+            ...acc,
+            [shortGameInfo._id]: shortGameInfo
+        }), {});
     }
 
     /**

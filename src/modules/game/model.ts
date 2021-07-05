@@ -172,8 +172,6 @@ export interface ISavedGame extends IInputGameData {
  * Тип краткой информации по игроку
  */
 export interface IShortPlayer {
-    // Конечный состав армии
-    army_remainder?: ICreatures[];
     // Цвет игрока
     color: EPlayerColor;
     // Название героя
@@ -190,8 +188,6 @@ export interface IShortPlayer {
 export interface IShortGame {
     // id в mongodb
     _id: string;
-    // id сражения
-    combat_id: number;
     // Дата окончания игры
     date?: string;
     // Произошел ли разрыв соединения
