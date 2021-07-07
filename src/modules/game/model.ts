@@ -76,6 +76,10 @@ export interface ISavedPlayer extends IInputPlayer {
     army_remainder?: ICreatures[];
     // Ид пользователя в бд
     user_id?: string;
+    // На сколько изменился рейтинг игрока за эту партию
+    changed_rating?: number;
+    // Новый рейтинг игрока после игры
+    new_rating?: number;
     // Является ли игрок победителем
     winner: boolean;
 }
@@ -83,13 +87,11 @@ export interface ISavedPlayer extends IInputPlayer {
 /**
  * Тип входящих данных по основным характеристикам игроков с ником отправителя
  */
-export interface IInputPlayersData {
+export interface ISaveGameParamsBody {
     // id сражения
     combat_id: number;
     // Версия карты
     map_version: string;
-    // id игрока
-    user_id: string;
     // Список данных о прокачках обоих игроков
     players: IInputPlayer[];
 }
@@ -112,6 +114,18 @@ export interface IWinnerRequestDto {
     percentage_of_army_left: number;
     // Цвет игрока победителя
     winner: EPlayerColor;
+    // Произошел ли разрыв соединения во время игры
+    isDisconnect: boolean;
+}
+
+/**
+ * Тело запроса для установки статуса соединения для игры
+ */
+export interface ISetDisconnectStatusDto {
+    // ИД игры для которой проставляется статус
+    combat_id?: number;
+    // статус соединения
+    disconnect?: boolean;
 }
 
 /**
@@ -138,10 +152,18 @@ export interface ISavedGame extends IInputGameData {
     date?: string;
     // Произошел ли разрыв соединения
     disconnect: boolean;
+    // Номер раунда в турнире
+    number_of_round?: number;
     // Список данных обоих игроков
     players: ISavedPlayer[];
     // Список ников игроков, участвующих в игре
     players_ids: string[];
+    // ИД турнира, в рамках которого была сыграна игра
+    tournament_id?: string;
+    // Название турнира, в рамках которого была сыграна игра
+    tournament_name?: string;
+    // Ожидание статуса соединения
+    waiting_for_disconnect_status: boolean;
     // Цвет победителя
     winner?: EPlayerColor;
 }
@@ -150,8 +172,6 @@ export interface ISavedGame extends IInputGameData {
  * Тип краткой информации по игроку
  */
 export interface IShortPlayer {
-    // Конечный состав армии
-    army_remainder?: ICreatures[];
     // Цвет игрока
     color: EPlayerColor;
     // Название героя
@@ -168,8 +188,6 @@ export interface IShortPlayer {
 export interface IShortGame {
     // id в mongodb
     _id: string;
-    // id сражения
-    combat_id: number;
     // Дата окончания игры
     date?: string;
     // Произошел ли разрыв соединения
@@ -245,6 +263,8 @@ interface IFilterPlayersField {
     level?: TComparisonField;
     // Стартовая мана героя
     mana_start?: TComparisonField;
+    // Один из навыков героя
+    perks?: string;
     // Один артефакт героя
     arts?: string;
     // Одно из заклинаний героя

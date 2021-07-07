@@ -1,33 +1,42 @@
 import {Request, Response} from "express";
-import {filter, flatten, map, omit, uniq} from "lodash";
+import {filter, find, flatten, isNil, map, omit, uniq} from "lodash";
 import {
+    EPlayerColor,
     GameService,
     IFilterGames,
-    IShortFilter,
     IFindGameOptions,
     IInputGameData,
-    IInputPlayersData,
     ISavedGame,
     ISavedPlayer,
+    ISaveGameParamsBody,
+    ISetDisconnectStatusDto,
+    IShortFilter,
     IShortGame,
     IShortPlayer,
     IWinnerRequestDto,
 } from "../modules/game";
 import {
+    failureResponse,
     incorrectParameters,
     insufficientParameters,
     internalError,
     mongoError,
     successResponse,
 } from "../modules/common/services";
-import {AuthService} from "../modules/auth";
-import {DictionariesService, IDictionary} from "../modules/dictionaries";
-import {EDictionaryName, IRecords} from "../modules/dictionaries/model";
+import {AuthService, ERoles} from "../modules/auth";
+import {
+    DictionariesService,
+    EDictionaryName,
+    IDictionary,
+    IRecords,
+} from "../modules/dictionaries";
+import {TournamentService} from "../modules/tournament";
 
 export class GameController {
-    private gameService: GameService = new GameService();
     private authService: AuthService = new AuthService();
     private dictionaryService: DictionariesService = new DictionariesService();
+    private gameService: GameService = new GameService();
+    private tournamentService: TournamentService = new TournamentService();
 
     /**
      * Получение таблицы соотношений ид игроков к никам
@@ -78,44 +87,185 @@ export class GameController {
      * Сохранение основных характеристик игрока с его никнеймом
      * Ожидаем от обоих игроков по такому запросу для заполнения основных данных об игре
      */
-    public saveGameParams(req: Request, res: Response) {
+    public async saveGameParams(
+        req: Request<unknown, unknown, ISaveGameParamsBody & { userId: string; roles: ERoles }>, res: Response
+    ) {
         try {
             // @ts-ignore
-            const gameData: IInputPlayersData = {
-                ...omit(req.body, ['userId']),
-                user_id: req.body.userId,
+            const savedGame: ISavedGame | null = await this.gameService.findGame({
+                combat_id: req.body.combat_id
+            })
+
+            /**
+             * Если запись игры еще не создана - создаем
+             */
+            if (!savedGame) {
+                const gameData: IInputGameData = {
+                    ...omit(req.body, ['userId', 'roles']),
+                    players_ids: [req.body.userId],
+                };
+
+                const createdGame = await this.gameService.createGame(gameData);
+
+                return successResponse('Запись игры успешно создана', createdGame, res);
             }
 
-            this.gameService.createOrUpdateGame(gameData, (err: any, gameData: IInputGameData) => {
-                if (err) {
-                    return mongoError(err, res);
-                }
+            /**
+             * Если игрок уже записан в игре - выкидываем
+             */
+            if (savedGame.players_ids.includes(req.body.userId)) {
+                return successResponse('Игрок уже записан в запись игры', savedGame, res);
+            }
 
-                successResponse('create game successfull', gameData, res);
-            });
+            const updatedValue = {
+                $push: {
+                    players_ids: req.body.userId,
+                },
+                $set: {
+                    "players.$[player].user_id": req.body.userId,
+                }
+            };
+
+            const option = {
+                arrayFilters: [
+                    { "player.user_id": null },
+                ]
+            };
+
+            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
+
+            successResponse('Запись игры успешно обновлена', updatedGame, res);
         } catch (error) {
             internalError(error, res);
         }
     }
 
     /**
+     * Запись результатов игры в турнир
+     */
+    private async saveGameIntoTournament(gameId: string) {
+        // @ts-ignore
+        const savedGame: ISavedGame | null = await this.gameService.findGame({ _id: gameId });
+
+        if (!savedGame) {
+            return null;
+        }
+
+        if (savedGame.waiting_for_disconnect_status || savedGame.disconnect) {
+            return null;
+        }
+
+        const winnerPlayer = savedGame.players.find((player: ISavedPlayer) => player.winner);
+        const looserPlayer = savedGame.players.find((player: ISavedPlayer) => !player.winner);
+
+        await this.tournamentService.addGameToTournament(
+            savedGame.tournament_id,
+            savedGame.number_of_round,
+            winnerPlayer.user_id,
+            savedGame._id,
+        );
+
+        const changedRating: Record<string, { changedRating: number; newRating: number }> = await this.authService.changePlayerRating(
+            winnerPlayer.user_id,
+            looserPlayer.user_id,
+        );
+
+        const updatedValue = {
+            $set: {
+                "players.$[winner].changed_rating": changedRating[winnerPlayer.user_id].changedRating,
+                "players.$[winner].new_rating": changedRating[winnerPlayer.user_id].newRating,
+                "players.$[looser].changed_rating": changedRating[looserPlayer.user_id].changedRating,
+                "players.$[looser].new_rating": changedRating[looserPlayer.user_id].newRating,
+            }
+        };
+
+        const option = {
+            arrayFilters: [
+                { "winner.user_id": winnerPlayer.user_id },
+                { "looser.user_id": looserPlayer.user_id },
+            ]
+        };
+
+        await this.gameService.updateGame(savedGame._id, updatedValue, option);
+    }
+
+    /**
      * Сохранение победителя и определение красного игрока
      */
-    public saveGameWinner(req: Request, res: Response) {
+    public async saveGameWinner(req: Request<unknown, unknown, IWinnerRequestDto & { userId: string; roles: ERoles }>, res: Response) {
         try {
             // @ts-ignore
-            const gameData: IWinnerRequestDto = {
-                ...omit(req.body, ['userId']),
-                user_id: req.body.userId,
+            const savedGame: ISavedGame = await this.gameService.findGame({ combat_id: req.body.combat_id });
+
+            /**
+             * Если игра с данным id отсутствует или игра завершилась корректно - не меняем ее исход
+             */
+            if (isNil(savedGame)) {
+                return failureResponse('Игра с таким ID отсутствует', null, res);
             }
 
-            this.gameService.saveGameWinner(gameData, (err: any, gameData: IInputGameData) => {
-                if (err) {
-                    return mongoError(err, res);
+            const senderIsWinner = (
+                req.body.isRedPlayer && req.body.winner === EPlayerColor.RED
+                || !req.body.isRedPlayer && req.body.winner === EPlayerColor.BLUE
+            )
+
+            const winnerId = senderIsWinner
+                ? req.body.userId
+                : find(
+                    savedGame.players_ids,
+                    (playerId: string) => playerId !== req.body.userId
+                );
+
+            const looserId = find(
+                savedGame.players_ids,
+                (playerId: string) => playerId !== winnerId
+            );
+
+            const updatedValue = {
+                $set: {
+                    "players.$[redPlayer].user_id": req.body.winner === EPlayerColor.RED ? winnerId : looserId,
+                    "players.$[bluePlayer].user_id": req.body.winner === EPlayerColor.BLUE ? winnerId : looserId,
+                    "players.$[winner].army_remainder": req.body.army_remainder,
+                    "players.$[looser].army_remainder": [],
+                    "players.$[winner].winner": true,
+                    "players.$[looser].winner": false,
+                    date: req.body.date,
+                    disconnect: false,
+                    percentage_of_army_left: req.body.percentage_of_army_left,
+                    waiting_for_disconnect_status: req.body.isDisconnect,
+                    winner: req.body.winner,
+                }
+            };
+
+            const option = {
+                multi: true,
+                arrayFilters: [
+                    { "redPlayer.color": EPlayerColor.RED },
+                    { "bluePlayer.color": EPlayerColor.BLUE },
+                    { "winner.color": req.body.winner },
+                    { "looser.color": { $ne: req.body.winner} },
+                ]
+            };
+
+            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
+
+            const tournamentData = await this.tournamentService.getTournamentIdWithNumberOfRound(savedGame.players_ids);
+
+            /**
+             * Если нашелся турнир с активным раундом - сохраняем это в запись игры
+             */
+            if (tournamentData) {
+                const updateQuery = {
+                    $set: tournamentData
                 }
 
-                successResponse('Победитель игры обозначен!', gameData, res);
-            });
+                await this.gameService.updateGame(savedGame._id, updateQuery);
+
+                await this.saveGameIntoTournament(savedGame._id);
+            }
+
+            successResponse('Финальные данные игры успешно записаны', updatedGame, res);
+
         } catch (error) {
             internalError(error, res);
         }
@@ -242,15 +392,25 @@ export class GameController {
     /**
      * Проставление игре статуса разрыва соединения
      */
-    public async setGameDisconnectStatusByCombatId(req: Request, res: Response) {
+    public async setGameDisconnectStatusByCombatId(
+        req: Request<unknown, unknown, ISetDisconnectStatusDto & { userId: string; roles: string[] }>, res: Response
+    ) {
         try {
-            const { combat_id } = req.body;
+            const { combat_id, disconnect } = req.body;
 
-            const updatedDocs = await this.gameService.setGameDisconnectStatus(combat_id);
+            if (combat_id === undefined || disconnect === undefined) {
+                return insufficientParameters(res);
+            }
+
+            await this.gameService.setGameDisconnectStatus(combat_id, disconnect);
+
+            const gameDoc = await this.gameService.findGame({ combat_id });
+
+            await this.saveGameIntoTournament(gameDoc._id);
 
             return successResponse(
-                `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения`,
-                updatedDocs,
+                `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения в ${disconnect}`,
+                null,
                 res,
             );
         } catch (error) {

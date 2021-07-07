@@ -5,6 +5,7 @@ import * as mongoose from "mongoose";
 import {AuthRoutes} from "../routes/authRoutes";
 import {TestRoutes} from '../routes/testRoutes';
 import {GameRoutes} from '../routes/gameRoutes';
+import {TournamentRoutes} from "../routes/tournamentRoutes";
 import {CommonRoutes} from '../routes/commonRoutes';
 import {DictionaryRoutes} from "../routes/dictionaryRoutes";
 
@@ -19,11 +20,16 @@ class App {
     private gameRoutes: GameRoutes = new GameRoutes();
     private dictionaryRoutes: DictionaryRoutes = new DictionaryRoutes();
     private commonRoutes: CommonRoutes = new CommonRoutes();
+    private tournamentRoutes: TournamentRoutes = new TournamentRoutes();
 
+    /**
+     * Новые маршруты необходимо добавлять перед commonRoutes, т.к. он закроет все оставшиеся роуты
+     */
     constructor() {
         this.app = express();
         this.config();
         this.mongoSetup();
+        this.tournamentRoutes.route(this.app);
         this.testRoutes.route(this.app);
         this.gameRoutes.route(this.app);
         this.authRoutes.route(this.app);

@@ -1,6 +1,5 @@
 import * as mongoose from "mongoose";
 import {EPlayerColor} from "./model";
-import {isBoolean} from "util";
 
 const CreatureSchema = new mongoose.Schema({
     name: {
@@ -32,6 +31,7 @@ const PlayerSchema = new mongoose.Schema({
         enum: Object.values(EPlayerColor),
         required: true
     },
+    changed_rating: Number,
     defence: {
         type: Number,
         required: true
@@ -88,6 +88,7 @@ const PlayerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    new_rating: Number,
     user_id: String,
     war_machines: {
         type: [String],
@@ -113,6 +114,11 @@ const GameSchema = new mongoose.Schema({
         required: true,
         type: Boolean,
     },
+    waiting_for_disconnect_status: {
+        default: false,
+        required: true,
+        type: Boolean,
+    },
     winner: {
         enum: Object.values(EPlayerColor),
         type: Number,
@@ -130,6 +136,9 @@ const GameSchema = new mongoose.Schema({
         type: [PlayerSchema],
         required: true
     },
+    tournament_id: String,
+    tournament_name: String,
+    number_of_round: Number,
 });
 
 export const GameModel = mongoose.model('game', GameSchema);
