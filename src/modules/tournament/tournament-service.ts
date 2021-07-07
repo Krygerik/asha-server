@@ -26,7 +26,6 @@ export class TournamentService {
             this.closeRegistrationInOpenTournaments()
                 .catch((e) => console.log('Ошибка при закрытии регистрации турнира: ', e.toString()));
         }, FIVE_MINUTE);
-
     }
 
     /**
@@ -432,16 +431,6 @@ export class TournamentService {
     }
 
     /**
-     * Получение списка участников турнира
-     */
-    public async getParticipantListByTournamentId(_id: string) {
-        const tournament = await TournamentModel.findOne({ _id });
-
-        // @ts-ignore
-        return tournament.toObject().users;
-    }
-
-    /**
      * Добавление игрока в переданный турнир
      */
     public async addParticipantToTournament(tournament_id: string, user_id: string) {
@@ -467,5 +456,27 @@ export class TournamentService {
             { _id: tournament_id },
             updateOperator,
         );
+    }
+
+    /**
+     * Получением мапы названий турниров на их ID переданных турниров
+     */
+    public async getMapTournamentNameToIdByIdList(idList: string[]) {
+        if (idList.length === 0) {
+            return {};
+        }
+
+        const tournamentsDoc = await TournamentModel.find(
+            { _id: { $in: idList } },
+            { name: true },
+        );
+
+        // @ts-ignore
+        const tournamentNameWithIdList: { _id: string; name: string }[] = tournamentsDoc.map(tourDoc => tourDoc.toObject());
+
+        return tournamentNameWithIdList.reduce((acc, nameWithId) => ({
+            ...acc,
+            [nameWithId._id]: nameWithId.name,
+        }), {});
     }
 }

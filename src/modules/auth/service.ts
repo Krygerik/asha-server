@@ -16,7 +16,7 @@ export class AuthService {
      * Нахождение пользователя по id в бд
      */
     public findUserById(id: string) {
-        return UserModel.findById(id);
+        return UserModel.findById(id).select('-hash_password');
     }
 
     /**

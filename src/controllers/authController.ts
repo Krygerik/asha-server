@@ -10,9 +10,11 @@ import {
     successResponse,
 } from "../modules/common/services";
 import {AuthService, IUser, ISavedUser} from "../modules/auth";
+import {TournamentService} from "../modules/tournament";
 
 export class AuthController {
     private authService: AuthService = new AuthService();
+    private tournamentService: TournamentService = new TournamentService();
 
     /**
      * Генерация временного токена для пользователя
@@ -131,15 +133,25 @@ export class AuthController {
             const { id }: { id: string } = req.params;
 
             // @ts-ignore
-            const user: ISavedUser | null = await this.authService.findUserById(id || userId);
+            const userDoc = await this.authService.findUserById(id || userId);
 
-            if (!user) {
+            if (!userDoc) {
                 return failureResponse(`Пользователь не найден`, null, res);
             }
 
-            const responseData = pick(user, ['_id', 'discord', 'email', 'nickname', 'roles']);
+            // @ts-ignore
+            const user: ISavedUser = userDoc.toObject();
 
-            successResponse('Данные пользователя получены успешно', responseData, res);
+            const mapTournamentNameToId = await this.tournamentService.getMapTournamentNameToIdByIdList(user.tournaments);
+
+            successResponse(
+                'Данные пользователя получены успешно',
+                {
+                    ...user,
+                    mapTournamentNameToId,
+                },
+                res,
+            );
         } catch (error) {
             internalError(error, res);
         }
