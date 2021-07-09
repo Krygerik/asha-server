@@ -141,7 +141,7 @@ export class GameService {
         const filterOptions = {
             _id: { $in: gameIdList },
             winner: { $ne: null },
-            waiting_for_disconnect_status: false,
+            waiting_for_disconnect_status: { $ne: true },
         };
 
         const gameInfoDocList = await GameModel.find(filterOptions);
