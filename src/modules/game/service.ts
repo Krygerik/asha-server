@@ -120,7 +120,7 @@ export class GameService {
         const filterOptions = {
             winner: { $ne: null },
             "players.user_id": userId,
-            waiting_for_disconnect_status: false,
+            waiting_for_disconnect_status: { $ne: true },
         };
 
         let additionalOptions = {
