@@ -63,7 +63,7 @@ export class GameService {
      */
     public async getShortGameInfoList(options: IFindGameOptions, filter: IShortFilter): Promise<IShortGame[]> {
         let query = {
-            waiting_for_disconnect_status: false,
+            waiting_for_disconnect_status: { $ne: true },
             winner: { $ne: null },
         };
 
@@ -163,7 +163,7 @@ export class GameService {
     public async setGameDisconnectStatus(combat_id: number, disconnect: boolean) {
         const updateFields = {
             disconnect,
-            waiting_for_disconnect_status: { $ne: true },
+            waiting_for_disconnect_status: false,
         }
 
         return GameModel.updateOne({ combat_id }, updateFields);
