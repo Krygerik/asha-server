@@ -163,7 +163,7 @@ export class GameService {
     public async setGameDisconnectStatus(combat_id: number, disconnect: boolean) {
         const updateFields = {
             disconnect,
-            waiting_for_disconnect_status: false,
+            waiting_for_disconnect_status: { $ne: true },
         }
 
         return GameModel.updateOne({ combat_id }, updateFields);
