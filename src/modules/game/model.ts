@@ -112,10 +112,10 @@ export interface IWinnerRequestDto {
     user_id: string;
     // Процент оставшейся силы армии
     percentage_of_army_left: number;
+    // Произошел ли разрыв соединения во время игры
+    wasDisconnect?: boolean;
     // Цвет игрока победителя
     winner: EPlayerColor;
-    // Произошел ли разрыв соединения во время игры
-    isDisconnect: boolean;
 }
 
 /**

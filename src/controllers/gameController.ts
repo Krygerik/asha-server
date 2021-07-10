@@ -232,7 +232,7 @@ export class GameController {
                     date: req.body.date,
                     disconnect: false,
                     percentage_of_army_left: req.body.percentage_of_army_left,
-                    waiting_for_disconnect_status: req.body.isDisconnect,
+                    waiting_for_disconnect_status: Boolean(req.body.wasDisconnect),
                     winner: req.body.winner,
                 }
             };
