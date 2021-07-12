@@ -103,7 +103,7 @@ const PlayerSchema = new mongoose.Schema({
 
 const GameSchema = new mongoose.Schema({
     combat_id: {
-        type: Number,
+        type: String,
         required: true
     },
     date: {

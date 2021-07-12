@@ -89,7 +89,7 @@ export interface ISavedPlayer extends IInputPlayer {
  */
 export interface ISaveGameParamsBody {
     // id сражения
-    combat_id: number;
+    combat_id: string;
     // Версия карты
     map_version: string;
     // Список данных о прокачках обоих игроков
@@ -103,7 +103,7 @@ export interface IWinnerRequestDto {
     // Конечный состав армии
     army_remainder: ICreatures[];
     // id сражения
-    combat_id: number;
+    combat_id: string;
     // Дата окончания игры
     date: string;
     // Является ли игрок красным
@@ -123,7 +123,7 @@ export interface IWinnerRequestDto {
  */
 export interface ISetDisconnectStatusDto {
     // ИД игры для которой проставляется статус
-    combat_id?: number;
+    combat_id?: string;
     // статус соединения
     disconnect?: boolean;
 }
@@ -133,7 +133,7 @@ export interface ISetDisconnectStatusDto {
  */
 export interface IInputGameData {
     // id сражения
-    combat_id: number;
+    combat_id: string;
     // Версия карты
     map_version: string;
     // Список ников игроков, участвующих в игре

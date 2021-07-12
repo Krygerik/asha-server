@@ -160,7 +160,7 @@ export class GameService {
     /**
      * Проставление игре статуса дисконнекта
      */
-    public async setGameDisconnectStatus(combat_id: number, disconnect: boolean) {
+    public async setGameDisconnectStatus(combat_id: string, disconnect: boolean) {
         const updateFields = {
             disconnect,
             waiting_for_disconnect_status: false,
