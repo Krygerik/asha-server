@@ -125,7 +125,7 @@ export interface ISetDisconnectStatusDto {
     // ИД игры для которой проставляется статус
     combat_id?: string;
     // статус соединения
-    disconnect?: boolean;
+    IsDisconnect?: boolean;
 }
 
 /**
