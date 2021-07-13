@@ -396,20 +396,20 @@ export class GameController {
         req: Request<unknown, unknown, ISetDisconnectStatusDto & { userId: string; roles: string[] }>, res: Response
     ) {
         try {
-            const { combat_id, disconnect } = req.body;
+            const { combat_id, IsDisconnect } = req.body;
 
-            if (combat_id === undefined || disconnect === undefined) {
+            if (combat_id === undefined || IsDisconnect === undefined) {
                 return insufficientParameters(res);
             }
 
-            await this.gameService.setGameDisconnectStatus(combat_id, disconnect);
+            await this.gameService.setGameDisconnectStatus(combat_id, IsDisconnect);
 
             const gameDoc = await this.gameService.findGame({ combat_id });
 
             await this.saveGameIntoTournament(gameDoc._id);
 
             return successResponse(
-                `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения в ${disconnect}`,
+                `Игре с combat_id: ${IsDisconnect} проставлен статус разрыва соединения в ${IsDisconnect}`,
                 null,
                 res,
             );
