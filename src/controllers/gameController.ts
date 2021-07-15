@@ -398,18 +398,18 @@ export class GameController {
         try {
             const { combat_id, IsDisconnect } = req.body;
 
-            if (combat_id === undefined || IsDisconnect === undefined) {
+            if (combat_id === undefined) {
                 return insufficientParameters(res);
             }
 
-            await this.gameService.setGameDisconnectStatus(combat_id, IsDisconnect);
+            await this.gameService.setGameDisconnectStatus(combat_id, Boolean(IsDisconnect));
 
             const gameDoc = await this.gameService.findGame({ combat_id });
 
             await this.saveGameIntoTournament(gameDoc._id);
 
             return successResponse(
-                `Игре с combat_id: ${IsDisconnect} проставлен статус разрыва соединения в ${IsDisconnect}`,
+                `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения в ${Boolean(IsDisconnect)}`,
                 null,
                 res,
             );
