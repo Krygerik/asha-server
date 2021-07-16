@@ -273,7 +273,7 @@ export class TournamentService {
         const tournament: ITournament | null = await TournamentModel.findOne({ _id: tournament_id });
 
         if (!tournament) {
-            throw new Error('Не удалось найти турнир, для добавления результатов игры');
+            return null;
         }
 
         const currentRound: ITournamentRound | null = tournament.grid.find(
@@ -281,7 +281,7 @@ export class TournamentService {
         );
 
         if (!currentRound) {
-            throw new Error('Не удалось найти активный раунд турнира');
+            return null;
         }
 
         /**

@@ -151,6 +151,10 @@ export class GameController {
             return null;
         }
 
+        if (!savedGame.tournament_id) {
+            return null;
+        }
+
         if (savedGame.waiting_for_disconnect_status || savedGame.disconnect) {
             return null;
         }
