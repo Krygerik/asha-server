@@ -414,7 +414,7 @@ export class GameController {
                 res,
             );
         } catch (error) {
-            return mongoError(error, res);
+            return internalError(error.toString(), res);
         }
     }
 
