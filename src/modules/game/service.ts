@@ -41,7 +41,7 @@ export class GameService {
     public createGame(gameParams: IInputGameData) {
         const game = new GameModel(gameParams);
 
-        return GameModel.insertMany(game);
+        return game.save();
     }
 
     /**

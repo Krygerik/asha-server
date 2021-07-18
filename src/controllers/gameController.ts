@@ -31,6 +31,7 @@ import {
     IRecords,
 } from "../modules/dictionaries";
 import {TournamentService} from "../modules/tournament";
+import {logger} from "../utils";
 
 export class GameController {
     private authService: AuthService = new AuthService();
@@ -91,29 +92,51 @@ export class GameController {
         req: Request<unknown, unknown, ISaveGameParamsBody & { userId: string; roles: ERoles }>, res: Response
     ) {
         try {
-            // @ts-ignore
-            const savedGame: ISavedGame | null = await this.gameService.findGame({
+            logger.info(
+                'saveGameParams: Запрос на сохранение основных данных об игре',
+                { metadata: { reqBody: req.body }}
+            );
+
+            const savedGameDoc = await this.gameService.findGame({
                 combat_id: req.body.combat_id
             })
 
             /**
              * Если запись игры еще не создана - создаем
              */
-            if (!savedGame) {
+            if (!savedGameDoc) {
                 const gameData: IInputGameData = {
                     ...omit(req.body, ['userId', 'roles']),
                     players_ids: [req.body.userId],
                 };
 
+                logger.info(
+                    'saveGameParams: Создание новой игры на основе пришедших данных',
+                    { metadata: { gameData }}
+                );
+
                 const createdGame = await this.gameService.createGame(gameData);
+
+                logger.info(
+                    'saveGameParams: Игра успешно создана',
+                    { metadata: { createdGame: createdGame.toObject() }}
+                );
 
                 return successResponse('Запись игры успешно создана', createdGame, res);
             }
+
+            // @ts-ignore
+            const savedGame: ISavedGame | null = savedGameDoc.toObject();
 
             /**
              * Если игрок уже записан в игре - выкидываем
              */
             if (savedGame.players_ids.includes(req.body.userId)) {
+                logger.warn(
+                    'saveGameParams: Игрок уже записан в запись игры',
+                    { metadata: { savedGame }}
+                );
+
                 return successResponse('Игрок уже записан в запись игры', savedGame, res);
             }
 
@@ -134,8 +157,18 @@ export class GameController {
 
             const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
+            logger.info(
+                'saveGameParams: Запись игры успешно обновлена',
+                { metadata: { updatedGame: updatedGame.toObject() }}
+            );
+
             successResponse('Запись игры успешно обновлена', updatedGame, res);
         } catch (error) {
+            logger.error(
+                'saveGameParams: Ошибка при обработке запроса',
+                { metadata: { error: error }}
+            );
+
             internalError(error, res);
         }
     }
