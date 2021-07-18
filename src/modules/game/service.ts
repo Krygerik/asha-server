@@ -59,17 +59,46 @@ export class GameService {
     }
 
     /**
+     * Возвращает фильтр поиска списка краткой информации по всем играм с пагинацией
+     */
+    private getShortGameInfoQueryFilter(filter: IShortFilter) {
+        return {
+            waiting_for_disconnect_status: { $ne: true },
+            winner: { $ne: null },
+            $or: [
+                {
+                    $and: filter.players.map((item, index) => ({
+                        players: {
+                            $elemMatch: {
+                                ...item,
+                                ...index === 0
+                                    ? { color: EPlayerColor.RED }
+                                    : { color: EPlayerColor.BLUE }
+                            }
+                        }
+                    }))
+                },
+                {
+                    $and: filter.players.map((item, index) => ({
+                        players: {
+                            $elemMatch: {
+                                ...item,
+                                ...index === 0
+                                    ? { color: EPlayerColor.BLUE }
+                                    : { color: EPlayerColor.RED }
+                            }
+                        }
+                    }))
+                },
+            ]
+        }
+    }
+
+    /**
      * Получение списка краткой информации по всем играм с пагинацией
      */
     public async getShortGameInfoList(options: IFindGameOptions, filter: IShortFilter): Promise<IShortGame[]> {
-        let query = {
-            waiting_for_disconnect_status: { $ne: true },
-            winner: { $ne: null },
-        };
-
-        forEach(filter, (value: string, key: string) => {
-            query[`players.${key}`] = value;
-        });
+        const query = this.getShortGameInfoQueryFilter(filter);
 
         // @ts-ignore
         const allGameInfoList: ISavedGame[] = await GameModel
@@ -85,13 +114,7 @@ export class GameService {
      * Получение количества страниц пагинации для переданных опций
      */
     public async getCountPagesByPageSize(size: number, filter: IShortFilter) {
-        let query = {
-            winner: { $ne: null },
-        };
-
-        forEach(filter, (value: string, key: string) => {
-            query[`players.${key}`] = value;
-        });
+        const query = this.getShortGameInfoQueryFilter(filter);
 
         const count = await GameModel.countDocuments(query);
 

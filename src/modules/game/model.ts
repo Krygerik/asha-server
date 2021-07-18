@@ -219,16 +219,20 @@ export enum EComparisonNames {
 
 export type TComparisonField = Record<EComparisonNames, number>;
 
-/**
- * Краткий фильтр игр
- */
-export interface IShortFilter {
+export interface IShortPlayerFilterInfo {
     // ID героя
     hero?: string;
     // ID фракции
     race?: string;
     // ID игрока
     user_id?: string;
+}
+
+/**
+ * Краткий фильтр игр
+ */
+export interface IShortFilter {
+    players: IShortPlayerFilterInfo[];
 }
 
 /**

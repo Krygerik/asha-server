@@ -298,10 +298,9 @@ export class GameController {
     /**
      * Получение краткого списка всех игр
      */
-    public async getShortGameInfoList(req: Request<unknown, unknown, { filter: IShortFilter }, Partial<IFindGameOptions>>, res: Response) {
+    public async getShortGameInfoList(req: Request<unknown, unknown, IShortFilter, Partial<IFindGameOptions>>, res: Response) {
         try {
             const { query } = req;
-            const { filter } = req.body;
 
             if (!query.items || !query.requestPage) {
                 return incorrectParameters(res);
@@ -315,12 +314,12 @@ export class GameController {
             /**
              * Количество страниц пагинации
              */
-            const totalPages = await this.gameService.getCountPagesByPageSize(options.items, filter);
+            const totalPages = await this.gameService.getCountPagesByPageSize(options.items, req.body);
 
             /**
              * Список игр без никнеймов игроков
              */
-            const allShortGameInfoList: IShortGame[] = await this.gameService.getShortGameInfoList(options, filter);
+            const allShortGameInfoList: IShortGame[] = await this.gameService.getShortGameInfoList(options, req.body);
 
             const gameDataWithNicknameList = await this.addNicknamesToGameInfoList(allShortGameInfoList);
 
