@@ -52,7 +52,7 @@ export class GameRoutes {
         /**
          * Получение краткой информации по последним играм пользователя
          */
-        app.post('/api/set-game-disconnect-status', AuthController.authMiddleware(), (req: Request, res: Response) => {
+        app.post('/api/set-game-disconnect-status', [loggerMiddleware, AuthController.authMiddleware()], (req: Request, res: Response) => {
             this.gameController.setGameDisconnectStatusByCombatId(req, res);
         })
 

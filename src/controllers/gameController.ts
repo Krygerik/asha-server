@@ -488,15 +488,34 @@ export class GameController {
         req: Request<unknown, unknown, ISetDisconnectStatusDto & { userId: string; roles: string[] }>, res: Response
     ) {
         try {
+            logger.info(
+                'setGameDisconnectStatusByCombatId: Проставление игре статуса разрыва соединения',
+                { metadata: { reqBody: req.body }}
+            );
+
             const { combat_id, IsDisconnect } = req.body;
 
             if (combat_id === undefined) {
+                logger.warn(
+                    'setGameDisconnectStatusByCombatId: В запросе отсутствует combat_id',
+                    { metadata: { combat_id }}
+                );
+
                 return insufficientParameters(res);
             }
 
             await this.gameService.setGameDisconnectStatus(combat_id, Boolean(IsDisconnect));
 
             const gameDoc = await this.gameService.findGame({ combat_id });
+
+            if (!gameDoc) {
+                logger.warn(
+                    'setGameDisconnectStatusByCombatId: Не удалось найти игру с таким CombatId',
+                    { metadata: { combat_id }}
+                );
+
+                return failureResponse('Не удалось найти игру с таким CombatId', null, res);
+            }
 
             await this.saveGameIntoTournament(gameDoc._id);
 
@@ -506,6 +525,11 @@ export class GameController {
                 res,
             );
         } catch (error) {
+            logger.error(
+                'setGameDisconnectStatusByCombatId: Ошибка при попытке проставить игре статуса разрыва соединения',
+                { metadata: { error }}
+            );
+
             return internalError(error.toString(), res);
         }
     }
