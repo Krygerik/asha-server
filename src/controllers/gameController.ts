@@ -177,18 +177,41 @@ export class GameController {
      * Запись результатов игры в турнир
      */
     private async saveGameIntoTournament(gameId: string) {
+        logger.info(
+            'saveGameIntoTournament: Запись результатов игры в турнир',
+            { metadata: { gameId }}
+        );
+
         // @ts-ignore
         const savedGame: ISavedGame | null = await this.gameService.findGame({ _id: gameId });
 
         if (!savedGame) {
+            logger.warn(
+                'saveGameIntoTournament: Запись игры не найдена',
+                { metadata: { gameId }}
+            );
+
             return null;
         }
 
         if (!savedGame.tournament_id) {
+            logger.warn(
+                'saveGameIntoTournament: Не найден ИД турнира, в рамках которого сыграна игра',
+                { metadata: { tournament_id: savedGame.tournament_id }}
+            );
+
             return null;
         }
 
         if (savedGame.waiting_for_disconnect_status || savedGame.disconnect) {
+            logger.warn(
+                'saveGameIntoTournament: Игра находится в статуса ожидания или разрыва соединения',
+                { metadata: {
+                    disconnect: savedGame.disconnect,
+                    waiting_for_disconnect_status: savedGame.waiting_for_disconnect_status,
+                }}
+            );
+
             return null;
         }
 
@@ -223,6 +246,14 @@ export class GameController {
             ]
         };
 
+        logger.info(
+            'saveGameIntoTournament: Сохранение изменения рейтинга игроков в запись игры',
+            { metadata: {
+                    gameId: savedGame._id,
+                    updatedValue,
+                }}
+        );
+
         await this.gameService.updateGame(savedGame._id, updatedValue, option);
     }
 
@@ -231,6 +262,11 @@ export class GameController {
      */
     public async saveGameWinner(req: Request<unknown, unknown, IWinnerRequestDto & { userId: string; roles: ERoles }>, res: Response) {
         try {
+            logger.info(
+                'saveGameWinner: Запрос на сохранение победителя и определение красного игрока',
+                { metadata: { reqBody: req.body }}
+            );
+
             // @ts-ignore
             const savedGame: ISavedGame = await this.gameService.findGame({ combat_id: req.body.combat_id });
 
@@ -238,6 +274,11 @@ export class GameController {
              * Если игра с данным id отсутствует или игра завершилась корректно - не меняем ее исход
              */
             if (isNil(savedGame)) {
+                logger.warn(
+                    'saveGameWinner: Игра с таким ID отсутствует',
+                    { metadata: { combat_id: req.body.combat_id }}
+                );
+
                 return failureResponse('Игра с таким ID отсутствует', null, res);
             }
 
@@ -286,12 +327,22 @@ export class GameController {
 
             const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
+            logger.info(
+                'saveGameWinner: Победитель игры записан',
+                { metadata: { _id: savedGame._id }}
+            );
+
             const tournamentData = await this.tournamentService.getTournamentIdWithNumberOfRound(savedGame.players_ids);
 
             /**
              * Если нашелся турнир с активным раундом - сохраняем это в запись игры
              */
             if (tournamentData) {
+                logger.info(
+                    'saveGameWinner: Сохранение ИД турнира и номера раунда этой игры',
+                    { metadata: { tournamentData }}
+                );
+
                 const updateQuery = {
                     $set: tournamentData
                 }
@@ -304,6 +355,11 @@ export class GameController {
             successResponse('Финальные данные игры успешно записаны', updatedGame, res);
 
         } catch (error) {
+            logger.error(
+                'saveGameWinner: Ошибка при сохранении победителя игры и записи результата в турнир',
+                { metadata: { error }}
+            );
+
             internalError(error, res);
         }
     }

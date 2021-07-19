@@ -7,6 +7,7 @@ import {
     mapCountMemberToCountStage,
     mapRoundFormatToMaximumCountGame,
 } from "./tournament-constants";
+import {logger} from "../../utils";
 
 /**
  * Действия непосредственно с таблицей с турнирами
@@ -211,10 +212,20 @@ export class TournamentService {
      * Получение ИД турнира и номера раунда по совпадению списка игроков
      */
     public async getTournamentIdWithNumberOfRound(gameUserIdList: string[]) {
+        logger.info(
+            'getTournamentIdWithNumberOfRound: Получение ИД турнира и номера раунда по совпадению списка игроков',
+            { metadata: { gameUserIdList }}
+        );
+
         /**
          * Если игроков не 2, не обрабатываем
          */
         if (gameUserIdList.length !== 2) {
+            logger.warn(
+                'getTournamentIdWithNumberOfRound: Количество игроков меньше 2',
+                { metadata: { gameUserIdList }}
+            );
+
             return null;
         }
 
@@ -231,6 +242,11 @@ export class TournamentService {
          * Если не найден турнир с такими участниками
          */
         if (!tournamentDoc) {
+            logger.warn(
+                'getTournamentIdWithNumberOfRound: Не найден турнир с такими участниками',
+                { metadata: { gameUserIdList }}
+            );
+
             return null;
         }
 
@@ -253,14 +269,26 @@ export class TournamentService {
          * Если у переданных игроков нет активной встречи - тож бесцеремонно выкидываем
          */
         if (!round) {
+            logger.warn(
+                'getTournamentIdWithNumberOfRound: У игроков нет сейчас активной встречи',
+                { metadata: { gameUserIdList }}
+            );
+
             return null;
         }
 
-        return {
+        const tournamentIdWithNumberOfRound = {
             number_of_round: round.number_of_round,
             tournament_id: tournament._id,
             tournament_name: tournament.name
-        }
+        };
+
+        logger.info(
+            'getTournamentIdWithNumberOfRound: Высчитан турнир и раунд для переданных игроков',
+            { metadata: { tournamentIdWithNumberOfRound } }
+        );
+
+        return tournamentIdWithNumberOfRound;
     }
 
     /**
@@ -269,10 +297,31 @@ export class TournamentService {
     public async addGameToTournament(
         tournament_id: string, number_of_round: number, winner_id: string, game_id: string
     ) {
+        logger.info(
+            'addGameToTournament: Добавление результата игры к раунду в турнире',
+            {
+                metadata: {
+                    game_id,
+                    number_of_round,
+                    tournament_id,
+                    winner_id,
+                }
+            }
+        );
+
         // @ts-ignore
         const tournament: ITournament | null = await TournamentModel.findOne({ _id: tournament_id });
 
         if (!tournament) {
+            logger.warn(
+                'addGameToTournament: Не найден турнир с таким ИД',
+                {
+                    metadata: {
+                        tournament_id
+                    }
+                }
+            );
+
             return null;
         }
 
@@ -281,13 +330,32 @@ export class TournamentService {
         );
 
         if (!currentRound) {
+            logger.warn(
+                'addGameToTournament: Не найден активный раунд по номеру раунда',
+                {
+                    metadata: {
+                        number_of_round
+                    }
+                }
+            );
+
             return null;
         }
 
         /**
-         * Если игра игра уже добавлена в раунд - выкидываем
+         * Если игра уже добавлена в раунд - выкидываем
          */
         if (currentRound.games.includes(game_id)) {
+            logger.warn(
+                'addGameToTournament: Игра уже была добавлена в раунд',
+                {
+                    metadata: {
+                        game_id,
+                        number_of_round,
+                    }
+                }
+            );
+
             return null;
         }
 
@@ -325,6 +393,16 @@ export class TournamentService {
             ]
         }
 
+        logger.info(
+            'addGameToTournament: Сохранение результата игры в бд',
+            {
+                metadata: {
+                    tournament_id,
+                    updatedValue,
+                }
+            }
+        );
+
         const updatedTournament = await TournamentModel.updateOne(
             { _id: tournament_id },
             updatedValue,
@@ -332,7 +410,17 @@ export class TournamentService {
         );
 
         if (!updatedTournament) {
-            throw new Error('Не удалось добавить результат игры в турнир');
+            logger.warn(
+                'addGameToTournament: Не удалось добавить результат игры в турнир',
+                {
+                    metadata: {
+                        tournament_id,
+                        updatedValue,
+                    }
+                }
+            );
+
+            return null;
         }
 
         /**
@@ -347,7 +435,30 @@ export class TournamentService {
      * Перемещаем победителя в следующий раунд
      */
     public async moveWinnerIntoNextRound(tournament_id: string, number_of_round: number) {
+        logger.info(
+            'moveWinnerIntoNextRound: Перемещаем победителя в следующий раунд',
+            {
+                metadata: {
+                    tournament_id,
+                    number_of_round,
+                }
+            }
+        );
+
         const tournamentDoc = await TournamentModel.findOne({ _id: tournament_id });
+
+        if (!tournamentDoc) {
+            logger.warn(
+                'moveWinnerIntoNextRound: Не найден турнир для перемещения победителя',
+                {
+                    metadata: {
+                        tournament_id,
+                    }
+                }
+            );
+
+            return null;
+        }
 
         // @ts-ignore
         const tournament: ITournament = tournamentDoc.toObject();
@@ -387,7 +498,18 @@ export class TournamentService {
         );
 
         if (!updatedTournament) {
-            throw new Error('Не удалось переместить победителя в следующий раунд турнира');
+            logger.warn(
+                'moveWinnerIntoNextRound: Не удалось переместить победителя в следующий раунд турнира',
+                {
+                    metadata: {
+                        tournament_id,
+                        updatedValue,
+                        option,
+                    }
+                }
+            );
+
+            return null;
         }
     }
 

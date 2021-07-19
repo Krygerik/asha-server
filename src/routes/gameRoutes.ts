@@ -1,6 +1,7 @@
 import {Application, Request, Response} from "express";
 import {AuthController} from "../controllers/authController";
 import {GameController} from "../controllers/gameController";
+import { loggerMiddleware } from "../utils";
 
 export class GameRoutes {
     private gameController: GameController = new GameController();
@@ -9,14 +10,14 @@ export class GameRoutes {
         /**
          * Сохранение основных характеристик игрока с его никнеймом
          */
-        app.post('/api/save-game-params', AuthController.authMiddleware(), (req: Request, res: Response) => {
+        app.post('/api/save-game-params', [loggerMiddleware, AuthController.authMiddleware()], (req: Request, res: Response) => {
             this.gameController.saveGameParams(req,res);
         });
 
         /**
          * Сохранение победителя и определение красного игрока
          */
-        app.post('/api/save-game-winner', AuthController.authMiddleware(), (req: Request, res: Response) => {
+        app.post('/api/save-game-winner', [loggerMiddleware, AuthController.authMiddleware()], (req: Request, res: Response) => {
             this.gameController.saveGameWinner(req,res);
         });
 
