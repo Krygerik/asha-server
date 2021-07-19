@@ -1,5 +1,6 @@
 import {ISavedUser, IUser} from "./model";
 import {UserModel} from "./schema";
+import {logger} from "../../utils";
 
 export class AuthService {
     public createUser(userData: IUser, callback: any) {
@@ -76,12 +77,32 @@ export class AuthService {
      * Добавление пользователю данных о турнире, на который он зарегистрировался
      */
     public async changePlayerRating(winnerId: string, loserId: string) {
+        logger.info(
+            'changePlayerRating: Добавление пользователю данных о турнире, на который он зарегистрировался',
+            {
+                metadata: {
+                    winnerId,
+                    loserId,
+                }
+            }
+        );
+
         // @ts-ignore
         const winner: ISavedUser | null = await UserModel.findOne({ _id: winnerId });
         // @ts-ignore
         const looser: ISavedUser | null = await UserModel.findOne({ _id: loserId });
 
         if (!winner || !looser) {
+            logger.warn(
+                'changePlayerRating: Не удалось получить данные о победителе или проигравшем',
+                {
+                    metadata: {
+                        winner,
+                        looser,
+                    }
+                }
+            );
+
             return null;
         }
 
@@ -93,10 +114,22 @@ export class AuthService {
         const newWinnerRating = Math.round(winner.rating + softFactor * (1 - updatedRatingFactor));
         const newLooserRating = Math.round(looser.rating + softFactor * (0 - updatedRatingFactor));
 
+        logger.info(
+            'changePlayerRating: Изменение рейтинга участникам игры',
+            {
+                metadata: {
+                    loserId,
+                    newLooserRating,
+                    newWinnerRating,
+                    winnerId,
+                }
+            }
+        );
+
         await UserModel.findOneAndUpdate({ _id: winnerId }, { rating: newWinnerRating });
         await UserModel.findOneAndUpdate({ _id: loserId }, { rating: newLooserRating });
 
-        return {
+        const result = {
             [loserId]: {
                 changedRating: Math.round(newLooserRating - looser.rating),
                 newRating: newLooserRating,
@@ -106,5 +139,16 @@ export class AuthService {
                 newRating: newWinnerRating,
             },
         };
+
+        logger.info(
+            'changePlayerRating: Возвращаемое значение',
+            {
+                metadata: {
+                    result,
+                }
+            }
+        );
+
+        return result;
     }
 }

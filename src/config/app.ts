@@ -8,13 +8,10 @@ import {GameRoutes} from '../routes/gameRoutes';
 import {TournamentRoutes} from "../routes/tournamentRoutes";
 import {CommonRoutes} from '../routes/commonRoutes';
 import {DictionaryRoutes} from "../routes/dictionaryRoutes";
-
-const database = process.env.NODE_ENV == 'production' ? 'production' : 'test';
+import { mongoUrl } from "../constants";
 
 class App {
     public app: express.Application;
-    public mongoUrl: string = 'mongodb://AdminSokratik:Her0EsF!ve@localhost:27017/' + database;
-
     private authRoutes: AuthRoutes = new AuthRoutes();
     private testRoutes: TestRoutes = new TestRoutes();
     private gameRoutes: GameRoutes = new GameRoutes();
@@ -49,7 +46,7 @@ class App {
 
     private mongoSetup(): void {
         mongoose.connect(
-            this.mongoUrl,
+            mongoUrl,
             { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }
         )
     }

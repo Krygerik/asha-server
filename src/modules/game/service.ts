@@ -13,6 +13,7 @@ import {
     TWinRate,
 } from "./model";
 import {GameModel} from "./schema";
+import {logger} from "../../utils";
 
 export class GameService {
     /**
@@ -41,7 +42,7 @@ export class GameService {
     public createGame(gameParams: IInputGameData) {
         const game = new GameModel(gameParams);
 
-        return GameModel.insertMany(game);
+        return game.save();
     }
 
     /**
@@ -184,10 +185,20 @@ export class GameService {
      * Проставление игре статуса дисконнекта
      */
     public async setGameDisconnectStatus(combat_id: string, disconnect: boolean) {
+        logger.info(
+            'setGameDisconnectStatus: Проставление игре статуса дисконнекта',
+            { metadata: { combat_id, disconnect }}
+        );
+
         const updateFields = {
             disconnect,
             waiting_for_disconnect_status: false,
-        }
+        };
+
+        logger.info(
+            'setGameDisconnectStatus: Сохранение статуса дисконнекта в бд',
+            { metadata: { combat_id, updateFields }}
+        );
 
         return GameModel.updateOne({ combat_id }, updateFields);
     }

@@ -31,6 +31,7 @@ import {
     IRecords,
 } from "../modules/dictionaries";
 import {TournamentService} from "../modules/tournament";
+import {logger} from "../utils";
 
 export class GameController {
     private authService: AuthService = new AuthService();
@@ -91,29 +92,51 @@ export class GameController {
         req: Request<unknown, unknown, ISaveGameParamsBody & { userId: string; roles: ERoles }>, res: Response
     ) {
         try {
-            // @ts-ignore
-            const savedGame: ISavedGame | null = await this.gameService.findGame({
+            logger.info(
+                'saveGameParams: Запрос на сохранение основных данных об игре',
+                { metadata: { reqBody: req.body }}
+            );
+
+            const savedGameDoc = await this.gameService.findGame({
                 combat_id: req.body.combat_id
             })
 
             /**
              * Если запись игры еще не создана - создаем
              */
-            if (!savedGame) {
+            if (!savedGameDoc) {
                 const gameData: IInputGameData = {
                     ...omit(req.body, ['userId', 'roles']),
                     players_ids: [req.body.userId],
                 };
 
+                logger.info(
+                    'saveGameParams: Создание новой игры на основе пришедших данных',
+                    { metadata: { gameData }}
+                );
+
                 const createdGame = await this.gameService.createGame(gameData);
+
+                logger.info(
+                    'saveGameParams: Игра успешно создана',
+                    { metadata: { createdGame: createdGame.toObject() }}
+                );
 
                 return successResponse('Запись игры успешно создана', createdGame, res);
             }
+
+            // @ts-ignore
+            const savedGame: ISavedGame | null = savedGameDoc.toObject();
 
             /**
              * Если игрок уже записан в игре - выкидываем
              */
             if (savedGame.players_ids.includes(req.body.userId)) {
+                logger.warn(
+                    'saveGameParams: Игрок уже записан в запись игры',
+                    { metadata: { savedGame }}
+                );
+
                 return successResponse('Игрок уже записан в запись игры', savedGame, res);
             }
 
@@ -134,8 +157,18 @@ export class GameController {
 
             const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
+            logger.info(
+                'saveGameParams: Запись игры успешно обновлена',
+                { metadata: { updatedGame: updatedGame.toObject() }}
+            );
+
             successResponse('Запись игры успешно обновлена', updatedGame, res);
         } catch (error) {
+            logger.error(
+                'saveGameParams: Ошибка при обработке запроса',
+                { metadata: { error: error }}
+            );
+
             internalError(error, res);
         }
     }
@@ -144,18 +177,41 @@ export class GameController {
      * Запись результатов игры в турнир
      */
     private async saveGameIntoTournament(gameId: string) {
+        logger.info(
+            'saveGameIntoTournament: Запись результатов игры в турнир',
+            { metadata: { gameId }}
+        );
+
         // @ts-ignore
         const savedGame: ISavedGame | null = await this.gameService.findGame({ _id: gameId });
 
         if (!savedGame) {
+            logger.warn(
+                'saveGameIntoTournament: Запись игры не найдена',
+                { metadata: { gameId }}
+            );
+
             return null;
         }
 
         if (!savedGame.tournament_id) {
+            logger.warn(
+                'saveGameIntoTournament: Не найден ИД турнира, в рамках которого сыграна игра',
+                { metadata: { tournament_id: savedGame.tournament_id }}
+            );
+
             return null;
         }
 
         if (savedGame.waiting_for_disconnect_status || savedGame.disconnect) {
+            logger.warn(
+                'saveGameIntoTournament: Игра находится в статуса ожидания или разрыва соединения',
+                { metadata: {
+                    disconnect: savedGame.disconnect,
+                    waiting_for_disconnect_status: savedGame.waiting_for_disconnect_status,
+                }}
+            );
+
             return null;
         }
 
@@ -190,6 +246,14 @@ export class GameController {
             ]
         };
 
+        logger.info(
+            'saveGameIntoTournament: Сохранение изменения рейтинга игроков в запись игры',
+            { metadata: {
+                    gameId: savedGame._id,
+                    updatedValue,
+                }}
+        );
+
         await this.gameService.updateGame(savedGame._id, updatedValue, option);
     }
 
@@ -198,6 +262,11 @@ export class GameController {
      */
     public async saveGameWinner(req: Request<unknown, unknown, IWinnerRequestDto & { userId: string; roles: ERoles }>, res: Response) {
         try {
+            logger.info(
+                'saveGameWinner: Запрос на сохранение победителя и определение красного игрока',
+                { metadata: { reqBody: req.body }}
+            );
+
             // @ts-ignore
             const savedGame: ISavedGame = await this.gameService.findGame({ combat_id: req.body.combat_id });
 
@@ -205,6 +274,11 @@ export class GameController {
              * Если игра с данным id отсутствует или игра завершилась корректно - не меняем ее исход
              */
             if (isNil(savedGame)) {
+                logger.warn(
+                    'saveGameWinner: Игра с таким ID отсутствует',
+                    { metadata: { combat_id: req.body.combat_id }}
+                );
+
                 return failureResponse('Игра с таким ID отсутствует', null, res);
             }
 
@@ -253,12 +327,22 @@ export class GameController {
 
             const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
+            logger.info(
+                'saveGameWinner: Победитель игры записан',
+                { metadata: { _id: savedGame._id }}
+            );
+
             const tournamentData = await this.tournamentService.getTournamentIdWithNumberOfRound(savedGame.players_ids);
 
             /**
              * Если нашелся турнир с активным раундом - сохраняем это в запись игры
              */
             if (tournamentData) {
+                logger.info(
+                    'saveGameWinner: Сохранение ИД турнира и номера раунда этой игры',
+                    { metadata: { tournamentData }}
+                );
+
                 const updateQuery = {
                     $set: tournamentData
                 }
@@ -271,6 +355,11 @@ export class GameController {
             successResponse('Финальные данные игры успешно записаны', updatedGame, res);
 
         } catch (error) {
+            logger.error(
+                'saveGameWinner: Ошибка при сохранении победителя игры и записи результата в турнир',
+                { metadata: { error }}
+            );
+
             internalError(error, res);
         }
     }
@@ -399,15 +488,34 @@ export class GameController {
         req: Request<unknown, unknown, ISetDisconnectStatusDto & { userId: string; roles: string[] }>, res: Response
     ) {
         try {
+            logger.info(
+                'setGameDisconnectStatusByCombatId: Проставление игре статуса разрыва соединения',
+                { metadata: { reqBody: req.body }}
+            );
+
             const { combat_id, IsDisconnect } = req.body;
 
             if (combat_id === undefined) {
+                logger.warn(
+                    'setGameDisconnectStatusByCombatId: В запросе отсутствует combat_id',
+                    { metadata: { combat_id }}
+                );
+
                 return insufficientParameters(res);
             }
 
             await this.gameService.setGameDisconnectStatus(combat_id, Boolean(IsDisconnect));
 
             const gameDoc = await this.gameService.findGame({ combat_id });
+
+            if (!gameDoc) {
+                logger.warn(
+                    'setGameDisconnectStatusByCombatId: Не удалось найти игру с таким CombatId',
+                    { metadata: { combat_id }}
+                );
+
+                return failureResponse('Не удалось найти игру с таким CombatId', null, res);
+            }
 
             await this.saveGameIntoTournament(gameDoc._id);
 
@@ -417,6 +525,11 @@ export class GameController {
                 res,
             );
         } catch (error) {
+            logger.error(
+                'setGameDisconnectStatusByCombatId: Ошибка при попытке проставить игре статуса разрыва соединения',
+                { metadata: { error }}
+            );
+
             return internalError(error.toString(), res);
         }
     }
