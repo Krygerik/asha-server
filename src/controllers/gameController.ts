@@ -330,12 +330,17 @@ export class GameController {
                 ]
             };
 
-            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
-
             logger.info(
-                'saveGameWinner: Победитель игры записан',
-                { metadata: { _id: savedGame._id }}
+                'saveGameWinner: Запись победителя игры в бд',
+                {
+                    metadata: {
+                        _id: savedGame._id,
+                        updatedValue,
+                    }
+                }
             );
+
+            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
             const tournamentData = await this.tournamentService.getTournamentIdWithNumberOfRound(savedGame.players_ids);
 

@@ -1,5 +1,5 @@
 import { uuid } from 'uuidv4';
-import {clsNamespace, TREAD_ID_FIELD_NAME} from "./logger-constants";
+import {clsNamespace, COMBAT_ID_FIELD_NAME, TREAD_ID_FIELD_NAME, USER_ID_FIELD_NAME} from "./logger-constants";
 
 
 /**
@@ -14,6 +14,8 @@ export const loggerMiddleware = (req, res, next) => {
 
     clsNamespace.run(() => {
         clsNamespace.set(TREAD_ID_FIELD_NAME, treadId);
+        clsNamespace.set(COMBAT_ID_FIELD_NAME, req.body.combat_id);
+        clsNamespace.set(USER_ID_FIELD_NAME, req.body.userId);
 
         next();
     })
