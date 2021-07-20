@@ -10,14 +10,14 @@ export class GameRoutes {
         /**
          * Сохранение основных характеристик игрока с его никнеймом
          */
-        app.post('/api/save-game-params', [loggerMiddleware, AuthController.authMiddleware()], (req: Request, res: Response) => {
+        app.post('/api/save-game-params', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
             this.gameController.saveGameParams(req,res);
         });
 
         /**
          * Сохранение победителя и определение красного игрока
          */
-        app.post('/api/save-game-winner', [loggerMiddleware, AuthController.authMiddleware()], (req: Request, res: Response) => {
+        app.post('/api/save-game-winner', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
             this.gameController.saveGameWinner(req,res);
         });
 
@@ -52,7 +52,7 @@ export class GameRoutes {
         /**
          * Получение краткой информации по последним играм пользователя
          */
-        app.post('/api/set-game-disconnect-status', [loggerMiddleware, AuthController.authMiddleware()], (req: Request, res: Response) => {
+        app.post('/api/set-game-disconnect-status', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
             this.gameController.setGameDisconnectStatusByCombatId(req, res);
         })
 

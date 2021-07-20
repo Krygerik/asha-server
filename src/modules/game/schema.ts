@@ -109,16 +109,8 @@ const GameSchema = new mongoose.Schema({
     date: {
         type: String,
     },
-    disconnect: {
-        default: false,
-        required: true,
-        type: Boolean,
-    },
-    waiting_for_disconnect_status: {
-        default: false,
-        required: true,
-        type: Boolean,
-    },
+    disconnect: Boolean,
+    waiting_for_disconnect_status: Boolean,
     winner: {
         enum: Object.values(EPlayerColor),
         type: Number,

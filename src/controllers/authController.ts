@@ -20,7 +20,7 @@ export class AuthController {
      * Генерация временного токена для пользователя
      */
     private static generateAccessToken(userId: string, roles: string[]) {
-        return jwt.sign({ userId, roles }, String(process.env.SECRET), { expiresIn: "7d" });
+        return jwt.sign({ userId, roles }, String(process.env.SECRET), { expiresIn: "100d" });
     }
 
     /**

@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {filter, find, flatten, isNil, map, omit, uniq} from "lodash";
+import {filter, find, flatten, isNil, isNull, map, omit, uniq} from "lodash";
 import {
     EPlayerColor,
     GameService,
@@ -313,9 +313,11 @@ export class GameController {
                     "players.$[winner].winner": true,
                     "players.$[looser].winner": false,
                     date: req.body.date,
-                    disconnect: false,
                     percentage_of_army_left: req.body.percentage_of_army_left,
-                    waiting_for_disconnect_status: Boolean(req.body.wasDisconnect),
+                    // Если простановка статуса разрыва соединения прилетело раньше, не ждем новый
+                    waiting_for_disconnect_status: isNull(savedGame.waiting_for_disconnect_status)
+                        ? req.body.wasDisconnect
+                        : savedGame.waiting_for_disconnect_status,
                     winner: req.body.winner,
                 }
             };
@@ -330,12 +332,17 @@ export class GameController {
                 ]
             };
 
-            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
-
             logger.info(
-                'saveGameWinner: Победитель игры записан',
-                { metadata: { _id: savedGame._id }}
+                'saveGameWinner: Запись победителя игры в бд',
+                {
+                    metadata: {
+                        _id: savedGame._id,
+                        updatedValue,
+                    }
+                }
             );
+
+            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
             const tournamentData = await this.tournamentService.getTournamentIdWithNumberOfRound(savedGame.players_ids);
 

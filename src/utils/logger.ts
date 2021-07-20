@@ -1,6 +1,6 @@
 import * as winston from "winston";
 import {mongoUrl} from "../constants";
-import {clsNamespace, TREAD_ID_FIELD_NAME} from "./logger-constants";
+import {clsNamespace, COMBAT_ID_FIELD_NAME, TREAD_ID_FIELD_NAME, USER_ID_FIELD_NAME} from "./logger-constants";
 import "winston-mongodb";
 
 /**
@@ -21,12 +21,16 @@ const options = {
  */
 const addTraceId = winston.format((info) => {
     const treadId = clsNamespace.get(TREAD_ID_FIELD_NAME)
+    const combat_id = clsNamespace.get(COMBAT_ID_FIELD_NAME)
+    const userId = clsNamespace.get(USER_ID_FIELD_NAME)
 
     return {
         ...info,
         metadata: {
             ...info.metadata,
+            combat_id,
             treadId,
+            userId,
         },
     }
 })();
