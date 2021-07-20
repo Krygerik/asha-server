@@ -155,12 +155,17 @@ export class GameController {
                 ]
             };
 
-            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
-
             logger.info(
-                'saveGameParams: Запись игры успешно обновлена',
-                { metadata: { updatedGame: updatedGame.toObject() }}
+                'saveGameParams: Обновление записи игры в бд',
+                {
+                    metadata: {
+                        _id: savedGame._id,
+                        updatedValue,
+                    }
+                }
             );
+
+            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
             successResponse('Запись игры успешно обновлена', updatedGame, res);
         } catch (error) {
