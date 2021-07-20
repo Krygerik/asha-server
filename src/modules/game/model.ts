@@ -151,7 +151,7 @@ export interface ISavedGame extends IInputGameData {
     // Дата окончания игры
     date?: string;
     // Произошел ли разрыв соединения
-    disconnect: boolean;
+    disconnect?: boolean;
     // Номер раунда в турнире
     number_of_round?: number;
     // Список данных обоих игроков
@@ -163,7 +163,7 @@ export interface ISavedGame extends IInputGameData {
     // Название турнира, в рамках которого была сыграна игра
     tournament_name?: string;
     // Ожидание статуса соединения
-    waiting_for_disconnect_status: boolean;
+    waiting_for_disconnect_status?: boolean;
     // Цвет победителя
     winner?: EPlayerColor;
 }
