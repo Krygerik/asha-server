@@ -276,7 +276,7 @@ export class GameController {
             const savedGame: ISavedGame = await this.gameService.findGame({ combat_id: req.body.combat_id });
 
             /**
-             * Если игра с данным id отсутствует или игра завершилась корректно - не меняем ее исход
+             * Если игра с данным id отсутствует выкидываем
              */
             if (isNil(savedGame)) {
                 logger.warn(
