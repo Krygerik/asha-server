@@ -507,483 +507,1186 @@
     "records": [
       {
         "game_id": "ID113",
-        "localize_name": "Волки"
+        "localize_name": "Волки",
+        "parameters": {
+          "initiative": 0
+        }
       },
       {
         "game_id": "ID85",
-        "localize_name": "Огненные элементали"
+        "localize_name": "Огненные элементали",
+        "parameters": {
+          "initiative": 8
+        }
       },
       {
         "game_id": "ID86",
-        "localize_name": "Водные элементали"
+        "localize_name": "Водные элементали",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID88",
-        "localize_name": "Воздушные элементали"
+        "localize_name": "Воздушные элементали",
+        "parameters": {
+          "initiative": 17
+        }
       },
       {
         "game_id": "ID87",
-        "localize_name": "Земные элементали"
+        "localize_name": "Земные элементали",
+        "parameters": {
+          "initiative": 7
+        }
       },
       {
         "game_id": "ID116",
-        "localize_name": "Мумии"
+        "localize_name": "Мумии",
+        "parameters": {
+          "initiative": 15
+        }
       },
       {
         "game_id": "ID90",
-        "localize_name": "Рыцари смерти"
+        "localize_name": "Рыцари смерти",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
-        "game_id": "ID58",
-        "localize_name": "Старшие гремлины"
+        "game_id": "ID115",
+        "localize_name": "Мантикоры",
+        "parameters": {
+          "initiative": 0
+        }
+      },
+      {
+        "game_id": "ID91",
+        "localize_name": "Фениксы",
+        "parameters": {
+          "initiative": 15
+        }
+      },
+      {
+        "game_id": "ID57",
+        "localize_name": "Старшие гремлины",
+        "parameters": {
+          "initiative": 11
+        }
       },
       {
         "game_id": "ID159",
-        "localize_name": "Гремлины вредители"
+        "localize_name": "Гремлины вредители",
+        "parameters": {
+          "initiative": 12
+        }
       },
       {
         "game_id": "ID59",
-        "localize_name": "Обсидиановые горгульи"
+        "localize_name": "Обсидиановые горгульи",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID160",
-        "localize_name": "Стихийные горгульи"
+        "localize_name": "Стихийные горгульи",
+        "parameters": {
+          "initiative": 11
+        }
       },
       {
         "game_id": "ID61",
-        "localize_name": "Стальные големы"
+        "localize_name": "Стальные големы",
+        "parameters": {
+          "initiative": 7
+        }
       },
       {
         "game_id": "ID161",
-        "localize_name": "Обсидиановые големы"
+        "localize_name": "Обсидиановые големы",
+        "parameters": {
+          "initiative": 9
+        }
       },
       {
         "game_id": "ID63",
-        "localize_name": "Архимаги"
+        "localize_name": "Архимаги",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID162",
-        "localize_name": "Боевые маги"
+        "localize_name": "Боевые маги",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID65",
-        "localize_name": "Султаны джиннов"
+        "localize_name": "Султаны джиннов",
+        "parameters": {
+          "initiative": 12
+        }
       },
       {
         "game_id": "ID163",
-        "localize_name": "Визири джиннов"
+        "localize_name": "Визири джиннов",
+        "parameters": {
+          "initiative": 12
+        }
       },
       {
         "game_id": "ID67",
-        "localize_name": "Раджи ракшас"
+        "localize_name": "Раджи ракшас",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID164",
-        "localize_name": "Кшатрии ракшас"
+        "localize_name": "Кшатрии ракшас",
+        "parameters": {
+          "initiative": 8
+        }
       },
       {
         "game_id": "ID69",
-        "localize_name": "Титаны"
+        "localize_name": "Титаны",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID165",
-        "localize_name": "Громовержцы"
+        "localize_name": "Громовержцы",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID92",
-        "localize_name": "Ассасины"
+        "localize_name": "Ассасины",
+        "parameters": {
+          "initiative": 12
+        }
       },
       {
         "game_id": "ID166",
-        "localize_name": "Ловчие"
+        "localize_name": "Ловчие",
+        "parameters": {
+          "initiative": 12
+        }
       },
       {
         "game_id": "ID73",
-        "localize_name": "Фурии"
+        "localize_name": "Фурии",
+        "parameters": {
+          "initiative": 16
+        }
       },
       {
         "game_id": "ID139",
-        "localize_name": "Мегеры"
+        "localize_name": "Мегеры",
+        "parameters": {
+          "initiative": 14
+        }
       },
       {
         "game_id": "ID75",
-        "localize_name": "Минотавры-стражи"
+        "localize_name": "Минотавры-стражи",
+        "parameters": {
+          "initiative": 9
+        }
       },
       {
         "game_id": "ID140",
-        "localize_name": "Минотавры-надсмотрщики"
+        "localize_name": "Минотавры-надсмотрщики",
+        "parameters": {
+          "initiative": 9
+        }
       },
       {
         "game_id": "ID77",
-        "localize_name": "Темные всадники"
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
       },
       {
         "game_id": "ID141",
-        "localize_name": "Проворные наездники"
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
       },
       {
         "game_id": "ID79",
-        "localize_name": "Пещерные гидры"
+        "localize_name": "Пещерные гидры",
+        "parameters": {
+          "initiative": 7
+        }
       },
       {
         "game_id": "ID142",
-        "localize_name": "Темные гидры"
+        "localize_name": "Темные гидры",
+        "parameters": {
+          "initiative": 8
+        }
+      },
+      {
+        "game_id": "ID81",
+        "localize_name": "Владычицы тени",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID143",
-        "localize_name": "Владычицы тени"
+        "localize_name": "Владычицы тени",
+        "parameters": {
+          "initiative": 11
+        }
       },
       {
         "game_id": "ID83",
-        "localize_name": "Черные драконы"
+        "localize_name": "Черные драконы",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID144",
-        "localize_name": "Красные драконы"
+        "localize_name": "Красные драконы",
+        "parameters": {
+          "initiative": 11
+        }
       },
       {
         "game_id": "ID1",
-        "localize_name": "Ополченцы"
+        "localize_name": "Ополченцы",
+        "parameters": {
+          "initiative": 8
+        }
       },
       {
         "game_id": "ID106",
-        "localize_name": "Лендлорды"
+        "localize_name": "Лендлорды",
+        "parameters": {
+          "initiative": 8
+        }
       },
       {
         "game_id": "ID3",
-        "localize_name": "Арбалетчики"
+        "localize_name": "Арбалетчики",
+        "parameters": {
+          "initiative": 9
+        }
       },
       {
         "game_id": "ID107",
-        "localize_name": "Стрелки"
+        "localize_name": "Стрелки",
+        "parameters": {
+          "initiative": 8
+        }
       },
       {
         "game_id": "ID5",
-        "localize_name": "Латники"
+        "localize_name": "Латники",
+        "parameters": {
+          "initiative": 8
+        }
       },
       {
         "game_id": "ID108",
-        "localize_name": "Ревнитель веры"
+        "localize_name": "Ревнитель веры",
+        "parameters": {
+          "initiative": 8
+        }
+      },
+      {
+        "game_id": "ID7",
+        "localize_name": "Королевские грифоны",
+        "parameters": {
+          "initiative": 15
+        }
       },
       {
         "game_id": "ID109",
-        "localize_name": "Боевые грифоны"
+        "localize_name": "Боевые грифоны",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID9",
-        "localize_name": "Инквизиторы"
+        "localize_name": "Инквизиторы",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID110",
-        "localize_name": "Адепты"
+        "localize_name": "Адепты",
+        "parameters": {
+          "initiative": 10
+        }
       },
       {
         "game_id": "ID11",
-        "localize_name": "Паладины"
+        "localize_name": "Паладины",
+        "parameters": {
+          "initiative": 12
+        }
       },
       {
         "game_id": "ID111",
-        "localize_name": "Рыцари Изабель"
-      },
-      {
-        "game_id": "ID112",
-        "localize_name": "Падшие ангелы"
-      },
-      {
-        "game_id": "ID15",
-        "localize_name": "Черти"
-      },
-      {
-        "game_id": "ID131",
-        "localize_name": "Дьяволята"
-      },
-      {
-        "game_id": "ID17",
-        "localize_name": "Огненные демоны"
-      },
-      {
-        "game_id": "ID132",
-        "localize_name": "Старшие демоны"
-      },
-      {
-        "game_id": "ID19",
-        "localize_name": "Церберы"
-      },
-      {
-        "game_id": "ID133",
-        "localize_name": "Огненные гончии"
-      },
-      {
-        "game_id": "ID21",
-        "localize_name": "Демонессы"
-      },
-      {
-        "game_id": "ID134",
-        "localize_name": "Искусительницы"
-      },
-      {
-        "game_id": "ID23",
-        "localize_name": "Кошмары"
-      },
-      {
-        "game_id": "ID135",
-        "localize_name": "Кони преисподней"
-      },
-      {
-        "game_id": "ID25",
-        "localize_name": "Пещерные владыки"
-      },
-      {
-        "game_id": "ID136",
-        "localize_name": "Пещерные отродья"
-      },
-      {
-        "game_id": "ID137",
-        "localize_name": "Архидемоны"
-      },
-      {
-        "game_id": "ID29",
-        "localize_name": "Костяные лучники"
-      },
-      {
-        "game_id": "ID152",
-        "localize_name": "Костяные воители"
-      },
-      {
-        "game_id": "ID31",
-        "localize_name": "Чумные зомби"
-      },
-      {
-        "game_id": "ID153",
-        "localize_name": "Гниющие зомби"
-      },
-      {
-        "game_id": "ID34",
-        "localize_name": "Призраки"
-      },
-      {
-        "game_id": "ID154",
-        "localize_name": "Духи"
-      },
-      {
-        "game_id": "ID35",
-        "localize_name": "Высшие вампиры"
-      },
-      {
-        "game_id": "ID155",
-        "localize_name": "Князья вампиров"
-      },
-      {
-        "game_id": "ID37",
-        "localize_name": "Архиличи"
-      },
-      {
-        "game_id": "ID156",
-        "localize_name": "Высшие личи"
-      },
-      {
-        "game_id": "ID39",
-        "localize_name": "Вестники смерти"
-      },
-      {
-        "game_id": "ID157",
-        "localize_name": "Банши"
-      },
-      {
-        "game_id": "ID41",
-        "localize_name": "Призрачные драконы"
-      },
-      {
-        "game_id": "ID158",
-        "localize_name": "Астральные драконы"
-      },
-      {
-        "game_id": "ID145",
-        "localize_name": "Нимфы"
-      },
-      {
-        "game_id": "ID146",
-        "localize_name": "Танцующие с ветром"
-      },
-      {
-        "game_id": "ID147",
-        "localize_name": "Мастера лука"
-      },
-      {
-        "game_id": "ID148",
-        "localize_name": "Старшие друиды"
-      },
-      {
-        "game_id": "ID51",
-        "localize_name": "Боевые единороги"
-      },
-      {
-        "game_id": "ID149",
-        "localize_name": "Светлые единороги"
-      },
-      {
-        "game_id": "ID150",
-        "localize_name": "Дикие энты"
-      },
-      {
-        "game_id": "ID151",
-        "localize_name": "Кристаллические драконы"
-      },
-      {
-        "game_id": "ID71",
-        "localize_name": "Воители"
-      },
-      {
-        "game_id": "ID138",
-        "localize_name": "Горные стражи"
-      },
-      {
-        "game_id": "ID94",
-        "localize_name": "Мастера копья"
-      },
-      {
-        "game_id": "ID167",
-        "localize_name": "Гарпунеры"
-      },
-      {
-        "game_id": "ID96",
-        "localize_name": "Хозяева медведей"
-      },
-      {
-        "game_id": "ID168",
-        "localize_name": "Северные наездники"
-      },
-      {
-        "game_id": "ID169",
-        "localize_name": "Воины Арката"
-      },
-      {
-        "game_id": "ID100",
-        "localize_name": "Жрецы Арката"
-      },
-      {
-        "game_id": "ID170",
-        "localize_name": "Жрецы Пламени"
-      },
-      {
-        "game_id": "ID95",
-        "localize_name": "Эрлы"
-      },
-      {
-        "game_id": "ID105",
-        "localize_name": "Лавовые драконы"
-      },
-      {
-        "game_id": "ID172",
-        "localize_name": "Драконы Арката"
-      },
-      {
-        "game_id": "ID117",
-        "localize_name": "Трапперы"
-      },
-      {
-        "game_id": "ID173",
-        "localize_name": "Колдуны гоблинов"
-      },
-      {
-        "game_id": "ID119",
-        "localize_name": "Кочевые кентавры"
-      },
-      {
-        "game_id": "ID174",
-        "localize_name": "Боевые кентавры"
-      },
-      {
-        "game_id": "ID121",
-        "localize_name": "Орочьи бойцы"
-      },
-      {
-        "game_id": "ID175",
-        "localize_name": "Вармонгеры"
-      },
-      {
-        "game_id": "ID123",
-        "localize_name": "Дочери неба"
-      },
-      {
-        "game_id": "ID176",
-        "localize_name": "Дочери земли"
-      },
-      {
-        "game_id": "ID125",
-        "localize_name": "Палачи"
-      },
-      {
-        "game_id": "ID177",
-        "localize_name": "Вожаки"
-      },
-      {
-        "game_id": "ID127",
-        "localize_name": "Темные виверны"
-      },
-      {
-        "game_id": "ID178",
-        "localize_name": "Паокаи"
-      },
-      {
-        "game_id": "ID129",
-        "localize_name": "Свободные циклопы"
-      },
-      {
-        "game_id": "ID179",
-        "localize_name": "Кровоглазые циклопы"
-      },
-      {
-        "game_id": "ID8",
-        "localize_name": "Королевские грифоны"
-      },
-      {
-        "game_id": "ID53",
-        "localize_name": "Древние энты"
-      },
-      {
-        "game_id": "ID56",
-        "localize_name": "Изумрудные драконы"
-      },
-      {
-        "game_id": "ID44",
-        "localize_name": "Нимфы"
-      },
-      {
-        "game_id": "ID103",
-        "localize_name": "Ярлы"
-      },
-      {
-        "game_id": "ID45",
-        "localize_name": "Танцующие со смертью"
-      },
-      {
-        "game_id": "ID48",
-        "localize_name": "Мастера лука"
-      },
-      {
-        "game_id": "ID49",
-        "localize_name": "Верховные друиды"
-      },
-      {
-        "game_id": "ID82",
-        "localize_name": "Владычицы тени"
-      },
-      {
-        "game_id": "ID98",
-        "localize_name": "Берсерки"
-      },
-      {
-        "game_id": "ID24",
-        "localize_name": "Архидьяволы"
+        "localize_name": "Рыцари Изабель",
+        "parameters": {
+          "initiative": 12
+        }
       },
       {
         "game_id": "ID13",
-        "localize_name": "Архангелы"
+        "localize_name": "Архангелы",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID112",
+        "localize_name": "Серафим",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID15",
+        "localize_name": "Черти",
+        "parameters": {
+          "initiative": 13
+        }
+      },
+      {
+        "game_id": "ID131",
+        "localize_name": "Дьяволята",
+        "parameters": {
+          "initiative": 13
+        }
+      },
+      {
+        "game_id": "ID17",
+        "localize_name": "Огненные демоны",
+        "parameters": {
+          "initiative": 8
+        }
+      },
+      {
+        "game_id": "ID132",
+        "localize_name": "Старшие демоны",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID19",
+        "localize_name": "Церберы",
+        "parameters": {
+          "initiative": 13
+        }
+      },
+      {
+        "game_id": "ID133",
+        "localize_name": "Огненные гончии",
+        "parameters": {
+          "initiative": 13
+        }
+      },
+      {
+        "game_id": "ID21",
+        "localize_name": "Демонессы",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID134",
+        "localize_name": "Искусительницы",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID23",
+        "localize_name": "Кошмары",
+        "parameters": {
+          "initiative": 16
+        }
+      },
+      {
+        "game_id": "ID135",
+        "localize_name": "Кони преисподней",
+        "parameters": {
+          "initiative": 15
+        }
+      },
+      {
+        "game_id": "ID25",
+        "localize_name": "Пещерные владыки",
+        "parameters": {
+          "initiative": 8
+        }
+      },
+      {
+        "game_id": "ID136",
+        "localize_name": "Пещерные отродья",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID27",
+        "localize_name": "Архидьяволы",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID137",
+        "localize_name": "Архидемоны",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID29",
+        "localize_name": "Костяные лучники",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID152",
+        "localize_name": "Костяные воители",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID31",
+        "localize_name": "Чумные зомби",
+        "parameters": {
+          "initiative": 7
+        }
+      },
+      {
+        "game_id": "ID153",
+        "localize_name": "Гниющие зомби",
+        "parameters": {
+          "initiative": 7
+        }
+      },
+      {
+        "game_id": "ID34",
+        "localize_name": "Призраки",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID154",
+        "localize_name": "Духи",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID35",
+        "localize_name": "Высшие вампиры",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID155",
+        "localize_name": "Князья вампиров",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID37",
+        "localize_name": "Архиличи",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID156",
+        "localize_name": "Высшие личи",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID39",
+        "localize_name": "Вестники смерти",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID157",
+        "localize_name": "Баньши",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID41",
+        "localize_name": "Призрачные драконы",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID158",
+        "localize_name": "Астральные драконы",
+        "parameters": {
+          "initiative": 11
+        }
       },
       {
         "game_id": "ID43",
-        "localize_name": "Дриады"
+        "localize_name": "Дриады",
+        "parameters": {
+          "initiative": 15
+        }
+      },
+      {
+        "game_id": "ID145",
+        "localize_name": "Нимфы",
+        "parameters": {
+          "initiative": 14
+        }
+      },
+      {
+        "game_id": "ID45",
+        "localize_name": "Танцующие со смертью",
+        "parameters": {
+          "initiative": 15
+        }
+      },
+      {
+        "game_id": "ID146",
+        "localize_name": "Танцующие с ветром",
+        "parameters": {
+          "initiative": 15
+        }
+      },
+      {
+        "game_id": "ID47",
+        "localize_name": "Мастера лука",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID147",
+        "localize_name": "Лесные стрелки",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID49",
+        "localize_name": "Верховные друиды",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID148",
+        "localize_name": "Старшие друиды",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID51",
+        "localize_name": "Боевые единороги",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID149",
+        "localize_name": "Светлые единороги",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID53",
+        "localize_name": "Древние энты",
+        "parameters": {
+          "initiative": 7
+        }
+      },
+      {
+        "game_id": "ID150",
+        "localize_name": "Дикие энты",
+        "parameters": {
+          "initiative": 7
+        }
+      },
+      {
+        "game_id": "ID55",
+        "localize_name": "Изумрудные драконы",
+        "parameters": {
+          "initiative": 14
+        }
+      },
+      {
+        "game_id": "ID151",
+        "localize_name": "Кристаллические драконы",
+        "parameters": {
+          "initiative": 14
+        }
+      },
+      {
+        "game_id": "ID71",
+        "localize_name": "Воители",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID138",
+        "localize_name": "Горные стражи",
+        "parameters": {
+          "initiative": 8
+        }
+      },
+      {
+        "game_id": "ID94",
+        "localize_name": "Мастера копья",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID167",
+        "localize_name": "Гарпунеры",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID96",
+        "localize_name": "Хозяева медведей",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID168",
+        "localize_name": "Северные наездники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID98",
+        "localize_name": "Берсерки",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID169",
+        "localize_name": "Воины Арката",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID100",
+        "localize_name": "Жрецы Арката",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID170",
+        "localize_name": "Жрецы Пламени",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID102",
+        "localize_name": "Ярлы",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID171",
+        "localize_name": "Эрлы",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID105",
+        "localize_name": "Лавовые драконы",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID172",
+        "localize_name": "Драконы Арката",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID117",
+        "localize_name": "Трапперы",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID173",
+        "localize_name": "Колдуны гоблинов",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID119",
+        "localize_name": "Кочевые кентавры",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID174",
+        "localize_name": "Боевые кентавры",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID121",
+        "localize_name": "Орочьи бойцы",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID175",
+        "localize_name": "Вармонгеры",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID123",
+        "localize_name": "Дочери неба",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID176",
+        "localize_name": "Дочери земли",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID125",
+        "localize_name": "Палачи",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID177",
+        "localize_name": "Вожаки",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID127",
+        "localize_name": "Темные виверны",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID178",
+        "localize_name": "Паокаи",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID129",
+        "localize_name": "Свободные циклопы",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID179",
+        "localize_name": "Кровоглазые циклопы",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID8",
+        "localize_name": "Королевские грифоны",
+        "parameters": {
+          "initiative": 15
+        }
+      },
+      {
+        "game_id": "ID54",
+        "localize_name": "Древние энты",
+        "parameters": {
+          "initiative": 7
+        }
+      },
+      {
+        "game_id": "ID56",
+        "localize_name": "Изумрудные драконы",
+        "parameters": {
+          "initiative": 14
+        }
+      },
+      {
+        "game_id": "ID14",
+        "localize_name": "Архангелы",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID16",
+        "localize_name": "Искусительницы",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID24",
+        "localize_name": "Архидьяволы",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID30",
+        "localize_name": "Духи",
+        "parameters": {
+          "initiative": 9
+        }
+      },
+      {
+        "game_id": "ID44",
+        "localize_name": "Нимфы",
+        "parameters": {
+          "initiative": 14
+        }
+      },
+      {
+        "game_id": "ID93",
+        "localize_name": "Ловчие",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID84",
+        "localize_name": "Владычицы тени",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID103",
+        "localize_name": "Ярлы",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID95",
+        "localize_name": "Эрлы",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID118",
+        "localize_name": "Архангелы",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID52",
+        "localize_name": "Серафим",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID66",
+        "localize_name": "Архангелы",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID46",
+        "localize_name": "Танцующие со смертью",
+        "parameters": {
+          "initiative": 15
+        }
+      },
+      {
+        "game_id": "ID18",
+        "localize_name": "Танцующие с ветром",
+        "parameters": {
+          "initiative": 15
+        }
+      },
+      {
+        "game_id": "ID48",
+        "localize_name": "Мастера лука",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID20",
+        "localize_name": "Лесные стрелки",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID50",
+        "localize_name": "Верховные друиды",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID22",
+        "localize_name": "Старшие друиды",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID62",
+        "localize_name": "Мастера лука",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID76",
+        "localize_name": "Лесные стрелки",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID72",
+        "localize_name": "Верховные друиды",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID74",
+        "localize_name": "Старшие друиды",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID82",
+        "localize_name": "Владычицы тени",
+        "parameters": {
+          "initiative": 10
+        }
+      },
+      {
+        "game_id": "ID200",
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID201",
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID202",
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID203",
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID204",
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID205",
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID206",
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID207",
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID208",
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID209",
+        "localize_name": "Темные всадники",
+        "parameters": {
+          "initiative": 11
+        }
+      },
+      {
+        "game_id": "ID210",
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID211",
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID212",
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID213",
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID214",
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID215",
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID216",
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID217",
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID218",
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID219",
+        "localize_name": "Проворные наездники",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID99",
+        "localize_name": "Берсерки",
+        "parameters": {
+          "initiative": 12
+        }
+      },
+      {
+        "game_id": "ID80",
+        "localize_name": "Воины Арката",
+        "parameters": {
+          "initiative": 11
+        }
       }
     ]
   },
@@ -1011,12 +1714,8 @@
         "localize_name": "Трезубец Титанов"
       },
       {
-        "game_id": "ID6",
-        "localize_name": "Посох Преисподней"
-      },
-      {
         "game_id": "ID7",
-        "localize_name": "Кандалы неизбежности"
+        "localize_name": "Посох Преисподней"
       },
       {
         "game_id": "ID8",

@@ -111,8 +111,10 @@ export class AuthService {
         // Смягчающий фактор
         const softFactor = 40;
 
-        const newWinnerRating = Math.round(winner.rating + softFactor * (1 - updatedRatingFactor));
-        const newLooserRating = Math.round(looser.rating + softFactor * (0 - updatedRatingFactor));
+        const changedRating = softFactor * (1 - updatedRatingFactor);
+
+        const newWinnerRating = Math.round(winner.rating + changedRating);
+        const newLooserRating = Math.round(looser.rating - changedRating);
 
         logger.info(
             'changePlayerRating: Изменение рейтинга участникам игры',
