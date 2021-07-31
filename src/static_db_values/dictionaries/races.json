@@ -1,0 +1,34 @@
+[
+  {
+    "game_id": "1",
+    "localize_name": "Орден Порядка"
+  },
+  {
+    "game_id": "2",
+    "localize_name": "Инферно"
+  },
+  {
+    "game_id": "3",
+    "localize_name": "Некрополис"
+  },
+  {
+    "game_id": "4",
+    "localize_name": "Лесной Союз"
+  },
+  {
+    "game_id": "5",
+    "localize_name": "Академия Волшебства"
+  },
+  {
+    "game_id": "6",
+    "localize_name": "Лига Теней"
+  },
+  {
+    "game_id": "7",
+    "localize_name": "Северные Кланы"
+  },
+  {
+    "game_id": "8",
+    "localize_name": "Великая Орда"
+  }
+]

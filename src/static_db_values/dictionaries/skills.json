@@ -1,0 +1,322 @@
+[
+  {
+    "game_id": "ID1 = 1",
+    "localize_name": "Основы логистики"
+  },
+  {
+    "game_id": "ID1 = 2",
+    "localize_name": "Развитая логистика"
+  },
+  {
+    "game_id": "ID1 = 3",
+    "localize_name": "Искусная логистика"
+  },
+  {
+    "game_id": "ID2 = 1",
+    "localize_name": "Основы управления машинами"
+  },
+  {
+    "game_id": "ID2 = 2",
+    "localize_name": "Развитое управление машинами"
+  },
+  {
+    "game_id": "ID2 = 3",
+    "localize_name": "Искусное управление машинами"
+  },
+  {
+    "game_id": "ID3 = 1",
+    "localize_name": "Основы образования"
+  },
+  {
+    "game_id": "ID3 = 2",
+    "localize_name": "Развитое образование"
+  },
+  {
+    "game_id": "ID3 = 3",
+    "localize_name": "Высшее образование"
+  },
+  {
+    "game_id": "ID4 = 1",
+    "localize_name": "Основы лидерства"
+  },
+  {
+    "game_id": "ID4 = 2",
+    "localize_name": "Развитое лидерство"
+  },
+  {
+    "game_id": "ID4 = 3",
+    "localize_name": "Искусное лидерство"
+  },
+  {
+    "game_id": "ID5 = 1",
+    "localize_name": "Призрачная удача"
+  },
+  {
+    "game_id": "ID5 = 2",
+    "localize_name": "Большая удача"
+  },
+  {
+    "game_id": "ID5 = 3",
+    "localize_name": "Постоянная удача"
+  },
+  {
+    "game_id": "ID6 = 1",
+    "localize_name": "Основы нападения"
+  },
+  {
+    "game_id": "ID6 = 2",
+    "localize_name": "Развитое нападение"
+  },
+  {
+    "game_id": "ID6 = 3",
+    "localize_name": "Искусное нападение"
+  },
+  {
+    "game_id": "ID7 = 1",
+    "localize_name": "Основы защиты"
+  },
+  {
+    "game_id": "ID7 = 2",
+    "localize_name": "Развитая защита"
+  },
+  {
+    "game_id": "ID7 = 3",
+    "localize_name": "Искусная защита"
+  },
+  {
+    "game_id": "ID8 = 1",
+    "localize_name": "Основы чародейства"
+  },
+  {
+    "game_id": "ID8 = 2",
+    "localize_name": "Развитое чародейство"
+  },
+  {
+    "game_id": "ID8 = 3",
+    "localize_name": "Искусное чародейство"
+  },
+  {
+    "game_id": "ID9 = 1",
+    "localize_name": "Основы магии Хаоса"
+  },
+  {
+    "game_id": "ID9 = 2",
+    "localize_name": "Сильная магия Хаоса"
+  },
+  {
+    "game_id": "ID9 = 3",
+    "localize_name": "Искусная магия Хаоса"
+  },
+  {
+    "game_id": "ID10 = 1",
+    "localize_name": "Основы магии Тьмы"
+  },
+  {
+    "game_id": "ID10 = 2",
+    "localize_name": "Сильная магия Тьмы"
+  },
+  {
+    "game_id": "ID10 = 3",
+    "localize_name": "Искусная магия Тьмы"
+  },
+  {
+    "game_id": "ID11 = 1",
+    "localize_name": "Основы магии Света"
+  },
+  {
+    "game_id": "ID11 = 2",
+    "localize_name": "Сильная магия Света"
+  },
+  {
+    "game_id": "ID11 = 3",
+    "localize_name": "Искусная магия Света"
+  },
+  {
+    "game_id": "ID11 = 4",
+    "localize_name": "Абсолютная магия Света"
+  },
+  {
+    "game_id": "ID12 = 1",
+    "localize_name": "Основы магии Призыва"
+  },
+  {
+    "game_id": "ID12 = 2",
+    "localize_name": "Сильная магия Призыва"
+  },
+  {
+    "game_id": "ID12 = 3",
+    "localize_name": "Искусная магия Призыва"
+  },
+  {
+    "game_id": "ID13 = 1",
+    "localize_name": "Основы контрудара"
+  },
+  {
+    "game_id": "ID13 = 2",
+    "localize_name": "Развитый контрудар"
+  },
+  {
+    "game_id": "ID13 = 3",
+    "localize_name": "Искусный контрудар"
+  },
+  {
+    "game_id": "ID14 = 1",
+    "localize_name": "Основы открытия врат"
+  },
+  {
+    "game_id": "ID14 = 2",
+    "localize_name": "Развитое открытие врат"
+  },
+  {
+    "game_id": "ID14 = 3",
+    "localize_name": "Искусное открытие врат"
+  },
+  {
+    "game_id": "ID15 = 1",
+    "localize_name": "Основы некромантии"
+  },
+  {
+    "game_id": "ID15 = 2",
+    "localize_name": "Развитая некромантия"
+  },
+  {
+    "game_id": "ID15 = 3",
+    "localize_name": "Искусная некромантия"
+  },
+  {
+    "game_id": "ID16 = 1",
+    "localize_name": "Неопытный мститель"
+  },
+  {
+    "game_id": "ID16 = 2",
+    "localize_name": "Обученный мститель"
+  },
+  {
+    "game_id": "ID16 = 3",
+    "localize_name": "Искусный мститель"
+  },
+  {
+    "game_id": "ID17 = 1",
+    "localize_name": "Ученик мастера артефактов"
+  },
+  {
+    "game_id": "ID17 = 2",
+    "localize_name": "Развитый мастер артефактов"
+  },
+  {
+    "game_id": "ID17 = 3",
+    "localize_name": "Искусный мастер артефактов"
+  },
+  {
+    "game_id": "ID18 = 1",
+    "localize_name": "Основы неодолимой магии"
+  },
+  {
+    "game_id": "ID18 = 2",
+    "localize_name": "Сильная неодолимая магия"
+  },
+  {
+    "game_id": "ID18 = 3",
+    "localize_name": "Искусная неодолимая магия"
+  },
+  {
+    "game_id": "ID18 = 4",
+    "localize_name": "Абсолютная неодолимая магия"
+  },
+  {
+    "game_id": "ID151 = 1",
+    "localize_name": "Основы знания рун"
+  },
+  {
+    "game_id": "ID151 = 2",
+    "localize_name": "Развитое знание рун"
+  },
+  {
+    "game_id": "ID151 = 3",
+    "localize_name": "Совершенное знание рун"
+  },
+  {
+    "game_id": "ID172 = 1",
+    "localize_name": "Основы гнева крови"
+  },
+  {
+    "game_id": "ID172 = 2",
+    "localize_name": "Развитый гнев крови"
+  },
+  {
+    "game_id": "ID172 = 3",
+    "localize_name": "Искусный гнев крови"
+  },
+  {
+    "game_id": "ID183 = 1",
+    "localize_name": "Основы образования"
+  },
+  {
+    "game_id": "ID183 = 2",
+    "localize_name": "Развитое образование"
+  },
+  {
+    "game_id": "ID183 = 3",
+    "localize_name": "Высшее образование"
+  },
+  {
+    "game_id": "ID187 = 1",
+    "localize_name": "Основы боевого клича"
+  },
+  {
+    "game_id": "ID187 = 2",
+    "localize_name": "Развитый боевой клич"
+  },
+  {
+    "game_id": "ID187 = 3",
+    "localize_name": "Искусный боевой клич"
+  },
+  {
+    "game_id": "ID191 = 1",
+    "localize_name": "Основы приглушения Хаоса"
+  },
+  {
+    "game_id": "ID191 = 2",
+    "localize_name": "Развитое приглушение Хаоса"
+  },
+  {
+    "game_id": "ID191 = 3",
+    "localize_name": "Искусное приглушение Хаоса"
+  },
+  {
+    "game_id": "ID195 = 1",
+    "localize_name": "Основы приглушения Тьмы"
+  },
+  {
+    "game_id": "ID195 = 2",
+    "localize_name": "Развитое приглешение Тьмы"
+  },
+  {
+    "game_id": "ID195 = 3",
+    "localize_name": "Искусное приглушение Тьмы"
+  },
+  {
+    "game_id": "ID199 = 1",
+    "localize_name": "Основы приглушения Света"
+  },
+  {
+    "game_id": "ID199 = 2",
+    "localize_name": "Развитое приглушение Света"
+  },
+  {
+    "game_id": "ID199 = 3",
+    "localize_name": "Развитое приглушение Света"
+  },
+  {
+    "game_id": "ID203 = 1",
+    "localize_name": "Основы приглушения Призыва"
+  },
+  {
+    "game_id": "ID203 = 2",
+    "localize_name": "Развитое приглушение Призыва"
+  },
+  {
+    "game_id": "ID203 = 3",
+    "localize_name": "Искусное приглушение Призыва"
+  }
+]

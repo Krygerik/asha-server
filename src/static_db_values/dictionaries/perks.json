@@ -1,0 +1,738 @@
+[
+  {
+    "game_id": "ID19",
+    "localize_name": "Нахождение пути"
+  },
+  {
+    "game_id": "ID20",
+    "localize_name": "Разведка"
+  },
+  {
+    "game_id": "ID21",
+    "localize_name": "Навигация"
+  },
+  {
+    "game_id": "ID22",
+    "localize_name": "Первая помощь"
+  },
+  {
+    "game_id": "ID23",
+    "localize_name": "Баллиста"
+  },
+  {
+    "game_id": "ID24",
+    "localize_name": "Тележка с боеприпасами"
+  },
+  {
+    "game_id": "ID25",
+    "localize_name": "Притяжение магии"
+  },
+  {
+    "game_id": "ID26",
+    "localize_name": "Ученый"
+  },
+  {
+    "game_id": "ID27",
+    "localize_name": "Разгадка тайного"
+  },
+  {
+    "game_id": "ID28",
+    "localize_name": "Сбор войск"
+  },
+  {
+    "game_id": "ID29",
+    "localize_name": "Управление казной"
+  },
+  {
+    "game_id": "ID30",
+    "localize_name": "Дипломатия"
+  },
+  {
+    "game_id": "ID31",
+    "localize_name": "Магическое сопротивление"
+  },
+  {
+    "game_id": "ID32",
+    "localize_name": "Солдатская удача"
+  },
+  {
+    "game_id": "ID33",
+    "localize_name": "Удача в пути"
+  },
+  {
+    "game_id": "ID34",
+    "localize_name": "Тактика"
+  },
+  {
+    "game_id": "ID35",
+    "localize_name": "Стрельба"
+  },
+  {
+    "game_id": "ID36",
+    "localize_name": "Боевое безумие"
+  },
+  {
+    "game_id": "ID37",
+    "localize_name": "Отражение"
+  },
+  {
+    "game_id": "ID38",
+    "localize_name": "Уклонение"
+  },
+  {
+    "game_id": "ID39",
+    "localize_name": "Стойкость"
+  },
+  {
+    "game_id": "ID40",
+    "localize_name": "Восполнение маны"
+  },
+  {
+    "game_id": "ID41",
+    "localize_name": "Мудрость"
+  },
+  {
+    "game_id": "ID42",
+    "localize_name": "Тайные знания"
+  },
+  {
+    "game_id": "ID43",
+    "localize_name": "Повелитель холода"
+  },
+  {
+    "game_id": "ID44",
+    "localize_name": "Повелитель огня"
+  },
+  {
+    "game_id": "ID45",
+    "localize_name": "Повелитель бурь"
+  },
+  {
+    "game_id": "ID46",
+    "localize_name": "Повелитель проклятий"
+  },
+  {
+    "game_id": "ID47",
+    "localize_name": "Повелитель разума"
+  },
+  {
+    "game_id": "ID48",
+    "localize_name": "Повелитель боли"
+  },
+  {
+    "game_id": "ID49",
+    "localize_name": "Дарующий благословение"
+  },
+  {
+    "game_id": "ID50",
+    "localize_name": "Дарующий защиту"
+  },
+  {
+    "game_id": "ID51",
+    "localize_name": "Гнев праведный"
+  },
+  {
+    "game_id": "ID52",
+    "localize_name": "Хозяин земли"
+  },
+  {
+    "game_id": "ID53",
+    "localize_name": "Повелитель чар"
+  },
+  {
+    "game_id": "ID54",
+    "localize_name": "Повелитель жизни"
+  },
+  {
+    "game_id": "ID55",
+    "localize_name": "Надзор"
+  },
+  {
+    "game_id": "ID56",
+    "localize_name": "Молитва"
+  },
+  {
+    "game_id": "ID57",
+    "localize_name": "Опытный военачальник"
+  },
+  {
+    "game_id": "ID58",
+    "localize_name": "Пожиратель душ"
+  },
+  {
+    "game_id": "ID59",
+    "localize_name": "Адский огонь"
+  },
+  {
+    "game_id": "ID60",
+    "localize_name": "Знак проклятого"
+  },
+  {
+    "game_id": "ID62",
+    "localize_name": "Вечное рабство"
+  },
+  {
+    "game_id": "ID63",
+    "localize_name": "Крик баньши"
+  },
+  {
+    "game_id": "ID64",
+    "localize_name": "Ливень из стрел"
+  },
+  {
+    "game_id": "ID66",
+    "localize_name": "Заколдованная стрела"
+  },
+  {
+    "game_id": "ID67",
+    "localize_name": "Знак волшебника"
+  },
+  {
+    "game_id": "ID68",
+    "localize_name": "Поглощение артефакта"
+  },
+  {
+    "game_id": "ID69",
+    "localize_name": "Волшебное зеркало"
+  },
+  {
+    "game_id": "ID70",
+    "localize_name": "Волна Аркан"
+  },
+  {
+    "game_id": "ID71",
+    "localize_name": "Темный ритуал"
+  },
+  {
+    "game_id": "ID111",
+    "localize_name": "Чувство стихий"
+  },
+  {
+    "game_id": "ID73",
+    "localize_name": "Родные земли"
+  },
+  {
+    "game_id": "ID74",
+    "localize_name": "Скорострельная баллиста"
+  },
+  {
+    "game_id": "ID75",
+    "localize_name": "Воодушевление"
+  },
+  {
+    "game_id": "ID76",
+    "localize_name": "Воздаяние"
+  },
+  {
+    "game_id": "ID77",
+    "localize_name": "Глухая оборона"
+  },
+  {
+    "game_id": "ID78",
+    "localize_name": "Ангел-хранитель"
+  },
+  {
+    "game_id": "ID79",
+    "localize_name": "Выпускник"
+  },
+  {
+    "game_id": "ID80",
+    "localize_name": "Покровительство Асхи"
+  },
+  {
+    "game_id": "ID81",
+    "localize_name": "Тайное преимущество"
+  },
+  {
+    "game_id": "ID82",
+    "localize_name": "Огненная ярость"
+  },
+  {
+    "game_id": "ID83",
+    "localize_name": "Падший рыцарь"
+  },
+  {
+    "game_id": "ID84",
+    "localize_name": "Стихийное равновесие"
+  },
+  {
+    "game_id": "ID86",
+    "localize_name": "Быстрое открытие врат"
+  },
+  {
+    "game_id": "ID87",
+    "localize_name": "Хранитель тайного"
+  },
+  {
+    "game_id": "ID88",
+    "localize_name": "Серный дождь"
+  },
+  {
+    "game_id": "ID89",
+    "localize_name": "Хозяин врат"
+  },
+  {
+    "game_id": "ID90",
+    "localize_name": "Широкие врата ада"
+  },
+  {
+    "game_id": "ID91",
+    "localize_name": "Дьявольский удар"
+  },
+  {
+    "game_id": "ID93",
+    "localize_name": "Взрывающиеся трупы"
+  },
+  {
+    "game_id": "ID94",
+    "localize_name": "Иссушающее пламя"
+  },
+  {
+    "game_id": "ID95",
+    "localize_name": "Ослабляющий удар"
+  },
+  {
+    "game_id": "ID96",
+    "localize_name": "Защита от огня"
+  },
+  {
+    "game_id": "ID97",
+    "localize_name": "Огненные воины"
+  },
+  {
+    "game_id": "ID98",
+    "localize_name": "Зов Ургаша"
+  },
+  {
+    "game_id": "ID99",
+    "localize_name": "Поступь смерти"
+  },
+  {
+    "game_id": "ID100",
+    "localize_name": "Чумная палатка"
+  },
+  {
+    "game_id": "ID101",
+    "localize_name": "Повелитель мертвых"
+  },
+  {
+    "game_id": "ID102",
+    "localize_name": "Вестник смерти"
+  },
+  {
+    "game_id": "ID103",
+    "localize_name": "Смертельная неудача"
+  },
+  {
+    "game_id": "ID104",
+    "localize_name": "Холодная сталь"
+  },
+  {
+    "game_id": "ID105",
+    "localize_name": "Могильный холод"
+  },
+  {
+    "game_id": "ID106",
+    "localize_name": "Защита нежити от магии"
+  },
+  {
+    "game_id": "ID107",
+    "localize_name": "Смертельный холод"
+  },
+  {
+    "game_id": "ID108",
+    "localize_name": "Духовная связь"
+  },
+  {
+    "game_id": "ID109",
+    "localize_name": "Сумерки"
+  },
+  {
+    "game_id": "ID110",
+    "localize_name": "Астрология"
+  },
+  {
+    "game_id": "ID112",
+    "localize_name": "Бесшумный преследователь"
+  },
+  {
+    "game_id": "ID113",
+    "localize_name": "Заколдованная баллиста"
+  },
+  {
+    "game_id": "ID114",
+    "localize_name": "Лесное коварство"
+  },
+  {
+    "game_id": "ID115",
+    "localize_name": "Лесной лидер"
+  },
+  {
+    "game_id": "ID116",
+    "localize_name": "Эльфийская удача"
+  },
+  {
+    "game_id": "ID117",
+    "localize_name": "Лесная ярость"
+  },
+  {
+    "game_id": "ID118",
+    "localize_name": "Битва до последнего"
+  },
+  {
+    "game_id": "ID119",
+    "localize_name": "Тайное откровение"
+  },
+  {
+    "game_id": "ID120",
+    "localize_name": "Взрыв маны"
+  },
+  {
+    "game_id": "ID121",
+    "localize_name": "Проклятая земля"
+  },
+  {
+    "game_id": "ID122",
+    "localize_name": "Штормовой ветер"
+  },
+  {
+    "game_id": "ID123",
+    "localize_name": "Туманная завеса"
+  },
+  {
+    "game_id": "ID124",
+    "localize_name": "Истинная удача"
+  },
+  {
+    "game_id": "ID125",
+    "localize_name": "Марш големов"
+  },
+  {
+    "game_id": "ID126",
+    "localize_name": "Власть над машинами"
+  },
+  {
+    "game_id": "ID127",
+    "localize_name": "Колдовская награда"
+  },
+  {
+    "game_id": "ID128",
+    "localize_name": "Преданность машин"
+  },
+  {
+    "game_id": "ID129",
+    "localize_name": "Трофеи"
+  },
+  {
+    "game_id": "ID130",
+    "localize_name": "Огненные стрелы"
+  },
+  {
+    "game_id": "ID131",
+    "localize_name": "Сопротивление"
+  },
+  {
+    "game_id": "ID132",
+    "localize_name": "Контрзаклинание"
+  },
+  {
+    "game_id": "ID133",
+    "localize_name": "Истощение магии"
+  },
+  {
+    "game_id": "ID134",
+    "localize_name": "Печать Тьмы"
+  },
+  {
+    "game_id": "ID135",
+    "localize_name": "Печать Света"
+  },
+  {
+    "game_id": "ID136",
+    "localize_name": "Изгнание"
+  },
+  {
+    "game_id": "ID137",
+    "localize_name": "Астрология"
+  },
+  {
+    "game_id": "ID138",
+    "localize_name": "Внезапная атака"
+  },
+  {
+    "game_id": "ID139",
+    "localize_name": "Сотрясение земли"
+  },
+  {
+    "game_id": "ID140",
+    "localize_name": "Темное откровение"
+  },
+  {
+    "game_id": "ID141",
+    "localize_name": "Аура скорости"
+  },
+  {
+    "game_id": "ID142",
+    "localize_name": "Удачливый чародей"
+  },
+  {
+    "game_id": "ID143",
+    "localize_name": "Волшебство скорости"
+  },
+  {
+    "game_id": "ID144",
+    "localize_name": "Прочность камня"
+  },
+  {
+    "game_id": "ID145",
+    "localize_name": "Изменчивая мана"
+  },
+  {
+    "game_id": "ID146",
+    "localize_name": "Тайны Хаоса"
+  },
+  {
+    "game_id": "ID147",
+    "localize_name": "Темное восполнение"
+  },
+  {
+    "game_id": "ID148",
+    "localize_name": "Тайны Света"
+  },
+  {
+    "game_id": "ID149",
+    "localize_name": "Экзорцизм"
+  },
+  {
+    "game_id": "ID150",
+    "localize_name": "Ярость стихий"
+  },
+  {
+    "game_id": "ID152",
+    "localize_name": "Обновленная руна"
+  },
+  {
+    "game_id": "ID153",
+    "localize_name": "Величайшая руна"
+  },
+  {
+    "game_id": "ID154",
+    "localize_name": "Завершенная руна"
+  },
+  {
+    "game_id": "ID155",
+    "localize_name": "Острый ум"
+  },
+  {
+    "game_id": "ID156",
+    "localize_name": "Рунные машины"
+  },
+  {
+    "game_id": "ID157",
+    "localize_name": "Рунный откат"
+  },
+  {
+    "game_id": "ID158",
+    "localize_name": "Рунная гармония"
+  },
+  {
+    "game_id": "ID159",
+    "localize_name": "Гномья удача"
+  },
+  {
+    "game_id": "ID160",
+    "localize_name": "Атакующий хирд"
+  },
+  {
+    "game_id": "ID161",
+    "localize_name": "Оборонительный хирд"
+  },
+  {
+    "game_id": "ID162",
+    "localize_name": "Отвлечение"
+  },
+  {
+    "game_id": "ID163",
+    "localize_name": "Пирокинез"
+  },
+  {
+    "game_id": "ID164",
+    "localize_name": "Слабость Тьмы"
+  },
+  {
+    "game_id": "ID165",
+    "localize_name": "Вечный Свет"
+  },
+  {
+    "game_id": "ID166",
+    "localize_name": "Рунный щит"
+  },
+  {
+    "game_id": "ID167",
+    "localize_name": "Абсолютная защита"
+  },
+  {
+    "game_id": "ID168",
+    "localize_name": "Мародерство"
+  },
+  {
+    "game_id": "ID169",
+    "localize_name": "Менторство"
+  },
+  {
+    "game_id": "ID170",
+    "localize_name": "Сопереживание"
+  },
+  {
+    "game_id": "ID171",
+    "localize_name": "Готовность"
+  },
+  {
+    "game_id": "ID173",
+    "localize_name": "Сила против магии"
+  },
+  {
+    "game_id": "ID174",
+    "localize_name": "Память нашей крови"
+  },
+  {
+    "game_id": "ID175",
+    "localize_name": "Подмога"
+  },
+  {
+    "game_id": "ID176",
+    "localize_name": "Чародейская защита"
+  },
+  {
+    "game_id": "ID177",
+    "localize_name": "Путь войны"
+  },
+  {
+    "game_id": "ID178",
+    "localize_name": "Упоение битвой"
+  },
+  {
+    "game_id": "ID179",
+    "localize_name": "Варварская удача"
+  },
+  {
+    "game_id": "ID180",
+    "localize_name": "Оглушающий удар"
+  },
+  {
+    "game_id": "ID181",
+    "localize_name": "Защити нас всех"
+  },
+  {
+    "game_id": "ID182",
+    "localize_name": "Помощь гоблинов"
+  },
+  {
+    "game_id": "ID184",
+    "localize_name": "Огонь ярости"
+  },
+  {
+    "game_id": "ID185",
+    "localize_name": "Военное знание"
+  },
+  {
+    "game_id": "ID186",
+    "localize_name": "Выносливость"
+  },
+  {
+    "game_id": "ID188",
+    "localize_name": "Развитие боевого клича"
+  },
+  {
+    "game_id": "ID189",
+    "localize_name": "Могучий клич"
+  },
+  {
+    "game_id": "ID190",
+    "localize_name": "Крик ярости"
+  },
+  {
+    "game_id": "ID192",
+    "localize_name": "Порча Хаоса"
+  },
+  {
+    "game_id": "ID193",
+    "localize_name": "Ослабление Хаоса"
+  },
+  {
+    "game_id": "ID194",
+    "localize_name": "Удержание Хаоса"
+  },
+  {
+    "game_id": "ID196",
+    "localize_name": "Порча Тьмы"
+  },
+  {
+    "game_id": "ID197",
+    "localize_name": "Ослабление Тьмы"
+  },
+  {
+    "game_id": "ID198",
+    "localize_name": "Удержание Тьмы"
+  },
+  {
+    "game_id": "ID200",
+    "localize_name": "Порча Света"
+  },
+  {
+    "game_id": "ID201",
+    "localize_name": "Ослабление Света"
+  },
+  {
+    "game_id": "ID202",
+    "localize_name": "Удержание Света"
+  },
+  {
+    "game_id": "ID204",
+    "localize_name": "Порча Призыва"
+  },
+  {
+    "game_id": "ID205",
+    "localize_name": "Ослабление Призыва"
+  },
+  {
+    "game_id": "ID206",
+    "localize_name": "Удержание Призыва"
+  },
+  {
+    "game_id": "ID207",
+    "localize_name": "Возвращение в пустоту"
+  },
+  {
+    "game_id": "ID208",
+    "localize_name": "Огненная ярость"
+  },
+  {
+    "game_id": "ID209",
+    "localize_name": "Ослабляющий удар"
+  },
+  {
+    "game_id": "ID210",
+    "localize_name": "Проклятая земля"
+  },
+  {
+    "game_id": "ID211",
+    "localize_name": "Туманная завеса"
+  },
+  {
+    "game_id": "ID212",
+    "localize_name": "Притяжение магии"
+  },
+  {
+    "game_id": "ID213",
+    "localize_name": "Восполнение маны"
+  },
+  {
+    "game_id": "ID214",
+    "localize_name": "Тайны Света"
+  },
+  {
+    "game_id": "ID215",
+    "localize_name": "Штормовой ветер"
+  }
+]
