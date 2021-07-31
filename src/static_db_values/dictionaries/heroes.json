@@ -1,462 +1,646 @@
 [
   {
-    "game_id": "Orrin",
+    "game_id": [
+      "Orrin"
+    ],
     "localize_name": "Дугал",
     "race_game_id": "1"
   },
   {
-    "game_id": "Sarge",
+    "game_id": [
+      "Sarge"
+    ],
     "localize_name": "Аксель",
     "race_game_id": "1"
 
   },
   {
-    "game_id": "Mardigo",
+    "game_id": [
+      "Mardigo"
+    ],
     "localize_name": "Ласло",
     "race_game_id": "1"
   },
   {
-    "game_id": "Brem",
+    "game_id": [
+      "Brem"
+    ],
     "localize_name": "Рутгер",
     "race_game_id": "1"
   },
   {
-    "game_id": "Maeve",
+    "game_id": [
+      "Maeve"
+    ],
     "localize_name": "Мив",
     "race_game_id": "1"
   },
   {
-    "game_id": "Ving",
+    "game_id": [
+      "Ving"
+    ],
     "localize_name": "Айрис",
     "race_game_id": "1"
   },
   {
-    "game_id": "Nathaniel",
+    "game_id": [
+      "Nathaniel"
+    ],
     "localize_name": "Эллайна",
     "race_game_id": "1"
   },
   {
-    "game_id": "Christian",
+    "game_id": [
+      "Christian"
+    ],
     "localize_name": "Витторио",
     "race_game_id": "1"
   },
   {
-    "game_id": "Godric",
+    "game_id": [
+      "Godric"
+    ],
     "localize_name": "Годрик",
     "race_game_id": "1"
   },
   {
-    "game_id": "RedHeavenHero03",
+    "game_id": [
+      "RedHeavenHero03"
+    ],
     "localize_name": "Валерия",
     "race_game_id": "1"
   },
   {
-    "game_id": "Isabell_A1",
+    "game_id": [
+      "Isabell_A1"
+    ],
     "localize_name": "Изабель",
     "race_game_id": "1"
   },
   {
-    "game_id": "Duncan",
+    "game_id": [
+      "Duncan"
+    ],
     "localize_name": "Дункан",
     "race_game_id": "1"
   },
   {
-    "game_id": "Nicolai",
+    "game_id": [
+      "Nicolai"
+    ],
     "localize_name": "Николай",
     "race_game_id": "1"
   },
   {
-    "game_id": "Grok",
+    "game_id": [
+      "Grok"
+    ],
     "localize_name": "Грок",
     "race_game_id": "2"
   },
   {
-    "game_id": "Oddrema",
+    "game_id": [
+      "Oddrema"
+    ],
     "localize_name": "Джезебет",
     "race_game_id": "2"
   },
   {
-    "game_id": "Marder",
+    "game_id": [
+      "Marder"
+    ],
     "localize_name": "Марбас",
     "race_game_id": "2"
   },
   {
-    "game_id": "Jazaz",
+    "game_id": [
+      "Jazaz"
+    ],
     "localize_name": "Ниброс",
     "race_game_id": "2"
   },
   {
-    "game_id": "Efion",
+    "game_id": [
+      "Efion"
+    ],
     "localize_name": "Аластор",
     "race_game_id": "2"
   },
   {
-    "game_id": "Deleb",
+    "game_id": [
+      "Deleb"
+    ],
     "localize_name": "Дэлеб",
     "race_game_id": "2"
   },
   {
-    "game_id": "Calid",
+    "game_id": [
+      "Calid"
+    ],
     "localize_name": "Грол",
     "race_game_id": "2"
   },
   {
-    "game_id": "Nymus",
+    "game_id": [
+      "Nymus"
+    ],
     "localize_name": "Нимус",
     "race_game_id": "2"
   },
   {
-    "game_id": "Orlando",
+    "game_id": [
+      "Orlando"
+    ],
     "localize_name": "Орландо",
     "race_game_id": "2"
   },
   {
-    "game_id": "Agrael",
+    "game_id": [
+      "Agrael"
+    ],
     "localize_name": "Аграил",
     "race_game_id": "2"
   },
   {
-    "game_id": "Kha-Beleth",
+    "game_id": [
+      "Kha-Beleth"
+    ],
     "localize_name": "Властелин",
     "race_game_id": "2"
   },
   {
-    "game_id": "Nemor",
+    "game_id": [
+      "Nemor"
+    ],
     "localize_name": "Дейдра",
     "race_game_id": "3"
   },
   {
-    "game_id": "Tamika",
+    "game_id": [
+      "Tamika"
+    ],
     "localize_name": "Лукреция",
     "race_game_id": "3"
   },
   {
-    "game_id": "Muscip",
+    "game_id": [
+      "Muscip"
+    ],
     "localize_name": "Наадир",
     "race_game_id": "3"
   },
   {
-    "game_id": "Aberrar",
+    "game_id": [
+      "Aberrar"
+    ],
     "localize_name": "Золтан",
     "race_game_id": "3"
   },
   {
-    "game_id": "Straker",
+    "game_id": [
+      "Straker"
+    ],
     "localize_name": "Орсон",
     "race_game_id": "3"
   },
   {
-    "game_id": "Effig",
+    "game_id": [
+      "Effig"
+    ],
     "localize_name": "Равенна",
     "race_game_id": "3"
   },
   {
-    "game_id": "Pelt",
+    "game_id": [
+      "Pelt"
+    ],
     "localize_name": "Влад",
     "race_game_id": "3"
   },
   {
-    "game_id": "Gles",
+    "game_id": [
+      "Gles"
+    ],
     "localize_name": "Каспар",
     "race_game_id": "3"
   },
   {
-    "game_id": "Arantir",
+    "game_id": [
+      "Arantir"
+    ],
     "localize_name": "Арантир",
     "race_game_id": "3"
   },
   {
-    "game_id": "OrnellaNecro",
+    "game_id": [
+      "OrnellaNecro"
+    ],
     "localize_name": "Орнелла",
     "race_game_id": "3"
   },
   {
-    "game_id": "Berein",
+    "game_id": [
+      "Berein"
+    ],
     "localize_name": "Маркел",
     "race_game_id": "3"
   },
   {
-    "game_id": "Nikolas",
+    "game_id": [
+      "Nikolas"
+    ],
     "localize_name": "Николас",
     "race_game_id": "3"
   },
   {
-    "game_id": "Metlirn",
+    "game_id": [
+      "Metlirn"
+    ],
     "localize_name": "Анвэн",
     "race_game_id": "4"
   },
   {
-    "game_id": "Gillion",
+    "game_id": [
+      "Gillion"
+    ],
     "localize_name": "Гильраэн",
     "race_game_id": "4"
   },
   {
-    "game_id": "Nadaur",
+    "game_id": [
+      "Nadaur"
+    ],
     "localize_name": "Таланар",
     "race_game_id": "4"
   },
   {
-    "game_id": "Diraya",
+    "game_id": [
+      "Diraya"
+    ],
     "localize_name": "Дираэль",
     "race_game_id": "4"
   },
   {
-    "game_id": "Ossir",
+    "game_id": [
+      "Ossir"
+    ],
     "localize_name": "Оссир",
     "race_game_id": "4"
   },
   {
-    "game_id": "Itil",
+    "game_id": [
+      "Itil"
+    ],
     "localize_name": "Ильфина",
     "race_game_id": "4"
   },
   {
-    "game_id": "Elleshar",
+    "game_id": [
+      "Elleshar"
+    ],
     "localize_name": "Винраэль",
     "race_game_id": "4"
   },
   {
-    "game_id": "Linaas",
+    "game_id": [
+      "Linaas"
+    ],
     "localize_name": "Вингаэль",
     "race_game_id": "4"
   },
   {
-    "game_id": "Heam",
+    "game_id": [
+      "Heam"
+    ],
     "localize_name": "Файдаэн",
     "race_game_id": "4"
   },
   {
-    "game_id": "Ildar",
+    "game_id": [
+      "Ildar"
+    ],
     "localize_name": "Аларон",
     "race_game_id": "4"
   },
   {
-    "game_id": "GhostFSLord",
+    "game_id": [
+      "GhostFSLord"
+    ],
     "localize_name": "Призрак",
     "race_game_id": "4"
   },
   {
-    "game_id": "Faiz",
+    "game_id": [
+      "Faiz"
+    ],
     "localize_name": "Фаиз",
     "race_game_id": "5"
   },
   {
-    "game_id": "Havez",
+    "game_id": [
+      "Havez"
+    ],
     "localize_name": "Хафиз",
     "race_game_id": "5"
   },
   {
-    "game_id": "Nur",
+    "game_id": [
+      "Nur"
+    ],
     "localize_name": "Назир",
     "race_game_id": "5"
   },
   {
-    "game_id": "Astral",
+    "game_id": [
+      "Astral"
+    ],
     "localize_name": "Нура",
     "race_game_id": "5"
   },
   {
-    "game_id": "Sufi",
+    "game_id": [
+      "Sufi"
+    ],
     "localize_name": "Ора",
     "race_game_id": "5"
   },
   {
-    "game_id": "Razzak",
+    "game_id": [
+      "Razzak"
+    ],
     "localize_name": "Нархиз",
     "race_game_id": "5"
   },
   {
-    "game_id": "Tan",
+    "game_id": [
+      "Tan"
+    ],
     "localize_name": "Джалиб",
     "race_game_id": "5"
   },
   {
-    "game_id": "Isher",
+    "game_id": [
+      "Isher"
+    ],
     "localize_name": "Раззак",
     "race_game_id": "5"
   },
   {
-    "game_id": "Zehir",
+    "game_id": [
+      "Zehir"
+    ],
     "localize_name": "Зехир",
     "race_game_id": "5"
   },
   {
-    "game_id": "Maahir",
+    "game_id": [
+      "Maahir"
+    ],
     "localize_name": "Маахир",
     "race_game_id": "5"
   },
   {
-    "game_id": "Cyrus",
+    "game_id": [
+      "Cyrus"
+    ],
     "localize_name": "Сайрус",
     "race_game_id": "5"
   },
   {
-    "game_id": "Eruina",
+    "game_id": [
+      "Eruina"
+    ],
     "localize_name": "Эрин",
     "race_game_id": "6"
   },
   {
-    "game_id": "Inagost",
+    "game_id": [
+      "Inagost"
+    ],
     "localize_name": "Синитар",
     "race_game_id": "6"
   },
   {
-    "game_id": "Urunir",
+    "game_id": [
+      "Urunir"
+    ],
     "localize_name": "Иранна",
     "race_game_id": "6"
   },
   {
-    "game_id": "Almegir",
+    "game_id": [
+      "Almegir"
+    ],
     "localize_name": "Ирбет",
     "race_game_id": "6"
   },
   {
-    "game_id": "Menel",
+    "game_id": [
+      "Menel"
+    ],
     "localize_name": "Кифра",
     "race_game_id": "6"
   },
   {
-    "game_id": "Dalom",
+    "game_id": [
+      "Dalom"
+    ],
     "localize_name": "Летос",
     "race_game_id": "6"
   },
   {
-    "game_id": "Ferigl",
+    "game_id": [
+      "Ferigl"
+    ],
     "localize_name": "Соргал",
     "race_game_id": "6"
   },
   {
-    "game_id": "Ohtarig",
+    "game_id": [
+      "Ohtarig"
+    ],
     "localize_name": "Вайшан",
     "race_game_id": "6"
   },
   {
-    "game_id": "Raelag_A1",
+    "game_id": [
+      "Raelag_A1"
+    ],
     "localize_name": "Раилаг",
     "race_game_id": "6"
   },
   {
-    "game_id": "Kelodin",
+    "game_id": [
+      "Kelodin"
+    ],
     "localize_name": "Шадия",
     "race_game_id": "6"
   },
   {
-    "game_id": "Shadwyn",
+    "game_id": [
+      "Shadwyn"
+    ],
     "localize_name": "Илайя",
     "race_game_id": "6"
   },
   {
-    "game_id": "Thralsai",
+    "game_id": [
+      "Thralsai"
+    ],
     "localize_name": "Тралсай",
     "race_game_id": "6"
   },
   {
-    "game_id": "Brand",
+    "game_id": [
+      "Brand"
+    ],
     "localize_name": "Бранд",
     "race_game_id": "7"
   },
   {
-    "game_id": "Bersy",
+    "game_id": [
+      "Bersy"
+    ],
     "localize_name": "Ибба",
     "race_game_id": "7"
   },
   {
-    "game_id": "Egil",
+    "game_id": [
+      "Egil"
+    ],
     "localize_name": "Эрлинг",
     "race_game_id": "7"
   },
   {
-    "game_id": "Ottar",
+    "game_id": [
+      "Ottar"
+    ],
     "localize_name": "Хельмар",
     "race_game_id": "7"
   },
   {
-    "game_id": "Una",
+    "game_id": [
+      "Una"
+    ],
     "localize_name": "Инга",
     "race_game_id": "7"
   },
   {
-    "game_id": "Ingvar",
+    "game_id": [
+      "Ingvar"
+    ],
     "localize_name": "Ингвар",
     "race_game_id": "7"
   },
   {
-    "game_id": "Vegeyr",
+    "game_id": [
+      "Vegeyr"
+    ],
     "localize_name": "Свея",
     "race_game_id": "7"
   },
   {
-    "game_id": "Skeggy",
+    "game_id": [
+      "Skeggy"
+    ],
     "localize_name": "Карли",
     "race_game_id": "7"
   },
   {
-    "game_id": "KingTolghar",
+    "game_id": [
+      "KingTolghar"
+    ],
     "localize_name": "Толгар",
     "race_game_id": "7"
   },
   {
-    "game_id": "Wulfstan",
+    "game_id": [
+      "Wulfstan"
+    ],
     "localize_name": "Вульфстен",
     "race_game_id": "7"
   },
   {
-    "game_id": "Rolf",
+    "game_id": [
+      "Rolf"
+    ],
     "localize_name": "Рольф",
     "race_game_id": "7"
   },
   {
-    "game_id": "Hero2",
+    "game_id": [
+      "Hero2"
+    ],
     "localize_name": "Аргат",
     "race_game_id": "8"
   },
   {
-    "game_id": "Hero3",
+    "game_id": [
+      "Hero3"
+    ],
     "localize_name": "Гаруна",
     "race_game_id": "8"
   },
   {
-    "game_id": "Hero6",
+    "game_id": [
+      "Hero6"
+    ],
     "localize_name": "Шак Карукат",
     "race_game_id": "8"
   },
   {
-    "game_id": "Hero8",
+    "game_id": [
+      "Hero8"
+    ],
     "localize_name": "Тилсек",
     "race_game_id": "8"
   },
   {
-    "game_id": "Hero7",
+    "game_id": [
+      "Hero7"
+    ],
     "localize_name": "Хаггеш",
     "race_game_id": "8"
   },
   {
-    "game_id": "Hero1",
+    "game_id": [
+      "Hero1"
+    ],
     "localize_name": "Краг",
     "race_game_id": "8"
   },
   {
-    "game_id": "Hero9",
+    "game_id": [
+      "Hero9"
+    ],
     "localize_name": "Киган",
     "race_game_id": "8"
   },
   {
-    "game_id": "Hero4",
+    "game_id": [
+      "Hero4"
+    ],
     "localize_name": "Гошак",
     "race_game_id": "8"
   },
   {
-    "game_id": "Kujin",
+    "game_id": [
+      "Kujin"
+    ],
     "localize_name": "Куджин",
     "race_game_id": "8"
   },
   {
-    "game_id": "Gottai",
+    "game_id": [
+      "Gottai"
+    ],
     "localize_name": "Готай",
     "race_game_id": "8"
   },
   {
-    "game_id": "Quroq",
+    "game_id": [
+      "Quroq"
+    ],
     "localize_name": "Курак",
     "race_game_id": "8"
   }

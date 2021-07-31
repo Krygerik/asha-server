@@ -1,14 +1,14 @@
 [
   {
-    "game_id": "ID1",
+    "game_id": ["ID1"],
     "localize_name": "Баллиста"
   },
   {
-    "game_id": "ID3",
+    "game_id": ["ID3"],
     "localize_name": "Палатка первой помощи"
   },
   {
-    "game_id": "ID4",
+    "game_id": ["ID4"],
     "localize_name": "Тележка с боеприпасами"
   }
 ]
