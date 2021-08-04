@@ -3,7 +3,10 @@
     "game_id": [
       "ID113"
     ],
-    "localize_name": "Волки",
+    "localize_name": {
+      "en": "Wolves",
+      "ru": "Волки"
+    },
     "parameters": {
       "initiative": 0
     }
@@ -12,7 +15,10 @@
     "game_id": [
       "ID85"
     ],
-    "localize_name": "Огненные элементали",
+    "localize_name": {
+      "en": "Fire elementals",
+      "ru": "Огненные элементали"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -21,7 +27,10 @@
     "game_id": [
       "ID86"
     ],
-    "localize_name": "Водные элементали",
+    "localize_name": {
+      "en": "Water elementals",
+      "ru": "Водные элементали"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -30,7 +39,10 @@
     "game_id": [
       "ID88"
     ],
-    "localize_name": "Воздушные элементали",
+    "localize_name": {
+      "en": "Air elementals",
+      "ru": "Воздушные элементали"
+    },
     "parameters": {
       "initiative": 17
     }
@@ -39,7 +51,10 @@
     "game_id": [
       "ID87"
     ],
-    "localize_name": "Земные элементали",
+    "localize_name": {
+      "en": "Earth elementals",
+      "ru": "Земные элементали"
+    },
     "parameters": {
       "initiative": 7
     }
@@ -48,7 +63,10 @@
     "game_id": [
       "ID116"
     ],
-    "localize_name": "Мумии",
+    "localize_name": {
+      "en": "Mummies",
+      "ru": "Мумии"
+    },
     "parameters": {
       "initiative": 15
     }
@@ -57,7 +75,10 @@
     "game_id": [
       "ID90"
     ],
-    "localize_name": "Рыцари смерти",
+    "localize_name": {
+      "en": "Death knights",
+      "ru": "Рыцари смерти"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -66,7 +87,10 @@
     "game_id": [
       "ID115"
     ],
-    "localize_name": "Мантикоры",
+    "localize_name": {
+      "en": "Manticores",
+      "ru": "Мантикоры"
+    },
     "parameters": {
       "initiative": 0
     }
@@ -75,7 +99,10 @@
     "game_id": [
       "ID91"
     ],
-    "localize_name": "Фениксы",
+    "localize_name": {
+      "en": "Phoenix",
+      "ru": "Фениксы"
+    },
     "parameters": {
       "initiative": 15
     }
@@ -84,7 +111,10 @@
     "game_id": [
       "ID57"
     ],
-    "localize_name": "Старшие гремлины",
+    "localize_name": {
+      "en": "Master gremlin",
+      "ru": "Старшие гремлины"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -93,7 +123,10 @@
     "game_id": [
       "ID159"
     ],
-    "localize_name": "Гремлины вредители",
+    "localize_name": {
+      "en": "Gremlin saboteur",
+      "ru": "Гремлины вредители"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -102,7 +135,10 @@
     "game_id": [
       "ID59"
     ],
-    "localize_name": "Обсидиановые горгульи",
+    "localize_name": {
+      "en": "Obsidian gargoyle",
+      "ru": "Обсидиановые горгульи"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -111,7 +147,10 @@
     "game_id": [
       "ID160"
     ],
-    "localize_name": "Стихийные горгульи",
+    "localize_name": {
+      "en": "Elemental gargoyle",
+      "ru": "Стихийные горгульи"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -120,7 +159,10 @@
     "game_id": [
       "ID61"
     ],
-    "localize_name": "Стальные големы",
+    "localize_name": {
+      "en": "Steel golem",
+      "ru": "Стальные големы"
+    },
     "parameters": {
       "initiative": 7
     }
@@ -129,7 +171,10 @@
     "game_id": [
       "ID161"
     ],
-    "localize_name": "Обсидиановые големы",
+    "localize_name": {
+      "en": "Magnetic golem",
+      "ru": "Обсидиановые големы"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -138,7 +183,10 @@
     "game_id": [
       "ID63"
     ],
-    "localize_name": "Архимаги",
+    "localize_name": {
+      "en": "Archmage",
+      "ru": "Архимаги"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -147,7 +195,10 @@
     "game_id": [
       "ID162"
     ],
-    "localize_name": "Боевые маги",
+    "localize_name": {
+      "en": "Battle mage",
+      "ru": "Боевые маги"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -156,7 +207,10 @@
     "game_id": [
       "ID65"
     ],
-    "localize_name": "Султаны джиннов",
+    "localize_name": {
+      "en": "Djinn sultan",
+      "ru": "Султаны джиннов"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -165,7 +219,10 @@
     "game_id": [
       "ID163"
     ],
-    "localize_name": "Визири джиннов",
+    "localize_name": {
+      "en": "Djinn vizier",
+      "ru": "Визири джиннов"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -174,7 +231,10 @@
     "game_id": [
       "ID67"
     ],
-    "localize_name": "Раджи ракшас",
+    "localize_name": {
+      "en": "Rakshasa raja",
+      "ru": "Раджи ракшас"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -183,7 +243,10 @@
     "game_id": [
       "ID164"
     ],
-    "localize_name": "Кшатрии ракшас",
+    "localize_name": {
+      "en": "Rakshas kshatra",
+      "ru": "Кшатрии ракшас"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -192,7 +255,10 @@
     "game_id": [
       "ID69"
     ],
-    "localize_name": "Титаны",
+    "localize_name": {
+      "en": "Titan",
+      "ru": "Титаны"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -201,7 +267,10 @@
     "game_id": [
       "ID165"
     ],
-    "localize_name": "Громовержцы",
+    "localize_name": {
+      "en": "Storm titan",
+      "ru": "Громовержцы"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -210,7 +279,10 @@
     "game_id": [
       "ID92"
     ],
-    "localize_name": "Ассасины",
+    "localize_name": {
+      "en": "Assassin",
+      "ru": "Ассасины"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -220,7 +292,10 @@
       "ID166",
       "ID93"
     ],
-    "localize_name": "Ловчие",
+    "localize_name": {
+      "en": "Stalker",
+      "ru": "Ловчие"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -229,7 +304,10 @@
     "game_id": [
       "ID73"
     ],
-    "localize_name": "Фурии",
+    "localize_name": {
+      "en": "Blood fury",
+      "ru": "Фурии"
+    },
     "parameters": {
       "initiative": 16
     }
@@ -238,7 +316,10 @@
     "game_id": [
       "ID139"
     ],
-    "localize_name": "Мегеры",
+    "localize_name": {
+      "en": "Blood sister",
+      "ru": "Мегеры"
+    },
     "parameters": {
       "initiative": 14
     }
@@ -247,7 +328,10 @@
     "game_id": [
       "ID75"
     ],
-    "localize_name": "Минотавры-стражи",
+    "localize_name": {
+      "en": "Minotaur guard",
+      "ru": "Минотавры-стражи"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -256,7 +340,10 @@
     "game_id": [
       "ID140"
     ],
-    "localize_name": "Минотавры-надсмотрщики",
+    "localize_name": {
+      "en": "Minotaur taskmaster",
+      "ru": "Минотавры-надсмотрщики"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -285,7 +372,10 @@
       "ID218",
       "ID219"
     ],
-    "localize_name": "Темные всадники",
+    "localize_name": {
+      "en": "Grim raider",
+      "ru": "Темный всадник"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -294,7 +384,10 @@
     "game_id": [
       "ID141"
     ],
-    "localize_name": "Проворные наездники",
+    "localize_name": {
+      "en": "Brisk raider",
+      "ru": "Проворные наездники"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -303,7 +396,10 @@
     "game_id": [
       "ID79"
     ],
-    "localize_name": "Пещерные гидры",
+    "localize_name": {
+      "en": "Deep hydra",
+      "ru": "Пещерные гидры"
+    },
     "parameters": {
       "initiative": 7
     }
@@ -312,7 +408,10 @@
     "game_id": [
       "ID142"
     ],
-    "localize_name": "Темные гидры",
+    "localize_name": {
+      "en": "Foul hydra",
+      "ru": "Темные гидры"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -324,7 +423,10 @@
       "ID84",
       "ID82"
     ],
-    "localize_name": "Владычицы тени",
+    "localize_name": {
+      "en": "Shadow matriarch",
+      "ru": "Владычицы тени"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -333,7 +435,10 @@
     "game_id": [
       "ID83"
     ],
-    "localize_name": "Черные драконы",
+    "localize_name": {
+      "en": "Black dragon",
+      "ru": "Черные драконы"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -342,7 +447,10 @@
     "game_id": [
       "ID144"
     ],
-    "localize_name": "Красные драконы",
+    "localize_name": {
+      "en": "Red dragon",
+      "ru": "Красные драконы"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -351,7 +459,10 @@
     "game_id": [
       "ID1"
     ],
-    "localize_name": "Ополченцы",
+    "localize_name": {
+      "en": "Conscript",
+      "ru": "Ополченцы"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -360,7 +471,10 @@
     "game_id": [
       "ID106"
     ],
-    "localize_name": "Лендлорды",
+    "localize_name": {
+      "en": "Brute",
+      "ru": "Лендлорды"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -369,7 +483,10 @@
     "game_id": [
       "ID3"
     ],
-    "localize_name": "Арбалетчики",
+    "localize_name": {
+      "en": "Marksman",
+      "ru": "Арбалетчик"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -378,7 +495,10 @@
     "game_id": [
       "ID107"
     ],
-    "localize_name": "Стрелки",
+    "localize_name": {
+      "en": "Crossbowman",
+      "ru": "Стрелки"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -387,7 +507,10 @@
     "game_id": [
       "ID5"
     ],
-    "localize_name": "Латники",
+    "localize_name": {
+      "en": "Squire",
+      "ru": "Латники"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -396,7 +519,10 @@
     "game_id": [
       "ID108"
     ],
-    "localize_name": "Ревнитель веры",
+    "localize_name": {
+      "en": "Vindicator",
+      "ru": "Ревнитель веры"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -406,7 +532,10 @@
       "ID7",
       "ID8"
     ],
-    "localize_name": "Королевские грифоны",
+    "localize_name": {
+      "en": "Imperial griffin",
+      "ru": "Королевские грифоны"
+    },
     "parameters": {
       "initiative": 15
     }
@@ -415,7 +544,10 @@
     "game_id": [
       "ID109"
     ],
-    "localize_name": "Боевые грифоны",
+    "localize_name": {
+      "en": "Battle griffin",
+      "ru": "Боевые грифоны"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -424,7 +556,10 @@
     "game_id": [
       "ID9"
     ],
-    "localize_name": "Инквизиторы",
+    "localize_name": {
+      "en": "Inquisitor",
+      "ru": "Инквизиторы"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -433,7 +568,10 @@
     "game_id": [
       "ID110"
     ],
-    "localize_name": "Адепты",
+    "localize_name": {
+      "en": "Zealot",
+      "ru": "Адепты"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -442,7 +580,10 @@
     "game_id": [
       "ID11"
     ],
-    "localize_name": "Паладины",
+    "localize_name": {
+      "en": "Paladin",
+      "ru": "Паладины"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -451,7 +592,10 @@
     "game_id": [
       "ID111"
     ],
-    "localize_name": "Рыцари Изабель",
+    "localize_name": {
+      "en": "Champion",
+      "ru": "Рыцари Изабель"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -463,7 +607,10 @@
       "ID118",
       "ID66"
     ],
-    "localize_name": "Архангелы",
+    "localize_name": {
+      "en": "Archangel",
+      "ru": "Архангелы"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -473,7 +620,10 @@
       "ID112",
       "ID52"
     ],
-    "localize_name": "Серафим",
+    "localize_name": {
+      "en": "Seraph",
+      "ru": "Серафим"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -482,7 +632,10 @@
     "game_id": [
       "ID15"
     ],
-    "localize_name": "Черти",
+    "localize_name": {
+      "en": "Familiar",
+      "ru": "Черти"
+    },
     "parameters": {
       "initiative": 13
     }
@@ -491,7 +644,10 @@
     "game_id": [
       "ID131"
     ],
-    "localize_name": "Дьяволята",
+    "localize_name": {
+      "en": "Vermin",
+      "ru": "Дьяволята"
+    },
     "parameters": {
       "initiative": 13
     }
@@ -500,7 +656,10 @@
     "game_id": [
       "ID17"
     ],
-    "localize_name": "Огненные демоны",
+    "localize_name": {
+      "en": "Horned overseer",
+      "ru": "Огненные демоны"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -509,7 +668,10 @@
     "game_id": [
       "ID132"
     ],
-    "localize_name": "Старшие демоны",
+    "localize_name": {
+      "en": "Horned grunt",
+      "ru": "Старшие демоны"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -518,7 +680,10 @@
     "game_id": [
       "ID19"
     ],
-    "localize_name": "Церберы",
+    "localize_name": {
+      "en": "Cerberus",
+      "ru": "Церберы"
+    },
     "parameters": {
       "initiative": 13
     }
@@ -527,7 +692,10 @@
     "game_id": [
       "ID133"
     ],
-    "localize_name": "Огненные гончии",
+    "localize_name": {
+      "en": "Firehound",
+      "ru": "Огненные гончие"
+    },
     "parameters": {
       "initiative": 13
     }
@@ -536,7 +704,10 @@
     "game_id": [
       "ID21"
     ],
-    "localize_name": "Демонессы",
+    "localize_name": {
+      "en": "Succubus mistress",
+      "ru": "Демонесса"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -546,7 +717,10 @@
       "ID134",
       "ID16"
     ],
-    "localize_name": "Искусительницы",
+    "localize_name": {
+      "en": "Succubus seducer",
+      "ru": "Искусительница"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -555,7 +729,10 @@
     "game_id": [
       "ID23"
     ],
-    "localize_name": "Кошмары",
+    "localize_name": {
+      "en": "Nightmare",
+      "ru": "Кошмары"
+    },
     "parameters": {
       "initiative": 16
     }
@@ -564,7 +741,10 @@
     "game_id": [
       "ID135"
     ],
-    "localize_name": "Кони преисподней",
+    "localize_name": {
+      "en": "Hell stalion",
+      "ru": "Кони преисподней"
+    },
     "parameters": {
       "initiative": 15
     }
@@ -573,7 +753,10 @@
     "game_id": [
       "ID25"
     ],
-    "localize_name": "Пещерные владыки",
+    "localize_name": {
+      "en": "Pit lord",
+      "ru": "пещерные владыки"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -582,7 +765,10 @@
     "game_id": [
       "ID136"
     ],
-    "localize_name": "Пещерные отродья",
+    "localize_name": {
+      "en": "Pit spawn",
+      "ru": "Пещерные отродья"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -592,7 +778,10 @@
       "ID27",
       "ID24"
     ],
-    "localize_name": "Архидьяволы",
+    "localize_name": {
+      "en": "Arch devil",
+      "ru": "Архидьявол"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -601,7 +790,10 @@
     "game_id": [
       "ID137"
     ],
-    "localize_name": "Архидемоны",
+    "localize_name": {
+      "en": "Arch demon",
+      "ru": "Архидемоны"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -610,7 +802,10 @@
     "game_id": [
       "ID29"
     ],
-    "localize_name": "Костяные лучники",
+    "localize_name": {
+      "en": "Skeleton archer",
+      "ru": "Костяные лучники"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -619,7 +814,10 @@
     "game_id": [
       "ID152"
     ],
-    "localize_name": "Костяные воители",
+    "localize_name": {
+      "en": "Skeleton warrior",
+      "ru": "Костяные воители"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -628,7 +826,10 @@
     "game_id": [
       "ID31"
     ],
-    "localize_name": "Чумные зомби",
+    "localize_name": {
+      "en": "Plague zombie",
+      "ru": "Чумные зомби"
+    },
     "parameters": {
       "initiative": 7
     }
@@ -637,7 +838,10 @@
     "game_id": [
       "ID153"
     ],
-    "localize_name": "Гниющие зомби",
+    "localize_name": {
+      "en": "Rot zombie",
+      "ru": "Гниющие зомби"
+    },
     "parameters": {
       "initiative": 7
     }
@@ -646,7 +850,10 @@
     "game_id": [
       "ID34"
     ],
-    "localize_name": "Призраки",
+    "localize_name": {
+      "en": "Spectre",
+      "ru": "Призраки"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -656,7 +863,10 @@
       "ID154",
       "ID30"
     ],
-    "localize_name": "Духи",
+    "localize_name": {
+      "en": "Poltergeist",
+      "ru": "Духи"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -665,7 +875,10 @@
     "game_id": [
       "ID35"
     ],
-    "localize_name": "Высшие вампиры",
+    "localize_name": {
+      "en": "Vampire lord",
+      "ru": "Высшие вампиры"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -674,7 +887,10 @@
     "game_id": [
       "ID155"
     ],
-    "localize_name": "Князья вампиров",
+    "localize_name": {
+      "en": "Vampire prince",
+      "ru": "Князья вампиров"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -683,7 +899,10 @@
     "game_id": [
       "ID37"
     ],
-    "localize_name": "Архиличи",
+    "localize_name": {
+      "en": "Archlich",
+      "ru": "Архилич"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -692,7 +911,10 @@
     "game_id": [
       "ID156"
     ],
-    "localize_name": "Высшие личи",
+    "localize_name": {
+      "en": "Lich master",
+      "ru": "Высшие личи"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -701,7 +923,10 @@
     "game_id": [
       "ID39"
     ],
-    "localize_name": "Вестники смерти",
+    "localize_name": {
+      "en": "Wraith",
+      "ru": "Вестники смерти"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -710,7 +935,10 @@
     "game_id": [
       "ID157"
     ],
-    "localize_name": "Баньши",
+    "localize_name": {
+      "en": "Banshee",
+      "ru": "Баньши"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -719,7 +947,10 @@
     "game_id": [
       "ID41"
     ],
-    "localize_name": "Призрачные драконы",
+    "localize_name": {
+      "en": "Spectral dragon",
+      "ru": "Призрачные драконы"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -728,7 +959,10 @@
     "game_id": [
       "ID158"
     ],
-    "localize_name": "Астральные драконы",
+    "localize_name": {
+      "en": "Ghost dragon",
+      "ru": "Астральные драконы"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -737,7 +971,10 @@
     "game_id": [
       "ID43"
     ],
-    "localize_name": "Дриады",
+    "localize_name": {
+      "en": "Sprite",
+      "ru": "Дриады"
+    },
     "parameters": {
       "initiative": 15
     }
@@ -747,7 +984,10 @@
       "ID145",
       "ID44"
     ],
-    "localize_name": "Нимфы",
+    "localize_name": {
+      "en": "Dryad",
+      "ru": "Нимфы"
+    },
     "parameters": {
       "initiative": 14
     }
@@ -757,7 +997,10 @@
       "ID45",
       "ID46"
     ],
-    "localize_name": "Танцующие со смертью",
+    "localize_name": {
+      "en": "War dancer",
+      "ru": "танцующий со смертью"
+    },
     "parameters": {
       "initiative": 15
     }
@@ -767,7 +1010,10 @@
       "ID146",
       "ID18"
     ],
-    "localize_name": "Танцующие с ветром",
+    "localize_name": {
+      "en": "Wind dancer",
+      "ru": "Танцующие с ветром"
+    },
     "parameters": {
       "initiative": 15
     }
@@ -778,7 +1024,10 @@
       "ID48",
       "ID62"
     ],
-    "localize_name": "Мастера лука",
+    "localize_name": {
+      "en": "Master hunter",
+      "ru": "Мастера лука"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -789,7 +1038,10 @@
       "ID20",
       "ID76"
     ],
-    "localize_name": "Лесные стрелки",
+    "localize_name": {
+      "en": "Arcane archer",
+      "ru": "Лесные стрелки"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -800,7 +1052,10 @@
       "ID50",
       "ID72"
     ],
-    "localize_name": "Верховные друиды",
+    "localize_name": {
+      "en": "Druid elder",
+      "ru": "Верховные друиды"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -811,7 +1066,10 @@
       "ID22",
       "ID74"
     ],
-    "localize_name": "Старшие друиды",
+    "localize_name": {
+      "en": "High druid",
+      "ru": "Старшие друиды"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -820,7 +1078,10 @@
     "game_id": [
       "ID51"
     ],
-    "localize_name": "Боевые единороги",
+    "localize_name": {
+      "en": "Silver unicorn",
+      "ru": "Боевые единороги"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -829,7 +1090,10 @@
     "game_id": [
       "ID149"
     ],
-    "localize_name": "Светлые единороги",
+    "localize_name": {
+      "en": "Pristine unicorn",
+      "ru": "Светлые единороги"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -839,7 +1103,10 @@
       "ID53",
       "ID54"
     ],
-    "localize_name": "Древние энты",
+    "localize_name": {
+      "en": "Ancient treant",
+      "ru": "Древние энты"
+    },
     "parameters": {
       "initiative": 7
     }
@@ -848,7 +1115,10 @@
     "game_id": [
       "ID150"
     ],
-    "localize_name": "Дикие энты",
+    "localize_name": {
+      "en": "Savage treant",
+      "ru": "Дикие энты"
+    },
     "parameters": {
       "initiative": 7
     }
@@ -858,7 +1128,10 @@
       "ID55",
       "ID56"
     ],
-    "localize_name": "Изумрудные драконы",
+    "localize_name": {
+      "en": "Emerald dragon",
+      "ru": "Изумрудные драконы"
+    },
     "parameters": {
       "initiative": 14
     }
@@ -867,7 +1140,10 @@
     "game_id": [
       "ID151"
     ],
-    "localize_name": "Кристаллические драконы",
+    "localize_name": {
+      "en": "Crystal dragon",
+      "ru": "Кристаллические драконы"
+    },
     "parameters": {
       "initiative": 14
     }
@@ -876,7 +1152,10 @@
     "game_id": [
       "ID71"
     ],
-    "localize_name": "Воители",
+    "localize_name": {
+      "en": "Shieldguard",
+      "ru": "Воители"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -885,7 +1164,10 @@
     "game_id": [
       "ID138"
     ],
-    "localize_name": "Горные стражи",
+    "localize_name": {
+      "en": "Mountin guard",
+      "ru": "Горные стражи"
+    },
     "parameters": {
       "initiative": 8
     }
@@ -894,7 +1176,10 @@
     "game_id": [
       "ID94"
     ],
-    "localize_name": "Мастера копья",
+    "localize_name": {
+      "en": "Skirmisher",
+      "ru": "Мастера копья"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -903,7 +1188,10 @@
     "game_id": [
       "ID167"
     ],
-    "localize_name": "Гарпунеры",
+    "localize_name": {
+      "en": "Harpooner",
+      "ru": "Гарпунеры"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -912,7 +1200,10 @@
     "game_id": [
       "ID96"
     ],
-    "localize_name": "Хозяева медведей",
+    "localize_name": {
+      "en": "Blackbear rider",
+      "ru": "Хозяева медведей"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -921,7 +1212,10 @@
     "game_id": [
       "ID168"
     ],
-    "localize_name": "Северные наездники",
+    "localize_name": {
+      "en": "Whitebear rider",
+      "ru": "Северные наездники"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -931,7 +1225,10 @@
       "ID98",
       "ID99"
     ],
-    "localize_name": "Берсерки",
+    "localize_name": {
+      "en": "Berserker",
+      "ru": "Берсерки"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -941,7 +1238,10 @@
       "ID169",
       "ID80"
     ],
-    "localize_name": "Воины Арката",
+    "localize_name": {
+      "en": "Battlerager",
+      "ru": "Воины Арката"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -950,7 +1250,10 @@
     "game_id": [
       "ID100"
     ],
-    "localize_name": "Жрецы Арката",
+    "localize_name": {
+      "en": "Rune patriarch",
+      "ru": "Жрецы Арката"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -959,7 +1262,10 @@
     "game_id": [
       "ID170"
     ],
-    "localize_name": "Жрецы Пламени",
+    "localize_name": {
+      "en": "Rune keeper",
+      "ru": "Жрецы пламени"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -969,7 +1275,10 @@
       "ID102",
       "ID103"
     ],
-    "localize_name": "Ярлы",
+    "localize_name": {
+      "en": "Flame lord",
+      "ru": "Ярл"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -979,7 +1288,10 @@
       "ID171",
       "ID95"
     ],
-    "localize_name": "Эрлы",
+    "localize_name": {
+      "en": "Thunder thane",
+      "ru": "Эрлы"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -988,7 +1300,10 @@
     "game_id": [
       "ID105"
     ],
-    "localize_name": "Лавовые драконы",
+    "localize_name": {
+      "en": "Magma dragon",
+      "ru": "Лавовый дракон"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -997,7 +1312,10 @@
     "game_id": [
       "ID172"
     ],
-    "localize_name": "Драконы Арката",
+    "localize_name": {
+      "en": "Lava dragon",
+      "ru": "Драконы Арката"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -1006,7 +1324,10 @@
     "game_id": [
       "ID117"
     ],
-    "localize_name": "Трапперы",
+    "localize_name": {
+      "en": "Goblin trapper",
+      "ru": "Траппер"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -1015,7 +1336,10 @@
     "game_id": [
       "ID173"
     ],
-    "localize_name": "Колдуны гоблинов",
+    "localize_name": {
+      "en": "Goblin witch-doctor",
+      "ru": "Колдуны гоблинов"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -1024,7 +1348,10 @@
     "game_id": [
       "ID119"
     ],
-    "localize_name": "Кочевые кентавры",
+    "localize_name": {
+      "en": "Centaur nomad",
+      "ru": "Кочевые кентавры"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -1033,7 +1360,10 @@
     "game_id": [
       "ID174"
     ],
-    "localize_name": "Боевые кентавры",
+    "localize_name": {
+      "en": "Centaur marauder",
+      "ru": "Боевые кентавры"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -1042,7 +1372,10 @@
     "game_id": [
       "ID121"
     ],
-    "localize_name": "Орочьи бойцы",
+    "localize_name": {
+      "en": "Mauler",
+      "ru": "Орочьи бойцы"
+    },
     "parameters": {
       "initiative": 11
     }
@@ -1051,7 +1384,10 @@
     "game_id": [
       "ID175"
     ],
-    "localize_name": "Вармонгеры",
+    "localize_name": {
+      "en": "Warmonger",
+      "ru": "Вармонгеры"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -1060,7 +1396,10 @@
     "game_id": [
       "ID123"
     ],
-    "localize_name": "Дочери неба",
+    "localize_name": {
+      "en": "Sky daughter",
+      "ru": "Дочери неба"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -1069,7 +1408,10 @@
     "game_id": [
       "ID176"
     ],
-    "localize_name": "Дочери земли",
+    "localize_name": {
+      "en": "Earth daughter",
+      "ru": "Дочери земли"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -1078,7 +1420,10 @@
     "game_id": [
       "ID125"
     ],
-    "localize_name": "Палачи",
+    "localize_name": {
+      "en": "Executioner",
+      "ru": "Палачи"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -1087,7 +1432,10 @@
     "game_id": [
       "ID177"
     ],
-    "localize_name": "Вожаки",
+    "localize_name": {
+      "en": "Chieftain",
+      "ru": "Вожаки"
+    },
     "parameters": {
       "initiative": 12
     }
@@ -1096,7 +1444,10 @@
     "game_id": [
       "ID127"
     ],
-    "localize_name": "Темные виверны",
+    "localize_name": {
+      "en": "Foul wyvern",
+      "ru": "Темные виверны"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -1105,7 +1456,10 @@
     "game_id": [
       "ID178"
     ],
-    "localize_name": "Паокаи",
+    "localize_name": {
+      "en": "Paokai",
+      "ru": "Паокаи"
+    },
     "parameters": {
       "initiative": 10
     }
@@ -1114,7 +1468,10 @@
     "game_id": [
       "ID129"
     ],
-    "localize_name": "Свободные циклопы",
+    "localize_name": {
+      "en": "Untamed cyclops",
+      "ru": "Свободные циклопы"
+    },
     "parameters": {
       "initiative": 9
     }
@@ -1123,7 +1480,10 @@
     "game_id": [
       "ID179"
     ],
-    "localize_name": "Кровоглазые циклопы",
+    "localize_name": {
+      "en": "Bloodeyed cyclops",
+      "ru": "Кровоглазые циклопы"
+    },
     "parameters": {
       "initiative": 10
     }
