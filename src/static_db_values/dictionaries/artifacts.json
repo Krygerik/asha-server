@@ -3,571 +3,622 @@
     "game_id": [
       "ID1"
     ],
-    "localize_name": "Меч мощи"
+    "localize_name": {
+      "en": "Sword of Might",
+      "ru": "Меч мощи"
+    }
   },
   {
     "game_id": [
       "ID2"
     ],
-    "localize_name": "Секира горного короля"
-  },
-  {
-    "game_id": [
-      "ID3"
-    ],
-    "localize_name": "Палочка с заклинанием"
+    "localize_name": {
+      "en": "Axe of the Mountain Lords",
+      "ru": "Секира горного короля"
+    }
   },
   {
     "game_id": [
       "ID4"
     ],
-    "localize_name": "Лук из рога единорога"
+    "localize_name": {
+      "en": "Unicorn Horn Bow",
+      "ru": "Лук из рога единорога"
+    }
   },
   {
     "game_id": [
       "ID5"
     ],
-    "localize_name": "Трезубец Титанов"
+    "localize_name": {
+      "en": "Trident of the Titans",
+      "ru": "Трезубец титанов"
+    }
   },
   {
     "game_id": [
       "ID7"
     ],
-    "localize_name": "Посох Преисподней"
+    "localize_name": {
+      "en": "Staff of the Netherworld",
+      "ru": "Посох преисподней"
+    }
   },
   {
     "game_id": [
       "ID8"
     ],
-    "localize_name": "Четырехлистный клевер"
+    "localize_name": {
+      "en": "Four Leaf Clover",
+      "ru": "Четырехлистный клевер"
+    }
   },
   {
     "game_id": [
       "ID9"
     ],
-    "localize_name": "Ледяной щит"
+    "localize_name": {
+      "en": "Shield of Crystal Ice",
+      "ru": "Ледяной щит"
+    }
   },
   {
     "game_id": [
       "ID10"
     ],
-    "localize_name": "Свиток маны"
+    "localize_name": {
+      "en": "Scroll of Mana",
+      "ru": "Свиток маны"
+    }
   },
   {
     "game_id": [
       "ID11"
     ],
-    "localize_name": "Корона льва"
-  },
-  {
-    "game_id": [
-      "ID12"
-    ],
-    "localize_name": "Корона всевидящего"
+    "localize_name": {
+      "en": "Lion Crown",
+      "ru": "Корона льва"
+    }
   },
   {
     "game_id": [
       "ID13"
     ],
-    "localize_name": "Доспехи Забытого Героя"
+    "localize_name": {
+      "en": "Armor of the Forgotten Hero",
+      "ru": "Доспехи забытого героя"
+    }
   },
   {
     "game_id": [
       "ID14"
     ],
-    "localize_name": "Нагрудник огромной мощи"
-  },
-  {
-    "game_id": [
-      "ID15"
-    ],
-    "localize_name": "Кулон мастерства"
+    "localize_name": {
+      "en": "Breastplate of Eldritch Might",
+      "ru": "Нагрудник огромной мощи"
+    }
   },
   {
     "game_id": [
       "ID16"
     ],
-    "localize_name": "Ошейник льва"
+    "localize_name": {
+      "en": "Necklace of the Lion",
+      "ru": "Ошейник льва"
+    }
   },
   {
     "game_id": [
       "ID17"
     ],
-    "localize_name": "Ожерелье кровавого когтя"
+    "localize_name": {
+      "en": "Necklace of the Bloody Claw",
+      "ru": "Ожерелье кровавого когтя"
+    }
   },
   {
     "game_id": [
       "ID18"
     ],
-    "localize_name": "Кулон ледяных объятий"
+    "localize_name": {
+      "en": "Evercold Icicle",
+      "ru": "Кулон ледяных объятий"
+    }
   },
   {
     "game_id": [
       "ID19"
     ],
-    "localize_name": "Ожерелье победы"
+    "localize_name": {
+      "en": "Necklace of Victory",
+      "ru": "Ожерелье победы"
+    }
   },
   {
     "game_id": [
       "ID20"
     ],
-    "localize_name": "Кольцо защиты от молний"
+    "localize_name": {
+      "en": "Ring of Lightning Protection",
+      "ru": "Кольцо защиты от молний"
+    }
   },
   {
     "game_id": [
       "ID21"
     ],
-    "localize_name": "Кольцо жизненной силы"
-  },
-  {
-    "game_id": [
-      "ID22"
-    ],
-    "localize_name": "Кольцо скорости"
+    "localize_name": {
+      "en": "Ring of Vitality",
+      "ru": "Кольцо жизненной силы"
+    }
   },
   {
     "game_id": [
       "ID23"
     ],
-    "localize_name": "Кольцо сломленного духа"
-  },
-  {
-    "game_id": [
-      "ID24"
-    ],
-    "localize_name": "Сапоги путешественника"
+    "localize_name": {
+      "en": "Ring of the Broken Will",
+      "ru": "Кольцо сломленного духа"
+    }
   },
   {
     "game_id": [
       "ID25"
     ],
-    "localize_name": "Золотая подкова"
-  },
-  {
-    "game_id": [
-      "ID26"
-    ],
-    "localize_name": "Сапоги открытого пути"
+    "localize_name": {
+      "en": "Golden Horseshoe",
+      "ru": "Золотая подкова"
+    }
   },
   {
     "game_id": [
       "ID27"
     ],
-    "localize_name": "Сапоги магической защиты"
-  },
-  {
-    "game_id": [
-      "ID28"
-    ],
-    "localize_name": "Сума бесконечного золота"
-  },
-  {
-    "game_id": [
-      "ID29"
-    ],
-    "localize_name": "Мешочек бесконечного золота"
-  },
-  {
-    "game_id": [
-      "ID30"
-    ],
-    "localize_name": "Крылья ангела"
+    "localize_name": {
+      "en": "Boots of Magical Defence",
+      "ru": "Сапоги магической защиты"
+    }
   },
   {
     "game_id": [
       "ID31"
     ],
-    "localize_name": "Накидка с гривой льва"
-  },
-  {
-    "game_id": [
-      "ID32"
-    ],
-    "localize_name": "Накидка из перьев феникса"
+    "localize_name": {
+      "en": "Cape of the Lion's Mane",
+      "ru": "Накидка с гривой льва"
+    }
   },
   {
     "game_id": [
       "ID33"
     ],
-    "localize_name": "Плащ Смертоносной Тени"
-  },
-  {
-    "game_id": [
-      "ID34"
-    ],
-    "localize_name": "Тюрбан просвещенности"
-  },
-  {
-    "game_id": [
-      "ID35"
-    ],
-    "localize_name": "Кольчуга просвещенности"
+    "localize_name": {
+      "en": "Cloak of Death's Shadow",
+      "ru": "Плащ смертоносной тени"
+    }
   },
   {
     "game_id": [
       "ID36"
     ],
-    "localize_name": "Доспехи из чешуи дракона"
+    "localize_name": {
+      "en": "Dragon Scale Armor",
+      "ru": "Доспехи из чешуи дракона"
+    }
   },
   {
     "game_id": [
       "ID37"
     ],
-    "localize_name": "Щит из чешуи дракона"
+    "localize_name": {
+      "en": "Dragon Scale Shield",
+      "ru": "Щит из чешуи дракона"
+    }
   },
   {
     "game_id": [
       "ID38"
     ],
-    "localize_name": "Поножи из кости дракона"
+    "localize_name": {
+      "en": "Dragon Bone Greaves",
+      "ru": "Поножи из кости дракона"
+    }
   },
   {
     "game_id": [
       "ID39"
     ],
-    "localize_name": "Мантия из крыльев дракона"
+    "localize_name": {
+      "en": "Dragon Wing Mantle ",
+      "ru": "Мантия из крыльев дракона"
+    }
   },
   {
     "game_id": [
       "ID40"
     ],
-    "localize_name": "Ожерелье из зубов дракона"
+    "localize_name": {
+      "en": "Dragon Teeth Necklace",
+      "ru": "Ожерелье из зубов дракона"
+    }
   },
   {
     "game_id": [
       "ID41"
     ],
-    "localize_name": "Корона из когтей дракона"
+    "localize_name": {
+      "en": "Dragon Talon Crown",
+      "ru": "Корона из когтей дракона"
+    }
   },
   {
     "game_id": [
       "ID42"
     ],
-    "localize_name": "Кольцо Глаз дракона"
+    "localize_name": {
+      "en": "Dragon Eye Ring",
+      "ru": "Кольцо глаз дракона"
+    }
   },
   {
     "game_id": [
       "ID43"
     ],
-    "localize_name": "Пламенный язык дракона"
+    "localize_name": {
+      "en": "Dragon Flame Tongue",
+      "ru": "Пламенный язык дракона"
+    }
   },
   {
     "game_id": [
       "ID44"
     ],
-    "localize_name": "Халат Сар-Иссы"
+    "localize_name": {
+      "en": "Robe of Sar-Issus",
+      "ru": "Халат Сар-Иссы"
+    }
   },
   {
     "game_id": [
       "ID45"
     ],
-    "localize_name": "Посох Сар-Иссы"
+    "localize_name": {
+      "en": "Staff of Sar-Issus",
+      "ru": "Посох Сар-Иссы"
+    }
   },
   {
     "game_id": [
       "ID46"
     ],
-    "localize_name": "Корона Сар-Иссы"
+    "localize_name": {
+      "en": "Crown of Sar-Issus",
+      "ru": "Корона Сар-Иссы"
+    }
   },
   {
     "game_id": [
       "ID47"
     ],
-    "localize_name": "Кольцо Сар-Иссы"
+    "localize_name": {
+      "en": "Ring of Sar-Issus",
+      "ru": "Кольцо Сар-Иссы"
+    }
   },
   {
     "game_id": [
       "ID48"
     ],
-    "localize_name": "Кираса короля гномов"
+    "localize_name": {
+      "en": "Curln of the Dwarven Kings",
+      "ru": "Кираса короля гномов"
+    }
   },
   {
     "game_id": [
       "ID49"
     ],
-    "localize_name": "Поножи короля гномов"
+    "localize_name": {
+      "en": "Greaves of the Dwarven Kings",
+      "ru": "Поножи короля гномов"
+    }
   },
   {
     "game_id": [
       "ID50"
     ],
-    "localize_name": "Шлем короля гномов"
+    "localize_name": {
+      "en": "Helm of the Dwarven Kings",
+      "ru": "Шлем короля гномов"
+    }
   },
   {
     "game_id": [
       "ID51"
     ],
-    "localize_name": "Щит короля гномов"
-  },
-  {
-    "game_id": [
-      "ID52"
-    ],
-    "localize_name": "Магический свиток"
-  },
-  {
-    "game_id": [
-      "ID53"
-    ],
-    "localize_name": "Слеза Асхи"
-  },
-  {
-    "game_id": [
-      "ID54"
-    ],
-    "localize_name": "Сапоги левитации"
+    "localize_name": {
+      "en": "Shield of the Dwarven Kings",
+      "ru": "Щит короля гномов"
+    }
   },
   {
     "game_id": [
       "ID55"
     ],
-    "localize_name": "Шлем некроманта"
+    "localize_name": {
+      "en": "Necromancer's Helm",
+      "ru": "Шлем некроманта"
+    }
   },
   {
     "game_id": [
       "ID56"
     ],
-    "localize_name": "Доспехи бесстрашия"
+    "localize_name": {
+      "en": "Armor of Valor",
+      "ru": "Доспехи бесстрашия"
+    }
   },
   {
     "game_id": [
       "ID57"
     ],
-    "localize_name": "Сапоги странника"
+    "localize_name": {
+      "en": "Windstrider Boots",
+      "ru": "Сапоги странника"
+    }
   },
   {
     "game_id": [
       "ID58"
     ],
-    "localize_name": "Лунный клинок"
+    "localize_name": {
+      "en": "Moonblade",
+      "ru": "Лунный клинок"
+    }
   },
   {
     "game_id": [
       "ID59"
     ],
-    "localize_name": "Кольцо стремительности"
+    "localize_name": {
+      "en": "Ring of Celerity",
+      "ru": "Кольцо стремительности"
+    }
   },
   {
     "game_id": [
       "ID60"
     ],
-    "localize_name": "Пояс элементалей"
-  },
-  {
-    "game_id": [
-      "ID61"
-    ],
-    "localize_name": "Изумрудные туфли"
+    "localize_name": {
+      "en": "Elemental Waistband",
+      "ru": "Пояс элементалей"
+    }
   },
   {
     "game_id": [
       "ID62"
     ],
-    "localize_name": "Плащ Силанны"
+    "localize_name": {
+      "en": "Cloak of Sylanna",
+      "ru": "Плащ Силанны"
+    }
   },
   {
     "game_id": [
       "ID63"
     ],
-    "localize_name": "Проклятое кольцо"
+    "localize_name": {
+      "en": "Cursed Ring",
+      "ru": "Проклятое кольцо"
+    }
   },
   {
     "game_id": [
       "ID64"
     ],
-    "localize_name": "Туника из плоти"
+    "localize_name": {
+      "en": "Tunic of the Carved Flesh",
+      "ru": "Туника из плоти"
+    }
   },
   {
     "game_id": [
       "ID65"
     ],
-    "localize_name": "Кольцо предостережения"
+    "localize_name": {
+      "en": "Ring of Caution",
+      "ru": "Кольцо предостережения"
+    }
   },
   {
     "game_id": [
       "ID66"
     ],
-    "localize_name": "Шлем Хаоса"
+    "localize_name": {
+      "en": "Helm of Chaos",
+      "ru": "Шлем хаоса"
+    }
   },
   {
     "game_id": [
       "ID67"
     ],
-    "localize_name": "Кулон поглощения"
+    "localize_name": {
+      "en": "Pendant of Conflux",
+      "ru": "Кулон поглощения"
+    }
   },
   {
     "game_id": [
       "ID68"
     ],
-    "localize_name": "Сандалии Святого"
-  },
-  {
-    "game_id": [
-      "ID69"
-    ],
-    "localize_name": "Плащ Сандро"
+    "localize_name": {
+      "en": "Sandals of the Blessed",
+      "ru": "Сандалии святого"
+    }
   },
   {
     "game_id": [
       "ID70"
     ],
-    "localize_name": "Кольцо Грешников"
+    "localize_name": {
+      "en": "Ring of Unrepentant",
+      "ru": "Кольцо грешников"
+    }
   },
   {
     "game_id": [
       "ID71",
       "ID94"
     ],
-    "localize_name": "Том Силы"
-  },
-  {
-    "game_id": [
-      "ID72"
-    ],
-    "localize_name": "Фрида"
-  },
-  {
-    "game_id": [
-      "ID73"
-    ],
-    "localize_name": "Кольцо Заклейменных Тенью"
+    "localize_name": {
+      "en": "Book of Power",
+      "ru": "Том силы"
+    }
   },
   {
     "game_id": [
       "ID74"
     ],
-    "localize_name": "Дубина людоеда"
+    "localize_name": {
+      "en": "Ogre Club",
+      "ru": "Дубина людоеда"
+    }
   },
   {
     "game_id": [
       "ID75"
     ],
-    "localize_name": "Щит людоеда"
+    "localize_name": {
+      "en": "Ogre Shield",
+      "ru": "Щит людоеда"
+    }
   },
   {
     "game_id": [
       "ID76"
     ],
-    "localize_name": "Том магии Хаоса"
+    "localize_name": {
+      "en": "Tome of Destruction Magic",
+      "ru": "Том магии хаоса"
+    }
   },
   {
     "game_id": [
       "ID77"
     ],
-    "localize_name": "Том магии Света"
+    "localize_name": {
+      "en": "Tome of Light Magic",
+      "ru": "том магии света"
+    }
   },
   {
     "game_id": [
       "ID78"
     ],
-    "localize_name": "Том магии Тьмы"
+    "localize_name": {
+      "en": "Tome of Dark Magic",
+      "ru": "Том магии тьмы"
+    }
   },
   {
     "game_id": [
       "ID79"
     ],
-    "localize_name": "Том магии Призыва"
+    "localize_name": {
+      "en": "Tome of Summoning Magic",
+      "ru": "Том магии призыва"
+    }
   },
   {
     "game_id": [
       "ID80"
     ],
-    "localize_name": "Волшебная палочка новичка"
+    "localize_name": {
+      "en": "Beginner's Magic Wand",
+      "ru": "Волшебная палочка новичка"
+    }
   },
   {
     "game_id": [
       "ID81"
     ],
-    "localize_name": "Рунный боевой топор"
+    "localize_name": {
+      "en": "Runic War Axe",
+      "ru": "Рунный боевой топор"
+    }
   },
   {
     "game_id": [
       "ID82"
     ],
-    "localize_name": "Рунная боевая упряжь"
+    "localize_name": {
+      "en": "Runic War Harness",
+      "ru": "Рунная боевая упряжь"
+    }
   },
   {
     "game_id": [
       "ID83"
     ],
-    "localize_name": "Череп Маркела"
+    "localize_name": {
+      "en": "Skull of Markal",
+      "ru": "Череп Маркела"
+    }
   },
   {
     "game_id": [
       "ID84"
     ],
-    "localize_name": "Тайные защитные покровы"
+    "localize_name": {
+      "en": "Bearhide Wraps",
+      "ru": "Тайные защитные покровы"
+    }
   },
   {
     "game_id": [
       "ID85"
     ],
-    "localize_name": "Гномий кузнечный молот"
-  },
-  {
-    "game_id": [
-      "ID86"
-    ],
-    "localize_name": "Руна пламени"
+    "localize_name": {
+      "en": "Dwarven Smithy Hammer",
+      "ru": "Гномий кузнечный молот"
+    }
   },
   {
     "game_id": [
       "ID87"
     ],
-    "localize_name": "Колода Таро"
+    "localize_name": {
+      "en": "Tarot Deck",
+      "ru": "Колода Таро"
+    }
   },
   {
     "game_id": [
       "ID88"
     ],
-    "localize_name": "Корона лидерства"
-  },
-  {
-    "game_id": [
-      "ID89"
-    ],
-    "localize_name": "Маска справедливости"
+    "localize_name": {
+      "en": "Crown of Leadership",
+      "ru": "Корона лидерства"
+    }
   },
   {
     "game_id": [
       "ID90"
     ],
-    "localize_name": "На грани равновесия"
-  },
-  {
-    "game_id": [
-      "ID91"
-    ],
-    "localize_name": "Кольцо родства с машинами"
-  },
-  {
-    "game_id": [
-      "ID92"
-    ],
-    "localize_name": "Рог изобилия"
-  },
-  {
-    "game_id": [
-      "ID93"
-    ],
-    "localize_name": "Кольцо изгнания"
+    "localize_name": {
+      "en": "Edge of Balance",
+      "ru": "На грани равновесия"
+    }
   },
   {
     "game_id": [
       "ID95"
     ],
-    "localize_name": "Изумительный колчан"
-  },
-  {
-    "game_id": [
-      "ID96"
-    ],
-    "localize_name": "Принцесса Аэлина"
-  },
-  {
-    "game_id": [
-      "ID97"
-    ],
-    "localize_name": "Подсчет эффектов"
+    "localize_name": {
+      "en": "Treeborn Quiver",
+      "ru": "Изумительный колчан"
+    }
   }
 ]
