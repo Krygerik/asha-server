@@ -26,11 +26,10 @@ import {
 import {AuthService, ERoles} from "../modules/auth";
 import {
     DictionariesService,
-    EDictionaryName,
-    IDictionary,
     IRecords,
 } from "../modules/dictionaries";
 import {TournamentService} from "../modules/tournament";
+import {EDictionariesNames} from "../modules/dictionaries/constants";
 import {logger} from "../utils";
 
 export class GameController {
@@ -553,19 +552,17 @@ export class GameController {
         try {
             const { filter } = req.body;
 
-            const racesDictionaryDoc = await this.dictionaryService.getDictionary(EDictionaryName.Races)
-
             // @ts-ignore
-            const racesDictionary: IDictionary = racesDictionaryDoc.toObject();
+            const racesDictionary: IRecords[] = await this.dictionaryService.getDictionary(EDictionariesNames.Races)
 
             /**
              * Одноуровневый список всех возможных матчапов
              */
             const allMatchUpsList = flatten(
-                racesDictionary.records.map((firstRecord: IRecords) => (
-                    racesDictionary.records.map((secondRecord: IRecords) => ({
-                        mainRaceId: firstRecord.game_id,
-                        otherRaceId: secondRecord.game_id,
+                racesDictionary.map((firstRecord: IRecords) => (
+                    racesDictionary.map((secondRecord: IRecords) => ({
+                        mainRaceId: firstRecord.game_id[0],
+                        otherRaceId: secondRecord.game_id[0],
                     }))
                 ))
             );
