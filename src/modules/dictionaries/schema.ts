@@ -49,10 +49,7 @@ const PerksRecordSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
-    localize_name: {
-        type: String,
-        required: true
-    },
+    localize_name: LocalizationSchema,
 });
 
 export const PerksModel = mongoose.model(EDictionariesNames.Perks, PerksRecordSchema);
@@ -119,10 +116,7 @@ const RacesRecordSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
-    localize_name: {
-        type: String,
-        required: true
-    },
+    localize_name: LocalizationSchema,
 });
 
 export const RacesModel = mongoose.model(EDictionariesNames.Races, RacesRecordSchema);
