@@ -6,6 +6,7 @@ export const AUTO_WIN = 'AUTO_WIN';
  * Граничные значения количества участников турнира
  */
 export const BOUNDARY_MEMBER_COUNT_LIST = [
+    2,
     4,
     8,
     16,
@@ -17,6 +18,7 @@ export const BOUNDARY_MEMBER_COUNT_LIST = [
  * Соотношение количества участников на количество раундов
  */
 export const mapCountMemberToCountStage = {
+    [2]: 1,
     [4]: 2,
     [8]: 3,
     [16]: 4,

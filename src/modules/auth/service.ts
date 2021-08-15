@@ -21,6 +21,15 @@ export class AuthService {
     }
 
     /**
+     * Получение ИД пользователей по их ид дискорда
+     */
+    public async getUserIdsByDiscordId(discordIds: string[]) {
+        const users = await UserModel.find({ discord: { $in: discordIds }}, { _id: 1 });
+
+        return users.map(user => user._id);
+    }
+
+    /**
      * Маппинг Id игроков к никам
      */
     public async getRelatedMappingUserIdToUserNickname(idList: string[]) {
