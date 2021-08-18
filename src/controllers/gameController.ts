@@ -417,7 +417,7 @@ export class GameController {
                 await this.saveGameIntoTournament(savedGame._id);
             }
 
-            successResponse('Финальные данные игры успешно записаны', updatedGame, res);
+            successResponse('Финальные данные игры успешно записаны', { id: savedGame._id }, res);
 
         } catch (error) {
             logger.error(
