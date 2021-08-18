@@ -152,6 +152,8 @@ export interface ISavedGame extends IInputGameData {
     date?: string;
     // Произошел ли разрыв соединения
     disconnect?: boolean;
+    // ИД рейтинговой встречи
+    ladder_id?: string;
     // Номер раунда в турнире
     number_of_round?: number;
     // Список данных обоих игроков

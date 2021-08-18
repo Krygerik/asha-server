@@ -26,16 +26,18 @@ import {
 import {AuthService, ERoles} from "../modules/auth";
 import {
     DictionariesService,
+    EDictionariesNames,
     IRecords,
 } from "../modules/dictionaries";
 import {TournamentService} from "../modules/tournament";
-import {EDictionariesNames} from "../modules/dictionaries/constants";
+import {LadderService, ILadderRecord} from "../modules/ladder";
 import {logger} from "../utils";
 
 export class GameController {
     private authService: AuthService = new AuthService();
     private dictionaryService: DictionariesService = new DictionariesService();
     private gameService: GameService = new GameService();
+    private ladderService: LadderService = new LadderService();
     private tournamentService: TournamentService = new TournamentService();
 
     /**
@@ -178,6 +180,47 @@ export class GameController {
     }
 
     /**
+     * Сохранение изменений рейтинга в запись игры
+     */
+    private async saveChangePlayersRatingToGame(winnerId: string, looserId: string, gameId: string) {
+        const changedRating: Record<
+            string,
+            { changedRating: number; newRating: number }
+        > = await this.authService.changePlayerRating(
+            winnerId,
+            looserId,
+        );
+
+        const updatedValue = {
+            $set: {
+                "players.$[winner].changed_rating": changedRating[winnerId].changedRating,
+                "players.$[winner].new_rating": changedRating[winnerId].newRating,
+                "players.$[looser].changed_rating": changedRating[looserId].changedRating,
+                "players.$[looser].new_rating": changedRating[looserId].newRating,
+            }
+        };
+
+        const option = {
+            arrayFilters: [
+                { "winner.user_id": winnerId },
+                { "looser.user_id": looserId },
+            ]
+        };
+
+        logger.info(
+            'saveGameIntoTournament: Сохранение изменения рейтинга игроков в запись игры',
+            {
+                metadata: {
+                    gameId: gameId,
+                    updatedValue,
+                }
+            }
+        );
+
+        await this.gameService.updateGame(gameId, updatedValue, option);
+    }
+
+    /**
      * Запись результатов игры в турнир
      */
     private async saveGameIntoTournament(gameId: string) {
@@ -229,36 +272,45 @@ export class GameController {
             savedGame._id,
         );
 
-        const changedRating: Record<string, { changedRating: number; newRating: number }> = await this.authService.changePlayerRating(
-            winnerPlayer.user_id,
-            looserPlayer.user_id,
-        );
+        await this.saveChangePlayersRatingToGame(winnerPlayer.user_id, looserPlayer.user_id, savedGame._id);
+    }
 
-        const updatedValue = {
-            $set: {
-                "players.$[winner].changed_rating": changedRating[winnerPlayer.user_id].changedRating,
-                "players.$[winner].new_rating": changedRating[winnerPlayer.user_id].newRating,
-                "players.$[looser].changed_rating": changedRating[looserPlayer.user_id].changedRating,
-                "players.$[looser].new_rating": changedRating[looserPlayer.user_id].newRating,
+    /**
+     * Запись ладдерных данных в запись игры
+     */
+    private async setLadderDataInToGame(winnerId: string, looserId: string, gameId: string) {
+        /**
+         * Ладдерной игрой считается игра обоих зарегистрированных игроков
+         */
+        if (!winnerId || !looserId) {
+            return;
+        }
+
+        // @ts-ignore
+        const activeWinnerLadder: ILadderRecord | null = await this.ladderService.getActiveLadderByUserId(winnerId);
+
+        if (activeWinnerLadder && activeWinnerLadder.member_ids.includes(looserId)) {
+            await this.ladderService.addGameToLadder(activeWinnerLadder._id, gameId);
+
+            await this.saveChangePlayersRatingToGame(winnerId, looserId, gameId);
+
+            await this.gameService.updateGame(gameId, { $set: { ladder_id: activeWinnerLadder._id }});
+        } else {
+            /**
+             * Если нет активного раунда обоих игроков, закрываем все открытые их встречи
+             */
+
+            if (activeWinnerLadder) {
+                await this.ladderService.closeLadderRound(activeWinnerLadder._id);
             }
-        };
 
-        const option = {
-            arrayFilters: [
-                { "winner.user_id": winnerPlayer.user_id },
-                { "looser.user_id": looserPlayer.user_id },
-            ]
-        };
+            // @ts-ignore
+            const activeLooserLadder: ILadderRecord | null = await this.ladderService.getActiveLadderByUserId(looserId);
 
-        logger.info(
-            'saveGameIntoTournament: Сохранение изменения рейтинга игроков в запись игры',
-            { metadata: {
-                    gameId: savedGame._id,
-                    updatedValue,
-                }}
-        );
-
-        await this.gameService.updateGame(savedGame._id, updatedValue, option);
+            if (activeLooserLadder) {
+                await this.ladderService.closeLadderRound(activeLooserLadder._id);
+            }
+        }
     }
 
     /**
@@ -342,6 +394,8 @@ export class GameController {
             );
 
             const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
+
+            await this.setLadderDataInToGame(winnerId, looserId, savedGame._id);
 
             const tournamentData = await this.tournamentService.getTournamentIdWithNumberOfRound(savedGame.players_ids);
 
