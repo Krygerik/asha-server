@@ -290,7 +290,12 @@ export class GameController {
         const activeWinnerLadder: ILadderRecord | null = await this.ladderService.getActiveLadderByUserId(winnerId);
 
         if (activeWinnerLadder && activeWinnerLadder.member_ids.includes(looserId)) {
-            await this.ladderService.addGameToLadder(activeWinnerLadder._id, gameId);
+            /**
+             * Добавляем игру в список игр ладдерной встречи
+             */
+            if (!activeWinnerLadder.game_ids.includes(gameId)) {
+                await this.ladderService.addGameToLadder(activeWinnerLadder._id, gameId);
+            }
 
             await this.saveChangePlayersRatingToGame(winnerId, looserId, gameId);
 
@@ -393,7 +398,7 @@ export class GameController {
                 }
             );
 
-            const updatedGame = await this.gameService.updateGame(savedGame._id, updatedValue, option);
+            await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
             await this.setLadderDataInToGame(winnerId, looserId, savedGame._id);
 

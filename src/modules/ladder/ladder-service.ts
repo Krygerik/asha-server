@@ -5,7 +5,20 @@ export class LadderService {
     /**
      * Создание записи ладдера
      */
-    public createLadder(ladderData: ILadderRecord) {
+    public async createLadder(ladderData: ILadderRecord) {
+        await LadderModel.updateMany(
+            {
+                member_ids: {
+                    $in: ladderData.member_ids
+                }
+            },
+            {
+                $set: {
+                    active: false
+                }
+            }
+        )
+
         return LadderModel.create(ladderData);
     }
 
@@ -33,6 +46,6 @@ export class LadderService {
      * Добавление ИД игры в запись турнирной встречи
      */
     public addGameToLadder(_id: string, gameId: string) {
-        LadderModel.findOneAndUpdate({ _id }, { $push: { game_ids: gameId} })
+        return LadderModel.findOneAndUpdate({ _id }, { $push: { game_ids: gameId } })
     }
 }
