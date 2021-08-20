@@ -1,0 +1,58 @@
+[
+  {
+    "game_id": ["1"],
+    "localize_name": {
+      "eu": "Haven",
+      "ru": "Орден Порядка"
+    }
+  },
+  {
+    "game_id": ["2"],
+    "localize_name": {
+      "eu": "Inferno",
+      "ru": "Инферно"
+    }
+  },
+  {
+    "game_id": ["3"],
+    "localize_name": {
+      "eu": "Necropolis",
+      "ru": "Некрополис"
+    }
+  },
+  {
+    "game_id": ["4"],
+    "localize_name": {
+      "eu": "Sylvan",
+      "ru": "Лесной Союз"
+    }
+  },
+  {
+    "game_id": ["5"],
+    "localize_name": {
+      "eu": "Academy",
+      "ru": "Академия Волшебства"
+    }
+  },
+  {
+    "game_id": ["6"],
+    "localize_name": {
+      "eu": "Dungeon",
+      "ru": "Лига Теней"
+    }
+  },
+  {
+    "game_id": ["7"],
+    "localize_name": {
+      "eu": "Fortress",
+      "ru": "Северные Кланы"
+    }
+  },
+  {
+    "game_id": ["8"],
+    "localize_name": {
+      "eu": "Stronghold",
+      "ru": "Великая Орда"
+    }
+  }
+]

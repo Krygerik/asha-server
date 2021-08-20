@@ -4,7 +4,6 @@
  */
 export enum ELogLevel {
     Error = 'error',
+    Fatal = 'fatal',
     Warn = 'warn',
-    Info = 'info',
-    Verbose = 'verbose',
 }

@@ -9,7 +9,10 @@ const ClientLogsSchema = new mongoose.Schema({
         type: String,
     },
     message: String,
-    user_id: String,
+    user_id: {
+        required: true,
+        type: String,
+    },
 });
 
 export const ClientLogsModel = mongoose.model('client-logs', ClientLogsSchema);

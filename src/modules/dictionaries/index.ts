@@ -1,6 +1,3 @@
-export {
-    EDictionaryName,
-    IDictionary,
-    IRecords,
-} from './model';
+export { IRecords } from './model';
 export {DictionariesService} from './service';
+export {EDictionariesNames} from './constants';

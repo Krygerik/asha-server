@@ -128,9 +128,10 @@ const GameSchema = new mongoose.Schema({
         type: [PlayerSchema],
         required: true
     },
+    ladder_id: String,
+    number_of_round: Number,
     tournament_id: String,
     tournament_name: String,
-    number_of_round: Number,
 });
 
 export const GameModel = mongoose.model('game', GameSchema);

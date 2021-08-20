@@ -1,0 +1,619 @@
+[
+  {
+    "game_id": ["ID23"],
+    "localize_name": {
+      "en": "Divine Strength",
+      "ru": "Божественная сила"
+    }
+  },
+  {
+    "game_id": ["ID216"],
+    "localize_name": {
+      "en": "Mass Divine Strength",
+      "ru": "Божественная сила (общее)"
+
+    }
+  },
+  {
+    "game_id": ["ID29"],
+    "localize_name": {
+      "en": "Deflect Missile",
+      "ru": "Уклонение"
+    }
+  },
+  {
+    "game_id": ["ID219"],
+    "localize_name": {
+      "en": "Mass Deflect Missile",
+      "ru": "Уклонение (общее)"
+    }
+  },
+  {
+    "game_id": ["ID25"],
+    "localize_name": {
+      "en": "Endurance",
+      "ru": "Каменная кожа"
+    }
+  },
+  {
+    "game_id": ["ID218"],
+    "localize_name": {
+      "en": "Mass Endurance",
+      "ru": "Каменная кожа (общее)"
+    }
+  },
+  {
+    "game_id": ["ID24"],
+    "localize_name": {
+      "en": "Haste",
+      "ru": "Ускорение"
+    }
+  },
+  {
+    "game_id": ["ID221"],
+    "localize_name": {
+      "en": "Mass Haste",
+      "ru": "Ускорение (общее)"
+    }
+  },
+  {
+    "game_id": ["ID28"],
+    "localize_name": {
+      "en": "Righteous Might",
+      "ru": "Карающий удар"
+    }
+  },
+  {
+    "game_id": ["ID220"],
+    "localize_name": {
+      "en": "Mass Righteous Might",
+      "ru": "Карающий удар (Общее)"
+    }
+  },
+  {
+    "game_id": ["ID26"],
+    "localize_name": {
+      "en": "Cleansing",
+      "ru": "Снятие чар"
+    }
+  },
+  {
+    "game_id": ["ID217"],
+    "localize_name": {
+      "en": "Mass Cleansing",
+      "ru": "Снятие чар (общее)"
+    }
+  },
+  {
+    "game_id": ["ID280"],
+    "localize_name": {
+      "en": "Regeneration",
+      "ru": "Регенерация"
+    }
+  },
+  {
+    "game_id": ["ID32"],
+    "localize_name": {
+      "en": "Teleportation",
+      "ru": "Телепорт"
+    }
+  },
+  {
+    "game_id": ["ID31"],
+    "localize_name": {
+      "en": "Magical Immunity",
+      "ru": "Антимагия"
+    }
+  },
+  {
+    "game_id": ["ID281"],
+    "localize_name": {
+      "en": "Divine Vengeance",
+      "ru": "Божественная месть"
+    }
+  },
+  {
+    "game_id": ["ID48"],
+    "localize_name": {
+      "en": "Resurrection",
+      "ru": "Воскрешение"
+    }
+  },
+  {
+    "game_id": ["ID35"],
+    "localize_name": {
+      "en": "Word of Light",
+      "ru": "Святое слово"
+    }
+  },
+  {
+    "game_id": ["ID11"],
+    "localize_name": {
+      "en": "Weakness",
+      "ru": "Ослабление"
+    }
+  },
+  {
+    "game_id": ["ID210"],
+    "localize_name": {
+      "en": "Mass Weakness",
+      "ru": "Ослабление (общее)"
+    }
+  },
+  {
+    "game_id": ["ID12"],
+    "localize_name": {
+      "en": "Slow",
+      "ru": "Замедление"
+    }
+  },
+  {
+    "game_id": ["ID212"],
+    "localize_name": {
+      "en": "Mass Slow",
+      "ru": "Замедление (общее)"
+    }
+  },
+  {
+    "game_id": ["ID15"],
+    "localize_name": {
+      "en": "Suffering",
+      "ru": "Немощность"
+    }
+  },
+  {
+    "game_id": ["ID215"],
+    "localize_name": {
+      "en": "Mass Suffering",
+      "ru": "Немощность (общее)"
+    }
+  },
+  {
+    "game_id": ["ID13"],
+    "localize_name": {
+      "en": "Vulnerability",
+      "ru": "Разрушающий луч"
+    }
+  },
+  {
+    "game_id": ["ID211"],
+    "localize_name": {
+      "en": "Mass Vulnerability",
+      "ru": "Разрушающий луч (общее)"
+    }
+  },
+  {
+    "game_id": ["ID17"],
+    "localize_name": {
+      "en": "Confusion",
+      "ru": "Рассеянность"
+    }
+  },
+  {
+    "game_id": ["ID213"],
+    "localize_name": {
+      "en": "Mass Confusion",
+      "ru": "Рассеянность (общее)"
+    }
+  },
+  {
+    "game_id": ["ID14"],
+    "localize_name": {
+      "en": "Decay",
+      "ru": "Чума"
+    }
+  },
+  {
+    "game_id": ["ID214"],
+    "localize_name": {
+      "en": "Mass Decay",
+      "ru": "Чума (общее)"
+    }
+  },
+  {
+    "game_id": ["ID277"],
+    "localize_name": {
+      "en": "Sorrow",
+      "ru": "Скорбь"
+    }
+  },
+  {
+    "game_id": ["ID19"],
+    "localize_name": {
+      "en": "Blindness",
+      "ru": "Ослепление"
+    }
+  },
+  {
+    "game_id": ["ID278"],
+    "localize_name": {
+      "en": "Vampirism",
+      "ru": "Вампиризм"
+    }
+  },
+  {
+    "game_id": ["ID18"],
+    "localize_name": {
+      "en": "Frenzy",
+      "ru": "Берсерк"
+    }
+  },
+  {
+    "game_id": ["ID20"],
+    "localize_name": {
+      "en": "Puppet Master",
+      "ru": "Подчинение"
+    }
+  },
+  {
+    "game_id": ["ID21"],
+    "localize_name": {
+      "en": "Curse of the Netherworld",
+      "ru": "Нечестивое слово"
+    }
+  },
+  {
+    "game_id": ["ID237"],
+    "localize_name": {
+      "en": "Stone Spikes",
+      "ru": "Каменные шипы"
+    }
+  },
+  {
+    "game_id": ["ID233"],
+    "localize_name": {
+      "en": "Empowered Stone Spikes",
+      "ru": "Каменные шипы (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID1"],
+    "localize_name": {
+      "en": "Eldritch Arrow",
+      "ru": "Магическая стрела"
+    }
+  },
+  {
+    "game_id": ["ID223"],
+    "localize_name": {
+      "en": "Empowered Eldritch Arrow",
+      "ru": "Магическая стрела (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID4"],
+    "localize_name": {
+      "en": "Ice Bolt",
+      "ru": "Ледяная глыба"
+    }
+  },
+  {
+    "game_id": ["ID226"],
+    "localize_name": {
+      "en": "Empowered Ice Bolt",
+      "ru": "Ледяная глыба (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID3"],
+    "localize_name": {
+      "en": "Lightning Bolt",
+      "ru": "Молния"
+    }
+  },
+  {
+    "game_id": ["ID225"],
+    "localize_name": {
+      "en": "Empowered Lightning Bolt",
+      "ru": "Молния (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID6"],
+    "localize_name": {
+      "en": "Circle of Winter",
+      "ru": "Кольцо холода"
+    }
+  },
+  {
+    "game_id": ["ID228"],
+    "localize_name": {
+      "en": "Empowered Circle of Winter",
+      "ru": "Кольцо холода (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID5"],
+    "localize_name": {
+      "en": "Fireball",
+      "ru": "Огненный шар"
+    }
+  },
+  {
+    "game_id": ["ID227"],
+    "localize_name": {
+      "en": "Empowered Fireball",
+      "ru": "Огненный шар (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID236"],
+    "localize_name": {
+      "en": "Firewall",
+      "ru": "Стена огня"
+    }
+  },
+  {
+    "game_id": ["ID7"],
+    "localize_name": {
+      "en": "Chain Lightning",
+      "ru": "Цепь молний"
+    }
+  },
+  {
+    "game_id": ["ID229"],
+    "localize_name": {
+      "en": "Empowered Chain Lightning",
+      "ru": "Цепь молний (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID8"],
+    "localize_name": {
+      "en": "Meteor Shower",
+      "ru": "Метеоритный дождь"
+    }
+  },
+  {
+    "game_id": ["ID230"],
+    "localize_name": {
+      "en": "Empowered Meteor Shower",
+      "ru": "Метеоритный дождь (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID279"],
+    "localize_name": {
+      "en": "Deep Freeze",
+      "ru": "Останавливающий холод"
+    }
+  },
+  {
+    "game_id": ["ID285"],
+    "localize_name": {
+      "en": "Empowered Deep Freeze",
+      "ru": "Останавливающий холод (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID9"],
+    "localize_name": {
+      "en": "Implosion",
+      "ru": "Шок земли"
+    }
+  },
+  {
+    "game_id": ["ID231"],
+    "localize_name": {
+      "en": "Empowered Implosion",
+      "ru": "Шок земли (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID10"],
+    "localize_name": {
+      "en": "Armageddon",
+      "ru": "Армагеддон"
+    }
+  },
+  {
+    "game_id": ["ID232"],
+    "localize_name": {
+      "en": "Empowered Armageddon",
+      "ru": "Армагеддон (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID2"],
+    "localize_name": {
+      "en": "Fist of Wrath",
+      "ru": "Волшебный кулак"
+    }
+  },
+  {
+    "game_id": ["ID224"],
+    "localize_name": {
+      "en": "Empowered Fist of Wrath",
+      "ru": "Волшебный кулак (усил.)"
+    }
+  },
+  {
+    "game_id": ["ID38"],
+    "localize_name": {
+      "en": "Fire Trap",
+      "ru": "Огненная ловушка"
+    }
+  },
+  {
+    "game_id": ["ID39"],
+    "localize_name": {
+      "en": "Wasp Swarm",
+      "ru": "Призыв осиного роя"
+    }
+  },
+  {
+    "game_id": ["ID282"],
+    "localize_name": {
+      "en": "Arcane Crystal",
+      "ru": "Кристалл тайного"
+    }
+  },
+  {
+    "game_id": ["ID284"],
+    "localize_name": {
+      "en": "Blade Barrier",
+      "ru": "Стена мечей"
+    }
+  },
+  {
+    "game_id": ["ID42"],
+    "localize_name": {
+      "en": "Rise Dead",
+      "ru": "Поднятие мертвых"
+    }
+  },
+  {
+    "game_id": ["ID40"],
+    "localize_name": {
+      "en": "Phantom Forces",
+      "ru": "Создание фантома"
+    }
+  },
+  {
+    "game_id": ["ID41"],
+    "localize_name": {
+      "en": "Earthquake",
+      "ru": "Землетрясение"
+    }
+  },
+  {
+    "game_id": ["ID43"],
+    "localize_name": {
+      "en": "Summon Elementals",
+      "ru": "Призыв элементалей"
+    }
+  },
+  {
+    "game_id": ["ID283"],
+    "localize_name": {
+      "en": "Summon Hive",
+      "ru": "Призыв улья"
+    }
+  },
+  {
+    "game_id": ["ID235"],
+    "localize_name": {
+      "en": "Conjure Phoenix",
+      "ru": "Призыв феникса"
+    }
+  },
+  {
+    "game_id": ["ID34"],
+    "localize_name": {
+      "en": "Arcane Armor",
+      "ru": "Небесный щит"
+    }
+  },
+  {
+    "game_id": ["ID249"],
+    "localize_name": {
+      "en": "Rune of Charge",
+      "ru": "Руна энергии"
+    }
+  },
+  {
+    "game_id": ["ID253"],
+    "localize_name": {
+      "en": "Rune of Elemental Immunity",
+      "ru": "Руна стихийной невосприимчивости"
+    }
+  },
+  {
+    "game_id": ["ID251"],
+    "localize_name": {
+      "en": "Rune of Magic Control",
+      "ru": "Руна магического надзора"
+    }
+  },
+  {
+    "game_id": ["ID252"],
+    "localize_name": {
+      "en": "Rune of Exorcism",
+      "ru": "Руна экзорцизма"
+    }
+  },
+  {
+    "game_id": ["ID256"],
+    "localize_name": {
+      "en": "Rune of Etherealness",
+      "ru": "Руна неосязаемости"
+    }
+  },
+  {
+    "game_id": ["ID254"],
+    "localize_name": {
+      "en": "Rune of Thunderclap",
+      "ru": "Руна громового раската"
+    }
+  },
+  {
+    "game_id": ["ID250"],
+    "localize_name": {
+      "en": "Rune of Berserking",
+      "ru": "Руна берсеркерства"
+    }
+  },
+  {
+    "game_id": ["ID257"],
+    "localize_name": {
+      "en": "Rune of Resurrection",
+      "ru": "Руна воскрешения"
+    }
+  },
+  {
+    "game_id": ["ID258"],
+    "localize_name": {
+      "en": "Rune of Dragonform",
+      "ru": "Руна драконьего обличия"
+    }
+  },
+  {
+    "game_id": ["ID255"],
+    "localize_name": {
+      "en": "Rune of Battle Rage",
+      "ru": "Руна боевой ярости"
+    }
+  },
+  {
+    "game_id": ["ID290"],
+    "localize_name": {
+      "en": "Ralling Cry",
+      "ru": "Объединяющий клич"
+    }
+  },
+  {
+    "game_id": ["ID291"],
+    "localize_name": {
+      "en": "Call of Blood",
+      "ru": "Зов крови"
+    }
+  },
+  {
+    "game_id": ["ID292"],
+    "localize_name": {
+      "en": "Word of the Chief",
+      "ru": "Слово вождя"
+    }
+  },
+  {
+    "game_id": ["ID293"],
+    "localize_name": {
+      "en": "Fear my Roar",
+      "ru": "Устрашающий рык"
+    }
+  },
+  {
+    "game_id": ["ID294"],
+    "localize_name": {
+      "en": "Battlecry",
+      "ru": "Боевой клич"
+    }
+  },
+  {
+    "game_id": ["ID295"],
+    "localize_name": {
+      "en": "Horde's Anger",
+      "ru": "Ярость орды"
+    }
+  }
+]

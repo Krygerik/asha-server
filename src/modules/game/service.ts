@@ -132,7 +132,7 @@ export class GameService {
         };
 
         // @ts-ignore
-        const gameInfoList: ISavedGame[] = await GameModel.find(option)
+        const gameInfoList: ISavedGame[] = await GameModel.find(option).sort({ date: 'desc' }).limit(10);
 
         return gameInfoList.map(GameService.formatFullGameInfoToShort);
     }

@@ -1,5 +1,4 @@
 import {Request, Response} from "express";
-import { omit } from "lodash";
 import { ClientLogsService } from "../modules/client-logs";
 import {internalError, successResponse} from "../modules/common/services";
 import {logger} from "../utils";
@@ -17,10 +16,7 @@ export class ClientLogsController {
                 { metadata: { reqBody: req.body }}
             );
 
-            const logRecord = await this.clientLogsService.createLogRecord({
-                ...omit(req.body, ['userId']),
-                user_id: req.body.userId,
-            });
+            const logRecord = await this.clientLogsService.createLogRecord(req.body);
 
             successResponse('Запись лога успешно создана', logRecord, res);
         } catch (error) {
