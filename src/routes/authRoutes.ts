@@ -39,5 +39,12 @@ export class AuthRoutes {
         app.get('/api/auth/get-users', (req: Request, res: Response) => {
             this.authController.getAllUsersList(req, res);
         });
+
+        /**
+         * Получение списка пользователей с ID и никнеймом всех зарегистрированных игроков
+         */
+        app.get('/api/auth/get-player-rating-list', (req: Request, res: Response) => {
+            this.authController.getTopRatingUserList(req, res);
+        });
     };
 }
