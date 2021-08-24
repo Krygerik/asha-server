@@ -169,4 +169,17 @@ export class AuthController {
             internalError(error, res);
         }
     }
+
+    /**
+     * Получение топа рейтинга всех игроков
+     */
+    public async getTopRatingUserList(req: Request, res: Response) {
+        try {
+            const playerList = await this.authService.getPlayerRatingList();
+
+            successResponse('Список пользователей с рейтингом успешно получен', playerList, res);
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
 }
