@@ -39,7 +39,7 @@ export class LadderService {
      * Закрывает ладдерную встречу
      */
     public closeLadderRound(_id: string) {
-        LadderModel.findOneAndUpdate({ _id }, { $set: { active: false } });
+        return LadderModel.findOneAndUpdate({ _id }, { active: false });
     }
 
     /**
