@@ -175,7 +175,7 @@ export class AuthController {
      */
     public async getTopRatingUserList(req: Request, res: Response) {
         try {
-            const playerList = await this.authService.getPlayerRatingList();
+            const playerList = await this.authService.getPlayerRatingList(Number(req.query.limit));
 
             successResponse('Список пользователей с рейтингом успешно получен', playerList, res);
         } catch (error) {
