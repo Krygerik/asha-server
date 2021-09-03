@@ -118,7 +118,7 @@ export class AuthService {
         const updatedRatingFactor = 1 / (1 + 10 ** ((looser.rating - winner.rating) / 400));
 
         // Смягчающий фактор
-        const softFactor = 40;
+        const softFactor = 5;
 
         const changedRating = softFactor * (1 - updatedRatingFactor);
 
