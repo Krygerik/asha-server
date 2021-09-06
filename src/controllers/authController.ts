@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {isEmpty, pick} from "lodash";
+import {isEmpty} from "lodash";
 import * as jwt from "jsonwebtoken";
 import {
     entryAlreadyExists,
@@ -178,6 +178,29 @@ export class AuthController {
             const playerList = await this.authService.getPlayerRatingList(Number(req.query.limit));
 
             successResponse('Список пользователей с рейтингом успешно получен', playerList, res);
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
+
+    /**
+     * Обновление ника и дискорда игрока
+     */
+    public async updateDiscordAndNickname(req: Request, res: Response) {
+        try {
+            const { userId, discord, nickname }: { userId: string; discord: string; nickname: string } = req.body;
+
+            if (!discord && !nickname) {
+                return failureResponse('Отсутствуют данные для изменения', null, res);
+            }
+
+            await this.authService.updateNicknameAndDiscord(userId, discord, nickname);
+
+            successResponse(
+                'Никнейм или дискорд успешно изменены',
+                { userId, discord, nickname },
+                res
+            );
         } catch (error) {
             internalError(error, res);
         }

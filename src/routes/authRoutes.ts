@@ -46,5 +46,12 @@ export class AuthRoutes {
         app.get('/api/auth/get-player-rating-list', (req: Request, res: Response) => {
             this.authController.getTopRatingUserList(req, res);
         });
+
+        /**
+         * Обновление изменяемых данных пользователя
+         */
+        app.post('/api/auth/update-user-info', AuthController.authMiddleware(), (req: Request, res: Response) => {
+            this.authController.updateDiscordAndNickname(req, res);
+        })
     };
 }

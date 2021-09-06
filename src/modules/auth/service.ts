@@ -172,4 +172,21 @@ export class AuthService {
             .sort({ rating: 'desc' })
             .limit(limit);
     }
+
+    /**
+     * Обновление ника или дискорда игрока
+     */
+    public updateNicknameAndDiscord(_id: string, discord?: string, nickname?: string) {
+        const updatedValues = { $set: {} as { discord?: string, nickname?: string } };
+
+        if (discord) {
+            updatedValues.$set.discord = discord;
+        }
+
+        if (nickname) {
+            updatedValues.$set.nickname = nickname;
+        }
+
+        return UserModel.findOneAndUpdate({ _id }, updatedValues);
+    }
 }
