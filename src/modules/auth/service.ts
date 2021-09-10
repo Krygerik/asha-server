@@ -168,7 +168,7 @@ export class AuthService {
      */
     public getPlayerRatingList(limit: number = 0) {
         return UserModel
-            .find({}, { nickname: 1, _id: 1, rating: 1 })
+            .find({}, { nickname: 1, _id: 1, rating: 1, discord: 1 })
             .sort({ rating: 'desc' })
             .limit(limit);
     }
