@@ -280,7 +280,7 @@ export class GameController {
      */
     private async setLadderDataInToGame(gameId: string) {
         // @ts-ignore
-        const gameDoc: ISavedGame | null = this.gameService.findGame({ _id: gameId });
+        const gameDoc: ISavedGame | null = await this.gameService.findGame({ _id: gameId });
 
         if (!gameDoc) {
             return;
