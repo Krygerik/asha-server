@@ -208,7 +208,7 @@ export class GameController {
         };
 
         logger.info(
-            'saveGameIntoTournament: Сохранение изменения рейтинга игроков в запись игры',
+            'saveChangePlayersRatingToGame: Сохранение изменения рейтинга игроков в запись игры',
             {
                 metadata: {
                     gameId: gameId,
@@ -278,18 +278,28 @@ export class GameController {
     /**
      * Запись ладдерных данных в запись игры
      */
-    private async setLadderDataInToGame(winnerId: string, looserId: string, gameId: string) {
+    private async setLadderDataInToGame(gameId: string) {
+        // @ts-ignore
+        const gameDoc: ISavedGame | null = this.gameService.findGame({ _id: gameId });
+
+        if (!gameDoc) {
+            return;
+        }
+
+        const winnerPlayer = gameDoc.players.find((player: ISavedPlayer) => player.winner);
+        const looserPlayer = gameDoc.players.find((player: ISavedPlayer) => !player.winner);
+
         /**
          * Ладдерной игрой считается игра обоих зарегистрированных игроков
          */
-        if (!winnerId || !looserId) {
+        if (!winnerPlayer.user_id || !looserPlayer.user_id) {
             return;
         }
 
         // @ts-ignore
-        const activeWinnerLadder: ILadderRecord | null = await this.ladderService.getActiveLadderByUserId(winnerId);
+        const activeWinnerLadder: ILadderRecord | null = await this.ladderService.getActiveLadderByUserId(winnerPlayer.user_id);
 
-        if (activeWinnerLadder && activeWinnerLadder.member_ids.includes(looserId)) {
+        if (activeWinnerLadder && activeWinnerLadder.member_ids.includes(looserPlayer.user_id)) {
             /**
              * Добавляем игру в список игр ладдерной встречи
              */
@@ -297,7 +307,7 @@ export class GameController {
                 await this.ladderService.addGameToLadder(activeWinnerLadder._id, gameId);
             }
 
-            await this.saveChangePlayersRatingToGame(winnerId, looserId, gameId);
+            await this.saveChangePlayersRatingToGame(winnerPlayer.user_id, looserPlayer.user_id, gameId);
 
             await this.gameService.updateGame(gameId, { $set: { ladder_id: activeWinnerLadder._id }});
         } else {
@@ -310,7 +320,7 @@ export class GameController {
             }
 
             // @ts-ignore
-            const activeLooserLadder: ILadderRecord | null = await this.ladderService.getActiveLadderByUserId(looserId);
+            const activeLooserLadder: ILadderRecord | null = await this.ladderService.getActiveLadderByUserId(looserPlayer.user_id);
 
             if (activeLooserLadder) {
                 await this.ladderService.closeLadderRound(activeLooserLadder._id);
@@ -360,6 +370,13 @@ export class GameController {
                 (playerId: string) => playerId !== winnerId
             );
 
+            /**
+             * Если простановка статуса разрыва соединения прилетело раньше, не ждем новый
+             */
+            const waiting_for_disconnect_status = isNull(savedGame.waiting_for_disconnect_status)
+                ? req.body.wasDisconnect
+                : savedGame.waiting_for_disconnect_status;
+
             const updatedValue = {
                 $set: {
                     "players.$[redPlayer].user_id": req.body.winner === EPlayerColor.RED ? winnerId : looserId,
@@ -370,10 +387,7 @@ export class GameController {
                     "players.$[looser].winner": false,
                     date: req.body.date,
                     percentage_of_army_left: req.body.percentage_of_army_left,
-                    // Если простановка статуса разрыва соединения прилетело раньше, не ждем новый
-                    waiting_for_disconnect_status: isNull(savedGame.waiting_for_disconnect_status)
-                        ? req.body.wasDisconnect
-                        : savedGame.waiting_for_disconnect_status,
+                    waiting_for_disconnect_status,
                     winner: req.body.winner,
                 }
             };
@@ -400,7 +414,13 @@ export class GameController {
 
             await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
-            await this.setLadderDataInToGame(winnerId, looserId, savedGame._id);
+            /**
+             * Если отсутствует упоминание ладдера в игре или один из игроков покинул игру,
+             * то не торопимся с выводами по изменению рейтинга :)
+             */
+            if (!savedGame.ladder_id || !waiting_for_disconnect_status) {
+                await this.setLadderDataInToGame(savedGame._id);
+            }
 
             const tournamentData = await this.tournamentService.getTournamentIdWithNumberOfRound(savedGame.players_ids);
 
@@ -574,7 +594,9 @@ export class GameController {
                 return insufficientParameters(res);
             }
 
-            await this.gameService.setGameDisconnectStatus(combat_id, Boolean(IsDisconnect));
+            const isDisconnect = Boolean(IsDisconnect);
+
+            await this.gameService.setGameDisconnectStatus(combat_id, isDisconnect);
 
             const gameDoc = await this.gameService.findGame({ combat_id });
 
@@ -589,8 +611,12 @@ export class GameController {
 
             await this.saveGameIntoTournament(gameDoc._id);
 
+            if (isDisconnect) {
+                await this.setLadderDataInToGame(gameDoc._id);
+            }
+
             return successResponse(
-                `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения в ${Boolean(IsDisconnect)}`,
+                `Игре с combat_id: ${combat_id} проставлен статус разрыва соединения в ${isDisconnect}`,
                 null,
                 res,
             );

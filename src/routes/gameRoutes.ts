@@ -50,7 +50,7 @@ export class GameRoutes {
         })
 
         /**
-         * Получение краткой информации по последним играм пользователя
+         * Проставление статуса разрыва соединения
          */
         app.post('/api/set-game-disconnect-status', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
             this.gameController.setGameDisconnectStatusByCombatId(req, res);
