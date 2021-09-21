@@ -415,10 +415,10 @@ export class GameController {
             await this.gameService.updateGame(savedGame._id, updatedValue, option);
 
             /**
-             * Если отсутствует упоминание ладдера в игре или один из игроков покинул игру,
+             * Если победитель записан в игру (значит победителя уже записывали) или один из игроков покинул игру,
              * то не торопимся с выводами по изменению рейтинга :)
              */
-            if (!savedGame.ladder_id || !waiting_for_disconnect_status) {
+            if (!savedGame.winner || !waiting_for_disconnect_status) {
                 await this.setLadderDataInToGame(savedGame._id);
             }
 
