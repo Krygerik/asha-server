@@ -35,3 +35,15 @@ export interface ISavedUser extends IUser {
     // Рейтинг игрока
     rating: number;
 }
+
+/**
+ * Тип тела запроса на изменение данных пользователя
+ */
+export interface IUpdateUserInfoRequestBody {
+    // новый дискорд
+    discord?: string;
+    // новый никнейм
+    nickname?: string;
+    // ид игрока, которому изменяется профиль
+    id?: string;
+}

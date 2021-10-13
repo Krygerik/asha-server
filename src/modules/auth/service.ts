@@ -176,7 +176,7 @@ export class AuthService {
     /**
      * Обновление ника или дискорда игрока
      */
-    public updateNicknameAndDiscord(_id: string, discord?: string, nickname?: string) {
+    public updateUserInfo(_id: string, discord?: string, nickname?: string) {
         const updatedValues = { $set: {} as { discord?: string, nickname?: string } };
 
         if (discord) {

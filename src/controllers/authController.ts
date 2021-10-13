@@ -9,7 +9,12 @@ import {
     mongoError,
     successResponse,
 } from "../modules/common/services";
-import {AuthService, IUser, ISavedUser} from "../modules/auth";
+import {
+    AuthService,
+    ISavedUser,
+    IUpdateUserInfoRequestBody,
+    IUser,
+} from "../modules/auth";
 import {TournamentService} from "../modules/tournament";
 
 export class AuthController {
@@ -186,19 +191,19 @@ export class AuthController {
     /**
      * Обновление ника и дискорда игрока
      */
-    public async updateDiscordAndNickname(req: Request, res: Response) {
+    public async updateUserInfo(req: Request, res: Response) {
         try {
-            const { userId, discord, nickname }: { userId: string; discord: string; nickname: string } = req.body;
+            const { id, discord, nickname }: IUpdateUserInfoRequestBody = req.body;
 
-            if (!discord && !nickname) {
+            if (!discord && !nickname || !id) {
                 return failureResponse('Отсутствуют данные для изменения', null, res);
             }
 
-            await this.authService.updateNicknameAndDiscord(userId, discord, nickname);
+            await this.authService.updateUserInfo(id, discord, nickname);
 
             successResponse(
                 'Никнейм или дискорд успешно изменены',
-                { userId, discord, nickname },
+                { id, discord, nickname },
                 res
             );
         } catch (error) {

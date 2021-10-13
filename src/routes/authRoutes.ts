@@ -51,7 +51,7 @@ export class AuthRoutes {
          * Обновление изменяемых данных пользователя
          */
         app.post('/api/auth/update-user-info', AuthController.authMiddleware(), (req: Request, res: Response) => {
-            this.authController.updateDiscordAndNickname(req, res);
+            this.authController.updateUserInfo(req, res);
         })
     };
 }
