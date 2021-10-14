@@ -289,6 +289,9 @@ interface IFilterPlayersField {
  * Фильтр по статистике игр
  */
 export interface IFilterGames {
+    // Версия карты
+    map_version?: EMapVersionValues;
+    // Данные по игрокам
     players: IFilterPlayersField[];
     // Количество оставшейся армии
     percentage_of_army_left?: TComparisonField;
