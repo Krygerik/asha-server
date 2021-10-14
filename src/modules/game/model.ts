@@ -1,3 +1,5 @@
+import { EMapVersionValues } from "../map-version";
+
 /**
  * Цвет игрока
  */
@@ -91,7 +93,7 @@ export interface ISaveGameParamsBody {
     // id сражения
     combat_id: string;
     // Версия карты
-    map_version: string;
+    map_version: EMapVersionValues;
     // Список данных о прокачках обоих игроков
     players: IInputPlayer[];
 }
@@ -135,7 +137,7 @@ export interface IInputGameData {
     // id сражения
     combat_id: string;
     // Версия карты
-    map_version: string;
+    map_version: EMapVersionValues;
     // Список ников игроков, участвующих в игре
     players_ids: string[];
     // Список данных о прокачках обоих игроков

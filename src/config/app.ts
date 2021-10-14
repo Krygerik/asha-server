@@ -8,6 +8,7 @@ import {CommonRoutes} from '../routes/commonRoutes';
 import {DictionaryRoutes} from "../routes/dictionaryRoutes";
 import {GameRoutes} from '../routes/gameRoutes';
 import {LadderRoutes} from "../routes/ladderRoutes";
+import { MapVersionRoutes } from "../routes/mapVersionRoutes";
 import {TestRoutes} from '../routes/testRoutes';
 import {TournamentRoutes} from "../routes/tournamentRoutes";
 import { mongoUrl } from "../constants";
@@ -20,6 +21,7 @@ class App {
     private dictionaryRoutes: DictionaryRoutes = new DictionaryRoutes();
     private gameRoutes: GameRoutes = new GameRoutes();
     private ladderRoutes: LadderRoutes = new LadderRoutes();
+    private mapVersionRoutes: MapVersionRoutes = new MapVersionRoutes();
     private testRoutes: TestRoutes = new TestRoutes();
     private tournamentRoutes: TournamentRoutes = new TournamentRoutes();
 
@@ -35,6 +37,7 @@ class App {
         this.dictionaryRoutes.route(this.app);
         this.gameRoutes.route(this.app);
         this.ladderRoutes.route(this.app);
+        this.mapVersionRoutes.route(this.app);
         this.testRoutes.route(this.app);
         this.tournamentRoutes.route(this.app);
         this.commonRoutes.route(this.app);
