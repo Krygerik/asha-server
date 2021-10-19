@@ -1,5 +1,6 @@
 import {Application, Request, Response} from "express";
 import {AuthController} from "../controllers/authController";
+import {ERoles} from "../modules/auth";
 
 export class AuthRoutes {
     private authController: AuthController = new AuthController();
@@ -52,6 +53,13 @@ export class AuthRoutes {
          */
         app.post('/api/auth/update-user-info', AuthController.authMiddleware(), (req: Request, res: Response) => {
             this.authController.updateUserInfo(req, res);
+        })
+
+        /**
+         * Обновление игровых данных пользователя
+         */
+        app.post('/api/auth/update-user-game-info', AuthController.authMiddleware(ERoles.ADMIN), (req: Request, res: Response) => {
+            this.authController.updateUserGameInfo(req, res);
         })
     };
 }

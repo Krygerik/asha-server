@@ -18,6 +18,8 @@ export interface IUser {
     hash_password: string;
     // ник игрока
     nickname: string;
+    // Рейтинг игрока, до создания АСХА
+    original_rating: string;
     // Рейтинг игрока
     rating?: number;
     // Роли игрока
@@ -46,4 +48,14 @@ export interface IUpdateUserInfoRequestBody {
     nickname?: string;
     // ид игрока, которому изменяется профиль
     id?: string;
+}
+
+/**
+ * Тип тела запроса на изменение данных пользователя
+ */
+export interface IUpdateUserGameInfoRequestBody {
+    // ид игрока, которому изменяется профиль
+    id?: string;
+    // рейтинг игрока, который был ранее
+    original_rating?: number;
 }

@@ -189,4 +189,11 @@ export class AuthService {
 
         return UserModel.findOneAndUpdate({ _id }, updatedValues);
     }
+
+    /**
+     * Обновление игровых данных игрока
+     */
+    public updateUserGameInfo(_id: string, original_rating: number) {
+        return UserModel.findOneAndUpdate({ _id }, { $set: { original_rating }});
+    }
 }

@@ -12,6 +12,7 @@ import {
 import {
     AuthService,
     ISavedUser,
+    IUpdateUserGameInfoRequestBody,
     IUpdateUserInfoRequestBody,
     IUser,
 } from "../modules/auth";
@@ -204,6 +205,29 @@ export class AuthController {
             successResponse(
                 'Никнейм или дискорд успешно изменены',
                 { id, discord, nickname },
+                res
+            );
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
+
+    /**
+     * Обновление игровых данных игрока
+     */
+    public async updateUserGameInfo(req: Request, res: Response) {
+        try {
+            const { id, original_rating }: IUpdateUserGameInfoRequestBody = req.body;
+
+            if (!id || !original_rating) {
+                return failureResponse('Отсутствуют данные для изменения', null, res);
+            }
+
+            await this.authService.updateUserGameInfo(id, original_rating);
+
+            successResponse(
+                'Начальный рейтинг игроков успешно изменен',
+                { id, original_rating },
                 res
             );
         } catch (error) {
