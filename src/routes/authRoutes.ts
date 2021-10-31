@@ -61,5 +61,12 @@ export class AuthRoutes {
         app.post('/api/auth/update-user-game-info', AuthController.authMiddleware(ERoles.ADMIN), (req: Request, res: Response) => {
             this.authController.updateUserGameInfo(req, res);
         })
+
+        /**
+         * Удаление игровых данных игрока
+         */
+        app.post('/api/auth/delete-user', AuthController.authMiddleware(ERoles.ADMIN), (req: Request, res: Response) => {
+            this.authController.deleteAllUserDataAndLinks(req, res);
+        })
     };
 }

@@ -581,6 +581,23 @@ export class TournamentService {
     }
 
     /**
+     * Удаление игрока из всех турниров на стадии регистрации
+     */
+    public removeParticipantFromAllNotStartedTournament(player_id: string) {
+        const updateOperator = {
+            $pull: { users: player_id }
+        };
+
+        return TournamentModel.updateMany(
+            {
+                started: false,
+                users: { $in: [player_id]},
+            },
+            updateOperator,
+        );
+    }
+
+    /**
      * Получением мапы названий турниров на их ID переданных турниров
      */
     public async getMapTournamentNameToIdByIdList(idList: string[]) {

@@ -196,4 +196,11 @@ export class AuthService {
     public updateUserGameInfo(_id: string, original_rating: number) {
         return UserModel.findOneAndUpdate({ _id }, { $set: { original_rating }});
     }
+
+    /**
+     * Удаление данных игрока
+     */
+    public deleteUser(_id: string) {
+        return UserModel.findOneAndDelete({ _id });
+    }
 }

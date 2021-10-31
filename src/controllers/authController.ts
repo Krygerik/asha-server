@@ -234,4 +234,28 @@ export class AuthController {
             internalError(error, res);
         }
     }
+
+    /**
+     * Удаление игрока и всех его связей
+     */
+    public async deleteAllUserDataAndLinks(req: Request, res: Response) {
+        try {
+            const { id }: { id?: string } = req.body;
+
+            if (!id) {
+                return failureResponse('Отсутствуют необходимые данные', null, res);
+            }
+
+            await this.authService.deleteUser(id);
+            await this.tournamentService.removeParticipantFromAllNotStartedTournament(id);
+
+            successResponse(
+                'Данные игрока успешно удалены',
+                { id },
+                res
+            );
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
 }
