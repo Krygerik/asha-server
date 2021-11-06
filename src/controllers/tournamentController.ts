@@ -175,11 +175,13 @@ export class TournamentController {
 
             const isStartedTournament: boolean = await this.tournamentService.getIsStartedTournament(tournament_id);
 
+            if (!isStartedTournament) {
+                await this.tournamentService.removeParticipantFromTournament(tournament_id, userId);
+            }
+
             if (isStartedTournament) {
                 await this.tournamentService.setParticipantTechnicalLose(tournament_id, userId);
             }
-
-            await this.tournamentService.removeParticipantFromTournament(tournament_id, userId);
 
             successResponse('Вы успешно сняли свою регистрацию на турнире', null, res);
         } catch (error) {
