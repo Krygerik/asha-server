@@ -48,5 +48,12 @@ export class TournamentRoutes {
         app.post('/api/tournament/leave', AuthController.authMiddleware(), (req: Request, res: Response) => {
             this.tournamentController.removeParticipantFromTournament(req, res);
         })
+
+        /**
+         * Проставление игроку технического поражения на турнире
+         */
+        app.post('/api/tournament/set-tech-lose', AuthController.authMiddleware(ERoles.ADMIN), (req: Request, res: Response) => {
+            this.tournamentController.setParticipantTechnicalLose(req, res);
+        })
     }
 }

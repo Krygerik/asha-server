@@ -188,4 +188,27 @@ export class TournamentController {
             internalError(error, res);
         }
     }
+
+    /**
+     * Выставление игроку технического поражения на турнире
+     */
+    public async setParticipantTechnicalLose(req: Request, res: Response) {
+        try {
+            const { tournament_id, user_id }: { tournament_id?: string; user_id: string } = req.body;
+
+            if (!tournament_id || !user_id) {
+                return insufficientParameters(res);
+            }
+
+            await this.tournamentService.setParticipantTechnicalLose(tournament_id, user_id);
+
+            successResponse(
+                'Игроку успешно проставлено техническое поражение на турнире',
+                { tournament_id, user_id },
+                res,
+            );
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
 }
