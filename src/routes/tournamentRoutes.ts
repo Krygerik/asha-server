@@ -43,7 +43,7 @@ export class TournamentRoutes {
         })
 
         /**
-         * Снятие кандидатуры игрока на турнире
+         * Снятие кандидатуры игрока на турнире (при регистрации и при запущенном турнире)
          */
         app.post('/api/tournament/leave', AuthController.authMiddleware(), (req: Request, res: Response) => {
             this.tournamentController.removeParticipantFromTournament(req, res);

@@ -1,3 +1,4 @@
+import { isNil } from "lodash";
 import {EPlayerColor} from "../game";
 import {TournamentModel} from "./tournament-schema";
 import {ITournament, ITournamentPlayer, ITournamentRound} from "./tournament-model";
@@ -578,6 +579,88 @@ export class TournamentService {
             { _id: tournament_id },
             updateOperator,
         );
+    }
+
+    /**
+     * Получение текущего активного раунда игрока
+     */
+    private async getActiveRound(tournament_id: string, user_id: string): Promise<ITournamentRound | null> {
+        // @ts-ignore
+        const tournament: ITournament| null = await TournamentModel.findOne({ _id: tournament_id });
+
+        if (!tournament) {
+            return null;
+        }
+
+        return tournament.grid.find(
+            (round: ITournamentRound) => (
+                round.players.find((player: ITournamentPlayer) => player.user_id === user_id)
+                && isNil(round.winner_id)
+            )
+        )
+    }
+
+    /**
+     * Проставление игроку технического поражения
+     */
+    public async setParticipantTechnicalLose(tournament_id: string, user_id: string) {
+        const activeRound: ITournamentRound | null = await this.getActiveRound(tournament_id, user_id);
+
+        if (!activeRound) {
+            return;
+        }
+
+        const winner: ITournamentPlayer | null = activeRound.players.find(
+            (player: ITournamentPlayer) => player.user_id !== user_id
+        );
+
+        // На всякий случай ¯\_(ツ)_/¯
+        if (!winner) {
+            return
+        }
+
+        const updatedValue = {
+            $set: {
+                "grid.$[round].winner_id": winner.user_id,
+                // Проставление победителя турнира, если это финальный раунд
+                ...activeRound.number_of_round === 1
+                    ? { winner_id: winner.user_id }
+                    : {}
+            },
+        }
+
+        const option = {
+            arrayFilters: [
+                { "round.number_of_round": activeRound.number_of_round },
+                { "winner.user_id": winner.user_id },
+            ]
+        }
+
+        await TournamentModel.updateOne(
+            { _id: tournament_id },
+            updatedValue,
+            option
+        );
+
+        await this.moveWinnerIntoNextRound(tournament_id, activeRound.number_of_round);
+    }
+
+    /**
+     * Стартовал ли переданный турнир
+     */
+    public async getIsStartedTournament(_id: string): Promise<boolean> {
+        // @ts-ignore
+        const tour: { started: boolean } | null = await TournamentModel.findOne(
+            { _id },
+            { started: true },
+        );
+
+        if (!tour) {
+            return false;
+        }
+
+        return tour.started;
+
     }
 
     /**
