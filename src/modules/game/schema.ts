@@ -1,5 +1,4 @@
 import * as mongoose from "mongoose";
-import { EMapVersionValues } from "../map-version";
 import {EPlayerColor} from "./model";
 
 const CreatureSchema = new mongoose.Schema({
@@ -117,7 +116,6 @@ const GameSchema = new mongoose.Schema({
         type: Number,
     },
     map_version: {
-        enum: Object.values(EMapVersionValues),
         required: true,
         type: String,
     },

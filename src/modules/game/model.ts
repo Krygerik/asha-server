@@ -1,4 +1,4 @@
-import { EMapVersionValues } from "../map-version";
+import { IMapVersionValue } from "../map-version";
 
 /**
  * Цвет игрока
@@ -93,7 +93,7 @@ export interface ISaveGameParamsBody {
     // id сражения
     combat_id: string;
     // Версия карты
-    map_version: EMapVersionValues;
+    map_version: IMapVersionValue;
     // Список данных о прокачках обоих игроков
     players: IInputPlayer[];
 }
@@ -137,7 +137,7 @@ export interface IInputGameData {
     // id сражения
     combat_id: string;
     // Версия карты
-    map_version: EMapVersionValues;
+    map_version: IMapVersionValue;
     // Список ников игроков, участвующих в игре
     players_ids: string[];
     // Список данных о прокачках обоих игроков
@@ -290,7 +290,7 @@ interface IFilterPlayersField {
  */
 export interface IFilterGames {
     // Версия карты
-    map_version?: EMapVersionValues;
+    map_version?: IMapVersionValue;
     // Данные по игрокам
     players: IFilterPlayersField[];
     // Количество оставшейся армии
