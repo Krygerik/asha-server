@@ -8,19 +8,32 @@ export class DictionaryController {
     private mapVersionService: MapVersionService = new MapVersionService();
 
     /**
-     * Получение всех справочников
+     * Получение всех игровых справочников
      */
     public async getDictionaries(req: Request, res: Response) {
         try {
             const gameDataDictionaries = await this.dictionaryService.getAllDictionaries();
+
+            successResponse(
+                'Список всех словарей игровых данных успешно получен',
+                gameDataDictionaries,
+                res,
+            );
+        } catch (e) {
+            return mongoError(e, res);
+        }
+    }
+
+    /**
+     * Получение внутренних словарей неигровых свойств асхи
+     */
+    public async getAshaDictionaries(req: Request, res: Response) {
+        try {
             const mapVersions = await this.mapVersionService.getMapVersionDictionary();
 
             successResponse(
-                'Список всех словарей успешно получен',
-                {
-                    ...gameDataDictionaries,
-                    mapVersions,
-                },
+                'Список всех внутренних словарей успешно получен',
+                { mapVersions },
                 res,
             );
         } catch (e) {

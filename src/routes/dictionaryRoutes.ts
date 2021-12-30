@@ -11,5 +11,12 @@ export class DictionaryRoutes {
         app.get('/api/get-dictionaries', (req: Request, res: Response) => {
             this.dictionaryController.getDictionaries(req, res);
         });
+
+        /**
+         * Получение всех возможных словарей
+         */
+        app.get('/api/get-asha-dictionaries', (req: Request, res: Response) => {
+            this.dictionaryController.getAshaDictionaries(req, res);
+        });
     }
 }
