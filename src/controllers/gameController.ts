@@ -544,34 +544,6 @@ export class GameController {
     }
 
     /**
-     * Получение списка игр с краткой информацией текущего пользователя
-     */
-    public async getShortGameInfoByUserId(req: Request, res: Response) {
-        try {
-            const { userId } = req.body.userId;
-            const limit = req.query.limit;
-
-            if (limit && typeof limit !== 'string') {
-                return insufficientParameters(res);
-            }
-
-            const additionalOptions = {
-                ...limit ? { limit }: {}
-            };
-
-            const shortGameInfoList = await this.gameService.getShortGamesInfoByUser(userId, additionalOptions);
-
-            return successResponse(
-                'Список краткой информации по последним играм пользователя получен',
-                shortGameInfoList,
-                res,
-            );
-        } catch (error) {
-            internalError(error, res);
-        }
-    }
-
-    /**
      * Проставление игре статуса разрыва соединения
      */
     public async setGameDisconnectStatusByCombatId(

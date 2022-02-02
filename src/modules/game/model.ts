@@ -96,6 +96,8 @@ export interface ISaveGameParamsBody {
     map_version: IMapVersionValue;
     // Список данных о прокачках обоих игроков
     players: IInputPlayer[];
+    // id пользователя из монго
+    userId: string;
 }
 
 /**
@@ -110,10 +112,10 @@ export interface IWinnerRequestDto {
     date: string;
     // Является ли игрок красным
     isRedPlayer: boolean;
-    // id игрока
-    user_id: string;
     // Процент оставшейся силы армии
     percentage_of_army_left: number;
+    // id пользователя из монго
+    userId: string;
     // Произошел ли разрыв соединения во время игры
     wasDisconnect?: boolean;
     // Цвет игрока победителя
@@ -128,6 +130,8 @@ export interface ISetDisconnectStatusDto {
     combat_id?: string;
     // статус соединения
     IsDisconnect?: boolean;
+    // id пользователя из монго
+    userId: string;
 }
 
 /**

@@ -45,11 +45,12 @@ export class AccountService {
         }));
     }
 
-    /**
-     * Получение данных аккаунта по ид в монго
-     */
     public getAccountByMongoId(id: string) {
         return AccountModel.findById(id, { clientConnectId: 0 });
+    }
+
+    public getAccountByClientTokenId(clientConnectId: string) {
+        return AccountModel.findOne({ clientConnectId });
     }
 
     public updateAccountNickname(_id: string, nickname: string) {

@@ -1,7 +1,7 @@
 import {Application, Request, Response} from "express";
-import {AuthController} from "../controllers/authController";
 import {GameController} from "../controllers/gameController";
 import { loggerMiddleware } from "../utils";
+import {AuthController} from "../controllers/authController";
 
 export class GameRoutes {
     private gameController: GameController = new GameController();
@@ -15,9 +15,23 @@ export class GameRoutes {
         });
 
         /**
+         * Сохранение основных характеристик игрока с его никнеймом
+         */
+        app.post('/api/save-game-params-wo-token', [loggerMiddleware], (req: Request, res: Response) => {
+            this.gameController.saveGameParams(req,res);
+        });
+
+        /**
          * Сохранение победителя и определение красного игрока
          */
         app.post('/api/save-game-winner', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
+            this.gameController.saveGameWinner(req,res);
+        });
+
+        /**
+         * Сохранение победителя и определение красного игрока
+         */
+        app.post('/api/save-game-winner-wo-token', [loggerMiddleware], (req: Request, res: Response) => {
             this.gameController.saveGameWinner(req,res);
         });
 
@@ -43,16 +57,16 @@ export class GameRoutes {
         })
 
         /**
-         * Получение краткой информации по последним играм пользователя
+         * Проставление статуса разрыва соединения
          */
-        app.get('/api/get-games-by-user', AuthController.authMiddleware(), (req: Request, res: Response) => {
-            this.gameController.getShortGameInfoByUserId(req, res);
+        app.post('/api/set-game-disconnect-status', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
+            this.gameController.setGameDisconnectStatusByCombatId(req, res);
         })
 
         /**
          * Проставление статуса разрыва соединения
          */
-        app.post('/api/set-game-disconnect-status', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
+        app.post('/api/set-game-disconnect-status-wo-token', [loggerMiddleware], (req: Request, res: Response) => {
             this.gameController.setGameDisconnectStatusByCombatId(req, res);
         })
 

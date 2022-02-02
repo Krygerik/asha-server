@@ -251,4 +251,24 @@ export class AccountController {
             internalError(error, res);
         }
     }
+
+    /**
+     * Получение аккаунта по токену
+     */
+    public async getAccountByToken(req: Request, res: Response) {
+        try {
+            // @ts-ignore
+            const { token }: { token: string } = req.params;
+
+            const updatedAccountDoc = await this.accountService.getAccountByClientTokenId(token);
+
+            if (!updatedAccountDoc) {
+                return failureResponse(`Не удалось получить аккаунт по токену: ${token}`, null, res);
+            }
+
+            successResponseWithoutMessage(updatedAccountDoc.toObject(), res);
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
 }

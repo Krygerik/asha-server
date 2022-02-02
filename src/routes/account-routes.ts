@@ -149,5 +149,13 @@ export class AccountRoutes {
             AccountRoutes.isAuthorized,
             (req: Request, res: Response) => this.accountController.regenerateClientToken(req, res)
         );
+
+        /**
+         * Получение аккаунта по клиентскому токену
+         */
+        app.get(
+            '/api/account/get-account-by-token/:token',
+            (req: Request, res: Response) => this.accountController.getAccountByToken(req, res)
+        )
     }
 }
