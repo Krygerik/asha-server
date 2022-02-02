@@ -6,6 +6,7 @@ import {ERoles} from "../auth";
 export interface IAccount {
     _id: string; // ИД в монго
     banned: boolean; // Забанен ли аккаунт
+    clientConnectId: string; // Ид для связи с клиентом АСХИ
     create_date: Date; // Дата создания аккаунта в АСХЕ
     discordId: string; // Ид дискорд аккаунта
     discriminator: string; // Дискорд тег пользователя

@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+import { uuid } from 'uuidv4';
 
 const AccountSchema = new mongoose.Schema({
     banned: {
@@ -6,9 +7,15 @@ const AccountSchema = new mongoose.Schema({
         required: true,
         type: Boolean,
     },
-    create_date: {
-        type: Date,
+    clientConnectId: {
+        default: uuid(),
         required: true,
+        type: String,
+    },
+    create_date: {
+        default: new Date(),
+        required: true,
+        type: Date,
     },
     discordId: {
         type: String,

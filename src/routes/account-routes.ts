@@ -122,7 +122,7 @@ export class AccountRoutes {
         /**
          * Получение списка пользователей с ID и никнеймом всех зарегистрированных игроков
          */
-        app.get('/api/account/get-account', (req, res) => this.accountController.getAllUsersList(req, res))
+        app.get('/api/account/get-all-id-with-nicknames', (req, res) => this.accountController.getAllUsersList(req, res))
 
         /**
          * Получение список аккаунтов по рейтингу
@@ -130,6 +130,24 @@ export class AccountRoutes {
         app.get(
             '/api/account/get-player-rating-list',
             (req: Request, res: Response) => this.accountController.getTopRatingUserList(req, res)
+        );
+
+        /**
+         * Получение токена доступа к клиенту
+         */
+        app.get(
+            '/api/account/get-client-token',
+            AccountRoutes.isAuthorized,
+            (req: Request, res: Response) => this.accountController.getClientToken(req, res)
+        );
+
+        /**
+         * Перегенерация токена доступа
+         */
+        app.get(
+            '/api/account/regenerate-client-token',
+            AccountRoutes.isAuthorized,
+            (req: Request, res: Response) => this.accountController.regenerateClientToken(req, res)
         );
     }
 }

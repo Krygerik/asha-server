@@ -1,8 +1,10 @@
 import {Request, Response} from "express";
+import { uuid } from 'uuidv4';
 import {AccountService} from "../modules/account";
 import {
-    failureResponse, insufficientParameters,
-    internalError, successResponse,
+    failureResponse,
+    insufficientParameters,
+    internalError,
     successResponseWithoutMessage,
 } from "../modules/common/services";
 import {
@@ -213,6 +215,38 @@ export class AccountController {
             const playerList = await this.accountService.getPlayerRatingList(Number(req.query.limit));
 
             successResponseWithoutMessage(playerList, res);
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
+
+    /**
+     * Получение токена клиента
+     */
+    public async getClientToken(req: Request, res: Response) {
+        try {
+            // @ts-ignore
+            successResponseWithoutMessage(req?.user?.clientConnectId, res);
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
+
+    /**
+     * Перегенерация токена клиента
+     */
+    public async regenerateClientToken(req: Request, res: Response) {
+        try {
+            const newToken = uuid();
+
+            // @ts-ignore
+            const updatedAccountDoc = await this.accountService.updateAccountClientToken(req?.user?._id, newToken);
+
+            if (!updatedAccountDoc) {
+                return failureResponse('Не удалось получить аккаунт для перегенерации токена', null, res);
+            }
+
+            successResponseWithoutMessage(newToken, res);
         } catch (error) {
             internalError(error, res);
         }

@@ -33,7 +33,6 @@ export class AccountService {
 
                 // @ts-ignore
                 const createdAccount: IAccount | null = await AccountModel.create({
-                    create_date: new Date(),
                     discordId: profile.id,
                     discriminator: profile.discriminator,
                     username: profile.username,
@@ -50,7 +49,7 @@ export class AccountService {
      * Получение данных аккаунта по ид в монго
      */
     public getAccountByMongoId(id: string) {
-        return AccountModel.findById(id);
+        return AccountModel.findById(id, { clientConnectId: 0 });
     }
 
     public updateAccountNickname(_id: string, nickname: string) {
@@ -67,6 +66,10 @@ export class AccountService {
 
     public updateAccountBanStatus(_id: string, banned: boolean) {
         return AccountModel.findOneAndUpdate({ _id }, { $set: { banned }});
+    }
+
+    public updateAccountClientToken(_id: string, clientConnectId: string) {
+        return AccountModel.findOneAndUpdate({ _id }, { $set: { clientConnectId }});
     }
 
     public async mergeOldAccountData(id: string, oldAccount: IMergeAccountData): Promise<IAccount> {
