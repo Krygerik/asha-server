@@ -1,36 +1,34 @@
 import * as mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
-    account_merging_status: {
+const AccountSchema = new mongoose.Schema({
+    banned: {
         default: false,
         required: true,
         type: Boolean,
     },
-    discord: {
+    create_date: {
+        type: Date,
         required: true,
+    },
+    discordId: {
         type: String,
-    },
-    email: {
         required: true,
+    },
+    discriminator: {
         type: String,
-    },
-    hash_password: {
         required: true,
-        type: String,
     },
-    nickname: {
+    merged_with_old_account: {
+        default: false,
         required: true,
-        type: String,
+        type: Boolean,
     },
-    original_rating: {
-        default: 0,
-        required: true,
-        type: Number,
-    },
+    nickname: String,
+    original_rating: Number,
     rating: {
         default: 1200,
         required: true,
-        type: Number,
+        type: String,
     },
     roles: {
         default: [],
@@ -39,8 +37,13 @@ const UserSchema = new mongoose.Schema({
     },
     tournaments: {
         default: [],
+        required: true,
         type: [String],
     },
-});
+    username: {
+        type: String,
+        required: true,
+    },
+})
 
-export const UserModel = mongoose.model('users', UserSchema);
+export const AccountModel = mongoose.model('accounts', AccountSchema);

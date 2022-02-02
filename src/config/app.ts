@@ -1,7 +1,10 @@
 import * as bodyParser from "body-parser";
 import * as cors from 'cors';
+import * as session from 'express-session';
 import * as express from "express";
 import * as mongoose from "mongoose";
+import * as passport from "passport";
+import { AccountRoutes } from "../routes/account-routes";
 import {AuthRoutes} from "../routes/authRoutes";
 import {ClientLogsRoutes} from "../routes/clientLogsRoutes";
 import {CommonRoutes} from '../routes/commonRoutes';
@@ -12,9 +15,11 @@ import { MapVersionRoutes } from "../routes/mapVersionRoutes";
 import {TestRoutes} from '../routes/testRoutes';
 import {TournamentRoutes} from "../routes/tournamentRoutes";
 import { mongoUrl } from "../constants";
+import 'dotenv/config';
 
 class App {
     public app: express.Application;
+    private accountRoutes: AccountRoutes = new AccountRoutes();
     private authRoutes: AuthRoutes = new AuthRoutes();
     private clientLogsRoutes: ClientLogsRoutes = new ClientLogsRoutes();
     private commonRoutes: CommonRoutes = new CommonRoutes();
@@ -32,6 +37,7 @@ class App {
         this.app = express();
         this.config();
         this.mongoSetup();
+        this.accountRoutes.route(this.app);
         this.authRoutes.route(this.app);
         this.clientLogsRoutes.route(this.app);
         this.dictionaryRoutes.route(this.app);
@@ -45,18 +51,32 @@ class App {
 
     private config(): void {
         const corsOptions = {
-            origin: '*',
-            optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+            credentials: true,
+            optionsSuccessStatus: 200,
+            origin: true,
         }
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(cors(corsOptions));
+        this.app.use(session({
+            secret: process.env.APP_SESSION_SECRET,
+            cookie: {
+                maxAge: 60000 * 60 * 24
+            },
+        }));
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
     }
 
     private mongoSetup(): void {
         mongoose.connect(
             mongoUrl,
-            { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }
+            {
+                useCreateIndex: true,
+                useFindAndModify: false,
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            }
         )
     }
 }

@@ -203,4 +203,11 @@ export class AuthService {
     public deleteUser(_id: string) {
         return UserModel.findOneAndDelete({ _id });
     }
+
+    /**
+     * Установка статуса, что данные пользователя перенесены в новый аккаунт
+     */
+    public setAccountMergingStatus(_id: string, account_merging_status: boolean) {
+        return UserModel.findOneAndUpdate({ _id }, { $set: { account_merging_status }});
+    }
 }
