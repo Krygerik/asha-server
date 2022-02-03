@@ -1,7 +1,6 @@
 import {Application, Request, Response} from "express";
 import {GameController} from "../controllers/gameController";
 import { loggerMiddleware } from "../utils";
-import {AuthController} from "../controllers/authController";
 
 export class GameRoutes {
     private gameController: GameController = new GameController();
@@ -10,28 +9,14 @@ export class GameRoutes {
         /**
          * Сохранение основных характеристик игрока с его никнеймом
          */
-        app.post('/api/save-game-params', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
-            this.gameController.saveGameParams(req,res);
-        });
-
-        /**
-         * Сохранение основных характеристик игрока с его никнеймом
-         */
-        app.post('/api/save-game-params-wo-token', [loggerMiddleware], (req: Request, res: Response) => {
+        app.post('/api/save-game-params', loggerMiddleware, (req: Request, res: Response) => {
             this.gameController.saveGameParams(req,res);
         });
 
         /**
          * Сохранение победителя и определение красного игрока
          */
-        app.post('/api/save-game-winner', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
-            this.gameController.saveGameWinner(req,res);
-        });
-
-        /**
-         * Сохранение победителя и определение красного игрока
-         */
-        app.post('/api/save-game-winner-wo-token', [loggerMiddleware], (req: Request, res: Response) => {
+        app.post('/api/save-game-winner', loggerMiddleware, (req: Request, res: Response) => {
             this.gameController.saveGameWinner(req,res);
         });
 
@@ -59,14 +44,7 @@ export class GameRoutes {
         /**
          * Проставление статуса разрыва соединения
          */
-        app.post('/api/set-game-disconnect-status', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
-            this.gameController.setGameDisconnectStatusByCombatId(req, res);
-        })
-
-        /**
-         * Проставление статуса разрыва соединения
-         */
-        app.post('/api/set-game-disconnect-status-wo-token', [loggerMiddleware], (req: Request, res: Response) => {
+        app.post('/api/set-game-disconnect-status', loggerMiddleware, (req: Request, res: Response) => {
             this.gameController.setGameDisconnectStatusByCombatId(req, res);
         })
 

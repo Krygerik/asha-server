@@ -26,7 +26,7 @@ export class AccountController {
     public async redirectToClientRootPage(req: Request, res: Response) {
         const clientRootPage = process.env.NODE_ENV == 'production'
             ? 'http://46.101.232.123'
-            : 'http://localhost:3000'
+            : 'http://46.101.232.123:8080'
 
         res.redirect(clientRootPage)
     }

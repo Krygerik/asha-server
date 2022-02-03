@@ -1,23 +1,10 @@
-import {ISavedUser, IUser} from "./model";
+import {ISavedUser} from "./model";
 import {UserModel} from "./schema";
 import {logger} from "../../utils";
 
 export class AuthService {
-    public createUser(userData: IUser, callback: any) {
-        const session = new UserModel(userData);
-
-        session.save(callback);
-    }
-
     public findUser(email: string) {
         return UserModel.findOne({email});
-    }
-
-    /**
-     * Нахождение пользователя по id в бд
-     */
-    public findUserById(id: string) {
-        return UserModel.findById(id).select('-hash_password');
     }
 
     /**
