@@ -24,9 +24,15 @@ export class AccountController {
      * Привязываем ид сессии к аккаунту
      */
     public async redirectToClientRootPage(req: Request, res: Response) {
-        const clientRootPage = process.env.NODE_ENV == 'production'
-            ? 'http://46.101.232.123'
-            : 'http://46.101.232.123:8080'
+        let clientRootPage = 'http://localhost:3000';
+
+        if (process.env.NODE_ENV === 'production') {
+            clientRootPage = 'http://46.101.232.123';
+        }
+
+        if (process.env.NODE_ENV === 'test') {
+            clientRootPage = 'http://46.101.232.123:8080';
+        }
 
         res.redirect(clientRootPage)
     }

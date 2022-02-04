@@ -36,4 +36,4 @@ jobs:
         passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
         script: |
           cd ~/projects/servers/
-          pm2 start pm2.config.js --only test
+          pm2 restart pm2.config.js --only test

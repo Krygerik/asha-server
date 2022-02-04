@@ -15,8 +15,18 @@ export class AccountService {
             if (discordBind) done(null, discordBind);
         })
 
+        let callbackURL = 'http://localhost:4000/api/account/discord-callback';
+
+        if (process.env.NODE_ENV === 'production') {
+            callbackURL = 'http://46.101.232.123:3002/api/account/discord-callback';
+        }
+
+        if (process.env.NODE_ENV === 'test') {
+            callbackURL = 'http://46.101.232.123:4002/api/account/discord-callback';
+        }
+
         passport.use(new DiscordStrategy({
-            callbackURL: '/api/account/discord-callback',
+            callbackURL,
             clientID: process.env.APP_DISCORD_CLIENT_ID,
             clientSecret: process.env.APP_DISCORD_CLIENT_SECRET,
             scope: ['identify', 'email', 'guilds']
