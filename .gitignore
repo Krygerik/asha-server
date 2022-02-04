@@ -9,3 +9,4 @@
 
 # Секретики
 .env
+pm2.config.js

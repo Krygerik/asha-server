@@ -53,7 +53,11 @@ class App {
         const corsOptions = {
             credentials: true,
             optionsSuccessStatus: 200,
-            origin: true,
+            origin: [
+                'http://localhost:3000',        // локальная сборка
+                'http://46.101.232.123:8080',   // тест стенд
+                'http://46.101.232.123',        // прод
+            ],
         }
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
