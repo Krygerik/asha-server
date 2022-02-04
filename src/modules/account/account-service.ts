@@ -25,10 +25,6 @@ export class AccountService {
             callbackURL = 'http://46.101.232.123:4002/api/account/discord-callback';
         }
 
-        console.log('callbackURL:', callbackURL);
-        console.log('process.env.APP_DISCORD_CLIENT_ID:', process.env.APP_DISCORD_CLIENT_ID);
-        console.log('process.env.APP_DISCORD_CLIENT_SECRET:', process.env.APP_DISCORD_CLIENT_SECRET);
-
         passport.use(new DiscordStrategy({
             callbackURL,
             clientID: process.env.APP_DISCORD_CLIENT_ID,
