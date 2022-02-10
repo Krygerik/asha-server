@@ -7,11 +7,11 @@ import {
     mongoError,
     successResponse,
 } from "../modules/common/services";
-import {AuthService} from "../modules/auth";
 import {GameService} from "../modules/game";
+import {AccountService} from "../modules/account";
 
 export class TournamentController {
-    private authService: AuthService = new AuthService();
+    private accountService: AccountService = new AccountService();
     private gameService: GameService = new GameService();
     private tournamentService: TournamentService = new TournamentService();
 
@@ -88,7 +88,7 @@ export class TournamentController {
 
             const tournament: ITournament = await this.tournamentService.getTournament({ _id: id });
 
-            const mapUsersIdToUserInfo = await this.authService.getMappingUsersIdToUserShortInfo(tournament.users);
+            const mapUsersIdToUserInfo = await this.accountService.getMappingUserIdToUserShortInfo(tournament.users);
 
             const allGameInToTournament: string[] = tournament.grid.reduce((acc, round) => ([
                 ...acc,
@@ -146,7 +146,7 @@ export class TournamentController {
             /**
              * Добавляем турнир в список турниров, в которых участвует пользователь
              */
-            const updatedUser = await this.authService.addTournamentIdToUser(userId, tournament_id);
+            const updatedUser = await this.accountService.addAccountParticipantTournament(userId, tournament_id);
 
             if (!updatedUser) {
                 return failureResponse(

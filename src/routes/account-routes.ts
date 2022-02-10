@@ -122,7 +122,10 @@ export class AccountRoutes {
         /**
          * Получение списка пользователей с ID и никнеймом всех зарегистрированных игроков
          */
-        app.get('/api/account/get-all-id-with-nicknames', (req, res) => this.accountController.getAllUsersList(req, res))
+        app.get(
+            '/api/account/get-all-id-with-nicknames',
+            (req, res) => this.accountController.getAllUsersList(req, res),
+        )
 
         /**
          * Получение список аккаунтов по рейтингу

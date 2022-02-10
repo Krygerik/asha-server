@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import { uuid } from 'uuidv4';
+import {CLIENT_ROOT_URL} from "../constants";
 import {AccountService} from "../modules/account";
 import {
     failureResponse,
@@ -24,17 +25,7 @@ export class AccountController {
      * Привязываем ид сессии к аккаунту
      */
     public async redirectToClientRootPage(req: Request, res: Response) {
-        let clientRootPage = 'http://localhost:3000';
-
-        if (process.env.NODE_ENV === 'production') {
-            clientRootPage = 'http://46.101.232.123';
-        }
-
-        if (process.env.NODE_ENV === 'test') {
-            clientRootPage = 'http://46.101.232.123:8080';
-        }
-
-        res.redirect(clientRootPage)
+        res.redirect(CLIENT_ROOT_URL)
     }
 
     /**

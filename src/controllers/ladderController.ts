@@ -6,10 +6,10 @@ import {
     LadderService,
 } from "../modules/ladder";
 import {failureResponse, internalError, successResponse} from "../modules/common/services";
-import {AuthService} from "../modules/auth";
+import {AccountService} from "../modules/account";
 
 export class LadderController {
-    private authService: AuthService = new AuthService();
+    private accountService: AccountService = new AccountService();
     private ladderService: LadderService = new LadderService();
 
     /**
@@ -27,7 +27,13 @@ export class LadderController {
             }
 
             // @ts-ignore
-            const member_ids: string[] = await this.authService.getUserIdsByDiscordId(discord_ids);
+            const member_ids: string[] = Promise.all(
+                discord_ids.map((discordData: string) => {
+                    const [discordId, discriminator] = discordData.split('#');
+
+                    return this.accountService.getUserIdByDiscordData(discordId, discriminator);
+                })
+            );
 
             if (member_ids.length > 2) {
                 return failureResponse(
@@ -65,7 +71,7 @@ export class LadderController {
             }
 
             // @ts-ignore
-            const member_ids: string[] = await this.authService.getUserIdsByDiscordId([discord_id]);
+            const member_ids: string[] = await this.accountService.getUserIdByDiscordData([discord_id]);
 
             if (member_ids.length === 0) {
                 return failureResponse(

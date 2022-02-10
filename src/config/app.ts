@@ -5,7 +5,6 @@ import * as express from "express";
 import * as mongoose from "mongoose";
 import * as passport from "passport";
 import { AccountRoutes } from "../routes/account-routes";
-import {AuthRoutes} from "../routes/authRoutes";
 import {ClientLogsRoutes} from "../routes/clientLogsRoutes";
 import {CommonRoutes} from '../routes/commonRoutes';
 import {DictionaryRoutes} from "../routes/dictionaryRoutes";
@@ -20,7 +19,6 @@ import 'dotenv/config';
 class App {
     public app: express.Application;
     private accountRoutes: AccountRoutes = new AccountRoutes();
-    private authRoutes: AuthRoutes = new AuthRoutes();
     private clientLogsRoutes: ClientLogsRoutes = new ClientLogsRoutes();
     private commonRoutes: CommonRoutes = new CommonRoutes();
     private dictionaryRoutes: DictionaryRoutes = new DictionaryRoutes();
@@ -38,7 +36,6 @@ class App {
         this.config();
         this.mongoSetup();
         this.accountRoutes.route(this.app);
-        this.authRoutes.route(this.app);
         this.clientLogsRoutes.route(this.app);
         this.dictionaryRoutes.route(this.app);
         this.gameRoutes.route(this.app);

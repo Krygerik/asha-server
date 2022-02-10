@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import {filter, find, flatten, isNil, isNull, map, omit, uniq} from "lodash";
+import { AccountService } from "../modules/account";
 import {
     EPlayerColor,
     GameService,
@@ -24,7 +25,7 @@ import {
     successResponse,
     successResponseWithoutMessage,
 } from "../modules/common/services";
-import {AuthService, ERoles} from "../modules/auth";
+import {ERoles} from "../modules/auth";
 import {
     DictionariesService,
     EDictionariesNames,
@@ -35,7 +36,7 @@ import {LadderService, ILadderRecord} from "../modules/ladder";
 import {logger} from "../utils";
 
 export class GameController {
-    private authService: AuthService = new AuthService();
+    private accountService: AccountService = new AccountService();
     private dictionaryService: DictionariesService = new DictionariesService();
     private gameService: GameService = new GameService();
     private ladderService: LadderService = new LadderService();
@@ -47,7 +48,7 @@ export class GameController {
     private getMappingIdToNicknames(idList: string[]) {
         const filteredEmptyIdList = filter<string>(idList, Boolean);
 
-        return this.authService.getRelatedMappingUserIdToUserNickname(filteredEmptyIdList);
+        return this.accountService.getUserNicknameListByUserIdList(filteredEmptyIdList);
     }
 
     /**
@@ -187,7 +188,7 @@ export class GameController {
         const changedRating: Record<
             string,
             { changedRating: number; newRating: number }
-        > = await this.authService.changePlayerRating(
+        > = await this.accountService.changePlayerRating(
             winnerId,
             looserId,
         );

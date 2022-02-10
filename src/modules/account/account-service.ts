@@ -1,7 +1,10 @@
 import * as passport from "passport";
 import { Strategy as DiscordStrategy } from "passport-discord";
+import {APPLICATION_URL} from "../../constants";
 import {AccountModel} from "./account-schema";
 import {IAccount, IMergeAccountData} from "./account-types";
+import {logger} from "../../utils";
+import {ISavedUser} from "../auth";
 
 export class AccountService {
     constructor() {
@@ -15,18 +18,8 @@ export class AccountService {
             if (discordBind) done(null, discordBind);
         })
 
-        let callbackURL = 'http://localhost:4000/api/account/discord-callback';
-
-        if (process.env.NODE_ENV === 'production') {
-            callbackURL = 'http://46.101.232.123:3002/api/account/discord-callback';
-        }
-
-        if (process.env.NODE_ENV === 'test') {
-            callbackURL = 'http://46.101.232.123:4002/api/account/discord-callback';
-        }
-
         passport.use(new DiscordStrategy({
-            callbackURL,
+            callbackURL: APPLICATION_URL + '/api/account/discord-callback',
             clientID: process.env.APP_DISCORD_CLIENT_ID,
             clientSecret: process.env.APP_DISCORD_CLIENT_SECRET,
             scope: ['identify', 'email', 'guilds']
@@ -93,8 +86,6 @@ export class AccountService {
         // @ts-ignore
         const account: IAccount = accountDoc.toObject();
 
-        console.log('account:', account);
-
         const createdAccountDoc = await AccountModel.create({
             ...account,
             _id: oldAccount._id,
@@ -121,7 +112,7 @@ export class AccountService {
     }
 
     public getIdWithNicknameFromAllAccounts() {
-        return AccountModel.find(null, { nickname: 1, _id: 1 });
+        return AccountModel.find({}, { nickname: 1, _id: 1 });
     }
 
     public getPlayerRatingList(limit: number = 0) {
@@ -129,5 +120,118 @@ export class AccountService {
             .find({}, { nickname: 1, _id: 1, rating: 1, discord: 1 })
             .sort({ rating: 'desc' })
             .limit(limit);
+    }
+
+    public async getUserIdByDiscordData(discordId: string, discriminator: string) {
+        const account = await AccountModel.findOne({ discordId, discriminator }, { _id: 1 });
+
+        // @ts-ignore
+        return account._id;
+    }
+
+    public async getUserNicknameListByUserIdList(userIdList: string[]) {
+        const accounts = await AccountModel.find({ _id: { $in: userIdList }});
+
+        return accounts
+            .map(account => account.toObject())
+            .reduce((accumulator, account: IAccount) => ({
+                ...accumulator,
+                [account._id]: account.nickname,
+            }), {});
+    }
+
+    public async changePlayerRating(winnerId: string, looserId: string) {
+        logger.info(
+            'changePlayerRating: Добавление пользователю данных о турнире, на который он зарегистрировался',
+            {
+                metadata: {
+                    winnerId,
+                    looserId,
+                }
+            }
+        );
+
+        // @ts-ignore
+        const winner: ISavedUser | null = await AccountModel.findOne({ _id: winnerId });
+        // @ts-ignore
+        const looser: ISavedUser | null = await AccountModel.findOne({ _id: loserId });
+
+        if (!winner || !looser) {
+            logger.warn(
+                'changePlayerRating: Не удалось получить данные о победителе или проигравшем',
+                {
+                    metadata: {
+                        winner,
+                        looser,
+                    }
+                }
+            );
+
+            return null;
+        }
+
+        const updatedRatingFactor = 1 / (1 + 10 ** ((looser.rating - winner.rating) / 400));
+
+        // Смягчающий фактор
+        const softFactor = 5;
+
+        const changedRating = softFactor * (1 - updatedRatingFactor);
+
+        const newWinnerRating = Math.round(winner.rating + changedRating);
+        const newLooserRating = Math.round(looser.rating - changedRating);
+
+        logger.info(
+            'changePlayerRating: Изменение рейтинга участникам игры',
+            {
+                metadata: {
+                    looserId,
+                    newLooserRating,
+                    newWinnerRating,
+                    winnerId,
+                }
+            }
+        );
+
+        await AccountModel.findOneAndUpdate({ _id: winnerId }, { rating: newWinnerRating });
+        await AccountModel.findOneAndUpdate({ _id: looserId }, { rating: newLooserRating });
+
+        const result = {
+            [looserId]: {
+                changedRating: Math.round(newLooserRating - looser.rating),
+                newRating: newLooserRating,
+            },
+            [winnerId]: {
+                changedRating: Math.round(newWinnerRating - winner.rating),
+                newRating: newWinnerRating,
+            },
+        };
+
+        logger.info(
+            'changePlayerRating: Возвращаемое значение',
+            {
+                metadata: {
+                    result,
+                }
+            }
+        );
+
+        return result;
+    }
+
+    public async getMappingUserIdToUserShortInfo(userIdList: string[]) {
+        const accountDocs = await AccountModel.find(
+            { _id: { $id: userIdList }},
+            { nickname: true, discordId: true, discriminator: true });
+
+        return accountDocs
+            .map(a => a.toObject())
+            .reduce((accumulator, account) => ({
+               ...accumulator,
+               [account._id]: account,
+            }));
+    }
+
+    public addAccountParticipantTournament(_id: string, tournamentId: string) {
+        return AccountModel.findOneAndUpdate({ _id }, { $push: { tournaments: tournamentId }});
     }
 }
