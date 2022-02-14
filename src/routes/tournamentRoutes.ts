@@ -1,5 +1,7 @@
 import {Application, Request, Response} from "express";
 import {TournamentController} from "../controllers/tournamentController";
+import {AccountController} from "../controllers/account-controller";
+import {ERoles} from "../modules/auth";
 
 export class TournamentRoutes {
     private tournamentController: TournamentController = new TournamentController();
@@ -8,9 +10,13 @@ export class TournamentRoutes {
         /**
          * Создание нового турнира
          */
-        app.post('/api/tournament/create', (req: Request, res: Response) => {
-            this.tournamentController.createTournament(req, res);
-        });
+        app.post(
+            '/api/tournament/create',
+            AccountController.accessByRoles([ERoles.ADMIN]),
+            (req: Request, res: Response) => {
+                this.tournamentController.createTournament(req, res);
+            }
+        );
 
         /**
          * Удаление существующего турнира

@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import { uuid } from 'uuidv4';
+import {intersection} from "lodash";
 import {CLIENT_ROOT_URL} from "../constants";
 import {AccountService} from "../modules/account";
 import {
@@ -20,6 +21,32 @@ export class AccountController {
     private accountService: AccountService = new AccountService();
     private authService: AuthService = new AuthService();
     private tournamentService: TournamentService = new TournamentService();
+
+    /**
+     * Мидлвара только для зареганных
+     */
+    public static isAuthorized(req, res, next) {
+        if(!req.user) {
+            return failureResponse('Пользователь не авторизован!', null, res);
+        }
+
+        next();
+    }
+
+    /**
+     * Мидлвара доступа только по ролям
+     */
+    public static accessByRoles(roles: string[]) {
+        return function (req, res, next) {
+            const matchedRolesList = intersection(roles, req.user?.roles);
+
+            if (matchedRolesList.length === 0) {
+                return failureResponse('Пользователь не имеет необходимой роли!', null, res);
+            }
+
+            next();
+        }
+    }
 
     /**
      * Привязываем ид сессии к аккаунту

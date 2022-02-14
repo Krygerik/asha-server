@@ -1,38 +1,10 @@
 import {Application, Request, Response} from "express";
-import { intersection } from "lodash";
 import * as passport from "passport";
 import {AccountController} from "../controllers/account-controller";
-import {failureResponse} from "../modules/common/services";
 import {ERoles} from "../modules/auth";
 
 export class AccountRoutes {
     private accountController: AccountController = new AccountController();
-
-    /**
-     * Мидлвара только для зареганных
-     */
-    private static isAuthorized(req, res, next) {
-        if(!req.user) {
-            return failureResponse('Пользователь не авторизован!', null, res);
-        }
-
-        next();
-    }
-
-    /**
-     * Мидлвара доступа только по ролям
-     */
-    private static accessByRoles(roles: string[]) {
-        return function (req, res, next) {
-            const matchedRolesList = intersection(roles, req.user.roles);
-
-            if (matchedRolesList.length === 0) {
-                return failureResponse('Пользователь не имеет необходимой роли!', null, res);
-            }
-
-            next();
-        }
-    }
 
     public route(app: Application) {
         /**
@@ -67,7 +39,7 @@ export class AccountRoutes {
          */
         app.get(
             '/api/account/get-profile/:id',
-            AccountRoutes.isAuthorized,
+            AccountController.isAuthorized,
             (req, res) => this.accountController.getProfile(req, res)
         );
 
@@ -76,7 +48,7 @@ export class AccountRoutes {
          */
         app.post(
             '/api/account/update-personal-info',
-            AccountRoutes.isAuthorized,
+            AccountController.isAuthorized,
             (req, res) => this.accountController.updateAccountNickname(req, res)
         );
 
@@ -85,7 +57,7 @@ export class AccountRoutes {
          */
         app.post(
             '/api/account/update-game-info',
-            AccountRoutes.isAuthorized,
+            AccountController.isAuthorized,
             (req, res) => this.accountController.updateUserGameInfo(req, res)
         );
 
@@ -94,7 +66,7 @@ export class AccountRoutes {
          */
         app.post(
             '/api/account/cancel-account-merging',
-            AccountRoutes.isAuthorized,
+            AccountController.isAuthorized,
             (req, res) => this.accountController.cancelAccountMerging(req, res)
         );
 
@@ -103,7 +75,7 @@ export class AccountRoutes {
          */
         app.post(
             '/api/account/merge-accounts',
-            AccountRoutes.isAuthorized,
+            AccountController.isAuthorized,
             (req, res) => this.accountController.mergingOldAccount(req, res)
         );
 
@@ -113,8 +85,8 @@ export class AccountRoutes {
         app.post(
             '/api/account/change-ban-status',
             [
-                AccountRoutes.isAuthorized,
-                AccountRoutes.accessByRoles([ERoles.ADMIN])
+                AccountController.isAuthorized,
+                AccountController.accessByRoles([ERoles.ADMIN])
             ],
             (req, res) => this.accountController.changeAccountBanStatus(req, res)
         );
@@ -140,7 +112,7 @@ export class AccountRoutes {
          */
         app.get(
             '/api/account/get-client-token',
-            AccountRoutes.isAuthorized,
+            AccountController.isAuthorized,
             (req: Request, res: Response) => this.accountController.getClientToken(req, res)
         );
 
@@ -149,7 +121,7 @@ export class AccountRoutes {
          */
         app.get(
             '/api/account/regenerate-client-token',
-            AccountRoutes.isAuthorized,
+            AccountController.isAuthorized,
             (req: Request, res: Response) => this.accountController.regenerateClientToken(req, res)
         );
 
