@@ -1,3 +1,4 @@
+import { Document } from 'mongoose';
 import { IMapVersionValue } from "../map-version";
 
 /**
@@ -30,7 +31,7 @@ interface ICreatures {
 /**
  * Интерфейс игрока в записи боя
  */
-export interface IInputPlayer {
+export interface IInputPlayer extends Document {
     // Список войск героя
     army: ICreatures[];
     // Артефакты героя
@@ -72,8 +73,6 @@ export interface IInputPlayer {
 }
 
 export interface ISavedPlayer extends IInputPlayer {
-    // id в mongodb
-    _id: string;
     // Конечный состав армии
     army_remainder?: ICreatures[];
     // Ид пользователя в бд
@@ -137,7 +136,7 @@ export interface ISetDisconnectStatusDto {
 /**
  * Тип данных для сохранения данных об игре
  */
-export interface IInputGameData {
+export interface IInputGameData extends Document {
     // id сражения
     combat_id: string;
     // Версия карты

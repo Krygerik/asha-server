@@ -1,3 +1,4 @@
+import {Document} from 'mongoose';
 import {EPlayerColor} from "../game";
 
 /**
@@ -45,7 +46,7 @@ export enum ERoundFormat {
 /**
  * Тип данных о турнире
  */
-export interface ITournament {
+export interface ITournament extends Document {
     // ИД записи в бд
     _id: string;
     // Список всех раундов турнира (Сетка)
@@ -76,4 +77,10 @@ export interface IRegisterParticipantBody {
     tournament_id: string | undefined;
     // ИД регистрирующегося игрока
     userId: string;
+}
+
+export interface ITournamentIdWithNumberOfRound {
+    number_of_round: number;
+    tournament_id: string;
+    tournament_name: string;
 }

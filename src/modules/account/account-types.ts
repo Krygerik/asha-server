@@ -1,10 +1,10 @@
+import { Document } from 'mongoose';
 import {ERoles} from "../auth";
 
 /**
  * Аккаунта пользователя, привязанный через дискорд
  */
-export interface IAccount {
-    _id: string; // ИД в монго
+export interface IAccount extends Document {
     banned: boolean; // Забанен ли аккаунт
     clientConnectId: string; // Ид для связи с клиентом АСХИ
     create_date: Date; // Дата создания аккаунта в АСХЕ

@@ -4,7 +4,6 @@ import {APPLICATION_URL} from "../../constants";
 import {AccountModel} from "./account-schema";
 import {IAccount, IMergeAccountData} from "./account-types";
 import {logger} from "../../utils";
-import {ISavedUser} from "../auth";
 
 export class AccountService {
     constructor() {
@@ -142,33 +141,12 @@ export class AccountService {
 
     public async changePlayerRating(winnerId: string, looserId: string) {
         logger.info(
-            'changePlayerRating: Добавление пользователю данных о турнире, на который он зарегистрировался',
-            {
-                metadata: {
-                    winnerId,
-                    looserId,
-                }
-            }
+            'changePlayerRating: Изменение рейтинга участникам игры',
+            { metadata: { winnerId, looserId } }
         );
 
-        // @ts-ignore
-        const winner: ISavedUser | null = await AccountModel.findOne({ _id: winnerId });
-        // @ts-ignore
-        const looser: ISavedUser | null = await AccountModel.findOne({ _id: loserId });
-
-        if (!winner || !looser) {
-            logger.warn(
-                'changePlayerRating: Не удалось получить данные о победителе или проигравшем',
-                {
-                    metadata: {
-                        winner,
-                        looser,
-                    }
-                }
-            );
-
-            return null;
-        }
+        const winner: IAccount = await AccountModel.findOne({ _id: winnerId });
+        const looser: IAccount = await AccountModel.findOne({ _id: looserId });
 
         const updatedRatingFactor = 1 / (1 + 10 ** ((looser.rating - winner.rating) / 400));
 
@@ -181,19 +159,12 @@ export class AccountService {
         const newLooserRating = Math.round(looser.rating - changedRating);
 
         logger.info(
-            'changePlayerRating: Изменение рейтинга участникам игры',
-            {
-                metadata: {
-                    looserId,
-                    newLooserRating,
-                    newWinnerRating,
-                    winnerId,
-                }
-            }
+            'changePlayerRating: Сохранение изменений рейтинга в аккаунты',
+            { metadata: { winnerId, newWinnerRating, looserId, newLooserRating } }
         );
 
-        await AccountModel.findOneAndUpdate({ _id: winnerId }, { rating: newWinnerRating });
-        await AccountModel.findOneAndUpdate({ _id: looserId }, { rating: newLooserRating });
+        await AccountModel.updateOne({ _id: winnerId }, { rating: newWinnerRating });
+        await AccountModel.updateOne({ _id: looserId }, { rating: newLooserRating });
 
         const result = {
             [looserId]: {
@@ -208,11 +179,7 @@ export class AccountService {
 
         logger.info(
             'changePlayerRating: Возвращаемое значение',
-            {
-                metadata: {
-                    result,
-                }
-            }
+            { metadata: { result } }
         );
 
         return result;

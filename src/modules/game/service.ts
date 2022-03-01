@@ -39,10 +39,8 @@ export class GameService {
     /**
      * Создание записи игры на основе данных, поступивших от любого игрока
      */
-    public createGame(gameParams: IInputGameData) {
-        const game = new GameModel(gameParams);
-
-        return game.save();
+    public createGame(gameParams: any) {
+        return GameModel.create(gameParams);
     }
     /**
      * получение последних 50 игр
@@ -56,6 +54,10 @@ export class GameService {
      */
     public findGame(query: any) {
         return GameModel.findOne(query);
+    }
+
+    public findOneAndUpdate(query: any, updatedValue: Record<any, any>, option?: Record<any, any>) {
+        return GameModel.findOneAndUpdate();
     }
 
     /**

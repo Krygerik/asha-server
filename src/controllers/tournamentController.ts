@@ -9,6 +9,7 @@ import {
 } from "../modules/common/services";
 import {GameService} from "../modules/game";
 import {AccountService} from "../modules/account";
+import {logger} from "../utils";
 
 export class TournamentController {
     private accountService: AccountService = new AccountService();
@@ -185,6 +186,11 @@ export class TournamentController {
 
             successResponse('Вы успешно сняли свою регистрацию на турнире', null, res);
         } catch (error) {
+            logger.error(
+                'setParticipantTechnicalLose: Проставление игроку технического поражения',
+                { metadata: { error }
+                }
+            );
             internalError(error, res);
         }
     }

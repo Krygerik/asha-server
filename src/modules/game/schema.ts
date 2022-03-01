@@ -1,7 +1,7 @@
-import * as mongoose from "mongoose";
-import {EPlayerColor} from "./model";
+import {EPlayerColor, ISavedGame} from "./model";
+import {Model, model, Schema} from "mongoose";
 
-const CreatureSchema = new mongoose.Schema({
+const CreatureSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -12,7 +12,7 @@ const CreatureSchema = new mongoose.Schema({
     },
 });
 
-const PlayerSchema = new mongoose.Schema({
+const PlayerSchema = new Schema({
     army: {
         type: [CreatureSchema],
         required: true
@@ -101,7 +101,7 @@ const PlayerSchema = new mongoose.Schema({
     }
 });
 
-const GameSchema = new mongoose.Schema({
+const GameSchema = new Schema({
     combat_id: {
         type: String,
         required: true
@@ -109,8 +109,16 @@ const GameSchema = new mongoose.Schema({
     date: {
         type: String,
     },
-    disconnect: Boolean,
-    waiting_for_disconnect_status: Boolean,
+    disconnect: {
+        default: false,
+        required: true,
+        type: Boolean,
+    },
+    waiting_for_disconnect_status: {
+        default: false,
+        required: true,
+        type: Boolean,
+    },
     winner: {
         enum: Object.values(EPlayerColor),
         type: Number,
@@ -134,4 +142,4 @@ const GameSchema = new mongoose.Schema({
     tournament_name: String,
 });
 
-export const GameModel = mongoose.model('game', GameSchema);
+export const GameModel: Model<ISavedGame> = model('game', GameSchema);

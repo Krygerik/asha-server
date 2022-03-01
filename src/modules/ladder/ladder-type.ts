@@ -1,8 +1,9 @@
+import { Document } from 'mongoose';
 
 /**
  * Тип записи ладдера
  */
-export interface ILadderRecord {
+export interface ILadderRecord extends Document {
     // ИД в бд
     _id?: string;
     // Активна ли текущая ладдерная встреча

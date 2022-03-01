@@ -1,7 +1,8 @@
-import * as mongoose from "mongoose";
 import { uuid } from 'uuidv4';
+import { model, Model, Schema } from "mongoose";
+import { IAccount } from "./account-types";
 
-const AccountSchema = new mongoose.Schema({
+const AccountSchema = new Schema({
     banned: {
         default: false,
         required: true,
@@ -53,4 +54,4 @@ const AccountSchema = new mongoose.Schema({
     },
 })
 
-export const AccountModel = mongoose.model('accounts', AccountSchema);
+export const AccountModel: Model<IAccount> = model('accounts', AccountSchema);
