@@ -54,5 +54,12 @@ export class GameRoutes {
         app.post('/api/get-races-win-rate', (req: Request, res: Response) => {
             this.gameController.getRacesWinRate(req, res);
         });
+
+        /**
+         * Получение информации о первоначальных характеристиках героя и его расе из случайной игры
+         */
+         app.get('/api/get-quiz-stat-hero', (req: Request, res: Response) => {
+            this.gameController.getStatHeroRandomGame(req, res);
+        });
     };
-}
+}   

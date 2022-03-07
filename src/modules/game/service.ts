@@ -44,7 +44,13 @@ export class GameService {
 
         return game.save();
     }
+    /**
+     * получение последних 50 игр
+     */
+    public getLast50Games() {
+        return GameModel.find().sort({_id:-1}).limit(50)
 
+    }
     /**
      * Поиск записи игры в бд
      */

@@ -22,6 +22,7 @@ import {
     internalError,
     mongoError,
     successResponse,
+    successResponseWithoutMessage,
 } from "../modules/common/services";
 import {AuthService, ERoles} from "../modules/auth";
 import {
@@ -657,4 +658,32 @@ export class GameController {
             return mongoError(error, res);
         }
     }
+
+    /**
+     * Получение краткой информации о герое одной случайной игры из последних 50
+     */
+    public async getStatHeroRandomGame(req: Request, res: Response) {
+        try {
+            const allGames: any[] = await this.gameService.getLast50Games()
+            const random_game_index = Math.floor(Math.random() * allGames.length)
+            const random_game = allGames[random_game_index]
+            const first_player_data = random_game.players[0]
+
+            const oneRandomGameShortInfo = {
+                attack: first_player_data.attack,
+                defence: first_player_data.defence,
+                race: first_player_data.race,
+                spell_power: first_player_data.spell_power,
+                knowledge: first_player_data.knowledge,
+                _id: random_game._id,
+            }
+
+            successResponseWithoutMessage(oneRandomGameShortInfo, res)
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
+
+
+
 }
