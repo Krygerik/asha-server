@@ -43,11 +43,13 @@ const combinedFormatter = winston.format.combine(
 /**
  * Кастомный логгер, используемый в проекте
  */
-export const logger = winston.createLogger({
-    level: 'info',
-    format: combinedFormatter,
-    transports: [
-        new winston.transports.MongoDB(options.dbInfo),
-    ],
-    exitOnError: false
-});
+export const logger = process.env.NODE_ENV !== 'unittests'
+    ? winston.createLogger({
+        level: 'info',
+        format: combinedFormatter,
+        transports: [
+            new winston.transports.MongoDB(options.dbInfo),
+        ],
+        exitOnError: false
+    })
+    : winston.createLogger();

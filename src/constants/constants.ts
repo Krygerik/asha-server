@@ -2,12 +2,22 @@
 /**
  * Название схемы в базе данных
  */
-const database = process.env.NODE_ENV == 'production' ? 'production' : 'test';
+const getDatabaseName = () => {
+    if (process.env.NODE_ENV === 'production') {
+        return 'production';
+    }
+
+    if (process.env.NODE_ENV === 'unittests') {
+        return 'unittests';
+    }
+
+    return 'test';
+}
 
 /**
  * Урл до бд с учетом среды
  */
-export const mongoUrl = 'mongodb://AdminSokratik:Her0EsF!ve@localhost:27017/' + database;
+export const mongoUrl = 'mongodb://AdminSokratik:Her0EsF!ve@localhost:27017/' + getDatabaseName();
 
 /**
  * Возможные значения окружения среды, в которых работает приложение
