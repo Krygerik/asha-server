@@ -26,12 +26,11 @@ export class LadderController {
                 return failureResponse(CREATE_LADDER_RESPONSE_MESSAGES.ERRORS.NOT_ENOUGH_DATA, null, res);
             }
 
-            // @ts-ignore
-            const member_ids: string[] = Promise.all(
+            const member_ids: string[] = await Promise.all(
                 discord_ids.map((discordData: string) => {
-                    const [discordId, discriminator] = discordData.split('#');
+                    const [username, discriminator] = discordData.split('#');
 
-                    return this.accountService.getUserIdByDiscordData(discordId, discriminator);
+                    return this.accountService.getUserIdByDiscordData(username, discriminator);
                 })
             );
 

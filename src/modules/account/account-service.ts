@@ -121,8 +121,8 @@ export class AccountService {
             .limit(limit);
     }
 
-    public async getUserIdByDiscordData(discordId: string, discriminator: string) {
-        const account = await AccountModel.findOne({ discordId, discriminator }, { _id: 1 });
+    public async getUserIdByDiscordData(username: string, discriminator: string) {
+        const account = await AccountModel.findOne({ username, discriminator }, { _id: 1 });
 
         // @ts-ignore
         return account._id;
