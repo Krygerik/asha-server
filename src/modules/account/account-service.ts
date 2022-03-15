@@ -122,10 +122,7 @@ export class AccountService {
     }
 
     public async getUserIdByDiscordData(username: string, discriminator: string) {
-        const account = await AccountModel.findOne({ username, discriminator }, { _id: 1 });
-
-        // @ts-ignore
-        return account._id;
+        return AccountModel.findOne({ username, discriminator }, { _id: 1 });
     }
 
     public async getUserNicknameListByUserIdList(userIdList: string[]) {

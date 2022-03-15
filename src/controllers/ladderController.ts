@@ -26,7 +26,7 @@ export class LadderController {
                 return failureResponse(CREATE_LADDER_RESPONSE_MESSAGES.ERRORS.NOT_ENOUGH_DATA, null, res);
             }
 
-            const member_ids: string[] = await Promise.all(
+            const userIds: { _id: string }[] = await Promise.all(
                 discord_ids.map((discordData: string) => {
                     const [username, discriminator] = discordData.split('#');
 
@@ -34,10 +34,10 @@ export class LadderController {
                 })
             );
 
-            if (member_ids.length > 2) {
+            if (userIds.length > 2) {
                 return failureResponse(
                     CREATE_LADDER_RESPONSE_MESSAGES.ERRORS.TOO_MUCH_PLAYERS_WITH_SUCH_DATA,
-                    { member_ids },
+                    { userIds },
                     res
                 );
             }
@@ -45,7 +45,7 @@ export class LadderController {
             const savedRecord = await this.ladderService.createLadder({
                 active: true,
                 game_ids: [],
-                member_ids,
+                member_ids: userIds.map(user => user._id),
             });
 
             successResponse(
@@ -69,10 +69,11 @@ export class LadderController {
                 return failureResponse(CANCEL_LADDER_RESPONSE_MESSAGES.ERROR.NO_DATA, null, res);
             }
 
-            // @ts-ignore
-            const member_ids: string[] = await this.accountService.getUserIdByDiscordData([discord_id]);
+            const [username, discriminator] = discord_id.split('#');
 
-            if (member_ids.length === 0) {
+            const usersId = await this.accountService.getUserIdByDiscordData(username, discriminator);
+
+            if (!usersId) {
                 return failureResponse(
                     CANCEL_LADDER_RESPONSE_MESSAGES.ERROR.PLAYER_NOT_FOUND,
                     null,
@@ -80,8 +81,7 @@ export class LadderController {
                 );
             }
 
-            // @ts-ignore
-            const activeLadder: ILadderRecord = await this.ladderService.getActiveLadderByUserId(member_ids[0]);
+            const activeLadder: ILadderRecord | null = await this.ladderService.getActiveLadderByUserId(usersId._id);
 
             if (!activeLadder) {
                 return successResponse(
@@ -91,11 +91,11 @@ export class LadderController {
                 );
             }
 
-            await this.ladderService.closeLadderRound(activeLadder._id);
+            const closedLadder = await this.ladderService.closeLadderRound(activeLadder._id);
 
             return successResponse(
                 CANCEL_LADDER_RESPONSE_MESSAGES.SUCCESS.LADDER_SUCCESSFULLY_CLOSE,
-                null,
+                closedLadder,
                 res,
             );
         } catch (error) {
