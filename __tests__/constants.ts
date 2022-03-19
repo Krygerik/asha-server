@@ -18,6 +18,8 @@ import * as skills from "../src/static_db_values/dictionaries/skills.json";
 import * as spells from "../src/static_db_values/dictionaries/spells.json";
 // @ts-ignore
 import * as warMachines from "../src/static_db_values/dictionaries/warMachines.json";
+// @ts-ignore
+import * as mapVersions from "../src/static_db_values/dictionaries/map-versions.json";
 
 const firstUserId = new ObjectId();
 const secondUserId = new ObjectId();
@@ -75,3 +77,7 @@ export const testAllDictionaries = {
     spells: spells.map(addingMongoId),
     'war-machines': warMachines.map(addingMongoId),
 };
+
+export const testAshaDictionaries = {
+    mapVersions: mapVersions.map(addingMongoId),
+}

@@ -13,6 +13,6 @@ export class MapVersionService {
      * Получение всего словаря версий карты
      */
     public getMapVersionDictionary() {
-        return MapVersionModel.find({});
+        return MapVersionModel.find({}).select('-__v');
     }
 }

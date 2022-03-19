@@ -8,7 +8,8 @@ import {
     SpellsModel,
     WarMachinesModel,
 } from "../src/modules/dictionaries/schema";
-import {testAllDictionaries} from "./constants";
+import {MapVersionModel} from "../src/modules/map-version/map-version-schema";
+import {testAllDictionaries, testAshaDictionaries} from "./constants";
 import {testServer} from "./common";
 
 describe("Запросы словарей", () => {
@@ -21,6 +22,7 @@ describe("Запросы словарей", () => {
         await SkillsModel.deleteMany({});
         await SpellsModel.deleteMany({});
         await WarMachinesModel.deleteMany({});
+        await MapVersionModel.deleteMany({});
     }
 
     beforeAll(clearCollections);
@@ -43,4 +45,15 @@ describe("Запросы словарей", () => {
             expect(res.body.DATA).toEqual(testAllDictionaries);
         });
     })
+
+    describe("GET /api/get-asha-dictionaries", () => {
+        it("Получение всех внутренних справочников", async () => {
+            await MapVersionModel.insertMany(testAshaDictionaries.mapVersions);
+
+            const res = await testServer.get("/api/get-asha-dictionaries");
+
+            expect(res.body.MESSAGE).toEqual('Список всех внутренних словарей успешно получен');
+            expect(res.body.DATA).toEqual(testAshaDictionaries);
+        })
+    });
 })

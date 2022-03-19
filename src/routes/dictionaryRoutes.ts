@@ -13,7 +13,7 @@ export class DictionaryRoutes {
         });
 
         /**
-         * Получение всех возможных словарей
+         * Получение внутренних словарей АСХА
          */
         app.get('/api/get-asha-dictionaries', (req: Request, res: Response) => {
             this.dictionaryController.getAshaDictionaries(req, res);
