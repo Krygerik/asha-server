@@ -2,21 +2,21 @@
   {
     "game_id": ["ID1"],
     "localize_name":  {
-      "eu": "Ballista",
+      "en": "Ballista",
       "ru": "Баллиста"
     }
   },
   {
     "game_id": ["ID3"],
     "localize_name": {
-      "eu": "First Aid",
+      "en": "First Aid",
       "ru": "Палатка первой помощи"
     }
   },
   {
     "game_id": ["ID4"],
     "localize_name": {
-      "eu": "Ammo cart",
+      "en": "Ammo cart",
       "ru": "Тележка с боеприпасами"
     }
   }

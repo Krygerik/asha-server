@@ -4,16 +4,19 @@ import {EDictionariesNames} from "./constants";
 /**
  * Локализованные названия
  */
-const LocalizationSchema = new mongoose.Schema({
-    en: {
-        required: true,
-        type: String,
+const LocalizationSchema = new mongoose.Schema(
+    {
+        en: {
+            required: true,
+            type: String,
+        },
+        ru: {
+            required: true,
+            type: String,
+        },
     },
-    ru: {
-        required: true,
-        type: String,
-    },
-});
+    { _id : false }
+);
 
 /**
  * Схема одной записи справочника "Заклинания"
@@ -74,24 +77,28 @@ export const HeroesModel = mongoose.model(EDictionariesNames.Heroes, HeroesRecor
 /**
  * Параметры существ
  */
-const CreatureParametersSchema = new mongoose.Schema({
-    initiative: {
-        type: [Number],
-        required: true
-    }
-});
+const CreatureParametersSchema = new mongoose.Schema(
+    {
+        initiative: {
+            type: Number,
+            required: true
+        }
+    },
+    { _id : false }
+);
 
 /**
  * Схема одной записи справочника "Артефакты"
  */
-const ArtifactsRecordSchema = new mongoose.Schema({
-    game_id: {
-        type: [String],
-        required: true
+const ArtifactsRecordSchema = new mongoose.Schema(
+    {
+        game_id: {
+            type: [String],
+            required: true
+        },
+        localize_name: LocalizationSchema,
     },
-    localize_name: LocalizationSchema,
-    parameters: CreatureParametersSchema,
-});
+);
 
 export const ArtifactsModel = mongoose.model(EDictionariesNames.Artifacts, ArtifactsRecordSchema);
 
@@ -104,6 +111,7 @@ const CreaturesRecordSchema = new mongoose.Schema({
         required: true
     },
     localize_name: LocalizationSchema,
+    parameters: CreatureParametersSchema,
 });
 
 export const CreaturesModel = mongoose.model(EDictionariesNames.Creatures, CreaturesRecordSchema);
