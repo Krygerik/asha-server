@@ -52,16 +52,11 @@ export interface IInputPlayer extends Document {
 }
 
 export interface ISavedPlayer extends IInputPlayer {
-    // Конечный состав армии
-    army_remainder?: ICreatures[];
-    // Ид пользователя в бд
-    user_id?: string;
-    // На сколько изменился рейтинг игрока за эту партию
-    changed_rating?: number;
-    // Новый рейтинг игрока после игры
-    new_rating?: number;
-    // Является ли игрок победителем
-    winner: boolean;
+    army_remainder?: ICreatures[];  // Конечный состав армии
+    changed_rating?: number;        // На сколько изменился рейтинг игрока за эту партию
+    new_rating?: number;            // Новый рейтинг игрока после игры
+    user_id?: string;               // Ид пользователя в бд
+    winner: boolean;                // Является ли игрок победителем
 }
 
 /**
@@ -78,22 +73,14 @@ export interface ISaveGameParamsBody {
  * Тип входящих данных с данными о победителе
  */
 export interface IWinnerRequestDto {
-    // Конечный состав армии
-    army_remainder: ICreatures[];
-    // id сражения
-    combat_id: string;
-    // Дата окончания игры
-    date: string;
-    // Является ли игрок красным
-    isRedPlayer: boolean;
-    // Процент оставшейся силы армии
-    percentage_of_army_left: number;
-    // id пользователя из монго
-    userId: string;
-    // Произошел ли разрыв соединения во время игры
-    wasDisconnect?: boolean;
-    // Цвет игрока победителя
-    winner: EPlayerColor;
+    army_remainder: ICreatures[];       // Конечный состав армии
+    combat_id: string;                  // id сражения
+    date: string;                       // Дата окончания игры
+    isRedPlayer: boolean;               // Является ли игрок красным
+    percentage_of_army_left: number;    // Процент оставшейся силы армии
+    userId: string;                     // id пользователя из монго
+    wasDisconnect?: boolean;            // Произошел ли разрыв соединения во время игры
+    winner: EPlayerColor;               // Цвет игрока победителя
 }
 
 /**
@@ -112,42 +99,26 @@ export interface ISetDisconnectStatusDto {
  * Тип данных для сохранения данных об игре
  */
 export interface IInputGameData extends Document {
-    // id сражения
-    combat_id: string;
-    // Версия карты
-    map_version: IMapVersionValue;
-    // Список ников игроков, участвующих в игре
-    players_ids: string[];
-    // Список данных о прокачках обоих игроков
-    players: IInputPlayer[];
+    combat_id: string;              // id сражения
+    map_version: IMapVersionValue;  // Версия карты
+    players: IInputPlayer[];        // Список данных о прокачках обоих игроков
+    players_ids: string[];          // Список ников игроков, участвующих в игре
 }
 
 /**
  * Тип информации об игре из бд
  */
 export interface ISavedGame extends IInputGameData {
-    // id в mongodb
-    _id: string;
-    // Дата окончания игры
-    date?: string;
-    // Произошел ли разрыв соединения
-    disconnect?: boolean;
-    // ИД рейтинговой встречи
-    ladder_id?: string;
-    // Номер раунда в турнире
-    number_of_round?: number;
-    // Список данных обоих игроков
-    players: ISavedPlayer[];
-    // Список ников игроков, участвующих в игре
-    players_ids: string[];
-    // ИД турнира, в рамках которого была сыграна игра
-    tournament_id?: string;
-    // Название турнира, в рамках которого была сыграна игра
-    tournament_name?: string;
-    // Ожидание статуса соединения
-    waiting_for_disconnect_status?: boolean;
-    // Цвет победителя
-    winner?: EPlayerColor;
+    date?: string;                              // Дата окончания игры
+    disconnect?: boolean;                       // Произошел ли разрыв соединения
+    ladder_id?: string;                         // ИД рейтинговой встречи
+    number_of_round?: number;                   // Номер раунда в турнире
+    players: ISavedPlayer[];                    // Список данных обоих игроков
+    players_ids: string[];                      // Список ников игроков, участвующих в игре
+    tournament_id?: string;                     // ИД турнира, в рамках которого была сыграна игра
+    tournament_name?: string;                   // Название турнира, в рамках которого была сыграна игра
+    waiting_for_disconnect_status?: boolean;    // Ожидание статуса соединения
+    winner?: EPlayerColor;                      // Цвет победителя
 }
 
 /**

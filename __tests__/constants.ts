@@ -21,6 +21,7 @@ import * as spells from "../src/static_db_values/dictionaries/spells.json";
 import * as warMachines from "../src/static_db_values/dictionaries/warMachines.json";
 // @ts-ignore
 import * as mapVersions from "../src/static_db_values/dictionaries/map-versions.json";
+import {EPlayerColor} from "../src/modules/game";
 
 const firstUserId = new ObjectId();
 const secondUserId = new ObjectId();
@@ -167,4 +168,44 @@ export const testCreatedGameRecords = {
 export const populateCreatedGameRecords = {
     ...commonTestCreatedGameRecord,
     players_ids: [testMainGamesParams.userId, otherTestMainGameParams.userId],
+};
+
+export const testWinnerRequestBody = {
+    army_remainder: [{
+        count: 1,
+        name: 'ID1',
+    }],
+    combat_id: '1',
+    date: new Date().toString(),
+    isRedPlayer: true,
+    percentage_of_army_left: 1,
+    userId: '1',
+    wasDisconnect: false,
+    winner: 1,
+};
+
+export const createdGameWithWinner = {
+    ...populateCreatedGameRecords,
+    date: testWinnerRequestBody.date,
+    percentage_of_army_left: testWinnerRequestBody.percentage_of_army_left,
+    players: populateCreatedGameRecords.players.map(
+        player => ({
+            ...player,
+            ...(
+                player.color === testWinnerRequestBody.winner
+                    ? {
+                        army_remainder: testWinnerRequestBody.army_remainder,
+                        user_id: '1',
+                        winner: true,
+                    }
+                    : {
+                        army_remainder: [],
+                        user_id: '2',
+                        winner: false,
+                    }
+            ),
+        })
+    ),
+    waiting_for_disconnect_status: false,
+    winner: testWinnerRequestBody.winner,
 };

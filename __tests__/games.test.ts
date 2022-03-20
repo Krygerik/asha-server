@@ -2,10 +2,12 @@ import { omit } from "lodash";
 import {GameModel} from "../src/modules/game";
 import {testServer} from "./common";
 import {
+    createdGameWithWinner,
     otherTestMainGameParams,
     populateCreatedGameRecords,
     testCreatedGameRecords,
     testMainGamesParams,
+    testWinnerRequestBody,
 } from "./constants";
 
 describe("Запросы на управление игровыми записями", () => {
@@ -56,6 +58,18 @@ describe("Запросы на управление игровыми запися
             const savedRecord = await GameModel.findById(res.body?.DATA?._id);
 
             expect(omit(savedRecord.toObject(), ['_id'])).toEqual(populateCreatedGameRecords);
+        }, 5000)
+    })
+
+    describe("POST /api/save-game-winner", () => {
+        it("Сохранение победителя и определение красного игрока", async () => {
+            const res = await testServer.post("/api/save-game-winner").send(testWinnerRequestBody);
+
+            expect(res.body.MESSAGE).toEqual('Финальные данные игры успешно записаны');
+
+            const savedRecord = await GameModel.findById(res.body?.DATA?._id);
+
+            expect(omit(savedRecord.toObject(), ['_id'])).toEqual(createdGameWithWinner);
         })
     })
 })

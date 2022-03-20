@@ -313,14 +313,13 @@ export class GameController {
     /**
      * Сохранение победителя и определение красного игрока
      */
-    public async saveGameWinner(req: Request<unknown, unknown, IWinnerRequestDto & { userId: string; roles: ERoles }>, res: Response) {
+    public async saveGameWinner(req: Request<unknown, unknown, IWinnerRequestDto>, res: Response) {
         try {
             logger.info(
                 'saveGameWinner: Запрос на сохранение победителя и определение красного игрока',
                 { metadata: { reqBody: req.body }}
             );
 
-            // @ts-ignore
             const savedGame: ISavedGame = await this.gameService.findGame({ combat_id: req.body.combat_id });
 
             /**
@@ -394,15 +393,16 @@ export class GameController {
                 }
             );
 
-            const updatedGame: ISavedGame = await this.gameService.findOneAndUpdate(
+            const updatedGamed: ISavedGame = await this.gameService.findOneAndUpdate(
                 { _id: savedGame._id }, updatedValue, option
             );
 
-            await this.runSideEffectOnCompletedGame(updatedGame);
+            await this.runSideEffectOnCompletedGame(updatedGamed);
 
-            successResponse('Финальные данные игры успешно записаны', { id: savedGame._id }, res);
+            successResponse('Финальные данные игры успешно записаны', updatedGamed, res);
 
         } catch (error) {
+            console.log('error:', error);
             logger.error(
                 'saveGameWinner: Ошибка при сохранении победителя игры и записи результата в турнир',
                 { metadata: { error }}
