@@ -83,7 +83,7 @@ export const testAshaDictionaries = {
     mapVersions: mapVersions.map(addingMongoId),
 }
 
-export const testMainGamesParams = {
+const commonTestMainGamesParams = {
     combat_id: '1',
     map_version: '1',
     players: [
@@ -136,10 +136,19 @@ export const testMainGamesParams = {
             war_machines: ['ID2'],
         },
     ],
+};
+
+export const testMainGamesParams = {
+    ...commonTestMainGamesParams,
     userId: '1',
 };
 
-export const testCreatedGameRecords = {
+export const otherTestMainGameParams = {
+    ...commonTestMainGamesParams,
+    userId: '2',
+};
+
+const commonTestCreatedGameRecord = {
     ...omit(testMainGamesParams, ['userId', 'players']),
     disconnect: false,
     players: testMainGamesParams.players.map(item => ({
@@ -147,6 +156,15 @@ export const testCreatedGameRecords = {
         army_remainder: [],
         winner: false,
     })),
-    players_ids: [testMainGamesParams.userId],
     waiting_for_disconnect_status: false,
+};
+
+export const testCreatedGameRecords = {
+    ...commonTestCreatedGameRecord,
+    players_ids: [testMainGamesParams.userId],
+};
+
+export const populateCreatedGameRecords = {
+    ...commonTestCreatedGameRecord,
+    players_ids: [testMainGamesParams.userId, otherTestMainGameParams.userId],
 };

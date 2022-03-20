@@ -145,24 +145,17 @@ export class GameController {
                 $push: {
                     players_ids: req.body.userId,
                 },
-                $set: {
-                    "players.$[player].user_id": req.body.userId,
-                }
-            };
-
-            const option = {
-                arrayFilters: [
-                    { "player.user_id": null },
-                ]
             };
 
             logger.info(
                 'saveGameParams: Обновление записи игры в бд',
-                { metadata: { _id: game._id, updatedValue, option }
+                { metadata: { _id: game._id, updatedValue }
                 }
             );
 
-            const updatedGame: ISavedGame | null = await this.gameService.findOneAndUpdate(game._id, updatedValue, option);
+            const updatedGame: ISavedGame | null = await this.gameService.findOneAndUpdate(
+                { _id: game._id }, updatedValue
+            );
 
             successResponse('Запись игры успешно обновлена', updatedGame, res);
         } catch (error) {
@@ -401,7 +394,9 @@ export class GameController {
                 }
             );
 
-            const updatedGame: ISavedGame = await this.gameService.findOneAndUpdate(savedGame._id, updatedValue, option);
+            const updatedGame: ISavedGame = await this.gameService.findOneAndUpdate(
+                { _id: savedGame._id }, updatedValue, option
+            );
 
             await this.runSideEffectOnCompletedGame(updatedGame);
 

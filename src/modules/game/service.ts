@@ -58,7 +58,7 @@ export class GameService {
     }
 
     public findOneAndUpdate(query: any, updatedValue: Record<any, any>, option?: Record<any, any>) {
-        return GameModel.findOneAndUpdate();
+        return GameModel.findOneAndUpdate(query, updatedValue, option);
     }
 
     /**
