@@ -52,4 +52,6 @@ export const logger = process.env.NODE_ENV !== 'unittests'
         ],
         exitOnError: false
     })
-    : winston.createLogger();
+    : winston.createLogger({
+        silent: true,
+    });

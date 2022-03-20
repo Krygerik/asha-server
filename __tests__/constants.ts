@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { omit } from 'lodash';
 import { uuid } from 'uuidv4';
 import {IAccount} from "../src/modules/account/account-types";
 import { ILadderRecord } from '../src/modules/ladder';
@@ -81,3 +82,71 @@ export const testAllDictionaries = {
 export const testAshaDictionaries = {
     mapVersions: mapVersions.map(addingMongoId),
 }
+
+export const testMainGamesParams = {
+    combat_id: '1',
+    map_version: '1',
+    players: [
+        {
+            army: [{
+                count: 1,
+                name: 'ID1',
+            }],
+            arts: ['ID1'],
+            attack: 1,
+            color: 1,
+            defence: 1,
+            hero: 'Maeve',
+            knowledge: 1,
+            level: 1,
+            luck: 1,
+            mana_start: 1,
+            mentoring: 1,
+            morale: 1,
+            perks: ['ID1'],
+            race: 'Haven',
+            skills: ['ID1'],
+            spell_power: 1,
+            spells: ['ID1'],
+            start_bonus: 'art',
+            war_machines: ['ID1'],
+        },
+        {
+            army: [{
+                count: 2,
+                name: 'ID2',
+            }],
+            arts: ['ID2'],
+            attack: 2,
+            color: 2,
+            defence: 2,
+            hero: 'Godric',
+            knowledge: 2,
+            level: 2,
+            luck: 2,
+            mana_start: 2,
+            mentoring: 2,
+            morale: 2,
+            perks: ['ID2'],
+            race: 'Haven',
+            skills: ['ID2'],
+            spell_power: 2,
+            spells: ['ID2'],
+            start_bonus: 'art',
+            war_machines: ['ID2'],
+        },
+    ],
+    userId: '1',
+};
+
+export const testCreatedGameRecords = {
+    ...omit(testMainGamesParams, ['userId', 'players']),
+    disconnect: false,
+    players: testMainGamesParams.players.map(item => ({
+        ...item,
+        army_remainder: [],
+        winner: false,
+    })),
+    players_ids: [testMainGamesParams.userId],
+    waiting_for_disconnect_status: false,
+};

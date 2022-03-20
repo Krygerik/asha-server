@@ -398,7 +398,7 @@ export class TournamentService {
      * Получение списка всех турниров
      */
     public async getAllTournaments() {
-        const docs = await TournamentModel.find().select('-__v');
+        const docs = await TournamentModel.find();
 
         return docs.map(doc => doc.toObject());
     }
@@ -407,7 +407,7 @@ export class TournamentService {
      * Получение данных о турнире
      */
     public async getTournament(query: any): Promise<ITournament | null> {
-        const tourDoc = await TournamentModel.findOne(query).select('-__v');
+        const tourDoc = await TournamentModel.findOne(query);
 
         if (!tourDoc) {
             return null;

@@ -40,7 +40,7 @@ export class DictionariesService {
     public async getAllDictionaries() {
         const allDictionaries = await Promise.all(
             Object.values(DictionariesService.mapDictionaryNameToModel).map(
-                    model => model.find({}).select('-__v')
+                    model => model.find({})
             )
         );
 

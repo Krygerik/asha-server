@@ -42,6 +42,7 @@ export class GameService {
     public createGame(gameParams: any) {
         return GameModel.create(gameParams);
     }
+
     /**
      * получение последних 50 игр
      */

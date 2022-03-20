@@ -27,7 +27,7 @@ const SpellsRecordSchema = new mongoose.Schema({
         required: true
     },
     localize_name: LocalizationSchema
-});
+}, { versionKey: false });
 
 export const SpellsModel = mongoose.model(EDictionariesNames.Spells, SpellsRecordSchema);
 
@@ -40,7 +40,7 @@ const SkillsRecordSchema = new mongoose.Schema({
         required: true
     },
     localize_name: LocalizationSchema
-});
+}, { versionKey: false });
 
 export const SkillsModel = mongoose.model(EDictionariesNames.Skills, SkillsRecordSchema);
 
@@ -53,7 +53,7 @@ const PerksRecordSchema = new mongoose.Schema({
         required: true
     },
     localize_name: LocalizationSchema,
-});
+}, { versionKey: false });
 
 export const PerksModel = mongoose.model(EDictionariesNames.Perks, PerksRecordSchema);
 
@@ -70,7 +70,7 @@ const HeroesRecordSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-});
+}, { versionKey: false });
 
 export const HeroesModel = mongoose.model(EDictionariesNames.Heroes, HeroesRecordSchema);
 
@@ -98,6 +98,7 @@ const ArtifactsRecordSchema = new mongoose.Schema(
         },
         localize_name: LocalizationSchema,
     },
+    { versionKey: false }
 );
 
 export const ArtifactsModel = mongoose.model(EDictionariesNames.Artifacts, ArtifactsRecordSchema);
@@ -112,7 +113,7 @@ const CreaturesRecordSchema = new mongoose.Schema({
     },
     localize_name: LocalizationSchema,
     parameters: CreatureParametersSchema,
-});
+}, { versionKey: false });
 
 export const CreaturesModel = mongoose.model(EDictionariesNames.Creatures, CreaturesRecordSchema);
 
@@ -125,7 +126,7 @@ const RacesRecordSchema = new mongoose.Schema({
         required: true
     },
     localize_name: LocalizationSchema,
-});
+}, { versionKey: false });
 
 export const RacesModel = mongoose.model(EDictionariesNames.Races, RacesRecordSchema);
 
@@ -138,6 +139,6 @@ const WarMachinesRecordSchema = new mongoose.Schema({
         required: true
     },
     localize_name: LocalizationSchema,
-});
+}, { versionKey: false });
 
 export const WarMachinesModel = mongoose.model(EDictionariesNames.WarMachines, WarMachinesRecordSchema);

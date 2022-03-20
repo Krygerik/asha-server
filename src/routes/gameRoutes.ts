@@ -7,7 +7,7 @@ export class GameRoutes {
 
     public route(app: Application) {
         /**
-         * Сохранение основных характеристик игрока с его никнеймом
+         * Сохранение основных характеристик игрока
          */
         app.post('/api/save-game-params', loggerMiddleware, (req: Request, res: Response) => {
             this.gameController.saveGameParams(req,res);

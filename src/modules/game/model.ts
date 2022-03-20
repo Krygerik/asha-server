@@ -22,54 +22,33 @@ export enum EPlayerStartedBonus {
  * Интерфейс однотипных войск
  */
 interface ICreatures {
-    // Количество
-    count: number;
-    // Название
-    name: string;
+    count: number;  // Количество
+    name: string;   // Название
 }
 
 /**
  * Интерфейс игрока в записи боя
  */
 export interface IInputPlayer extends Document {
-    // Список войск героя
-    army: ICreatures[];
-    // Артефакты героя
-    arts: string[];
-    // Нападение героя
-    attack: number;
-    // цвет игрока
-    color: EPlayerColor;
-    // Защита героя
-    defence: number;
-    // Название героя
-    hero: string;
-    // Знание героя
-    knowledge: number;
-    // Уровень героя
-    level: number;
-    // Удача героя
-    luck: number;
-    // Стартовая мана героя
-    mana_start: number;
-    // Количество использования ментора
-    mentoring: number;
-    // Мораль героя
-    morale: number;
-    // Умения, способности
-    perks: string[];
-    // Раса
-    race: string;
-    // Школы героя
-    skills: string[];
-    // Колдовство героя
-    spell_power: number;
-    // Заклинания героя
-    spells: string[];
-    // Выбранный стартовый бонус
-    start_bonus: EPlayerStartedBonus;
-    // Боевые машины игрока
-    war_machines: string[];
+    army: ICreatures[];                 // Список войск героя
+    arts: string[];                     // Артефакты героя
+    attack: number;                     // Нападение героя
+    color: EPlayerColor;                // цвет игрока
+    defence: number;                    // Защита героя
+    hero: string;                       // Название героя
+    knowledge: number;                  // Знание героя
+    level: number;                      // Уровень героя
+    luck: number;                       // Удача героя
+    mana_start: number;                 // Стартовая мана героя
+    mentoring: number;                  // Количество использования ментора
+    morale: number;                     // Мораль героя
+    perks: string[];                    // Умения, способности
+    race: string;                       // Раса
+    skills: string[];                   // Школы героя
+    spell_power: number;                // Колдовство героя
+    spells: string[];                   // Заклинания героя
+    start_bonus: EPlayerStartedBonus;   // Выбранный стартовый бонус
+    war_machines: string[];             // Боевые машины игрока
 }
 
 export interface ISavedPlayer extends IInputPlayer {
@@ -89,14 +68,10 @@ export interface ISavedPlayer extends IInputPlayer {
  * Тип входящих данных по основным характеристикам игроков с ником отправителя
  */
 export interface ISaveGameParamsBody {
-    // id сражения
-    combat_id: string;
-    // Версия карты
-    map_version: IMapVersionValue;
-    // Список данных о прокачках обоих игроков
-    players: IInputPlayer[];
-    // id пользователя из монго
-    userId: string;
+    combat_id: string;              // id сражения
+    map_version: IMapVersionValue;  // Версия карты
+    players: IInputPlayer[];        // Список данных о прокачках обоих игроков
+    userId: string;                 // id пользователя из монго
 }
 
 /**

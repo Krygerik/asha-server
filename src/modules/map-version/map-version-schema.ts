@@ -5,6 +5,6 @@ const MapVersionSchema = new mongoose.Schema({
         required: true,
         type: String,
     },
-});
+}, { versionKey: false });
 
 export const MapVersionModel = mongoose.model('map-versions', MapVersionSchema)
