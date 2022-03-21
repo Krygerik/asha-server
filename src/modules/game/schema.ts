@@ -124,6 +124,11 @@ const GameSchema = new Schema({
         required: true,
         type: Boolean,
     },
+    disconnect_confirmed: {
+        default: false,
+        required: true,
+        type: Boolean,
+    },
     waiting_for_disconnect_status: {
         default: false,
         required: true,

@@ -21,7 +21,6 @@ import * as spells from "../src/static_db_values/dictionaries/spells.json";
 import * as warMachines from "../src/static_db_values/dictionaries/warMachines.json";
 // @ts-ignore
 import * as mapVersions from "../src/static_db_values/dictionaries/map-versions.json";
-import {EPlayerColor} from "../src/modules/game";
 
 const firstUserId = new ObjectId();
 const secondUserId = new ObjectId();
@@ -152,6 +151,7 @@ export const otherTestMainGameParams = {
 const commonTestCreatedGameRecord = {
     ...omit(testMainGamesParams, ['userId', 'players']),
     disconnect: false,
+    disconnect_confirmed: false,
     players: testMainGamesParams.players.map(item => ({
         ...item,
         army_remainder: [],
@@ -170,7 +170,7 @@ export const populateCreatedGameRecords = {
     players_ids: [testMainGamesParams.userId, otherTestMainGameParams.userId],
 };
 
-export const testWinnerRequestBody = {
+const commonTestWinnerRequestBody = {
     army_remainder: [{
         count: 1,
         name: 'ID1',
@@ -180,11 +180,20 @@ export const testWinnerRequestBody = {
     isRedPlayer: true,
     percentage_of_army_left: 1,
     userId: '1',
-    wasDisconnect: false,
     winner: 1,
 };
 
-export const createdGameWithWinner = {
+export const testWinnerRequestBody = {
+    ...commonTestWinnerRequestBody,
+    wasDisconnect: false,
+};
+
+export const testWinnerRequestBodyWithDisconnect = {
+    ...commonTestWinnerRequestBody,
+    wasDisconnect: true,
+};
+
+const commonCreatedGameWithWinner = {
     ...populateCreatedGameRecords,
     date: testWinnerRequestBody.date,
     percentage_of_army_left: testWinnerRequestBody.percentage_of_army_left,
@@ -206,6 +215,21 @@ export const createdGameWithWinner = {
             ),
         })
     ),
-    waiting_for_disconnect_status: false,
     winner: testWinnerRequestBody.winner,
+};
+
+export const createdGameWithWinner = {
+    ...commonCreatedGameWithWinner,
+    waiting_for_disconnect_status: false,
+};
+
+export const createdGameWithWinnerAndDisconnect = {
+    ...commonCreatedGameWithWinner,
+    waiting_for_disconnect_status: true,
+};
+
+export const testSetDisconnectStatusReqBody = {
+    IsDisconnect: false,
+    combat_id: '1',
+    userId: '1',
 };

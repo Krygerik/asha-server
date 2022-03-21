@@ -1,12 +1,11 @@
 import {Request, Response} from "express";
-import {filter, find, flatten, isNil, isNull, map, omit, uniq} from "lodash";
+import {filter, find, flatten, isNil, map, omit, uniq} from "lodash";
 import { AccountService } from "../modules/account";
 import {
     EPlayerColor,
     GameService,
     IFilterGames,
     IFindGameOptions,
-    IInputGameData,
     ISavedGame,
     ISavedPlayer,
     ISaveGameParamsBody,
@@ -351,13 +350,6 @@ export class GameController {
                 (playerId: string) => playerId !== winnerId
             );
 
-            /**
-             * Если простановка статуса разрыва соединения прилетело раньше, не ждем новый
-             */
-            const waiting_for_disconnect_status = isNull(savedGame.waiting_for_disconnect_status)
-                ? req.body.wasDisconnect
-                : savedGame.waiting_for_disconnect_status;
-
             const updatedValue = {
                 $set: {
                     "players.$[redPlayer].user_id": req.body.winner === EPlayerColor.RED ? winnerId : looserId,
@@ -367,8 +359,12 @@ export class GameController {
                     "players.$[winner].winner": true,
                     "players.$[looser].winner": false,
                     date: req.body.date,
+                    disconnect_confirmed: false,
                     percentage_of_army_left: req.body.percentage_of_army_left,
-                    waiting_for_disconnect_status,
+                    // Если простановка статуса разрыва соединения прилетело раньше, не ждем новый
+                    waiting_for_disconnect_status: savedGame.disconnect_confirmed
+                        ? false
+                        : req.body.wasDisconnect,
                     winner: req.body.winner,
                 }
             };
@@ -402,7 +398,6 @@ export class GameController {
             successResponse('Финальные данные игры успешно записаны', updatedGamed, res);
 
         } catch (error) {
-            console.log('error:', error);
             logger.error(
                 'saveGameWinner: Ошибка при сохранении победителя игры и записи результата в турнир',
                 { metadata: { error }}
@@ -505,7 +500,7 @@ export class GameController {
      * Проставление игре статуса разрыва соединения
      */
     public async setGameDisconnectStatusByCombatId(
-        req: Request<unknown, unknown, ISetDisconnectStatusDto & { userId: string; roles: string[] }>, res: Response
+        req: Request<unknown, unknown, ISetDisconnectStatusDto>, res: Response
     ) {
         try {
             logger.info(
@@ -524,9 +519,12 @@ export class GameController {
                 return insufficientParameters(res);
             }
 
+            const savedGame: ISavedGame = await this.gameService.findGame({ combat_id });
+
             const updatedValue = {
                 disconnect: Boolean(IsDisconnect),
                 waiting_for_disconnect_status: false,
+                disconnect_confirmed: !savedGame.waiting_for_disconnect_status
             };
 
             logger.info(
@@ -538,7 +536,7 @@ export class GameController {
 
             await this.runSideEffectOnCompletedGame(updatedGame);
 
-            return successResponseWithoutMessage(null, res);
+            return successResponseWithoutMessage(updatedGame, res);
         } catch (error) {
             logger.error(
                 'setGameDisconnectStatusByCombatId: Ошибка при попытке проставить игре статуса разрыва соединения',

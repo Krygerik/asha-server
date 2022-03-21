@@ -87,12 +87,9 @@ export interface IWinnerRequestDto {
  * Тело запроса для установки статуса соединения для игры
  */
 export interface ISetDisconnectStatusDto {
-    // ИД игры для которой проставляется статус
-    combat_id?: string;
-    // статус соединения
-    IsDisconnect?: boolean;
-    // id пользователя из монго
-    userId: string;
+    IsDisconnect?: boolean; // статус соединения
+    combat_id?: string;     // ИД игры для которой проставляется статус
+    userId: string;         // id пользователя из монго
 }
 
 /**
@@ -109,15 +106,16 @@ export interface IInputGameData extends Document {
  * Тип информации об игре из бд
  */
 export interface ISavedGame extends IInputGameData {
-    date?: string;                              // Дата окончания игры
-    disconnect?: boolean;                       // Произошел ли разрыв соединения
+    date: string;                               // Дата окончания игры
+    disconnect: boolean;                        // Произошел ли разрыв соединения
+    disconnect_confirmed: boolean;              // Подтверждение дисконнекта пришло раньше чем началось его ожидание
     ladder_id?: string;                         // ИД рейтинговой встречи
     number_of_round?: number;                   // Номер раунда в турнире
     players: ISavedPlayer[];                    // Список данных обоих игроков
     players_ids: string[];                      // Список ников игроков, участвующих в игре
     tournament_id?: string;                     // ИД турнира, в рамках которого была сыграна игра
     tournament_name?: string;                   // Название турнира, в рамках которого была сыграна игра
-    waiting_for_disconnect_status?: boolean;    // Ожидание статуса соединения
+    waiting_for_disconnect_status: boolean;     // Ожидание статуса соединения
     winner?: EPlayerColor;                      // Цвет победителя
 }
 
