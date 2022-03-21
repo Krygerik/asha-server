@@ -228,8 +228,22 @@ export const createdGameWithWinnerAndDisconnect = {
     waiting_for_disconnect_status: true,
 };
 
-export const testSetDisconnectStatusReqBody = {
-    IsDisconnect: false,
+const commonSetDisconnectStatusReqBody = {
     combat_id: '1',
     userId: '1',
+}
+
+export const testSetDisconnectStatusReqBody = {
+    ...commonSetDisconnectStatusReqBody,
+    IsDisconnect: false,
+};
+
+export const setDisconnectStatusAsTrueReqBody = {
+    ...commonSetDisconnectStatusReqBody,
+    IsDisconnect: true,
+};
+
+export const createdGameWithWinnerAndDisconnected = {
+    ...commonCreatedGameWithWinner,
+    disconnect: true,
 };
