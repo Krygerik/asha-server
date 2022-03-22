@@ -333,6 +333,10 @@ export class GameController {
                 return failureResponse('Игра с таким ID отсутствует', null, res);
             }
 
+            if (savedGame.winner && !savedGame.disconnect) {
+                return successResponse('Окончательные результаты игры уже записаны', savedGame, res);
+            }
+
             const senderIsWinner = (
                 req.body.isRedPlayer && req.body.winner === EPlayerColor.RED
                 || !req.body.isRedPlayer && req.body.winner === EPlayerColor.BLUE
@@ -359,6 +363,7 @@ export class GameController {
                     "players.$[winner].winner": true,
                     "players.$[looser].winner": false,
                     date: req.body.date,
+                    disconnect: false,
                     disconnect_confirmed: false,
                     percentage_of_army_left: req.body.percentage_of_army_left,
                     // Если простановка статуса разрыва соединения прилетело раньше, не ждем новый
@@ -536,7 +541,7 @@ export class GameController {
 
             await this.runSideEffectOnCompletedGame(updatedGame);
 
-            return successResponseWithoutMessage(updatedGame, res);
+            return successResponse('Подтверждение игроком статуса разрыва соединения успешно', updatedGame, res);
         } catch (error) {
             logger.error(
                 'setGameDisconnectStatusByCombatId: Ошибка при попытке проставить игре статуса разрыва соединения',

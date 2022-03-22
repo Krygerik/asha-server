@@ -183,8 +183,26 @@ const commonTestWinnerRequestBody = {
     winner: 1,
 };
 
+const otherCommonWinnerRequestBody = {
+    army_remainder: [{
+        count: 2,
+        name: 'ID2',
+    }],
+    combat_id: '1',
+    date: new Date().toString(),
+    isRedPlayer: false,
+    percentage_of_army_left: 1,
+    userId: '2',
+    winner: 2,
+};
+
 export const testWinnerRequestBody = {
     ...commonTestWinnerRequestBody,
+    wasDisconnect: false,
+};
+
+export const otherWinnerRequestBody = {
+    ...otherCommonWinnerRequestBody,
     wasDisconnect: false,
 };
 
@@ -216,6 +234,31 @@ const commonCreatedGameWithWinner = {
         })
     ),
     winner: testWinnerRequestBody.winner,
+};
+
+export const otherCommonCreatedGameWithWinner = {
+    ...populateCreatedGameRecords,
+    date: otherCommonWinnerRequestBody.date,
+    percentage_of_army_left: otherCommonWinnerRequestBody.percentage_of_army_left,
+    players: populateCreatedGameRecords.players.map(
+        player => ({
+            ...player,
+            ...(
+                player.color === otherCommonWinnerRequestBody.winner
+                    ? {
+                        army_remainder: otherCommonWinnerRequestBody.army_remainder,
+                        user_id: '2',
+                        winner: true,
+                    }
+                    : {
+                        army_remainder: [],
+                        user_id: '1',
+                        winner: false,
+                    }
+            ),
+        })
+    ),
+    winner: otherCommonWinnerRequestBody.winner,
 };
 
 export const createdGameWithWinner = {

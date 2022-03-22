@@ -3,9 +3,13 @@ import {GameModel} from "../src/modules/game";
 import {testServer} from "./common";
 import {
     createdGameWithWinner,
-    createdGameWithWinnerAndDisconnect, createdGameWithWinnerAndDisconnected,
+    createdGameWithWinnerAndDisconnect,
+    createdGameWithWinnerAndDisconnected,
+    otherCommonCreatedGameWithWinner,
     otherTestMainGameParams,
-    populateCreatedGameRecords, setDisconnectStatusAsTrueReqBody,
+    otherWinnerRequestBody,
+    populateCreatedGameRecords,
+    setDisconnectStatusAsTrueReqBody,
     testCreatedGameRecords,
     testMainGamesParams,
     testSetDisconnectStatusReqBody,
@@ -157,6 +161,56 @@ describe("Запросы на управление игровыми запися
             const savedRecord = await GameModel.findById(res.body?.DATA?._id);
 
             expect(omit(savedRecord.toObject(), ['_id'])).toEqual(createdGameWithWinnerAndDisconnected);
+        }, 5000)
+    })
+
+    describe("Перезапись игровых данных при переигровке матча с разрывом соединения", () => {
+        it("Создание новой записи игры", async () => {
+            await clearCollections();
+
+            const res = await testServer.post("/api/save-game-params").send(testMainGamesParams);
+
+            expect(res.body.MESSAGE).toEqual('Запись игры успешно создана');
+        }, 5000)
+
+        it("Запись данных от второго игрока", async () => {
+            const res = await testServer.post("/api/save-game-params").send(otherTestMainGameParams);
+
+            expect(res.body.MESSAGE).toEqual('Запись игры успешно обновлена');
+        }, 5000)
+
+        it("Запись победителя и статус соединения", async () => {
+            const res = await testServer.post("/api/save-game-winner").send(testWinnerRequestBodyWithDisconnect);
+
+            expect(res.body.MESSAGE).toEqual('Финальные данные игры успешно записаны');
+        }, 5000)
+
+        it("Подтверждение статуса разрыва соединения игроком", async () => {
+            const res = await testServer.post("/api/set-game-disconnect-status").send(setDisconnectStatusAsTrueReqBody);
+
+            expect(res.body.MESSAGE).toEqual('Подтверждение игроком статуса разрыва соединения успешно');
+        }, 5000)
+
+        it("Повторная отправка данных первым игроком на перезапись", async () => {
+            const res = await testServer.post("/api/save-game-params").send(testMainGamesParams);
+
+            expect(res.body.MESSAGE).toEqual('Игрок уже записан в запись игры');
+        }, 5000)
+
+        it("Повторная отправка данных вторым игроком на перезапись", async () => {
+            const res = await testServer.post("/api/save-game-params").send(otherTestMainGameParams);
+
+            expect(res.body.MESSAGE).toEqual('Игрок уже записан в запись игры');
+        }, 5000)
+
+        it("Сохранение новых результатов игры", async () => {
+            const res = await testServer.post("/api/save-game-winner").send(otherWinnerRequestBody);
+
+            expect(res.body.MESSAGE).toEqual('Финальные данные игры успешно записаны');
+
+            const savedRecord = await GameModel.findById(res.body?.DATA?._id);
+
+            expect(omit(savedRecord.toObject(), ['_id'])).toEqual(otherCommonCreatedGameWithWinner);
         }, 5000)
     })
 })
