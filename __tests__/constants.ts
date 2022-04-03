@@ -22,8 +22,8 @@ import * as warMachines from "../src/static_db_values/dictionaries/warMachines.j
 // @ts-ignore
 import * as mapVersions from "../src/static_db_values/dictionaries/map-versions.json";
 
-const firstUserId = new ObjectId();
-const secondUserId = new ObjectId();
+const firstUserId = (new ObjectId()).toString();
+const secondUserId = (new ObjectId()).toString();
 
 export const testUserRecordList = [
     {
@@ -52,13 +52,13 @@ export const testUserRecordList = [
     }
 ] as IAccount[];
 
-export const testLadderRecord: ILadderRecord = {
-    _id: new ObjectId(),
+export const testLadderRecord = {
+    _id: (new ObjectId()).toString(),
     active: true,
     game_ids: [],
     // @ts-ignore
     member_ids: [firstUserId, secondUserId],
-};
+} as ILadderRecord;
 
 /**
  * Добавление к элементу справочника поля Монго ИД
@@ -140,12 +140,22 @@ const commonTestMainGamesParams = {
 
 export const testMainGamesParams = {
     ...commonTestMainGamesParams,
-    userId: '1',
+    userId: testUserRecordList[0]._id,
 };
 
 export const otherTestMainGameParams = {
     ...commonTestMainGamesParams,
-    userId: '2',
+    userId: testUserRecordList[1]._id,
+};
+
+export const secondGameFirstRequestFirstPlayer = {
+    ...testMainGamesParams,
+    combat_id: '2',
+};
+
+export const secondGameFirstRequestSecondPlayer = {
+    ...otherTestMainGameParams,
+    combat_id: '2',
 };
 
 const commonTestCreatedGameRecord = {
@@ -179,7 +189,7 @@ const commonTestWinnerRequestBody = {
     date: new Date().toString(),
     isRedPlayer: true,
     percentage_of_army_left: 1,
-    userId: '1',
+    userId: testUserRecordList[0]._id,
     winner: 1,
 };
 
@@ -192,13 +202,19 @@ const otherCommonWinnerRequestBody = {
     date: new Date().toString(),
     isRedPlayer: false,
     percentage_of_army_left: 1,
-    userId: '2',
+    userId: testUserRecordList[1]._id,
     winner: 2,
 };
 
 export const testWinnerRequestBody = {
     ...commonTestWinnerRequestBody,
     wasDisconnect: false,
+};
+
+export const secondGameSecondRequest = {
+    ...commonTestWinnerRequestBody,
+    combat_id: '2',
+    wasDisconnect: true,
 };
 
 export const otherWinnerRequestBody = {
@@ -222,12 +238,12 @@ const commonCreatedGameWithWinner = {
                 player.color === testWinnerRequestBody.winner
                     ? {
                         army_remainder: testWinnerRequestBody.army_remainder,
-                        user_id: '1',
+                        user_id: testUserRecordList[0]._id,
                         winner: true,
                     }
                     : {
                         army_remainder: [],
-                        user_id: '2',
+                        user_id: testUserRecordList[1]._id,
                         winner: false,
                     }
             ),
@@ -247,12 +263,12 @@ export const otherCommonCreatedGameWithWinner = {
                 player.color === otherCommonWinnerRequestBody.winner
                     ? {
                         army_remainder: otherCommonWinnerRequestBody.army_remainder,
-                        user_id: '2',
+                        user_id: testUserRecordList[1]._id,
                         winner: true,
                     }
                     : {
                         army_remainder: [],
-                        user_id: '1',
+                        user_id: testUserRecordList[0]._id,
                         winner: false,
                     }
             ),
@@ -273,7 +289,7 @@ export const createdGameWithWinnerAndDisconnect = {
 
 const commonSetDisconnectStatusReqBody = {
     combat_id: '1',
-    userId: '1',
+    userId: testUserRecordList[0]._id,
 }
 
 export const testSetDisconnectStatusReqBody = {
@@ -289,4 +305,118 @@ export const setDisconnectStatusAsTrueReqBody = {
 export const createdGameWithWinnerAndDisconnected = {
     ...commonCreatedGameWithWinner,
     disconnect: true,
+};
+
+export const secondGameThirdRequestBody = {
+    ...testSetDisconnectStatusReqBody,
+    combat_id: '2',
+};
+
+export const createTournamentReqBody = {
+    _id: new ObjectId(),
+    maximum_player_count: 2,
+    name: 'Sokratik',
+    rounds_format: 'Bo3',
+    start_date: new Date().toString(),
+    super_final_format: 'Bo5',
+};
+
+export const otherTournamentReqBodyWithIdentityName = {
+    _id: new ObjectId(),
+    maximum_player_count: 4,
+    name: 'Sokratik',
+    rounds_format: 'Bo5',
+    start_date: new Date().toString(),
+    super_final_format: 'Bo5',
+};
+
+export const createdTournament = {
+    ...omit(createTournamentReqBody, ['user']),
+    grid: [],
+    started: false,
+    users: [],
+};
+
+export const deleteTournamentReqBody = {
+    tournament_id: createTournamentReqBody._id,
+};
+
+export const registerFirstParticipantReqBody = {
+    tournament_id: createTournamentReqBody._id,
+    userId: testUserRecordList[0]._id
+};
+
+export const registerSecondParticipantReqBody = {
+    tournament_id: createTournamentReqBody._id,
+    userId: testUserRecordList[1]._id
+};
+
+export const createdTournamentWithOnePlayer = {
+    ...createdTournament,
+    users: [testUserRecordList[0]._id],
+};
+
+export const createdTournamentWithTwoPlayer = {
+    ...createdTournament,
+    grid: [
+        {
+            children_rounds: [],
+            number_of_round: 1,
+            players: [
+                {
+                    color: 2,
+                    user_id: testUserRecordList[1]._id,
+                    win_count: 0,
+                },
+                {
+                    color: 1,
+                    user_id: testUserRecordList[0]._id,
+                    win_count: 0,
+                },
+            ],
+            round_format: 'Bo5',
+        },
+    ],
+    started: true,
+    users: [testUserRecordList[0]._id, testUserRecordList[1]._id],
+};
+
+export const startedTourWithFirstGame = {
+    ...createdTournamentWithTwoPlayer,
+    grid: [
+        {
+            ...createdTournamentWithTwoPlayer.grid[0],
+            players: [
+                {
+                    color: 2,
+                    user_id: testUserRecordList[1]._id,
+                    win_count: 0,
+                },
+                {
+                    color: 1,
+                    user_id: testUserRecordList[0]._id,
+                    win_count: 1,
+                },
+            ],
+        },
+    ],
+};
+
+export const startedTourWithSecondGame = {
+    ...startedTourWithFirstGame,
+    grid: [{
+        ...startedTourWithFirstGame.grid[0],
+        players: [
+            {
+                color: 2,
+                user_id: testUserRecordList[1]._id,
+                win_count: 0,
+            },
+            {
+                color: 1,
+                user_id: testUserRecordList[0]._id,
+                win_count: 2,
+            },
+        ],
+    }]
 };

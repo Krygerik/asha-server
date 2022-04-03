@@ -64,6 +64,17 @@ export class TournamentService {
      * Завершение регистрации на отдельный турнир
      */
     private static async closeRegistrationInSingleTournament(tournament: ITournament) {
+        if (tournament.users.length < 2) {
+            return TournamentModel.findOneAndUpdate(
+                { _id: tournament._id },
+                {
+                    $set: {
+                        started: true,
+                    }
+                }
+            );
+        }
+
         const grid = TournamentService.generateTournamentGrid(tournament);
 
         await TournamentModel.findOneAndUpdate(
@@ -143,7 +154,7 @@ export class TournamentService {
 
                 return {
                     ...round,
-                    winner_id: playerWOOpponent.user_id,
+                    winner_id: playerWOOpponent?.user_id,
                 };
             }
 
@@ -230,6 +241,8 @@ export class TournamentService {
             { metadata: { gameUserIdList }}
         );
 
+        console.log('gameUserIdList:', gameUserIdList);
+
         const tournament = await TournamentModel.findOne(
             {
                 started: true,
@@ -238,6 +251,8 @@ export class TournamentService {
             },
             { grid: true, name: true }
         );
+
+        console.log('tournament:', tournament);
 
         /**
          * Если не найден турнир с такими участниками
@@ -263,6 +278,8 @@ export class TournamentService {
             )
         )
 
+        console.log('round:', round);
+
         /**
          * Если у переданных игроков нет активной встречи - тож бесцеремонно выкидываем
          */
@@ -280,6 +297,8 @@ export class TournamentService {
             tournament_id: tournament._id,
             tournament_name: tournament.name
         };
+
+        console.log('tournamentIdWithNumberOfRound:', tournamentIdWithNumberOfRound);
 
         logger.info(
             'getTournamentIdWithNumberOfRound: Высчитан турнир и раунд для переданных игроков',
@@ -300,8 +319,14 @@ export class TournamentService {
             { metadata: { game_id, number_of_round, tournament_id, winner_id }}
         );
 
+        console.log('tournament_id:', tournament_id);
+        console.log('number_of_round:', number_of_round);
+        console.log('winner_id:', winner_id);
+        console.log('game_id:', game_id);
+
         const tournament: ITournament | null = await TournamentModel.findOne({ _id: tournament_id });
 
+        console.log('tournament:', tournament);
         if (!tournament) {
             logger.error(
                 'addGameToTournament: Не найден турнир с таким ИД',
@@ -314,6 +339,7 @@ export class TournamentService {
         const currentRound: ITournamentRound | null = tournament.grid.find(
             (round: ITournamentRound) => round.number_of_round === number_of_round
         );
+        console.log('currentRound:', currentRound);
 
         if (!currentRound) {
             logger.error(
@@ -332,21 +358,30 @@ export class TournamentService {
         );
 
         const newWinCount = winnerGamePlayer.win_count + 1;
-        const isFinishGame = newWinCount >= mapRoundFormatToMaximumCountGame[currentRound.round_format];
-        const needChangeGrid = isFinishGame && number_of_round !== 1;
+        const isFinishGameOnRound = newWinCount >= mapRoundFormatToMaximumCountGame[currentRound.round_format];
+        const needChangeGrid = isFinishGameOnRound && number_of_round !== 1;
         const targetRound: ITournamentRound = tournament.grid.find(
             round => round.number_of_round === number_of_round
         );
 
-        const nextRound: ITournamentRound = tournament.grid.find(
+        const nextRound: ITournamentRound | null = tournament.grid.find(
             round => round.number_of_round === targetRound.parent_round
         );
 
         const mainDataQuery = getMainDataQuery(game_id, number_of_round, newWinCount, winner_id);
-        const finishRoundDataQuery = getFinishRoundDataQuery(isFinishGame, winner_id, number_of_round);
+        const finishRoundDataQuery = getFinishRoundDataQuery(isFinishGameOnRound, winner_id, number_of_round);
         const changeGridDataQuery = getChangeGridDataQuery(
-            needChangeGrid, nextRound.players.length, targetRound.parent_round, winner_id
+            needChangeGrid, nextRound?.players?.length, targetRound.parent_round, winner_id
         );
+
+        console.log('newWinCount:', newWinCount);
+        console.log('isFinishGameOnRound:', isFinishGameOnRound);
+        console.log('needChangeGrid:', needChangeGrid);
+        console.log('targetRound:', targetRound);
+        console.log('nextRound:', nextRound);
+        console.log('mainDataQuery:', mainDataQuery);
+        console.log('finishRoundDataQuery:', finishRoundDataQuery);
+        console.log('changeGridDataQuery:', changeGridDataQuery);
 
         const updatedValue = {
             $set: {
@@ -365,6 +400,10 @@ export class TournamentService {
                 ...changeGridDataQuery.options.arrayFilters,
             ]
         }
+
+        console.log('updatedValue:', updatedValue);
+        console.log('options:', options);
+
 
         logger.info(
             'addGameToTournament: Сохранение результата игры в бд',
@@ -388,10 +427,8 @@ export class TournamentService {
     /**
      * Удаление турнира
      */
-    public async deleteTournament(_id: string) {
-        const deletedTour = await TournamentModel.findOneAndDelete({ _id });
-
-        return deletedTour.toObject();
+    public deleteTournament(_id: string) {
+        return TournamentModel.findOneAndDelete({ _id });
     }
 
     /**
@@ -406,15 +443,8 @@ export class TournamentService {
     /**
      * Получение данных о турнире
      */
-    public async getTournament(query: any): Promise<ITournament | null> {
-        const tourDoc = await TournamentModel.findOne(query);
-
-        if (!tourDoc) {
-            return null;
-        }
-
-        // @ts-ignore
-        return tourDoc.toObject();
+    public getTournament(query: any) {
+        return TournamentModel.findOne(query);
     }
 
     /**

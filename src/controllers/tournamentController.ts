@@ -26,7 +26,6 @@ export class TournamentController {
                 return failureResponse('Турнир с таким названием уже зарегистрирован', null, res);
             }
 
-            // @ts-ignore
             const createdTournament: ITournament | null = await this.tournamentService.createTournament(tournamentData);
 
             if (!createdTournament) {
@@ -50,14 +49,13 @@ export class TournamentController {
                 return insufficientParameters(res);
             }
 
-            // @ts-ignore
             const deletedTournament: ITournament | null = await this.tournamentService.deleteTournament(tournament_id);
 
             if (!deletedTournament) {
                 return failureResponse('Такого турнира не существует', null, res);
             }
 
-            successResponse(`Турнир "${deletedTournament.name}" успешно удален`, null, res);
+            successResponse('Турнир успешно удален', deletedTournament, res);
         } catch (error) {
             mongoError(error, res);
         }

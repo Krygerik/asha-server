@@ -13,7 +13,7 @@ const PlayerSchema = new Schema({
         default: 0,
         required: true,
     },
-});
+}, { _id: false });
 
 const GridSchema = new Schema({
     children_rounds: {
@@ -41,7 +41,7 @@ const GridSchema = new Schema({
         type: String,
     },
     winner_id: String,
-});
+}, { _id: false });
 
 const TournamentSchema = new Schema({
     users: {

@@ -176,7 +176,11 @@ export class GameController {
         const winnerPlayer = game.players.find((player: ISavedPlayer) => player.winner);
         const looserPlayer = game.players.find((player: ISavedPlayer) => !player.winner);
 
-        const currentLadder: ILadderRecord = await this.ladderService.getActiveLadderByUserId(winnerPlayer.user_id);
+        const currentLadder: ILadderRecord | null = await this.ladderService.getActiveLadderByUserId(winnerPlayer.user_id);
+
+        if (!currentLadder) {
+            return null;
+        }
 
         if (currentLadder.member_ids.includes(looserPlayer.user_id)) {
             if (!currentLadder.game_ids.includes(gameId)) {
@@ -247,8 +251,8 @@ export class GameController {
             const looserPlayer = game.players.find((player: ISavedPlayer) => !player.winner);
 
             await this.tournamentService.addGameToTournament(
-                game.tournament_id,
-                game.number_of_round,
+                tournamentData.tournament_id,
+                tournamentData.number_of_round,
                 winnerPlayer.user_id,
                 game._id,
             );
@@ -306,7 +310,7 @@ export class GameController {
 
         await this.checkAndEnrichmentTournamentData(game._id);
 
-        await this.checkAndEnrichmentLadderData(game._id);
+        // await this.checkAndEnrichmentLadderData(game._id);
     }
 
     /**
@@ -375,13 +379,14 @@ export class GameController {
             };
 
             const option = {
-                multi: true,
                 arrayFilters: [
                     { "redPlayer.color": EPlayerColor.RED },
                     { "bluePlayer.color": EPlayerColor.BLUE },
                     { "winner.color": req.body.winner },
                     { "looser.color": { $ne: req.body.winner} },
-                ]
+                ],
+                multi: true,
+                new: true,
             };
 
             logger.info(
@@ -537,7 +542,11 @@ export class GameController {
                 { metadata: { combat_id, updatedValue }}
             );
 
-            const updatedGame: ISavedGame = await this.gameService.findOneAndUpdate({ combat_id }, updatedValue);
+            const updatedGame: ISavedGame = await this.gameService.findOneAndUpdate(
+                { combat_id },
+                updatedValue,
+                { new: true },
+            );
 
             await this.runSideEffectOnCompletedGame(updatedGame);
 
