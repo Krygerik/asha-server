@@ -522,6 +522,16 @@
   },
   {
     "game_id": [
+      "Cyrus"
+    ],
+    "localize_name": {
+      "en": "Cyrus",
+      "ru": "Сайрус"
+    },
+    "race_game_id": "5"
+  },
+  {
+    "game_id": [
       "Eruina"
     ],
     "localize_name": {
@@ -617,6 +627,16 @@
     "localize_name": {
       "en": "Ylaya",
       "ru": "Илайя"
+    },
+    "race_game_id": "6"
+  },
+  {
+    "game_id": [
+      "Thralsai"
+    ],
+    "localize_name": {
+      "en": "Thralsai",
+      "ru": "Тралсай"
     },
     "race_game_id": "6"
   },
