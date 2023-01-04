@@ -36,4 +36,4 @@ jobs:
         passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
         script: |
           cd ~/projects/servers/production/
-          NODE_ENV=production pm2 restart dist/index.js
+          NODE_ENV=production pm2 start dist/index.js
