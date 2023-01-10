@@ -48,13 +48,8 @@ class App {
 
     private config(): void {
         const corsOptions = {
-            credentials: true,
-            optionsSuccessStatus: 200,
-            origin: [
-                'http://localhost:3000',                    // локальная сборка
-                process.env.APP_DEVELOP_CLIENT_ROOT_PAGE,   // тест стенд
-                process.env.APP_PRODUCTION_CLIENT_ROOT_PAGE,   /// прод
-            ],
+            origin: '*',
+            optionsSuccessStatus: 200
         }
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
