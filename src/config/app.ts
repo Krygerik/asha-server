@@ -51,9 +51,9 @@ class App {
             credentials: true,
             optionsSuccessStatus: 200,
             origin: [
-                'http://localhost:3000',        // локальная сборка
-                'http://46.101.232.123:8080',   // тест стенд
-                'http://46.101.232.123',        // прод
+                'http://localhost:3000',                    // локальная сборка
+                process.env.APP_DEVELOP_CLIENT_ROOT_PAGE,   // тест стенд
+                process.env.APP_PRODUCTION_CLIENT_ROOT_PAGE,   /// прод
             ],
         }
         this.app.use(bodyParser.json());
