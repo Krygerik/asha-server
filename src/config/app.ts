@@ -14,7 +14,6 @@ import { MapVersionRoutes } from "../routes/mapVersionRoutes";
 import {TestRoutes} from '../routes/testRoutes';
 import {TournamentRoutes} from "../routes/tournamentRoutes";
 import { mongoUrl } from "../constants";
-import 'dotenv/config';
 
 class App {
     public app: express.Application;
