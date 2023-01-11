@@ -17,7 +17,7 @@ const getDatabaseName = () => {
 /**
  * Урл до бд с учетом среды
  */
-export const mongoUrl = 'mongodb://AdminSokratik:Her0EsF!ve@localhost:27017/' + getDatabaseName();
+export const mongoUrl = 'mongodb://AdminSokratik:HEr0EsF!ve@localhost:27017/' + getDatabaseName();
 
 /**
  * Возможные значения окружения среды, в которых работает приложение
