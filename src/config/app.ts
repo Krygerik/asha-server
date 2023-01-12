@@ -47,8 +47,13 @@ class App {
 
     private config(): void {
         const corsOptions = {
-            origin: '*',
-            optionsSuccessStatus: 200
+            origin: [
+                'http://localhost:3000',
+                process.env.APP_PRODUCTION_CLIENT_ROOT_PAGE,
+                process.env.APP_DEVELOP_CLIENT_ROOT_PAGE,
+            ],
+            optionsSuccessStatus: 200,
+            withCredentials: true,
         }
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
