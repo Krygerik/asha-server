@@ -53,7 +53,7 @@ class App {
                 process.env.APP_DEVELOP_CLIENT_ROOT_PAGE,
             ],
             optionsSuccessStatus: 200,
-            withCredentials: true,
+            credentials: true,
         }
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
