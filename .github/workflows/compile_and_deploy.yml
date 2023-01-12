@@ -35,5 +35,5 @@ jobs:
         key: ${{secrets.SERVER_SSH_KEY}}
         passphrase: ${{secrets.SERVER_SSH_PASSPHRASE}}
         script: |
-          cd ~/projects/servers/production/
-          NODE_ENV=production pm2 start dist/index.js
+          cd ~/projects/servers
+          pm2 restart pm2.config.js --only production
