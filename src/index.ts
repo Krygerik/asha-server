@@ -1,13 +1,10 @@
 import app from "./config/app";
+import {EEnvironment} from "./constants";
 
-const port = process.env.NODE_ENV == 'production'
-    ? process.env.APP_PRODUCTION_PORT
-    : process.env.APP_DEVELOPMENT_PORT
-
-if (process.env.NODE_ENV !== 'unittests') {
-    app.listen(port, () => {
-        console.log('Express server listening on port ' + port);
-    })
+if (process.env.NODE_ENV !== EEnvironment.UnitTests) {
+  app.listen(process.env.APP_PORT, () => {
+    console.log('Express server listening on port ' + process.env.APP_PORT);
+  })
 }
 
 export default app;

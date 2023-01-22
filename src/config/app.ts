@@ -1,9 +1,14 @@
+import * as path from 'path';
 import * as bodyParser from "body-parser";
 import * as cors from 'cors';
 import * as session from 'express-session';
 import * as express from "express";
 import * as mongoose from "mongoose";
 import * as passport from "passport";
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: path.join(__dirname, '../../.env.' + process.env.NODE_ENV) });
+
 import { AccountRoutes } from "../routes/account-routes";
 import {ClientLogsRoutes} from "../routes/clientLogsRoutes";
 import {CommonRoutes} from '../routes/commonRoutes';
@@ -13,7 +18,6 @@ import {LadderRoutes} from "../routes/ladderRoutes";
 import { MapVersionRoutes } from "../routes/mapVersionRoutes";
 import {TestRoutes} from '../routes/testRoutes';
 import {TournamentRoutes} from "../routes/tournamentRoutes";
-import { mongoUrl } from "../constants";
 
 class App {
     public app: express.Application;
@@ -48,9 +52,7 @@ class App {
     private config(): void {
         const corsOptions = {
             origin: [
-                'http://localhost:3000',
-                process.env.APP_PRODUCTION_CLIENT_ROOT_PAGE,
-                process.env.APP_DEVELOP_CLIENT_ROOT_PAGE,
+                process.env.APP_CLIENT_ROOT_PAGE,
             ],
             optionsSuccessStatus: 200,
             credentials: true,
@@ -70,7 +72,7 @@ class App {
 
     private mongoSetup(): void {
         mongoose.connect(
-            mongoUrl,
+            process.env.APP_DB_URI,
             {
                 useCreateIndex: true,
                 useFindAndModify: false,

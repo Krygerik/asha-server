@@ -1,6 +1,5 @@
 import * as passport from "passport";
 import { Strategy as DiscordStrategy } from "passport-discord";
-import {APPLICATION_URL} from "../../constants";
 import {AccountModel} from "./account-schema";
 import {IAccount, IMergeAccountData} from "./account-types";
 import {logger} from "../../utils";
@@ -18,7 +17,7 @@ export class AccountService {
         })
 
         passport.use(new DiscordStrategy({
-            callbackURL: APPLICATION_URL + '/api/account/discord-callback',
+            callbackURL: process.env.APP_BACKEND_URI + '/api/account/discord-callback',
             clientID: process.env.APP_DISCORD_CLIENT_ID,
             clientSecret: process.env.APP_DISCORD_CLIENT_SECRET,
             scope: ['identify', 'email', 'guilds']

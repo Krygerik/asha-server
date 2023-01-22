@@ -1,7 +1,6 @@
 import {Request, Response} from "express";
 import { uuid } from 'uuidv4';
 import {intersection} from "lodash";
-import {CLIENT_ROOT_URL} from "../constants";
 import {AccountService} from "../modules/account";
 import {
     failureResponse,
@@ -52,7 +51,7 @@ export class AccountController {
      * Привязываем ид сессии к аккаунту
      */
     public async redirectToClientRootPage(req: Request, res: Response) {
-        res.redirect(CLIENT_ROOT_URL)
+        res.redirect(process.env.APP_CLIENT_ROOT_PAGE)
     }
 
     /**
