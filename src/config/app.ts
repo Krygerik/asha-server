@@ -51,9 +51,6 @@ class App {
 
     private config(): void {
         const corsOptions = {
-            origin: [
-                process.env.APP_CLIENT_ROOT_PAGE,
-            ],
             optionsSuccessStatus: 200,
             credentials: true,
         }
