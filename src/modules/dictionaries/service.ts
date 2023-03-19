@@ -7,8 +7,17 @@ import {
     SkillsModel,
     SpellsModel,
     WarMachinesModel,
+    ChangedArtifactsModel,
+    ChangedCreaturesModel,
+    ChangedHeroesModel,
+    ChangedPerksModel,
+    ChangedRacesModel,
+    ChangedSkillsModel,
+    ChangedSpellsModel,
+    ChangedWarMachinesModel,
 } from "./schema";
-import { EDictionariesNames } from "./constants";
+import { EDictionariesNames, aggregateSubjectText } from "./constants";
+import {IMapVersionValue} from "../map-version/map-version-model";
 
 export class DictionariesService {
     /**
@@ -23,6 +32,17 @@ export class DictionariesService {
         [EDictionariesNames.Skills]: SkillsModel,
         [EDictionariesNames.Spells]: SpellsModel,
         [EDictionariesNames.WarMachines]: WarMachinesModel,
+    }
+
+    static mapChangedDictionaryNameToModel = {
+        [EDictionariesNames.Artifacts]: ChangedArtifactsModel,
+        [EDictionariesNames.Creatures]: ChangedCreaturesModel,
+        [EDictionariesNames.Heroes]: ChangedHeroesModel,
+        [EDictionariesNames.Perks]: ChangedPerksModel,
+        [EDictionariesNames.Races]: ChangedRacesModel,
+        [EDictionariesNames.Skills]: ChangedSkillsModel,
+        [EDictionariesNames.Spells]: ChangedSpellsModel,
+        [EDictionariesNames.WarMachines]: ChangedWarMachinesModel,
     }
 
     /**
@@ -51,5 +71,83 @@ export class DictionariesService {
             }),
             {},
         );
+    }
+
+    /**
+     * update
+     */
+    public getUpdate(name: EDictionariesNames) {
+        const model = DictionariesService.mapDictionaryNameToModel[name];
+        return model.updateMany({});
+    }
+
+    public async getAllChangedDictionaries(map) {
+        const allChangedDictionaries = await Promise.all(
+            Object.values(DictionariesService.mapChangedDictionaryNameToModel).map(
+                    model => model.aggregate(aggregateSubjectText(map))
+            )
+        );
+
+        return Object.keys(DictionariesService.mapChangedDictionaryNameToModel).reduce(
+            (acc, dictionariesNames, index) => ({
+                ...acc,
+                //@ts-ignore
+                [dictionariesNames]: allChangedDictionaries[index],
+            }),
+            {},
+        );
+    }
+
+    public async getAllGameID(map: IMapVersionValue, dictionary: EDictionariesNames) {
+        const model = DictionariesService.mapChangedDictionaryNameToModel[dictionary]
+    }
+
+    public getGameID(map: IMapVersionValue, ID: String, dictionary: EDictionariesNames) {
+        const model = DictionariesService.mapChangedDictionaryNameToModel[dictionary]
+        let res = model.aggregate([
+        {$graphLookup:{
+            from: "map-tests",
+            startWith: "$map",
+            connectFromField: "map",
+            connectToField: "parent",
+            as: "arr",
+            },
+        },
+        {$match: {
+            $or: [{
+                arr: {
+                    $elemMatch: {
+                        map: map,
+                    },
+                    },
+                }, {
+                map: map,
+                }],
+            },
+        },
+        {$addfields: {
+            arr_size: {$size: "$arr" }
+            }
+        },
+        {$sort: {
+            game_id: 1,
+            arr_size: 1,
+            },
+        },
+        {$group: {
+            _id: {game_id: "$game_id"},
+            changed_id: {$first: "$changed_id"},
+            },
+        },
+        {$match: {
+            changed_id: {$elemMatch: {$eq: ID}}
+            }
+        }])
+    
+        if (!res[0]._id) {
+            return ID
+        } else {
+            return res[0]._id
+        }
     }
 }

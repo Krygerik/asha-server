@@ -100,8 +100,41 @@ export class GameController {
                 { metadata: { reqBody: req.body }}
             );
 
+            /*
+             * Заменяем ИД существ
+             */
+            const allChangedDictionaries = await this.dictionaryService.getAllChangedDictionaries( {type: "hrta", version: req.body.map_version} )
+            
+            const bodyWithOrigID = {
+                ...omit(req.body, ['players']),
+                players: req.body.players.map(element => ({
+                        ...omit(element, ["army_remainder", "army", "arts", "perks", "skills", "spells", "war_machines", "hero"]),
+                        army_remainder: element.army_remainder.map(function(el) {
+                            let result = allChangedDictionaries[EDictionariesNames.Creatures].find(item => item.changed_id.includes(el.name))
+                            return {
+                                name: result ? result._id : el.name,
+                                count: el.count
+                            }
+                        }),
+                        army: element.army.map(function(el) {
+                            let result = allChangedDictionaries[EDictionariesNames.Creatures].find(item => item.changed_id.includes(el.name))
+                            return {
+                                name: result ? result._id : el.name,
+                                count: el.count
+                            }
+                        }),
+                        arts: element.arts.map(el => allChangedDictionaries[EDictionariesNames.Artifacts].find(item => item.changed_id.includes(el))?._id || el),
+                        perks: element.perks.map(el => allChangedDictionaries[EDictionariesNames.Perks].find(item => item.changed_id.includes(el))?._id || el),
+                        skills: element.skills.map(el => allChangedDictionaries[EDictionariesNames.Skills].find(item => item.changed_id.includes(el))?._id || el),
+                        spells: element.spells.map(el => allChangedDictionaries[EDictionariesNames.Spells].find(item => item.changed_id.includes(el))?._id || el),
+                        war_machines: element.war_machines.map(el => allChangedDictionaries[EDictionariesNames.WarMachines].find(item => item.changed_id.includes(el))?._id || el),
+                        hero: allChangedDictionaries[EDictionariesNames.Heroes].find(item => item.changed_id.includes(element.hero))?._id || element.hero
+                    })
+                )
+            }
+
             const game: ISavedGame | null = await this.gameService.findGame({
-                combat_id: req.body.combat_id
+                combat_id: bodyWithOrigID.combat_id
             })
 
             /**
@@ -109,8 +142,8 @@ export class GameController {
              */
             if (!game) {
                 const gameData = {
-                    ...omit(req.body, ['userId', 'roles']),
-                    players_ids: [req.body.userId],
+                    ...omit(bodyWithOrigID, ['userId', 'roles']),
+                    players_ids: [bodyWithOrigID.userId],
                 };
 
                 logger.info(
@@ -131,7 +164,7 @@ export class GameController {
             /**
              * Если игрок уже записан в игре - выкидываем
              */
-            if (game.players_ids.includes(req.body.userId)) {
+            if (game.players_ids.includes(bodyWithOrigID.userId)) {
                 logger.warn(
                     'saveGameParams: Игрок уже записан в запись игры',
                     { metadata: { game }}
@@ -142,7 +175,7 @@ export class GameController {
 
             const updatedValue = {
                 $push: {
-                    players_ids: req.body.userId,
+                    players_ids: bodyWithOrigID.userId,
                 },
             };
 

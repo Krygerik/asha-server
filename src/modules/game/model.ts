@@ -23,7 +23,7 @@ export enum EPlayerStartedBonus {
  */
 interface ICreatures {
     count: number;  // Количество
-    name: string;   // Название
+    name: string;   // Название (ид)
 }
 
 /**
@@ -65,7 +65,7 @@ export interface ISavedPlayer extends IInputPlayer {
 export interface ISaveGameParamsBody {
     combat_id: string;              // id сражения
     map_version: IMapVersionValue;  // Версия карты
-    players: IInputPlayer[];        // Список данных о прокачках обоих игроков
+    players: ISavedPlayer[];        // Список данных о прокачках обоих игроков
     userId: string;                 // id пользователя из монго
 }
 

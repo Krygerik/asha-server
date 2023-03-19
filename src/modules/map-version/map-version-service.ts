@@ -6,7 +6,7 @@ export class MapVersionService {
      * Получение информации о версии карты по ее значению
      */
     public getMapVersionInfoByValue(value: IMapVersionValue) {
-        return MapVersionModel.findOne({ value });
+        return MapVersionModel.findOne({ value: value });
     }
 
     /**
