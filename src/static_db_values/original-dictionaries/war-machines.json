@@ -1,0 +1,6 @@
+[
+  { "localize_name": { "en": "Ammo Cart" }, "game_id": 4 },
+  { "localize_name": { "en": "Ballista" }, "game_id": 1 },
+  { "localize_name": { "en": "Catapult" }, "game_id": 2 },
+  { "localize_name": { "en": "First Aid Tent" }, "game_id": 3 }
+]

@@ -3,15 +3,15 @@ import {EDictionariesNames} from "./constants";
 import {MapVersionValueSchema} from "../map-version/map-version-schema";
 
 const mapToChangedNames = {
-        [EDictionariesNames.Artifacts]: 'changed-artifacts',
-        [EDictionariesNames.Creatures]: 'changed-creatures',
-        [EDictionariesNames.Heroes]: 'changed-heroes',
-        [EDictionariesNames.Perks]: 'changed-perks',
-        [EDictionariesNames.Races]: 'changed-races',
-        [EDictionariesNames.Skills]: 'changed-skills',
-        [EDictionariesNames.Spells]: 'changed-spells',
-        [EDictionariesNames.WarMachines]: 'changed-machines',
-    }
+    [EDictionariesNames.Artifacts]: 'changed-artifacts',
+    [EDictionariesNames.Creatures]: 'changed-creatures',
+    [EDictionariesNames.Heroes]: 'changed-heroes',
+    [EDictionariesNames.Perks]: 'changed-perks',
+    [EDictionariesNames.Races]: 'changed-races',
+    [EDictionariesNames.Skills]: 'changed-skills',
+    [EDictionariesNames.Spells]: 'changed-spells',
+    [EDictionariesNames.WarMachines]: 'changed-machines',
+}
 
 /**
  * Локализованные названия
