@@ -72,6 +72,14 @@ export class DictionariesService {
         );
     }
 
+    /**
+     * update
+     */
+    public getUpdate(name: EDictionariesNames) {
+        const model = DictionariesService.mapDictionaryNameToModel[name];
+        return model.updateMany({});
+    }
+
     public async getAllChangedDictionaries(map) {
         const allChangedDictionaries = await Promise.all(
             Object.values(DictionariesService.mapChangedDictionaryNameToModel).map(
