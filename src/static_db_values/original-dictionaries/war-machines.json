@@ -1,0 +1,6 @@
+[
+  { "localize_name": { "en": "Ammo Cart", "ru": "Тележка с боеприпасами" }, "game_id": 4 },
+  { "localize_name": { "en": "Ballista", "ru": "Баллиста" }, "game_id": 1 },
+  { "localize_name": { "en": "Catapult", "ru": "Катапульта" }, "game_id": 2 },
+  { "localize_name": { "en": "First Aid Tent", "ru": "Палатка первой помощи" }, "game_id": 3 }
+]

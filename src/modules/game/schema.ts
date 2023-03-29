@@ -139,8 +139,8 @@ const GameSchema = new Schema({
         type: Number,
     },
     map_version: {
-        required: true,
-        type: String,
+        type: { type: String, required: true },
+        version: { type: String, required: true },
     },
     percentage_of_army_left: Number,
     players_ids: {

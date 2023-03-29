@@ -18,7 +18,7 @@ import * as skills from "../src/static_db_values/dictionaries/skills.json";
 // @ts-ignore
 import * as spells from "../src/static_db_values/dictionaries/spells.json";
 // @ts-ignore
-import * as warMachines from "../src/static_db_values/dictionaries/warMachines.json";
+import * as warMachines from "../src/static_db_values/dictionaries/war-machines.json";
 // @ts-ignore
 import * as mapVersions from "../src/static_db_values/dictionaries/map-versions.json";
 

@@ -1,5 +1,13 @@
 import {
     ArtifactsModel,
+    ChangedArtifactsModel,
+    ChangedCreaturesModel,
+    ChangedHeroesModel,
+    ChangedPerksModel,
+    ChangedRacesModel,
+    ChangedSkillsModel,
+    ChangedSpellsModel,
+    ChangedWarMachinesModel,
     CreaturesModel,
     HeroesModel,
     PerksModel,
@@ -8,7 +16,7 @@ import {
     SpellsModel,
     WarMachinesModel,
 } from "./schema";
-import { EDictionariesNames } from "./constants";
+import { EDictionariesNames, aggregateSubjectText } from "./constants";
 
 export class DictionariesService {
     /**
@@ -23,6 +31,17 @@ export class DictionariesService {
         [EDictionariesNames.Skills]: SkillsModel,
         [EDictionariesNames.Spells]: SpellsModel,
         [EDictionariesNames.WarMachines]: WarMachinesModel,
+    }
+
+    static mapChangedDictionaryNameToModel = {
+        [EDictionariesNames.Artifacts]: ChangedArtifactsModel,
+        [EDictionariesNames.Creatures]: ChangedCreaturesModel,
+        [EDictionariesNames.Heroes]: ChangedHeroesModel,
+        [EDictionariesNames.Perks]: ChangedPerksModel,
+        [EDictionariesNames.Races]: ChangedRacesModel,
+        [EDictionariesNames.Skills]: ChangedSkillsModel,
+        [EDictionariesNames.Spells]: ChangedSpellsModel,
+        [EDictionariesNames.WarMachines]: ChangedWarMachinesModel,
     }
 
     /**
@@ -48,6 +67,23 @@ export class DictionariesService {
             (acc, dictionariesNames, index) => ({
                 ...acc,
                 [dictionariesNames]: allDictionaries[index],
+            }),
+            {},
+        );
+    }
+
+    public async getAllChangedDictionaries(map) {
+        const allChangedDictionaries = await Promise.all(
+            Object.values(DictionariesService.mapChangedDictionaryNameToModel).map(
+                    model => model.aggregate(aggregateSubjectText(map))
+            )
+        );
+
+        return Object.keys(DictionariesService.mapChangedDictionaryNameToModel).reduce(
+            (acc, dictionariesNames, index) => ({
+                ...acc,
+                //@ts-ignore
+                [dictionariesNames]: allChangedDictionaries[index],
             }),
             {},
         );
