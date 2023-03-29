@@ -103,7 +103,7 @@ export class GameController {
             /*
              * Заменяем ИД существ
              */
-            const allChangedDictionaries = await this.dictionaryService.getAllChangedDictionaries( {type: "hrta", version: req.body.map_version} )
+            const allChangedDictionaries = await this.dictionaryService.getAllChangedDictionaries( { type: req.body.map_type, version: req.body.map_version} )
             
             const bodyWithOrigID = {
                 ...omit(req.body, ['players']),

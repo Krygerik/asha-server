@@ -2,17 +2,6 @@ import * as mongoose from "mongoose";
 import {EDictionariesNames} from "./constants";
 import {MapVersionValueSchema} from "../map-version/map-version-schema";
 
-const mapToChangedNames = {
-    [EDictionariesNames.Artifacts]: 'changed-artifacts',
-    [EDictionariesNames.Creatures]: 'changed-creatures',
-    [EDictionariesNames.Heroes]: 'changed-heroes',
-    [EDictionariesNames.Perks]: 'changed-perks',
-    [EDictionariesNames.Races]: 'changed-races',
-    [EDictionariesNames.Skills]: 'changed-skills',
-    [EDictionariesNames.Spells]: 'changed-spells',
-    [EDictionariesNames.WarMachines]: 'changed-machines',
-}
-
 /**
  * Локализованные названия
  */
@@ -165,7 +154,7 @@ const ChangedArtifactsSchema = new mongoose.Schema({
     localize_name: LocalizationSchema
 })
 
-export const ChangedArtifactsModel = mongoose.model(mapToChangedNames[EDictionariesNames.Artifacts], ChangedArtifactsSchema);
+export const ChangedArtifactsModel = mongoose.model(EDictionariesNames.ChangedArtifacts, ChangedArtifactsSchema);
 
 /**
  * Схема одной записи справочника "Существа" с изменениями ИД
@@ -177,7 +166,7 @@ const ChangedCreaturesSchema = new mongoose.Schema({
     localize_name: LocalizationSchema
 })
 
-export const ChangedCreaturesModel = mongoose.model(mapToChangedNames[EDictionariesNames.Creatures], ChangedCreaturesSchema);
+export const ChangedCreaturesModel = mongoose.model(EDictionariesNames.ChangedCreatures, ChangedCreaturesSchema);
 
 /**
  * Схема одной записи справочника "Герои" с изменениями ИД
@@ -189,7 +178,7 @@ const ChangedHeroesSchema = new mongoose.Schema({
     localize_name: LocalizationSchema
 })
 
-export const ChangedHeroesModel = mongoose.model(mapToChangedNames[EDictionariesNames.Heroes], ChangedHeroesSchema);
+export const ChangedHeroesModel = mongoose.model(EDictionariesNames.ChangedHeroes, ChangedHeroesSchema);
 
 /**
  * Схема одной записи справочника "Навыки" с изменениями ИД
@@ -201,7 +190,7 @@ const ChangedPerksSchema = new mongoose.Schema({
     localize_name: LocalizationSchema
 })
 
-export const ChangedPerksModel = mongoose.model(mapToChangedNames[EDictionariesNames.Perks], ChangedPerksSchema);
+export const ChangedPerksModel = mongoose.model(EDictionariesNames.ChangedPerks, ChangedPerksSchema);
 
 /**
  * Схема одной записи справочника "Расы" с изменениями ИД
@@ -213,7 +202,7 @@ const ChangedRacesSchema = new mongoose.Schema({
     localize_name: LocalizationSchema
 })
 
-export const ChangedRacesModel = mongoose.model(mapToChangedNames[EDictionariesNames.Races], ChangedRacesSchema);
+export const ChangedRacesModel = mongoose.model(EDictionariesNames.ChangedRaces, ChangedRacesSchema);
 
 /**
  * Схема одной записи справочника "Школы" с изменениями ИД
@@ -225,7 +214,7 @@ const ChangedSkillsSchema = new mongoose.Schema({
     localize_name: LocalizationSchema
 })
 
-export const ChangedSkillsModel = mongoose.model(mapToChangedNames[EDictionariesNames.Skills], ChangedSkillsSchema);
+export const ChangedSkillsModel = mongoose.model(EDictionariesNames.ChangedSkills, ChangedSkillsSchema);
 
 /**
  * Схема одной записи справочника "Заклинания" с изменениями ИД
@@ -237,7 +226,7 @@ const ChangedSpellsSchema = new mongoose.Schema({
     localize_name: LocalizationSchema
 })
 
-export const ChangedSpellsModel = mongoose.model(mapToChangedNames[EDictionariesNames.Spells], ChangedSpellsSchema);
+export const ChangedSpellsModel = mongoose.model(EDictionariesNames.ChangedSpells, ChangedSpellsSchema);
 
 /**
  * Схема одной записи справочника "Боевые машины" с изменениями ИД
@@ -249,4 +238,4 @@ const ChangedWarMachinesSchema = new mongoose.Schema({
     localize_name: LocalizationSchema
 })
 
-export const ChangedWarMachinesModel = mongoose.model(mapToChangedNames[EDictionariesNames.WarMachines], ChangedWarMachinesSchema);
+export const ChangedWarMachinesModel = mongoose.model(EDictionariesNames.ChangedWarMachines, ChangedWarMachinesSchema);

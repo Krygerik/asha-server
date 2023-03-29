@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { IMapVersionValue } from "../map-version";
+import { IMapType, IMapVersionValue } from "../map-version";
 
 /**
  * Цвет игрока
@@ -64,6 +64,7 @@ export interface ISavedPlayer extends IInputPlayer {
  */
 export interface ISaveGameParamsBody {
     combat_id: string;              // id сражения
+    map_type: IMapType;             // Тип карты
     map_version: IMapVersionValue;  // Версия карты
     players: ISavedPlayer[];        // Список данных о прокачках обоих игроков
     userId: string;                 // id пользователя из монго

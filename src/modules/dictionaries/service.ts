@@ -1,12 +1,5 @@
 import {
     ArtifactsModel,
-    CreaturesModel,
-    HeroesModel,
-    PerksModel,
-    RacesModel,
-    SkillsModel,
-    SpellsModel,
-    WarMachinesModel,
     ChangedArtifactsModel,
     ChangedCreaturesModel,
     ChangedHeroesModel,
@@ -15,9 +8,15 @@ import {
     ChangedSkillsModel,
     ChangedSpellsModel,
     ChangedWarMachinesModel,
+    CreaturesModel,
+    HeroesModel,
+    PerksModel,
+    RacesModel,
+    SkillsModel,
+    SpellsModel,
+    WarMachinesModel,
 } from "./schema";
 import { EDictionariesNames, aggregateSubjectText } from "./constants";
-import {IMapVersionValue} from "../map-version/map-version-model";
 
 export class DictionariesService {
     /**
@@ -73,14 +72,6 @@ export class DictionariesService {
         );
     }
 
-    /**
-     * update
-     */
-    public getUpdate(name: EDictionariesNames) {
-        const model = DictionariesService.mapDictionaryNameToModel[name];
-        return model.updateMany({});
-    }
-
     public async getAllChangedDictionaries(map) {
         const allChangedDictionaries = await Promise.all(
             Object.values(DictionariesService.mapChangedDictionaryNameToModel).map(
@@ -96,58 +87,5 @@ export class DictionariesService {
             }),
             {},
         );
-    }
-
-    public async getAllGameID(map: IMapVersionValue, dictionary: EDictionariesNames) {
-        const model = DictionariesService.mapChangedDictionaryNameToModel[dictionary]
-    }
-
-    public getGameID(map: IMapVersionValue, ID: String, dictionary: EDictionariesNames) {
-        const model = DictionariesService.mapChangedDictionaryNameToModel[dictionary]
-        let res = model.aggregate([
-        {$graphLookup:{
-            from: "map-tests",
-            startWith: "$map",
-            connectFromField: "map",
-            connectToField: "parent",
-            as: "arr",
-            },
-        },
-        {$match: {
-            $or: [{
-                arr: {
-                    $elemMatch: {
-                        map: map,
-                    },
-                    },
-                }, {
-                map: map,
-                }],
-            },
-        },
-        {$addfields: {
-            arr_size: {$size: "$arr" }
-            }
-        },
-        {$sort: {
-            game_id: 1,
-            arr_size: 1,
-            },
-        },
-        {$group: {
-            _id: {game_id: "$game_id"},
-            changed_id: {$first: "$changed_id"},
-            },
-        },
-        {$match: {
-            changed_id: {$elemMatch: {$eq: ID}}
-            }
-        }])
-    
-        if (!res[0]._id) {
-            return ID
-        } else {
-            return res[0]._id
-        }
     }
 }

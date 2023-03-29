@@ -1,12 +1,13 @@
 
 export type IMapVersionValue = string
+export type IMapType = 'RTA' | 'HRTA';
 
 /**
  * Перечисление всех возможных значений версий карты
  */
-export interface IMapVersionTypeValue = {
-    // Тип карты (rta, hrta)
-    type: string;
+export interface IMapVersionTypeValue {
+    // Тип карты
+    type: IMapType;
     // Значение карты, передаваемое из игры
     version: IMapVersionValue;
 }
@@ -17,7 +18,7 @@ export interface IMapVersionTypeValue = {
 export interface IMapVersionRecord {
     // id в монго
     _id: string;
-    // Тип карты (rta, hrta)
+    // Тип карты
     value: IMapVersionTypeValue;
     // Родитель
     parent: IMapVersionTypeValue
