@@ -33,4 +33,26 @@ export class MapVersionController {
             internalError(error, res);
         }
     }
+
+    public async getMapTypeList(req: Request, res: Response) {
+        try {
+            const mapTypeList: string[] = await this.mapVersionService.getMapTypeList();
+
+            if (!mapTypeList.length) {
+                return failureResponse(
+                    'В базе данных не найдено упоминаний о фиксируемых картах',
+                    null,
+                    res,
+                );
+            }
+
+            return successResponse(
+                'Все доступные типы карты успешно получены',
+                mapTypeList,
+                res,
+            );
+        } catch (error) {
+            internalError(error, res);
+        }
+    }
 }

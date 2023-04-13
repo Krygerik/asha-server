@@ -15,4 +15,11 @@ export class MapVersionService {
     public getMapVersionDictionary() {
         return MapVersionModel.find({});
     }
+
+    /**
+     * Получение всех записанных типов карт
+     */
+    public getMapTypeList() {
+        return MapVersionModel.distinct('value.type');
+    }
 }
