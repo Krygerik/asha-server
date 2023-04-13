@@ -138,10 +138,8 @@ const GameSchema = new Schema({
         enum: Object.values(EPlayerColor),
         type: Number,
     },
-    map_version: {
-        type: { type: String, required: true },
-        version: { type: String, required: true },
-    },
+    map_type: { type: String, required: true },
+    map_version: { type: String, required: true },
     percentage_of_army_left: Number,
     players_ids: {
         type: [String],

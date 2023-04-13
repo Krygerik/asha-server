@@ -109,13 +109,6 @@ export class GameController {
                 ...omit(req.body, ['players']),
                 players: req.body.players.map(element => ({
                         ...omit(element, ["army_remainder", "army", "arts", "perks", "skills", "spells", "war_machines", "hero"]),
-                        army_remainder: element.army_remainder.map(function(el) {
-                            let result = allChangedDictionaries[EDictionariesNames.Creatures].find(item => item.changed_id.includes(el.name))
-                            return {
-                                name: result ? result._id : el.name,
-                                count: el.count
-                            }
-                        }),
                         army: element.army.map(function(el) {
                             let result = allChangedDictionaries[EDictionariesNames.Creatures].find(item => item.changed_id.includes(el.name))
                             return {
