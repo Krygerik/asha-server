@@ -22,7 +22,7 @@ export enum EDictionariesNames {
 }
 
 // для получения измененных ид всех объектов
-export const aggregateSubjectText = (map) => [
+export const aggregateSubjectText = (mapType: string, mapVersion: string) => [
     {$graphLookup:{
         from: "map-tests",
         startWith: "$map",
@@ -32,16 +32,29 @@ export const aggregateSubjectText = (map) => [
         },
     },
     {$match: {
-        $or: [{
-            arr: {
-                $elemMatch: {
-                    map: map,
+        $or: [
+            {
+                arr: {
+                    $elemMatch: {
+                        $and: [
+                            {
+                                "map.type": mapType,
+                                "map.version": mapVersion,
+                            },
+                        ],
+                    },
                 },
-                },
-            }, {
-            map: map,
-            }],
-        },
+            },
+            {
+                $and: [
+                    {
+                        "map.type": mapType,
+                        "map.version": mapVersion,
+                    },
+                ],
+            },
+        ],
+    },
     },
     {$addFields: {
         arr_size: {$size: "$arr" }
@@ -54,7 +67,7 @@ export const aggregateSubjectText = (map) => [
     },
     {$group: {
         _id: {game_id: "$game_id"},
-        changed_id: {$first: "$changed_id"},
+        change_id: {$first: "$change_id"},
         },
     }
 ]

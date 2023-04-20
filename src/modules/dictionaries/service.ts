@@ -80,10 +80,10 @@ export class DictionariesService {
         return model.updateMany({});
     }
 
-    public async getAllChangedDictionaries(map) {
+    public async getAllChangedDictionaries(mapType: string, mapVersion: string) {
         const allChangedDictionaries = await Promise.all(
             Object.values(DictionariesService.mapChangedDictionaryNameToModel).map(
-                    model => model.aggregate(aggregateSubjectText(map))
+                    model => model.aggregate(aggregateSubjectText(mapType, mapVersion))
             )
         );
 

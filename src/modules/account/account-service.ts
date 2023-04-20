@@ -115,7 +115,7 @@ export class AccountService {
 
     public getPlayerRatingList(limit: number = 0) {
         return AccountModel
-            .find({}, { nickname: 1, _id: 1, rating: 1, discord: 1 })
+            .find({}, { username: 1, _id: 1, rating: 1, discord: 1 })
             .sort({ rating: 'desc' })
             .limit(limit);
     }
@@ -131,7 +131,7 @@ export class AccountService {
             .map(account => account.toObject())
             .reduce((accumulator, account: IAccount) => ({
                 ...accumulator,
-                [account._id]: account.nickname,
+                [account._id]: account.username,
             }), {});
     }
 
