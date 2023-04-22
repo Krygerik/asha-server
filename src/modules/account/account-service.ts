@@ -54,8 +54,8 @@ export class AccountService {
         return AccountModel.findOne({ clientConnectId });
     }
 
-    public updateAccountNickname(_id: string, nickname: string) {
-        return AccountModel.findOneAndUpdate({ _id }, { $set: { nickname }});
+    public updateAccountNickname(_id: string, username: string) {
+        return AccountModel.findOneAndUpdate({ _id }, { $set: { username }});
     }
 
     public updateAccountGameInfo(_id: string, original_rating: number) {
@@ -110,12 +110,12 @@ export class AccountService {
     }
 
     public getIdWithNicknameFromAllAccounts() {
-        return AccountModel.find({}, { nickname: 1, _id: 1 });
+        return AccountModel.find({}, { username: 1, _id: 1 });
     }
 
     public getPlayerRatingList(limit: number = 0) {
         return AccountModel
-            .find({}, { username: 1, _id: 1, rating: 1, discord: 1 })
+            .find({}, { username: 1, _id: 1, rating: 1 })
             .sort({ rating: 'desc' })
             .limit(limit);
     }
@@ -184,7 +184,7 @@ export class AccountService {
     public async getMappingUserIdToUserShortInfo(userIdList: string[]) {
         const accountDocs = await AccountModel.find(
             { _id: { $id: userIdList }},
-            { nickname: true, discordId: true, discriminator: true });
+            { username: true, discordId: true, discriminator: true });
 
         return accountDocs
             .map(a => a.toObject())
