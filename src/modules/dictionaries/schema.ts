@@ -67,7 +67,7 @@ const HeroesRecordSchema = new mongoose.Schema({
         required: true
     },
     localize_name: LocalizationSchema,
-    race_game_id: {
+    race_id: {
         type: String,
         required: true
     }
