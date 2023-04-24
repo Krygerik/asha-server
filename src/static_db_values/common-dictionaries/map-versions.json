@@ -3,6 +3,8 @@
   { "value": { "type": "HRTA", "version": "1.26a" }, "parent": { "type": "HRTA", "version": "1.25c" } },
   { "value": { "type": "HRTA", "version": "1.26b" }, "parent": { "type": "HRTA", "version": "1.26a" } },
   { "value": { "type": "HRTA", "version": "1.26c" }, "parent": { "type": "HRTA", "version": "1.26b" } },
+  { "value": { "type": "HRTA", "version": "1.26d" }, "parent": { "type": "HRTA", "version": "1.26c" } },
+  { "value": { "type": "HRTA", "version": "1.26e" }, "parent": { "type": "HRTA", "version": "1.26d" } },
   { "value": { "type": "RTA", "version": "2.10" }, "parent": null },
   { "value": { "type": "RTA", "version": "2.11" }, "parent": { "type": "RTA", "version": "2.10" } }
 ]
