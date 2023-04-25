@@ -23,53 +23,74 @@ export enum EDictionariesNames {
 
 // для получения измененных ид всех объектов
 export const aggregateSubjectText = (mapType: string, mapVersion: string) => [
-    {$graphLookup:{
-        from: "map-tests",
-        startWith: "$map",
-        connectFromField: "map",
-        connectToField: "parent",
-        as: "arr",
+    {
+        $project: {
+            game_id: "$game_id",
+            change_id: "$change_id",
+            real_map: {
+                type: "$map.type",
+                version: "$map.version",
+            },
         },
     },
-    {$match: {
-        $or: [
-            {
-                arr: {
-                    $elemMatch: {
-                        $and: [
-                            {
-                                "map.type": mapType,
-                                "map.version": mapVersion,
-                            },
-                        ],
+    {
+        $graphLookup: {
+            from: "map-versions",
+            startWith: "$real_map",
+            connectFromField: "value",
+            connectToField: "parent",
+            as: "arr",
+        },
+    },
+    {
+        $match: {
+            $or: [
+                {
+                    arr: {
+                        $elemMatch: {
+                            $and: [
+                                {
+                                    "value.type": mapType,
+                                    "value.version": mapVersion,
+                                },
+                            ],
+                        },
                     },
                 },
-            },
-            {
-                $and: [
-                    {
-                        "map.type": mapType,
-                        "map.version": mapVersion,
-                    },
-                ],
-            },
-        ],
-    },
-    },
-    {$addFields: {
-        arr_size: {$size: "$arr" }
-        }
-    },
-    {$sort: {
-        game_id: 1,
-        arr_size: 1,
+                {
+                    $and: [
+                        {
+                            "real_map.type": mapType,
+                            "real_map.version": mapVersion,
+                        },
+                    ],
+                },
+            ],
         },
     },
-    {$group: {
-        _id: {game_id: "$game_id"},
-        change_id: {$first: "$change_id"},
+    {
+        $addFields: {
+            arr_size: {
+                $size: "$arr",
+            },
         },
-    }
+    },
+    {
+        $sort: {
+            game_id: 1,
+            arr_size: 1,
+        },
+    },
+    {
+        $group: {
+            _id: {
+                game_id: "$game_id",
+            },
+            change_id: {
+                $first: "$change_id",
+            },
+        },
+    },
 ]
 
 
