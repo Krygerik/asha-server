@@ -9,12 +9,10 @@ const AccountSchema = new Schema({
         type: Boolean,
     },
     clientConnectId: {
-        default: uuid(),
         required: true,
         type: String,
     },
     create_date: {
-        default: new Date(),
         required: true,
         type: Date,
     },

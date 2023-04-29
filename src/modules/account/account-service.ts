@@ -3,6 +3,7 @@ import { Strategy as DiscordStrategy } from "passport-discord";
 import {AccountModel} from "./account-schema";
 import {IAccount, IMergeAccountData} from "./account-types";
 import {logger} from "../../utils";
+import {uuid} from "uuidv4";
 
 export class AccountService {
     constructor() {
@@ -34,6 +35,8 @@ export class AccountService {
 
                 // @ts-ignore
                 const createdAccount: IAccount | null = await AccountModel.create({
+                    clientConnectId: uuid(),
+                    create_date: new Date(),
                     discordId: profile.id,
                     discriminator: profile.discriminator,
                     username: profile.username,
