@@ -48,7 +48,6 @@
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Nadaur", "change_id": ["Nadaur", "Nadaur2"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Linaas", "change_id": ["Linaas", "Linaas2"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Elleshar", "change_id": ["Elleshar", "Elleshar2"] },
-  { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Linaas", "change_id": ["Linaas", "Linaas2"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Itil", "change_id": ["Itil", "Itil2"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Brand", "change_id": ["Brand", "Brand2"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Bersy", "change_id": ["Bersy", "Bersy2"] },
