@@ -118,7 +118,7 @@ export class GameController {
                         }),
                         arts: element.arts.map(el => allChangedDictionaries[EDictionariesNames.Artifacts].find(item => item.change_id.includes(el))?._id?.game_id || el),
                         perks: element.perks.reduce((accumulator: string[], element: string) => {
-                            const changedGameId = allChangedDictionaries[EDictionariesNames.Perks].find(item => item.change_id.includes(element))?._id?.game_id || element
+                            const changedGameId = allChangedDictionaries[EDictionariesNames.Perks].find(item => item.change_id.includes(element))?._id?.game_id;
 
                             /**
                              * Убираем вшитые навыки, которые в карте скрыты
