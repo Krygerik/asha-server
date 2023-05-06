@@ -4,5 +4,6 @@
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "HRTA-Astrology", "change_id": ["110", "137"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "HRTA-Ammo-Cart", "change_id": ["24"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["85"] },
-  { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["72"] }
+  { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["72"] },
+  { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["92"] }
 ]
