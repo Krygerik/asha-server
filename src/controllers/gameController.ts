@@ -129,7 +129,18 @@ export class GameController {
 
                             return [...accumulator, changedGameId || element]
                         }, []),
-                        skills: element.skills.map(el => allChangedDictionaries[EDictionariesNames.Skills].find(item => item.change_id.includes(el))?._id?.game_id || el),
+                        skills: element.skills.reduce((acc: string[], el: string) => {
+                            const changedGameId = allChangedDictionaries[EDictionariesNames.Skills].find(item => item.change_id.includes(el))?._id?.game_id;
+
+                            /**
+                             * Варварское образло дублируется с обычным. Поэтому не включаем варварский дубликат
+                             */
+                            if (el.includes('183')) {
+                                return acc;
+                            }
+
+                            return [...acc, changedGameId || el];
+                        }, []),
                         spells: element.spells.map(el => allChangedDictionaries[EDictionariesNames.Spells].find(item => item.change_id.includes(el))?._id?.game_id || el),
                         war_machines: element.war_machines.map(el => allChangedDictionaries[EDictionariesNames.WarMachines].find(item => item.change_id.includes(el))?._id?.game_id || el),
                         hero: allChangedDictionaries[EDictionariesNames.Heroes].find(item => item.change_id.includes(element.hero))?._id?.game_id || element.hero
