@@ -127,6 +127,13 @@ export class GameController {
                                 return accumulator;
                             }
 
+                            /**
+                             * Выбрасываем навыки, дублирующиеся у орка
+                             */
+                            if (changedGameId === "213") {
+                                return accumulator;
+                            }
+
                             return [...accumulator, changedGameId || element]
                         }, []),
                         skills: element.skills.reduce((acc: string[], el: string) => {
