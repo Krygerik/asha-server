@@ -103,7 +103,7 @@ export class GameController {
             /*
              * Заменяем ИД существ
              */
-            const allChangedDictionaries = await this.dictionaryService.getAllChangedDictionaries( req.body.map_type, req.body.map_version);
+            const allChangedDictionaries = await this.dictionaryService.getAllChangedDictionaries(req.body.map_type, req.body.map_version);
             
             const bodyWithOrigID = {
                 ...omit(req.body, ['players']),
@@ -384,11 +384,19 @@ export class GameController {
                 (playerId: string) => playerId !== winnerId
             );
 
+            const allChangedDictionaries = await this.dictionaryService.getAllChangedDictionaries(savedGame.map_type, savedGame.map_version);
+
             const updatedValue = {
                 $set: {
                     "players.$[redPlayer].user_id": req.body.winner === EPlayerColor.RED ? winnerId : looserId,
                     "players.$[bluePlayer].user_id": req.body.winner === EPlayerColor.BLUE ? winnerId : looserId,
-                    "players.$[winner].army_remainder": req.body.army_remainder,
+                    "players.$[winner].army_remainder": req.body.army_remainder.map(function(el) {
+                        let result = allChangedDictionaries[EDictionariesNames.Creatures].find(item => item.change_id.includes(el.name))
+                        return {
+                            name: result?._id?.game_id || el.name,
+                            count: el.count
+                        }
+                    }),
                     "players.$[looser].army_remainder": [],
                     "players.$[winner].winner": true,
                     "players.$[looser].winner": false,

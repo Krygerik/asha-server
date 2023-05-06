@@ -98,6 +98,7 @@ export interface ISetDisconnectStatusDto {
  */
 export interface IInputGameData extends Document {
     combat_id: string;              // id сражения
+    map_type: IMapType;             // Версия карты
     map_version: IMapVersionValue;  // Версия карты
     players: IInputPlayer[];        // Список данных о прокачках обоих игроков
     players_ids: string[];          // Список ников игроков, участвующих в игре
