@@ -190,5 +190,6 @@
   { "localize_name": { "en": "Goblin Support", "ru": "Помощь гоблинов" }, "game_id": 182 },
   { "localize_name": { "en": "Wizarding Protection", "ru": "Чародейская защита" }, "game_id": "HRTA-Wizarding-Protection" },
   { "localize_name": { "en": "Astrology", "ru": "Астрология" }, "game_id": "HRTA-Astrology" },
-  { "localize_name": { "en": "Ammo Cart", "ru": "Тележка с боеприпасами" }, "game_id": "HRTA-Ammo-Cart" }
+  { "localize_name": { "en": "Ammo Cart", "ru": "Тележка с боеприпасами" }, "game_id": "HRTA-Ammo-Cart" },
+  { "localize_name": { "en": "", "ru": "" }, "game_id": "Empty" }
 ]

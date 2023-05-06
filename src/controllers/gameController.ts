@@ -117,7 +117,18 @@ export class GameController {
                             }
                         }),
                         arts: element.arts.map(el => allChangedDictionaries[EDictionariesNames.Artifacts].find(item => item.change_id.includes(el))?._id?.game_id || el),
-                        perks: element.perks.map(el => allChangedDictionaries[EDictionariesNames.Perks].find(item => item.change_id.includes(el))?._id?.game_id || el),
+                        perks: element.perks.reduce((accumulator: string[], element: string) => {
+                            const changedGameId = allChangedDictionaries[EDictionariesNames.Perks].find(item => item.change_id.includes(element))?._id?.game_id || element
+
+                            /**
+                             * Убираем вшитые навыки, которые в карте скрыты
+                             */
+                            if (changedGameId === 'Empty') {
+                                return accumulator;
+                            }
+
+                            return [...accumulator, changedGameId || element]
+                        }, []),
                         skills: element.skills.map(el => allChangedDictionaries[EDictionariesNames.Skills].find(item => item.change_id.includes(el))?._id?.game_id || el),
                         spells: element.spells.map(el => allChangedDictionaries[EDictionariesNames.Spells].find(item => item.change_id.includes(el))?._id?.game_id || el),
                         war_machines: element.war_machines.map(el => allChangedDictionaries[EDictionariesNames.WarMachines].find(item => item.change_id.includes(el))?._id?.game_id || el),
