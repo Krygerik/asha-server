@@ -13,8 +13,8 @@ export interface ILocalization {
 export interface IRecords {
     // id записи в БД
     _id: string;
-    // id записи в игре
-    game_id: string[];
+    // id объекта
+    game_id: string;
     // Локализованное (русское) название записи
     localize_name: ILocalization | string;
 }

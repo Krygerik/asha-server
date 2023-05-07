@@ -1,6 +1,7 @@
-import * as mongoose from "mongoose";
+import {Model, model, Schema} from "mongoose";
+import { ILadderRecord } from "./ladder-type";
 
-const LadderSchema = new mongoose.Schema({
+const LadderSchema = new Schema({
     member_ids: {
         default: [],
         required: true,
@@ -18,4 +19,4 @@ const LadderSchema = new mongoose.Schema({
     }
 });
 
-export const LadderModel = mongoose.model('ladder', LadderSchema);
+export const LadderModel: Model<ILadderRecord> = model('ladder', LadderSchema);

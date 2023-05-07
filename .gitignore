@@ -8,7 +8,6 @@
 /dist
 
 # Секретики
-.env
 .env.development
 .env.test
 pm2.config.js

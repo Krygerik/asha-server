@@ -1,4 +1,5 @@
-import { IMapVersionValue } from "../map-version";
+import { Document } from 'mongoose';
+import { IMapType, IMapVersionValue } from "../map-version";
 
 /**
  * Цвет игрока
@@ -21,155 +22,103 @@ export enum EPlayerStartedBonus {
  * Интерфейс однотипных войск
  */
 interface ICreatures {
-    // Количество
-    count: number;
-    // Название
-    name: string;
+    count: number;  // Количество
+    name: string;   // Название (ид)
 }
 
 /**
  * Интерфейс игрока в записи боя
  */
-export interface IInputPlayer {
-    // Список войск героя
-    army: ICreatures[];
-    // Артефакты героя
-    arts: string[];
-    // Нападение героя
-    attack: number;
-    // цвет игрока
-    color: EPlayerColor;
-    // Защита героя
-    defence: number;
-    // Название героя
-    hero: string;
-    // Знание героя
-    knowledge: number;
-    // Уровень героя
-    level: number;
-    // Удача героя
-    luck: number;
-    // Стартовая мана героя
-    mana_start: number;
-    // Количество использования ментора
-    mentoring: number;
-    // Мораль героя
-    morale: number;
-    // Умения, способности
-    perks: string[];
-    // Раса
-    race: string;
-    // Школы героя
-    skills: string[];
-    // Колдовство героя
-    spell_power: number;
-    // Заклинания героя
-    spells: string[];
-    // Выбранный стартовый бонус
-    start_bonus: EPlayerStartedBonus;
-    // Боевые машины игрока
-    war_machines: string[];
+export interface IInputPlayer extends Document {
+    army: ICreatures[];                 // Список войск героя
+    arts: string[];                     // Артефакты героя
+    attack: number;                     // Нападение героя
+    color: EPlayerColor;                // цвет игрока
+    defence: number;                    // Защита героя
+    hero: string;                       // Название героя
+    knowledge: number;                  // Знание героя
+    level: number;                      // Уровень героя
+    luck: number;                       // Удача героя
+    mana_start: number;                 // Стартовая мана героя
+    mentoring: number;                  // Количество использования ментора
+    morale: number;                     // Мораль героя
+    perks: string[];                    // Умения, способности
+    race: string;                       // Раса
+    skills: string[];                   // Школы героя
+    spell_power: number;                // Колдовство героя
+    spells: string[];                   // Заклинания героя
+    start_bonus: EPlayerStartedBonus;   // Выбранный стартовый бонус
+    war_machines: string[];             // Боевые машины игрока
 }
 
 export interface ISavedPlayer extends IInputPlayer {
-    // id в mongodb
-    _id: string;
-    // Конечный состав армии
-    army_remainder?: ICreatures[];
-    // Ид пользователя в бд
-    user_id?: string;
-    // На сколько изменился рейтинг игрока за эту партию
-    changed_rating?: number;
-    // Новый рейтинг игрока после игры
-    new_rating?: number;
-    // Является ли игрок победителем
-    winner: boolean;
+    army_remainder?: ICreatures[];  // Конечный состав армии
+    changed_rating?: number;        // На сколько изменился рейтинг игрока за эту партию
+    new_rating?: number;            // Новый рейтинг игрока после игры
+    user_id?: string;               // Ид пользователя в бд
+    winner: boolean;                // Является ли игрок победителем
 }
 
 /**
  * Тип входящих данных по основным характеристикам игроков с ником отправителя
  */
 export interface ISaveGameParamsBody {
-    // id сражения
-    combat_id: string;
-    // Версия карты
-    map_version: IMapVersionValue;
-    // Список данных о прокачках обоих игроков
-    players: IInputPlayer[];
+    combat_id: string;              // id сражения
+    map_type: IMapType;             // Тип карты
+    map_version: IMapVersionValue;  // Версия карты
+    players: ISavedPlayer[];        // Список данных о прокачках обоих игроков
+    userId: string;                 // id пользователя из монго
 }
 
 /**
  * Тип входящих данных с данными о победителе
  */
 export interface IWinnerRequestDto {
-    // Конечный состав армии
-    army_remainder: ICreatures[];
-    // id сражения
-    combat_id: string;
-    // Дата окончания игры
-    date: string;
-    // Является ли игрок красным
-    isRedPlayer: boolean;
-    // id игрока
-    user_id: string;
-    // Процент оставшейся силы армии
-    percentage_of_army_left: number;
-    // Произошел ли разрыв соединения во время игры
-    wasDisconnect?: boolean;
-    // Цвет игрока победителя
-    winner: EPlayerColor;
+    army_remainder: ICreatures[];       // Конечный состав армии
+    combat_id: string;                  // id сражения
+    date: string;                       // Дата окончания игры
+    isRedPlayer: boolean;               // Является ли игрок красным
+    percentage_of_army_left: number;    // Процент оставшейся силы армии
+    userId: string;                     // id пользователя из монго
+    wasDisconnect?: boolean;            // Произошел ли разрыв соединения во время игры
+    winner: EPlayerColor;               // Цвет игрока победителя
 }
 
 /**
  * Тело запроса для установки статуса соединения для игры
  */
 export interface ISetDisconnectStatusDto {
-    // ИД игры для которой проставляется статус
-    combat_id?: string;
-    // статус соединения
-    IsDisconnect?: boolean;
+    IsDisconnect?: boolean; // статус соединения
+    combat_id?: string;     // ИД игры для которой проставляется статус
+    userId: string;         // id пользователя из монго
 }
 
 /**
  * Тип данных для сохранения данных об игре
  */
-export interface IInputGameData {
-    // id сражения
-    combat_id: string;
-    // Версия карты
-    map_version: IMapVersionValue;
-    // Список ников игроков, участвующих в игре
-    players_ids: string[];
-    // Список данных о прокачках обоих игроков
-    players: IInputPlayer[];
+export interface IInputGameData extends Document {
+    combat_id: string;              // id сражения
+    map_type: IMapType;             // Версия карты
+    map_version: IMapVersionValue;  // Версия карты
+    players: IInputPlayer[];        // Список данных о прокачках обоих игроков
+    players_ids: string[];          // Список ников игроков, участвующих в игре
 }
 
 /**
  * Тип информации об игре из бд
  */
 export interface ISavedGame extends IInputGameData {
-    // id в mongodb
-    _id: string;
-    // Дата окончания игры
-    date?: string;
-    // Произошел ли разрыв соединения
-    disconnect?: boolean;
-    // ИД рейтинговой встречи
-    ladder_id?: string;
-    // Номер раунда в турнире
-    number_of_round?: number;
-    // Список данных обоих игроков
-    players: ISavedPlayer[];
-    // Список ников игроков, участвующих в игре
-    players_ids: string[];
-    // ИД турнира, в рамках которого была сыграна игра
-    tournament_id?: string;
-    // Название турнира, в рамках которого была сыграна игра
-    tournament_name?: string;
-    // Ожидание статуса соединения
-    waiting_for_disconnect_status?: boolean;
-    // Цвет победителя
-    winner?: EPlayerColor;
+    date: string;                               // Дата окончания игры
+    disconnect: boolean;                        // Произошел ли разрыв соединения
+    disconnect_confirmed: boolean;              // Подтверждение дисконнекта пришло раньше чем началось его ожидание
+    ladder_id?: string;                         // ИД рейтинговой встречи
+    number_of_round?: number;                   // Номер раунда в турнире
+    players: ISavedPlayer[];                    // Список данных обоих игроков
+    players_ids: string[];                      // Список ников игроков, участвующих в игре
+    tournament_id?: string;                     // ИД турнира, в рамках которого была сыграна игра
+    tournament_name?: string;                   // Название турнира, в рамках которого была сыграна игра
+    waiting_for_disconnect_status: boolean;     // Ожидание статуса соединения
+    winner?: EPlayerColor;                      // Цвет победителя
 }
 
 /**

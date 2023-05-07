@@ -1,8 +1,8 @@
-import * as mongoose from "mongoose";
 import {EPlayerColor} from "../game";
-import { ERoundFormat } from "./tournament-model";
+import { ERoundFormat, ITournament } from "./tournament-model";
+import {Model, Schema, model} from "mongoose";
 
-const PlayerSchema = new mongoose.Schema({
+const PlayerSchema = new Schema({
     user_id: String,
     color: {
         enum: Object.values(EPlayerColor),
@@ -13,9 +13,9 @@ const PlayerSchema = new mongoose.Schema({
         default: 0,
         required: true,
     },
-});
+}, { _id: false });
 
-const GridSchema = new mongoose.Schema({
+const GridSchema = new Schema({
     children_rounds: {
         type: [Number],
         required: true,
@@ -41,9 +41,9 @@ const GridSchema = new mongoose.Schema({
         type: String,
     },
     winner_id: String,
-});
+}, { _id: false });
 
-const TournamentSchema = new mongoose.Schema({
+const TournamentSchema = new Schema({
     users: {
         default: [],
         required: true,
@@ -85,6 +85,6 @@ const TournamentSchema = new mongoose.Schema({
         type: String,
     },
     winner_id: String,
-});
+}, { versionKey: false });
 
-export const TournamentModel = mongoose.model('tournament', TournamentSchema);
+export const TournamentModel: Model<ITournament> = model('tournament', TournamentSchema);

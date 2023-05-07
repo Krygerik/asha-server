@@ -1,14 +1,24 @@
 import { isNil } from "lodash";
+import {logger} from "../../utils";
 import {EPlayerColor} from "../game";
 import {TournamentModel} from "./tournament-schema";
-import {ITournament, ITournamentPlayer, ITournamentRound} from "./tournament-model";
+import {
+    ITournament,
+    ITournamentIdWithNumberOfRound,
+    ITournamentPlayer,
+    ITournamentRound,
+} from "./tournament-model";
 import {
     AUTO_WIN,
     BOUNDARY_MEMBER_COUNT_LIST,
     mapCountMemberToCountStage,
     mapRoundFormatToMaximumCountGame,
 } from "./tournament-constants";
-import {logger} from "../../utils";
+import {
+    getChangeGridDataQuery,
+    getFinishRoundDataQuery,
+    getMainDataQuery,
+} from "./tournament-utils";
 
 /**
  * Действия непосредственно с таблицей с турнирами
@@ -54,6 +64,17 @@ export class TournamentService {
      * Завершение регистрации на отдельный турнир
      */
     private static async closeRegistrationInSingleTournament(tournament: ITournament) {
+        if (tournament.users.length < 2) {
+            return TournamentModel.findOneAndUpdate(
+                { _id: tournament._id },
+                {
+                    $set: {
+                        started: true,
+                    }
+                }
+            );
+        }
+
         const grid = TournamentService.generateTournamentGrid(tournament);
 
         await TournamentModel.findOneAndUpdate(
@@ -133,7 +154,7 @@ export class TournamentService {
 
                 return {
                     ...round,
-                    winner_id: playerWOOpponent.user_id,
+                    winner_id: playerWOOpponent?.user_id,
                 };
             }
 
@@ -212,25 +233,17 @@ export class TournamentService {
     /**
      * Получение ИД турнира и номера раунда по совпадению списка игроков
      */
-    public async getTournamentIdWithNumberOfRound(gameUserIdList: string[]) {
+    public async getTournamentIdWithNumberOfRound(gameUserIdList: string[]): Promise<
+        ITournamentIdWithNumberOfRound | null
+    > {
         logger.info(
             'getTournamentIdWithNumberOfRound: Получение ИД турнира и номера раунда по совпадению списка игроков',
             { metadata: { gameUserIdList }}
         );
 
-        /**
-         * Если игроков не 2, не обрабатываем
-         */
-        if (gameUserIdList.length !== 2) {
-            logger.warn(
-                'getTournamentIdWithNumberOfRound: Количество игроков меньше 2',
-                { metadata: { gameUserIdList }}
-            );
+        console.log('gameUserIdList:', gameUserIdList);
 
-            return null;
-        }
-
-        const tournamentDoc = await TournamentModel.findOne(
+        const tournament = await TournamentModel.findOne(
             {
                 started: true,
                 users: { $all: gameUserIdList },
@@ -239,10 +252,12 @@ export class TournamentService {
             { grid: true, name: true }
         );
 
+        console.log('tournament:', tournament);
+
         /**
          * Если не найден турнир с такими участниками
          */
-        if (!tournamentDoc) {
+        if (!tournament) {
             logger.warn(
                 'getTournamentIdWithNumberOfRound: Не найден турнир с такими участниками',
                 { metadata: { gameUserIdList }}
@@ -250,9 +265,6 @@ export class TournamentService {
 
             return null;
         }
-
-        // @ts-ignore
-        const tournament: ITournament | null = tournamentDoc.toObject();
 
         /**
          * Получение раундав котором участвуют
@@ -266,6 +278,8 @@ export class TournamentService {
             )
         )
 
+        console.log('round:', round);
+
         /**
          * Если у переданных игроков нет активной встречи - тож бесцеремонно выкидываем
          */
@@ -278,11 +292,13 @@ export class TournamentService {
             return null;
         }
 
-        const tournamentIdWithNumberOfRound = {
+        const tournamentIdWithNumberOfRound: ITournamentIdWithNumberOfRound = {
             number_of_round: round.number_of_round,
             tournament_id: tournament._id,
             tournament_name: tournament.name
         };
+
+        console.log('tournamentIdWithNumberOfRound:', tournamentIdWithNumberOfRound);
 
         logger.info(
             'getTournamentIdWithNumberOfRound: Высчитан турнир и раунд для переданных игроков',
@@ -300,64 +316,38 @@ export class TournamentService {
     ) {
         logger.info(
             'addGameToTournament: Добавление результата игры к раунду в турнире',
-            {
-                metadata: {
-                    game_id,
-                    number_of_round,
-                    tournament_id,
-                    winner_id,
-                }
-            }
+            { metadata: { game_id, number_of_round, tournament_id, winner_id }}
         );
 
-        // @ts-ignore
+        console.log('tournament_id:', tournament_id);
+        console.log('number_of_round:', number_of_round);
+        console.log('winner_id:', winner_id);
+        console.log('game_id:', game_id);
+
         const tournament: ITournament | null = await TournamentModel.findOne({ _id: tournament_id });
 
+        console.log('tournament:', tournament);
         if (!tournament) {
-            logger.warn(
+            logger.error(
                 'addGameToTournament: Не найден турнир с таким ИД',
-                {
-                    metadata: {
-                        tournament_id
-                    }
-                }
+                { metadata: { tournament_id } }
             );
 
-            return null;
+            throw new Error(`Не найден турнир с таким ИД: ${tournament_id}`);
         }
 
         const currentRound: ITournamentRound | null = tournament.grid.find(
             (round: ITournamentRound) => round.number_of_round === number_of_round
         );
+        console.log('currentRound:', currentRound);
 
         if (!currentRound) {
-            logger.warn(
+            logger.error(
                 'addGameToTournament: Не найден активный раунд по номеру раунда',
-                {
-                    metadata: {
-                        number_of_round
-                    }
-                }
+                { metadata: { number_of_round } }
             );
 
-            return null;
-        }
-
-        /**
-         * Если игра уже добавлена в раунд - выкидываем
-         */
-        if (currentRound.games.includes(game_id)) {
-            logger.warn(
-                'addGameToTournament: Игра уже была добавлена в раунд',
-                {
-                    metadata: {
-                        game_id,
-                        number_of_round,
-                    }
-                }
-            );
-
-            return null;
+            throw new Error(`Не найден активный раунд по номеру раунда: ${currentRound}, ${tournament}`);
         }
 
         /**
@@ -368,150 +358,63 @@ export class TournamentService {
         );
 
         const newWinCount = winnerGamePlayer.win_count + 1;
-        const isFinishGame = newWinCount >= mapRoundFormatToMaximumCountGame[currentRound.round_format];
-
-        const updatedValue = {
-            $set: {
-                "grid.$[round].players.$[winner].win_count": newWinCount,
-                ...isFinishGame
-                    ? {
-                        "grid.$[round].winner_id": winner_id,
-                        ...number_of_round === 1
-                            ? { winner_id }
-                            : {}
-                    }
-                    : {}
-            },
-            $push: {
-                "grid.$[round].games": game_id,
-            }
-        }
-
-        const option = {
-            arrayFilters: [
-                { "round.number_of_round": number_of_round },
-                { "winner.user_id": winner_id },
-            ]
-        }
-
-        logger.info(
-            'addGameToTournament: Сохранение результата игры в бд',
-            {
-                metadata: {
-                    tournament_id,
-                    updatedValue,
-                }
-            }
-        );
-
-        const updatedTournament = await TournamentModel.updateOne(
-            { _id: tournament_id },
-            updatedValue,
-            option
-        );
-
-        if (!updatedTournament) {
-            logger.warn(
-                'addGameToTournament: Не удалось добавить результат игры в турнир',
-                {
-                    metadata: {
-                        tournament_id,
-                        updatedValue,
-                    }
-                }
-            );
-
-            return null;
-        }
-
-        /**
-         * Если это последняя игра раунда и не суперфинал - двигаем игрока дальше по сетке
-         */
-        if (isFinishGame && number_of_round !== 1) {
-            await this.moveWinnerIntoNextRound(tournament_id, number_of_round);
-        }
-    }
-
-    /**
-     * Перемещаем победителя в следующий раунд
-     */
-    public async moveWinnerIntoNextRound(tournament_id: string, number_of_round: number) {
-        logger.info(
-            'moveWinnerIntoNextRound: Перемещаем победителя в следующий раунд',
-            {
-                metadata: {
-                    tournament_id,
-                    number_of_round,
-                }
-            }
-        );
-
-        const tournamentDoc = await TournamentModel.findOne({ _id: tournament_id });
-
-        if (!tournamentDoc) {
-            logger.warn(
-                'moveWinnerIntoNextRound: Не найден турнир для перемещения победителя',
-                {
-                    metadata: {
-                        tournament_id,
-                    }
-                }
-            );
-
-            return null;
-        }
-
-        // @ts-ignore
-        const tournament: ITournament = tournamentDoc.toObject();
-
+        const isFinishGameOnRound = newWinCount >= mapRoundFormatToMaximumCountGame[currentRound.round_format];
+        const needChangeGrid = isFinishGameOnRound && number_of_round !== 1;
         const targetRound: ITournamentRound = tournament.grid.find(
             round => round.number_of_round === number_of_round
         );
 
-        const nextRound: ITournamentRound = tournament.grid.find(
+        const nextRound: ITournamentRound | null = tournament.grid.find(
             round => round.number_of_round === targetRound.parent_round
         );
 
-        const playerDataInNextRound: ITournamentPlayer = {
-            color: nextRound.players.length === 0
-                ? EPlayerColor.RED
-                : EPlayerColor.BLUE,
-            user_id: targetRound.winner_id,
-            win_count: 0,
-        }
+        const mainDataQuery = getMainDataQuery(game_id, number_of_round, newWinCount, winner_id);
+        const finishRoundDataQuery = getFinishRoundDataQuery(isFinishGameOnRound, winner_id, number_of_round);
+        const changeGridDataQuery = getChangeGridDataQuery(
+            needChangeGrid, nextRound?.players?.length, targetRound.parent_round, winner_id
+        );
+
+        console.log('newWinCount:', newWinCount);
+        console.log('isFinishGameOnRound:', isFinishGameOnRound);
+        console.log('needChangeGrid:', needChangeGrid);
+        console.log('targetRound:', targetRound);
+        console.log('nextRound:', nextRound);
+        console.log('mainDataQuery:', mainDataQuery);
+        console.log('finishRoundDataQuery:', finishRoundDataQuery);
+        console.log('changeGridDataQuery:', changeGridDataQuery);
 
         const updatedValue = {
+            $set: {
+                ...mainDataQuery.update.$set,
+                ...finishRoundDataQuery.update.$set,
+            },
             $push: {
-                "grid.$[nextRound].players": playerDataInNextRound,
+                ...mainDataQuery.update.$push,
+                ...changeGridDataQuery.update.$push,
             }
-        };
+        }
 
-        const option = {
+        const options = {
             arrayFilters: [
-                { "nextRound.number_of_round": targetRound.parent_round },
+                ...mainDataQuery.options.arrayFilters,
+                ...changeGridDataQuery.options.arrayFilters,
             ]
         }
 
-        const updatedTournament = await TournamentModel.updateOne(
-            { _id: tournament_id },
-            updatedValue,
-            option
+        console.log('updatedValue:', updatedValue);
+        console.log('options:', options);
+
+
+        logger.info(
+            'addGameToTournament: Сохранение результата игры в бд',
+            { metadata: { tournament_id, updatedValue } }
         );
 
-        if (!updatedTournament) {
-            logger.warn(
-                'moveWinnerIntoNextRound: Не удалось переместить победителя в следующий раунд турнира',
-                {
-                    metadata: {
-                        tournament_id,
-                        updatedValue,
-                        option,
-                    }
-                }
-            );
-
-            return null;
-        }
+        await TournamentModel.updateOne(
+            { _id: tournament_id },
+            updatedValue,
+            options
+        );
     }
 
     /**
@@ -524,17 +427,15 @@ export class TournamentService {
     /**
      * Удаление турнира
      */
-    public async deleteTournament(_id: string) {
-        const deletedTour = await TournamentModel.findOneAndDelete({ _id });
-
-        return deletedTour.toObject();
+    public deleteTournament(_id: string) {
+        return TournamentModel.findOneAndDelete({ _id });
     }
 
     /**
      * Получение списка всех турниров
      */
     public async getAllTournaments() {
-        const docs = await TournamentModel.find().select('-__v');
+        const docs = await TournamentModel.find();
 
         return docs.map(doc => doc.toObject());
     }
@@ -542,15 +443,8 @@ export class TournamentService {
     /**
      * Получение данных о турнире
      */
-    public async getTournament(query: any): Promise<ITournament | null> {
-        const tourDoc = await TournamentModel.findOne(query).select('-__v');
-
-        if (!tourDoc) {
-            return null;
-        }
-
-        // @ts-ignore
-        return tourDoc.toObject();
+    public getTournament(query: any) {
+        return TournamentModel.findOne(query);
     }
 
     /**
@@ -582,41 +476,38 @@ export class TournamentService {
     }
 
     /**
-     * Получение текущего активного раунда игрока
+     * Проставление игроку технического поражения и продвижение его оппонента по сетке
      */
-    private async getActiveRound(tournament_id: string, user_id: string): Promise<ITournamentRound | null> {
-        // @ts-ignore
-        const tournament: ITournament| null = await TournamentModel.findOne({ _id: tournament_id });
+    public async setParticipantTechnicalLose(tournament_id: string, user_id: string) {
+        logger.info(
+            'setParticipantTechnicalLose: Проставление игроку технического поражения',
+            { metadata: { tournament_id, user_id }
+            }
+        );
 
-        if (!tournament) {
-            return null;
-        }
+        const tournament: ITournament = await TournamentModel.findOne({ _id: tournament_id });
 
-        return tournament.grid.find(
+        const activeRound: ITournamentRound | null = tournament.grid.find(
             (round: ITournamentRound) => (
                 round.players.find((player: ITournamentPlayer) => player.user_id === user_id)
                 && isNil(round.winner_id)
             )
         )
-    }
-
-    /**
-     * Проставление игроку технического поражения
-     */
-    public async setParticipantTechnicalLose(tournament_id: string, user_id: string) {
-        const activeRound: ITournamentRound | null = await this.getActiveRound(tournament_id, user_id);
-
-        if (!activeRound) {
-            return;
-        }
 
         const winner: ITournamentPlayer | null = activeRound.players.find(
             (player: ITournamentPlayer) => player.user_id !== user_id
         );
 
-        // На всякий случай ¯\_(ツ)_/¯
-        if (!winner) {
-            return
+        const nextRound: ITournamentRound = tournament.grid.find(
+            round => round.number_of_round === activeRound.parent_round
+        );
+
+        const playerDataInNextRound: ITournamentPlayer = {
+            color: nextRound.players.length === 0
+                ? EPlayerColor.RED
+                : EPlayerColor.BLUE,
+            user_id: activeRound.winner_id,
+            win_count: 0,
         }
 
         const updatedValue = {
@@ -624,25 +515,33 @@ export class TournamentService {
                 "grid.$[round].winner_id": winner.user_id,
                 // Проставление победителя турнира, если это финальный раунд
                 ...activeRound.number_of_round === 1
-                    ? { winner_id: winner.user_id }
+                    ? {winner_id: winner.user_id}
                     : {}
             },
+            $push: {
+                "grid.$[nextRound].players": playerDataInNextRound,
+            }
         }
 
         const option = {
             arrayFilters: [
-                { "round.number_of_round": activeRound.number_of_round },
-                { "winner.user_id": winner.user_id },
+                {"round.number_of_round": activeRound.number_of_round},
+                {"winner.user_id": winner.user_id},
+                { "nextRound.number_of_round": activeRound.parent_round },
             ]
         }
 
+        logger.info(
+            'setParticipantTechnicalLose: Сохранение победителя текущего раунда и обновление сетки',
+            { metadata: { updatedValue, option }
+            }
+        );
+
         await TournamentModel.updateOne(
-            { _id: tournament_id },
+            {_id: tournament_id},
             updatedValue,
             option
         );
-
-        await this.moveWinnerIntoNextRound(tournament_id, activeRound.number_of_round);
     }
 
     /**
@@ -661,23 +560,6 @@ export class TournamentService {
 
         return tour.started;
 
-    }
-
-    /**
-     * Удаление игрока из всех турниров на стадии регистрации
-     */
-    public removeParticipantFromAllNotStartedTournament(player_id: string) {
-        const updateOperator = {
-            $pull: { users: player_id }
-        };
-
-        return TournamentModel.updateMany(
-            {
-                started: false,
-                users: { $in: [player_id]},
-            },
-            updateOperator,
-        );
     }
 
     /**

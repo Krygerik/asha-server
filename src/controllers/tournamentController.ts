@@ -7,11 +7,12 @@ import {
     mongoError,
     successResponse,
 } from "../modules/common/services";
-import {AuthService} from "../modules/auth";
 import {GameService} from "../modules/game";
+import {AccountService} from "../modules/account";
+import {logger} from "../utils";
 
 export class TournamentController {
-    private authService: AuthService = new AuthService();
+    private accountService: AccountService = new AccountService();
     private gameService: GameService = new GameService();
     private tournamentService: TournamentService = new TournamentService();
 
@@ -25,7 +26,6 @@ export class TournamentController {
                 return failureResponse('Турнир с таким названием уже зарегистрирован', null, res);
             }
 
-            // @ts-ignore
             const createdTournament: ITournament | null = await this.tournamentService.createTournament(tournamentData);
 
             if (!createdTournament) {
@@ -49,14 +49,13 @@ export class TournamentController {
                 return insufficientParameters(res);
             }
 
-            // @ts-ignore
             const deletedTournament: ITournament | null = await this.tournamentService.deleteTournament(tournament_id);
 
             if (!deletedTournament) {
                 return failureResponse('Такого турнира не существует', null, res);
             }
 
-            successResponse(`Турнир "${deletedTournament.name}" успешно удален`, null, res);
+            successResponse('Турнир успешно удален', deletedTournament, res);
         } catch (error) {
             mongoError(error, res);
         }
@@ -88,7 +87,7 @@ export class TournamentController {
 
             const tournament: ITournament = await this.tournamentService.getTournament({ _id: id });
 
-            const mapUsersIdToUserInfo = await this.authService.getMappingUsersIdToUserShortInfo(tournament.users);
+            const mapUsersIdToUserInfo = await this.accountService.getMappingUserIdToUserShortInfo(tournament.users);
 
             const allGameInToTournament: string[] = tournament.grid.reduce((acc, round) => ([
                 ...acc,
@@ -146,7 +145,7 @@ export class TournamentController {
             /**
              * Добавляем турнир в список турниров, в которых участвует пользователь
              */
-            const updatedUser = await this.authService.addTournamentIdToUser(userId, tournament_id);
+            const updatedUser = await this.accountService.addAccountParticipantTournament(userId, tournament_id);
 
             if (!updatedUser) {
                 return failureResponse(
@@ -185,6 +184,11 @@ export class TournamentController {
 
             successResponse('Вы успешно сняли свою регистрацию на турнире', null, res);
         } catch (error) {
+            logger.error(
+                'setParticipantTechnicalLose: Проставление игроку технического поражения',
+                { metadata: { error }
+                }
+            );
             internalError(error, res);
         }
     }

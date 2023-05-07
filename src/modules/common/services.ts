@@ -9,6 +9,13 @@ export function successResponse(message: string, DATA: any, res: Response) {
     });
 }
 
+export function successResponseWithoutMessage(DATA: any, res: Response) {
+    res.status(responseStatusCodes.success).json({
+        STATUS: 'SUCCESS',
+        DATA
+    });
+}
+
 export function failureResponse(message: string, DATA: any, res: Response) {
     res.status(responseStatusCodes.bad_request).json({
         STATUS: 'FAILURE',

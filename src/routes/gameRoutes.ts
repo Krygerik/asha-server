@@ -1,5 +1,4 @@
 import {Application, Request, Response} from "express";
-import {AuthController} from "../controllers/authController";
 import {GameController} from "../controllers/gameController";
 import { loggerMiddleware } from "../utils";
 
@@ -8,16 +7,16 @@ export class GameRoutes {
 
     public route(app: Application) {
         /**
-         * Сохранение основных характеристик игрока с его никнеймом
+         * Сохранение основных характеристик игрока
          */
-        app.post('/api/save-game-params', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
+        app.post('/api/save-game-params', loggerMiddleware, (req: Request, res: Response) => {
             this.gameController.saveGameParams(req,res);
         });
 
         /**
          * Сохранение победителя и определение красного игрока
          */
-        app.post('/api/save-game-winner', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
+        app.post('/api/save-game-winner', loggerMiddleware, (req: Request, res: Response) => {
             this.gameController.saveGameWinner(req,res);
         });
 
@@ -43,16 +42,9 @@ export class GameRoutes {
         })
 
         /**
-         * Получение краткой информации по последним играм пользователя
-         */
-        app.get('/api/get-games-by-user', AuthController.authMiddleware(), (req: Request, res: Response) => {
-            this.gameController.getShortGameInfoByUserId(req, res);
-        })
-
-        /**
          * Проставление статуса разрыва соединения
          */
-        app.post('/api/set-game-disconnect-status', [AuthController.authMiddleware(), loggerMiddleware], (req: Request, res: Response) => {
+        app.post('/api/set-game-disconnect-status', loggerMiddleware, (req: Request, res: Response) => {
             this.gameController.setGameDisconnectStatusByCombatId(req, res);
         })
 
@@ -62,5 +54,12 @@ export class GameRoutes {
         app.post('/api/get-races-win-rate', (req: Request, res: Response) => {
             this.gameController.getRacesWinRate(req, res);
         });
+
+        /**
+         * Получение информации о первоначальных характеристиках героя и его расе из случайной игры
+         */
+         app.get('/api/get-quiz-stat-hero', (req: Request, res: Response) => {
+            this.gameController.getStatHeroRandomGame(req, res);
+        });
     };
-}
+}   

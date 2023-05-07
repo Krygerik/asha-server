@@ -19,7 +19,9 @@ export interface IUser {
     // ник игрока
     nickname: string;
     // Рейтинг игрока, до создания АСХА
-    original_rating: string;
+    original_rating: number;
+    // Статус переноса данных в новый аккаунт
+    account_merging_status: boolean;
     // Рейтинг игрока
     rating?: number;
     // Роли игрока

@@ -13,7 +13,7 @@ export class LadderRoutes {
         })
 
         /**
-         * Создание ладдерной встречи
+         * Завершение ладдерной встречи
          */
         app.post('/api/ladder/cancel', (req: Request, res: Response) => {
             this.ladderController.cancelLadder(req, res);

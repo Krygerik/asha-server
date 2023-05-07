@@ -5,7 +5,7 @@ export class LadderService {
     /**
      * Создание записи ладдера
      */
-    public async createLadder(ladderData: ILadderRecord) {
+    public async createLadder(ladderData: any) {
         await LadderModel.updateMany(
             {
                 member_ids: {
@@ -25,14 +25,8 @@ export class LadderService {
     /**
      * Получение записи ладдера по участнику
      */
-    public async getActiveLadderByUserId(userId: string) {
-        const ladderDoc = await LadderModel.findOne({ member_ids: userId, active: true });
-
-        if (!ladderDoc) {
-            return null;
-        }
-
-        return ladderDoc.toObject();
+    public getActiveLadderByUserId(userId: string) {
+        return LadderModel.findOne({ member_ids: userId, active: true });
     }
 
     /**

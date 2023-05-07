@@ -1,6 +1,11 @@
 import * as mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
+    account_merging_status: {
+        default: false,
+        required: true,
+        type: Boolean,
+    },
     discord: {
         required: true,
         type: String,
