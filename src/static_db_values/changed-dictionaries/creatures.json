@@ -69,5 +69,19 @@
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "166", "change_id": ["138"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "169", "change_id": ["80"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "171", "change_id": ["95"] },
-  { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "176", "change_id": ["126"] }
+  { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "176", "change_id": ["126"] },
+  { "map": { "version": "2.12", "type": "RTA" }, "game_id": "65", "change_id": ["184"] },
+  { "map": { "version": "2.12", "type": "RTA" }, "game_id": "66", "change_id": ["185"] },
+  { "map": { "version": "2.12", "type": "RTA" }, "game_id": "163", "change_id": ["186"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "77", "change_id": ["200"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "78", "change_id": ["201"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "141", "change_id": ["202"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "9", "change_id": ["203"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "10", "change_id": ["204"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "110", "change_id": ["205"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "117", "change_id": ["206"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "118", "change_id": ["207"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "173", "change_id": ["208"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "124", "change_id": ["190"] },
+    { "map": { "version": "2.12", "type": "RTA" }, "game_id": "176", "change_id": ["191"] }
 ]
