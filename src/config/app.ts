@@ -18,6 +18,7 @@ import {LadderRoutes} from "../routes/ladderRoutes";
 import { MapVersionRoutes } from "../routes/mapVersionRoutes";
 import {TestRoutes} from '../routes/testRoutes';
 import {TournamentRoutes} from "../routes/tournamentRoutes";
+import {initMongo} from "./init"
 
 class App {
     public app: express.Application;
@@ -37,16 +38,24 @@ class App {
     constructor() {
         this.app = express();
         this.config();
-        this.mongoSetup();
-        this.accountRoutes.route(this.app);
-        this.clientLogsRoutes.route(this.app);
-        this.dictionaryRoutes.route(this.app);
-        this.gameRoutes.route(this.app);
-        this.ladderRoutes.route(this.app);
-        this.mapVersionRoutes.route(this.app);
-        this.testRoutes.route(this.app);
-        this.tournamentRoutes.route(this.app);
-        this.commonRoutes.route(this.app);
+        this.mongoSetup().then((result) => {
+            if (result) {
+                console.log("SUCCESS<mongoSetup>");
+                this.accountRoutes.route(this.app);
+                this.clientLogsRoutes.route(this.app);
+                this.dictionaryRoutes.route(this.app);
+                this.gameRoutes.route(this.app);
+                this.ladderRoutes.route(this.app);
+                this.mapVersionRoutes.route(this.app);
+                this.testRoutes.route(this.app);
+                this.tournamentRoutes.route(this.app);
+                this.commonRoutes.route(this.app);
+            } else {
+                console.log("ERROR<mongoSetup>");
+            }
+        }, (err) => {
+            console.log("ERROR<mongoSetup>: " + err);
+        })
     }
 
     private config(): void {
@@ -71,8 +80,8 @@ class App {
         this.app.use(passport.session());
     }
 
-    private mongoSetup(): void {
-        mongoose.connect(
+    private async mongoSetup(): Promise<any> {
+        let result = await mongoose.connect(
             process.env.APP_DB_URI,
             {
                 useCreateIndex: true,
@@ -80,7 +89,13 @@ class App {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
             }
-        )
+        ).then((res) => {
+            console.log("SUCCESS<mongoose.connect>");
+            return initMongo();
+        }, (err) => {
+            console.log("ERROR<mongoose.connect>: " + err);
+        })
+        return result;
     }
 }
 
