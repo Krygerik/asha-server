@@ -38,23 +38,16 @@ class App {
     constructor() {
         this.app = express();
         this.config();
-        this.mongoSetup().then((result) => {
-            if (result) {
-                console.log("SUCCESS<mongoSetup>");
-                this.accountRoutes.route(this.app);
-                this.clientLogsRoutes.route(this.app);
-                this.dictionaryRoutes.route(this.app);
-                this.gameRoutes.route(this.app);
-                this.ladderRoutes.route(this.app);
-                this.mapVersionRoutes.route(this.app);
-                this.testRoutes.route(this.app);
-                this.tournamentRoutes.route(this.app);
-                this.commonRoutes.route(this.app);
-            } else {
-                console.log("ERROR<mongoSetup>");
-            }
-        }, (err) => {
-            console.log("ERROR<mongoSetup>: " + err);
+        this.mongoSetup().then(() => {
+            this.accountRoutes.route(this.app);
+            this.clientLogsRoutes.route(this.app);
+            this.dictionaryRoutes.route(this.app);
+            this.gameRoutes.route(this.app);
+            this.ladderRoutes.route(this.app);
+            this.mapVersionRoutes.route(this.app);
+            this.testRoutes.route(this.app);
+            this.tournamentRoutes.route(this.app);
+            this.commonRoutes.route(this.app);
         })
     }
 
@@ -80,22 +73,22 @@ class App {
         this.app.use(passport.session());
     }
 
-    private async mongoSetup(): Promise<any> {
-        let result = await mongoose.connect(
-            process.env.APP_DB_URI,
-            {
-                useCreateIndex: true,
-                useFindAndModify: false,
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            }
-        ).then((res) => {
-            console.log("SUCCESS<mongoose.connect>");
-            return initMongo();
-        }, (err) => {
-            console.log("ERROR<mongoose.connect>: " + err);
-        })
-        return result;
+    private async mongoSetup(): Promise<void> {
+        try {
+            await mongoose.connect(
+                process.env.APP_DB_URI,
+                {
+                    useCreateIndex: true,
+                    useFindAndModify: false,
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true,
+                }
+            );
+
+            await initMongo();
+        } catch (e) {
+            throw Error('Failed connect to mongo:' + e.toString());
+        }
     }
 }
 

@@ -1,4 +1,3 @@
-
 import {DictionariesService} from "../modules/dictionaries";
 import {EDictionariesNames, needToChangeDict} from "../modules/dictionaries/constants";
 
@@ -22,25 +21,19 @@ const mapDictionaryNameToFileJSON = {
         [EDictionariesNames.WarMachines]: warMachinesJSON,
     }
 
-export async function initMongo(): Promise<any> {
-	let dictionariesService: DictionariesService = new DictionariesService();
-	if (needToChangeDict) {
-		for (let key in DictionariesService.mapDictionaryNameToModel) {
-			let model = DictionariesService.mapDictionaryNameToModel[key];
-			
-			let result = await model.deleteMany()
-			.then((res) => {
-				console.log("SUCCESS<deleteMany>");
-				return model.insertMany(mapDictionaryNameToFileJSON[key]).then(res => {
-					console.log("SUCCESS<insertMany>");
-					return res;
-				}, (err) => {
-					console.log("ERROR<insertMany>: " + err);
-				});
-			}, (err) => {
-    	        console.log("ERROR<deleteMany>: " + err);
-    	    });
-			return result;		
+export async function initMongo(): Promise<void | undefined> {
+	if (!needToChangeDict) {
+		return;
+	}
+
+	for (let key in DictionariesService.mapDictionaryNameToModel) {
+		let model = DictionariesService.mapDictionaryNameToModel[key];
+
+		try {
+			await model.deleteMany({})
+			await model.insertMany(mapDictionaryNameToFileJSON[key])
+		} catch (e) {
+			console.error('Failed init mongo tables:', e)
 		}
 	}
 }
