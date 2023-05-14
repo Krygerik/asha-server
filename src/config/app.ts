@@ -18,6 +18,7 @@ import {LadderRoutes} from "../routes/ladderRoutes";
 import { MapVersionRoutes } from "../routes/mapVersionRoutes";
 import {TestRoutes} from '../routes/testRoutes';
 import {TournamentRoutes} from "../routes/tournamentRoutes";
+import {initMongo} from "./init"
 
 class App {
     public app: express.Application;
@@ -37,16 +38,17 @@ class App {
     constructor() {
         this.app = express();
         this.config();
-        this.mongoSetup();
-        this.accountRoutes.route(this.app);
-        this.clientLogsRoutes.route(this.app);
-        this.dictionaryRoutes.route(this.app);
-        this.gameRoutes.route(this.app);
-        this.ladderRoutes.route(this.app);
-        this.mapVersionRoutes.route(this.app);
-        this.testRoutes.route(this.app);
-        this.tournamentRoutes.route(this.app);
-        this.commonRoutes.route(this.app);
+        this.mongoSetup().then(() => {
+            this.accountRoutes.route(this.app);
+            this.clientLogsRoutes.route(this.app);
+            this.dictionaryRoutes.route(this.app);
+            this.gameRoutes.route(this.app);
+            this.ladderRoutes.route(this.app);
+            this.mapVersionRoutes.route(this.app);
+            this.testRoutes.route(this.app);
+            this.tournamentRoutes.route(this.app);
+            this.commonRoutes.route(this.app);
+        })
     }
 
     private config(): void {
@@ -71,16 +73,22 @@ class App {
         this.app.use(passport.session());
     }
 
-    private mongoSetup(): void {
-        mongoose.connect(
-            process.env.APP_DB_URI,
-            {
-                useCreateIndex: true,
-                useFindAndModify: false,
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            }
-        )
+    private async mongoSetup(): Promise<void> {
+        try {
+            await mongoose.connect(
+                process.env.APP_DB_URI,
+                {
+                    useCreateIndex: true,
+                    useFindAndModify: false,
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true,
+                }
+            );
+
+            await initMongo();
+        } catch (e) {
+            throw Error('Failed connect to mongo:' + e.toString());
+        }
     }
 }
 
