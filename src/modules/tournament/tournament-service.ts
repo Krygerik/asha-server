@@ -241,7 +241,6 @@ export class TournamentService {
             { metadata: { gameUserIdList }}
         );
 
-        console.log('gameUserIdList:', gameUserIdList);
 
         const tournament = await TournamentModel.findOne(
             {
@@ -252,7 +251,6 @@ export class TournamentService {
             { grid: true, name: true }
         );
 
-        console.log('tournament:', tournament);
 
         /**
          * Если не найден турнир с такими участниками
@@ -278,7 +276,6 @@ export class TournamentService {
             )
         )
 
-        console.log('round:', round);
 
         /**
          * Если у переданных игроков нет активной встречи - тож бесцеремонно выкидываем
@@ -298,7 +295,6 @@ export class TournamentService {
             tournament_name: tournament.name
         };
 
-        console.log('tournamentIdWithNumberOfRound:', tournamentIdWithNumberOfRound);
 
         logger.info(
             'getTournamentIdWithNumberOfRound: Высчитан турнир и раунд для переданных игроков',
@@ -319,14 +315,8 @@ export class TournamentService {
             { metadata: { game_id, number_of_round, tournament_id, winner_id }}
         );
 
-        console.log('tournament_id:', tournament_id);
-        console.log('number_of_round:', number_of_round);
-        console.log('winner_id:', winner_id);
-        console.log('game_id:', game_id);
-
         const tournament: ITournament | null = await TournamentModel.findOne({ _id: tournament_id });
 
-        console.log('tournament:', tournament);
         if (!tournament) {
             logger.error(
                 'addGameToTournament: Не найден турнир с таким ИД',
@@ -339,7 +329,6 @@ export class TournamentService {
         const currentRound: ITournamentRound | null = tournament.grid.find(
             (round: ITournamentRound) => round.number_of_round === number_of_round
         );
-        console.log('currentRound:', currentRound);
 
         if (!currentRound) {
             logger.error(
@@ -374,15 +363,6 @@ export class TournamentService {
             needChangeGrid, nextRound?.players?.length, targetRound.parent_round, winner_id
         );
 
-        console.log('newWinCount:', newWinCount);
-        console.log('isFinishGameOnRound:', isFinishGameOnRound);
-        console.log('needChangeGrid:', needChangeGrid);
-        console.log('targetRound:', targetRound);
-        console.log('nextRound:', nextRound);
-        console.log('mainDataQuery:', mainDataQuery);
-        console.log('finishRoundDataQuery:', finishRoundDataQuery);
-        console.log('changeGridDataQuery:', changeGridDataQuery);
-
         const updatedValue = {
             $set: {
                 ...mainDataQuery.update.$set,
@@ -400,10 +380,6 @@ export class TournamentService {
                 ...changeGridDataQuery.options.arrayFilters,
             ]
         }
-
-        console.log('updatedValue:', updatedValue);
-        console.log('options:', options);
-
 
         logger.info(
             'addGameToTournament: Сохранение результата игры в бд',

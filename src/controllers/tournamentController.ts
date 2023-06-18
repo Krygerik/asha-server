@@ -85,7 +85,11 @@ export class TournamentController {
                 return insufficientParameters(res);
             }
 
-            const tournament: ITournament = await this.tournamentService.getTournament({ _id: id });
+            const tournament = await this.tournamentService.getTournament({ _id: id }).then(x => x ? x.toObject() : undefined);
+
+            if (!tournament) {
+                return failureResponse('Не удалось найти указанный турнир', null, res);
+            }
 
             const mapUsersIdToUserInfo = await this.accountService.getMappingUserIdToUserShortInfo(tournament.users);
 

@@ -48,7 +48,7 @@ const combinedFormatter = winston.format.combine(
 /**
  * Кастомный логгер, используемый в проекте
  */
-export const logger = process.env.NODE_ENV !== EEnvironment.UnitTests
+export const logger = (process.env.NODE_ENV !== EEnvironment.UnitTests && process.env.NODE_ENV !== EEnvironment.Develop)
   ? winston.createLogger({
     level: 'info',
     format: combinedFormatter,

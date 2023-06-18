@@ -186,7 +186,7 @@ export class AccountService {
 
     public async getMappingUserIdToUserShortInfo(userIdList: string[]) {
         const accountDocs = await AccountModel.find(
-            { _id: { $id: userIdList }},
+            { _id: { $in: userIdList }},
             { username: true, discordId: true, discriminator: true });
 
         return accountDocs
@@ -194,7 +194,7 @@ export class AccountService {
             .reduce((accumulator, account) => ({
                ...accumulator,
                [account._id]: account,
-            }));
+            }), []);
     }
 
     public addAccountParticipantTournament(_id: string, tournamentId: string) {

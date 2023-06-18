@@ -87,4 +87,4 @@ const TournamentSchema = new Schema({
     winner_id: String,
 }, { versionKey: false });
 
-export const TournamentModel: Model<ITournament> = model('tournament', TournamentSchema);
+export const TournamentModel: Model<ITournament> = model('tournaments', TournamentSchema);
