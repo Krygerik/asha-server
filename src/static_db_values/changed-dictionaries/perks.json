@@ -6,5 +6,6 @@
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["85"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["72"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["92"] },
-  { "map": { "version": "2.12", "type": "RTA" }, "game_id": "RTA-Obsidian-Sphere", "change_id": ["176"] }
+  { "map": { "version": "2.12", "type": "RTA" }, "game_id": "RTA-Obsidian-Sphere", "change_id": ["176"] },
+  { "map": { "version": "2.12", "type": "RTA" }, "game_id": "61", "change_id": ["78"] }
 ]
