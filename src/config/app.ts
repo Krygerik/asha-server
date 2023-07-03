@@ -85,7 +85,7 @@ class App {
                 }
             );
 
-            await initMongo();
+            // await initMongo();
         } catch (e) {
             throw Error('Failed connect to mongo:' + e.toString());
         }
