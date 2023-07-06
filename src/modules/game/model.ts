@@ -182,6 +182,8 @@ export interface IShortPlayerFilterInfo {
  * Краткий фильтр игр
  */
 export interface IShortFilter {
+    map_type?: IMapType;
+    map_version?: IMapVersionValue;
     players: IShortPlayerFilterInfo[];
 }
 

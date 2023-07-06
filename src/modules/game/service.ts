@@ -3,7 +3,6 @@ import {
     EPlayerColor,
     IFilterGames,
     IFindGameOptions,
-    IInputGameData,
     ISavedGame,
     ISavedPlayer,
     IShortFilter,
@@ -75,6 +74,8 @@ export class GameService {
      */
     private getShortGameInfoQueryFilter(filter: IShortFilter) {
         return {
+            ...filter.map_type ? { map_type: filter.map_type } : {},
+            ...filter.map_version ? { map_version: filter.map_version } : {},
             waiting_for_disconnect_status: { $ne: true },
             winner: { $ne: null },
             $or: [
