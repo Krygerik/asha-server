@@ -139,16 +139,13 @@ export interface IShortPlayer {
  * Тип краткой информации по игре
  */
 export interface IShortGame {
-    // id в mongodb
-    _id: string;
-    // Дата окончания игры
-    date?: string;
-    // Произошел ли разрыв соединения
-    disconnect: boolean;
-    // Список данных обоих игроков
-    players: IShortPlayer[];
-    // Цвет победителя
-    winner: EPlayerColor;
+    _id: string; // id в mongodb
+    date?: string; // Дата окончания игры
+    disconnect: boolean; // Произошел ли разрыв соединения
+    map_type: string; // Тип карты
+    map_version: string; // Версия карты
+    players: IShortPlayer[]; // Список данных обоих игроков
+    winner: EPlayerColor; // Цвет победителя
 }
 
 /**

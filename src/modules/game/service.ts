@@ -32,6 +32,8 @@ export class GameService {
                     user_id: player.user_id,
                 }),
             ),
+            map_type: gameInfo.map_type,
+            map_version: gameInfo.map_version,
             winner: gameInfo.winner,
         };
     }
