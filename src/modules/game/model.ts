@@ -237,6 +237,8 @@ interface IFilterPlayersField {
  * Фильтр по статистике игр
  */
 export interface IFilterGames {
+    // Тип карты
+    map_type?: string;
     // Версия карты
     map_version?: IMapVersionValue;
     // Данные по игрокам

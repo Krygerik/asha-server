@@ -295,11 +295,8 @@ export class GameService {
             players_ids: { $size: 2 },
             winner: { $ne: null },
             waiting_for_disconnect_status: { $ne: true },
-            ...(
-                filter.map_version
-                    ? { map_version: filter.map_version }
-                    : {}
-            )
+            ...filter.map_type ? { map_type: filter.map_type } : {},
+            ...filter.map_version ? { map_version: filter.map_version } : {},
         };
 
         const cutGamesDoc = await GameModel.find(
