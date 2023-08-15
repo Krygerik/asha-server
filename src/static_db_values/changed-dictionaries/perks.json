@@ -3,9 +3,7 @@
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "72", "change_id": ["111"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "HRTA-Astrology", "change_id": ["110", "137"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "HRTA-Ammo-Cart", "change_id": ["24"] },
-  { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["85"] },
-  { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["72"] },
-  { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["92"] },
+  { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Empty", "change_id": ["85", "72", "92"] },
   { "map": { "version": "2.12", "type": "RTA" }, "game_id": "RTA-Obsidian-Sphere", "change_id": ["176"] },
   { "map": { "version": "2.12", "type": "RTA" }, "game_id": "61", "change_id": ["78"] }
 ]
