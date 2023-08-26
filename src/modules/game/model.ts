@@ -241,6 +241,8 @@ export interface IFilterGames {
     map_type?: string;
     // Версия карты
     map_version?: IMapVersionValue;
+    // Учитывать неизвестных
+    with_unknown: boolean;
     // Данные по игрокам
     players: IFilterPlayersField[];
     // Количество оставшейся армии

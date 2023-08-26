@@ -292,9 +292,9 @@ export class GameService {
             })),
             disconnect: { $ne: true },
             // 2 - означает, что в игре участвовало 2 зарегистрированных участника проекта
-            players_ids: { $size: 2 },
             winner: { $ne: null },
             waiting_for_disconnect_status: { $ne: true },
+            ...filter.with_unknown ? {} : { players_ids: { $size: 2 } },
             ...filter.map_type ? { map_type: filter.map_type } : {},
             ...filter.map_version ? { map_version: filter.map_version } : {},
         };
