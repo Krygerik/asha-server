@@ -12,6 +12,7 @@
   { "value": { "type": "HRTA", "version": "1.27b" }, "parent": { "type": "HRTA", "version": "1.27a" } },
   { "value": { "type": "HRTA", "version": "1.27c" }, "parent": { "type": "HRTA", "version": "1.27b" } },
   { "value": { "type": "HRTA", "version": "1.27d" }, "parent": { "type": "HRTA", "version": "1.27c" } },
+  { "value": { "type": "HRTA", "version": "1.27e" }, "parent": { "type": "HRTA", "version": "1.27d" } },
   { "value": { "type": "RTA", "version": "2.12" }, "parent": null },
   { "value": { "type": "RTA", "version": "2.13" }, "parent": { "type": "RTA", "version": "2.12" } }
 ]
