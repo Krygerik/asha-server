@@ -49,6 +49,7 @@ export interface IInputPlayer extends Document {
     spells: string[];                   // Заклинания героя
     start_bonus: EPlayerStartedBonus;   // Выбранный стартовый бонус
     war_machines: string[];             // Боевые машины игрока
+    visible: boolean;                   // Видимость
 }
 
 export interface ISavedPlayer extends IInputPlayer {

@@ -67,7 +67,7 @@ export class GameController {
             ...item,
             players: map(item.players, ((player: ISavedPlayer | IShortPlayer) => ({
                 ...player,
-                nickname: mappingIdToNicknames[player.user_id]
+                ...mappingIdToNicknames[player.user_id],
             })))
         }));
     }
@@ -82,7 +82,7 @@ export class GameController {
             ...gameInfo,
             players: map(gameInfo.players, ((player: ISavedPlayer) => ({
                 ...player,
-                nickname: mappingIdToNicknames[player.user_id]
+                ...mappingIdToNicknames[player.user_id],
             })))
         }
     }

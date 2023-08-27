@@ -98,15 +98,15 @@ export class AccountController {
      */
     public async updateAccountNickname(req: Request, res: Response) {
         try {
-            const { id, nickname }: IUpdateNicknameInfoRequestBody = req.body;
+            const { id, nickname, visible }: IUpdateNicknameInfoRequestBody = req.body;
 
-            if (!nickname || !id) {
+            if (!id) {
                 return failureResponse('Отсутствуют данные для изменения', null, res);
             }
 
-            await this.accountService.updateAccountNickname(id, nickname);
+            await this.accountService.updateAccountNickname(id, nickname, visible);
 
-            successResponseWithoutMessage({ id, nickname }, res);
+            successResponseWithoutMessage({ id, nickname, visible }, res);
         } catch (error) {
             internalError(error, res);
         }
@@ -117,13 +117,13 @@ export class AccountController {
      */
     public async updateUserGameInfo(req: Request, res: Response) {
         try {
-            const { id, original_rating }: IUpdateAccountGameInfoRequestBody = req.body;
+            const { id, original_rating, visible }: IUpdateAccountGameInfoRequestBody = req.body;
 
-            if (!id || !original_rating) {
+            if (!id) {
                 return failureResponse('Отсутствуют данные для изменения', null, res);
             }
 
-            await this.accountService.updateAccountGameInfo(id, original_rating);
+            await this.accountService.updateAccountGameInfo(id, original_rating, visible);
 
             successResponseWithoutMessage({ id, original_rating }, res);
         } catch (error) {

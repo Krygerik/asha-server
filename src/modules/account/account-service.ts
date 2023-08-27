@@ -57,12 +57,12 @@ export class AccountService {
         return AccountModel.findOne({ clientConnectId });
     }
 
-    public updateAccountNickname(_id: string, username: string) {
-        return AccountModel.findOneAndUpdate({ _id }, { $set: { username }});
+    public updateAccountNickname(_id: string, nickname: string, visible: boolean) {
+        return AccountModel.findOneAndUpdate({ _id }, { $set: { nickname, visible }});
     }
 
-    public updateAccountGameInfo(_id: string, original_rating: number) {
-        return AccountModel.findOneAndUpdate({ _id }, { $set: { original_rating }});
+    public updateAccountGameInfo(_id: string, original_rating: number, visible: boolean) {
+        return AccountModel.findOneAndUpdate({ _id }, { $set: { original_rating, visible }});
     }
 
     public updateAccountMergingStatus(_id: string, merged_with_old_account: boolean) {
@@ -113,7 +113,7 @@ export class AccountService {
     }
 
     public getIdWithNicknameFromAllAccounts() {
-        return AccountModel.find({}, { username: 1, _id: 1 });
+        return AccountModel.find({}, { username: 1, _id: 1, visible: 1 });
     }
 
     public getPlayerRatingList(limit: number = 0) {
@@ -134,7 +134,7 @@ export class AccountService {
             .map(account => account.toObject())
             .reduce((accumulator, account: IAccount) => ({
                 ...accumulator,
-                [account._id]: account.username,
+                [account._id]: { nickname: account?.username, visible: account?.visible },
             }), {});
     }
 

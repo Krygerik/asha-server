@@ -17,6 +17,7 @@ export interface IAccount extends Document {
     roles: ERoles[]; // Роли игрока
     tournaments: string[]; // ИД турниров, в которых юзверь участвовал или участвует
     username: string; // Никнейм пользователя из дискорд аккаунта
+    visible: boolean; // Видимость аккаунта
 }
 
 /**
@@ -25,6 +26,7 @@ export interface IAccount extends Document {
 export interface IUpdateNicknameInfoRequestBody {
     id?: string; // ид аккаунта
     nickname?: string; // новый никнейм
+    visible: boolean; // видимость аккаунта
 }
 
 /**
@@ -33,6 +35,7 @@ export interface IUpdateNicknameInfoRequestBody {
 export interface IUpdateAccountGameInfoRequestBody {
     id?: string; // ид игрока, которому изменяется профиль
     original_rating?: number; // рейтинг игрока, который был ранее
+    visible: boolean; // видимость аккаунта
 }
 
 /**

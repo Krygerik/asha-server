@@ -1,4 +1,3 @@
-import { uuid } from 'uuidv4';
 import { model, Model, Schema } from "mongoose";
 import { IAccount } from "./account-types";
 
@@ -49,6 +48,11 @@ const AccountSchema = new Schema({
     username: {
         type: String,
         required: true,
+    },
+    visible: {
+        default: true,
+        required: true,
+        type: Boolean,
     },
 })
 
