@@ -16,6 +16,8 @@
   { "value": { "type": "HRTA", "version": "1.27f" }, "parent": { "type": "HRTA", "version": "1.27e" } },
   { "value": { "type": "HRTA", "version": "1.27g" }, "parent": { "type": "HRTA", "version": "1.27f" } },
   { "value": { "type": "HRTA", "version": "1.27h" }, "parent": { "type": "HRTA", "version": "1.27g" } },
+  { "value": { "type": "HRTA", "version": "1.28a" }, "parent": { "type": "HRTA", "version": "1.27h" } },
+  { "value": { "type": "HRTA", "version": "1.28b" }, "parent": { "type": "HRTA", "version": "1.28a" } },
   { "value": { "type": "RTA", "version": "2.12" }, "parent": null },
   { "value": { "type": "RTA", "version": "2.13" }, "parent": { "type": "RTA", "version": "2.12" } }
 ]
