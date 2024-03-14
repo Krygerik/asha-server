@@ -21,6 +21,15 @@
   { "value": { "type": "HRTA", "version": "1.28c" }, "parent": { "type": "HRTA", "version": "1.28b" } },
   { "value": { "type": "HRTA", "version": "1.28d" }, "parent": { "type": "HRTA", "version": "1.28c" } },
   { "value": { "type": "HRTA", "version": "1.28d_no_mentor" }, "parent": { "type": "HRTA", "version": "1.28d" } },
+  { "value": { "type": "HRTA", "version": "1.28e" }, "parent": { "type": "HRTA", "version": "1.28d" } },
+  { "value": { "type": "HRTA", "version": "1.28e_no_mentor" }, "parent": { "type": "HRTA", "version": "1.28d_no_mentor" } },
+  { "value": { "type": "HRTA", "version": "1.28f" }, "parent": { "type": "HRTA", "version": "1.28e" } },
+  { "value": { "type": "HRTA", "version": "1.28f_no_mentor" }, "parent": { "type": "HRTA", "version": "1.28e_no_mentor" } },
+  { "value": { "type": "HRTA", "version": "1.28g" }, "parent": { "type": "HRTA", "version": "1.28f" } },
+  { "value": { "type": "HRTA", "version": "1.28g_no_mentor" }, "parent": { "type": "HRTA", "version": "1.28f_no_mentor" } },
+  { "value": { "type": "HRTA", "version": "1.29a" }, "parent": { "type": "HRTA", "version": "1.28g" } },
+  { "value": { "type": "HRTA", "version": "1.29a_no_mentor" }, "parent": { "type": "HRTA", "version": "1.28g_no_mentor" } },
   { "value": { "type": "RTA", "version": "2.12" }, "parent": null },
-  { "value": { "type": "RTA", "version": "2.13" }, "parent": { "type": "RTA", "version": "2.12" } }
+  { "value": { "type": "RTA", "version": "2.13" }, "parent": { "type": "RTA", "version": "2.12" } },
+  { "value": { "type": "RTA", "version": "2.14" }, "parent": { "type": "RTA", "version": "2.13" } }
 ]
