@@ -29,6 +29,12 @@
   { "value": { "type": "HRTA", "version": "1.28g_no_mentor" }, "parent": { "type": "HRTA", "version": "1.28f_no_mentor" } },
   { "value": { "type": "HRTA", "version": "1.29a" }, "parent": { "type": "HRTA", "version": "1.28g" } },
   { "value": { "type": "HRTA", "version": "1.29a_no_mentor" }, "parent": { "type": "HRTA", "version": "1.28g_no_mentor" } },
+  { "value": { "type": "HRTA", "version": "1.29b" }, "parent": { "type": "HRTA", "version": "1.29a" } },
+  { "value": { "type": "HRTA", "version": "1.29b_no_mentor" }, "parent": { "type": "HRTA", "version": "1.29a_no_mentor" } },
+  { "value": { "type": "HRTA", "version": "1.29c" }, "parent": { "type": "HRTA", "version": "1.29b" } },
+  { "value": { "type": "HRTA", "version": "1.29c_no_mentor" }, "parent": { "type": "HRTA", "version": "1.29b_no_mentor" } },
+  { "value": { "type": "HRTA", "version": "1.30a" }, "parent": { "type": "HRTA", "version": "1.29c" } },
+  { "value": { "type": "HRTA", "version": "1.30a_no_mentor" }, "parent": { "type": "HRTA", "version": "1.29c_no_mentor" } },
   { "value": { "type": "RTA", "version": "2.12" }, "parent": null },
   { "value": { "type": "RTA", "version": "2.13" }, "parent": { "type": "RTA", "version": "2.12" } },
   { "value": { "type": "RTA", "version": "2.14" }, "parent": { "type": "RTA", "version": "2.13" } }
