@@ -67,7 +67,6 @@
   { "race_id": "3", "localize_name": { "en": "Lethos", "ru": "Летос" }, "game_id": "Dalom" },
   { "race_id": "3", "localize_name": { "en": "Raelag", "ru": "Раилаг" }, "game_id": "Raelag" },
   { "race_id": "3", "localize_name": { "en": "Raelag", "ru": "Раилаг" }, "game_id": "Raelag_A1" },
-  { "race_id": "3", "localize_name": { "en": "Ranleth", "ru": "Ранли" }, "game_id": "Ferigl" },
   { "race_id": "3", "localize_name": { "en": "Segref", "ru": "Сигриф" }, "game_id": "Segref" },
   { "race_id": "3", "localize_name": { "en": "Shadya", "ru": "Шадия" }, "game_id": "Kelodin" },
   { "race_id": "3", "localize_name": { "en": "Sinitar", "ru": "Синитар" }, "game_id": "Inagost" },

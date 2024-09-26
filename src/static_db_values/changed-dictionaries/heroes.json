@@ -114,6 +114,7 @@
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Hero6", "change_id": ["Hero6", "Hero62"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Hero8", "change_id": ["Hero8", "Hero82"] },
   { "map": { "version": "1.25c", "type": "HRTA" }, "game_id": "Hero2", "change_id": ["Hero2", "Hero22"] },
+  { "map": { "version": "1.31b", "type": "HRTA" }, "game_id": "Orlando", "change_id": ["Orlando3", "Orlando4"] },
   { "map": { "version": "2.12", "type": "RTA" }, "game_id": "Orrin", "change_id": ["Dougal", "Dougal2"] },
   { "map": { "version": "2.12", "type": "RTA" }, "game_id": "Sarge", "change_id": ["Aksel", "Aksel2"] },
   { "map": { "version": "2.12", "type": "RTA" }, "game_id": "Mardigo", "change_id": ["Laslo", "Laslo2"] },
